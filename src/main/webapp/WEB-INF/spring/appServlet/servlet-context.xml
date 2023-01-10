@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:p="http://www.springframework.org/schema/p"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://www.springframework.org/schema/beans"
+		xmlns:mvc="http://www.springframework.org/schema/mvc"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+				http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- 전송된 데이터를 자바빈이 아닌 맵으로 받기 위한 설정 -->
+	<mvc:annotation-driven>
+		<mvc:argument-resolvers>
+			<bean class="paw.togaether.common.resolver.CustomMapArgumentResolver"/>
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean id="loggerInterceptor" class="paw.togaether.common.interceptor.LoggerInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<!-- 리소스 파일 맵핑 -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+
+	<!-- 뷰리솔버 순서: 이름으로 뷰 전달 -> URL 기반 뷰 전달 -->
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0" />
+	<!-- JSON으로 뷰 전달을 위한 설정 -->
+    <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="1"
+		p:viewClass="org.springframework.web.servlet.view.JstlView"
+		p:prefix="/WEB-INF/views/" p:suffix=".jsp"/>
+	
+	<!-- 빈 스캔 패키지 -->
+	<context:component-scan base-package="paw.togaether" />
+</beans>

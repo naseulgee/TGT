@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="common">
+	<!-- 작업날짜 작업자: 쿼리문 설명 -->
+	<select id="sample1" resultType="hashmap"></select>
+	
+	<!-- 23.01.12 홍길동: 뭐뭐하는 쿼리
+		23.01.15 김개똥: 솨솨 부분 수정 -->
+	<select id="sample2" resultType="hashmap"></select>
+	
+	<!-- 23.01.10 나슬기: 페이징 처리하는 쿼리 조각 -->
+	<sql id="pagingPre">
+		select
+			AAA.*
+		from(
+			select
+				count(*) over() as TOTAL_COUNT,
+				AA.*
+			from(
+	</sql>
+	<sql id="pagingPost">
+			) AA
+		) AAA
+		where
+			AAA.rnum between #{START} and #{END}
+	</sql>
+</mapper>

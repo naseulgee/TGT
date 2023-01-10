@@ -1,0 +1,29 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ include file="/WEB-INF/include/common-head.jspf" %>
+
+<body id="admin_body">
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="/resources/css/common/layout_admin.css"/>
+
+<header class="bgColor">
+	<div class="logo_wrap">
+		<a href="/admin.paw">
+			<img class="logo" alt="투개더 로고" src="/resources/image/logo.png">
+		</a>
+	</div>
+	<ul class="sub_pages">
+		<li><a href=""><i class="fa-solid fa-user-group"></i> 고객정보 관리</a></li>
+		<li><a href=""><i class="fa-solid fa-flag"></i> 함께해요 관리</a></li>
+		<li><a href=""><i class="fa-solid fa-comments"></i> 멍멍왈왈 관리</a></li>
+		<li><a href=""><i class="fa-solid fa-building-wheat"></i> 우리동네 관리</a></li>
+		<li><a href=""><i class="fa-solid fa-bell"></i>알람 관리</a>
+	</ul>
+	<div class="btn_wrap flex flexWrap flexBetween">
+		<a href=""><i class="fa-solid fa-arrow-right-from-bracket"></i>로그아웃</a>
+		<div class="arrow_wrap">
+			<button type="button" class="toggle_header" onclick="click_toggle_on('body')"><i class="fa-regular fa-circle-left"></i>메뉴 닫기</button>
+			<button type="button" onclick="go_top()"><i class="fa-regular fa-circle-up"></i>맨 위로가기</button>
+		</div>
+	</div>
+	<form id="common" method="post"></form>
+</header>

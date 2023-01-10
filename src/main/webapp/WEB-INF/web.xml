@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- 컨텍스트 경로 접속 시 자동 출력 파일 -->
+	<welcome-file-list>
+		<welcome-file>main.paw</welcome-file>
+	</welcome-file-list>
+	
+	<!-- 인코딩 필터 설정 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- 공용 스프링 컨테이너 지정. 필터와 메인 서블릿에서 공유 가능 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/*-context.xml</param-value>
+	</context-param>
+	<!-- 공용 스프링 컨테이너 사용 가능하도록 리스너 등록 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- 메인 실행 서블릿 -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+		<!-- 업로드 관련 설정 -->
+		<multipart-config>
+			<!-- 원래 절대경로로 지정해야하나,
+			팀원들의 경로가 다 다르기 때문에 classpath를 이용한 상대경로로 지정해보았음.
+			오류가 생긴다면 각자 절대경로를 지정해야 함 -->
+			<location>classpath:/temp</location><!-- 업로드 폴더 지정 -->
+			<max-file-size>20971520</max-file-size> <!--1MB * 20 -->
+			<max-request-size>41943040</max-request-size><!-- 40MB -->
+			<file-size-threshold>20971520</file-size-threshold> <!-- 20MB -->
+		</multipart-config>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>*.paw</url-pattern>
+	</servlet-mapping>
+
+</web-app>

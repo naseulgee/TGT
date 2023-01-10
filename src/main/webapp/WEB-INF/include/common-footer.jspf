@@ -1,0 +1,20 @@
+<%@ page pageEncoding="UTF-8" %>
+<!-- 공통 풋터 -->
+<footer>
+	<div class="footer_wrap layoutCenter">
+		<h2>투개더</h2>
+		<ul>
+			<li>팀장 : 나슬기</li>
+			<li>팀원 : 박선영, 신현지, 이소영, 최선아, 최현주</li>
+			<li>이메일 : help@togaether.com</li>
+		</ul>
+		<ul>
+			<li>주소 : 서울특별시 종로구 종로 78 (종로2가, 미려빌딩 3,5,6층)</li>
+			<li>고객센터 : 1600-1234</li>
+			<li>운영시간 : 평일 오전 9시~오후 5시 / 주말,공휴일 휴무</li>
+		</ul>
+		<p class="copyright">ⓒ 2022 2-TEAM. All Rights Reserved.</p>
+	</div>
+</footer>
+</body>
+</html>

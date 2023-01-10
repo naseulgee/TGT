@@ -1,0 +1,14 @@
+<%@ page pageEncoding="UTF-8" %>
+
+<!-- 마이페이지 네비게이션 -->
+<nav class="mypage">
+	<div class="nav_wrap slim_scroll">
+		<h2><a href="">마이페이지</a></h2>
+		<ul class="user_info">
+			<h3><a href="">나의 정보</a></h3>
+			<li><a href="">프로필 보기</a></li>
+			<li><a href="">작성한 함께 해요</a></li>
+			<li><a href="">참여한 함께 하고 싶어요</a></li>
+		</ul>
+	</div>
+</nav>

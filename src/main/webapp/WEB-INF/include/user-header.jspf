@@ -1,0 +1,43 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ include file="/WEB-INF/include/common-head.jspf" %>
+
+<body>
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="/resources/css/common/layout.css"/>
+
+<header>
+	<div class="header_wrap slim_scroll layoutCenter flexBetween">
+		<div class="logo_wrap">
+			<a href="/">
+				<img class="logo" alt="투개더 로고" src="/resources/image/logo.png">
+			</a>
+		</div>
+		<button class="menu_btn" type="button" onclick="click_toggle_on('header')">
+			<svg viewBox="0 0 24 24">
+				<line class="bar1" x1="3" y1="6" x2="21" y2="6"/>
+				<line class="bar2" x1="3" y1="12" x2="21" y2="12"/>
+				<line class="bar3" x1="3" y1="18" x2="21" y2="18"/>
+			</svg>
+		</button>
+		<ul class="sub_pages flexCenter">
+			<li><a class="paw_hover" href="">함께해요</a></li>
+			<li><a class="paw_hover" href="">멍멍왈왈</a></li>
+			<li><a class="paw_hover" href="">개BTI</a></li>
+			<li><a class="paw_hover" href="">우리동네</a></li>
+		</ul>
+		<ul class="sub_icons flexCenter">
+			<li class="search flex">
+				<form id="search" name="search" method="post" action="/search">
+					<input type="text" name="search_keyword" placeholder="주소 또는 업체명을 검색해 주세요" autocomplete="off" value="${empty search_keyword?'':search_keyword}">
+					<input type="hidden" name="currentPageNo" value="${empty currentPageNo?'1':currentPageNo}">
+				</form>
+				<button type="submit"><i class="fa-solid fa-magnifying-glass"></i><span class="displaynone">검색</span></button>
+			</li>
+			<li class="mypage"><a href=""><i class="fa-solid fa-paw"></i><span class="displaynone">마이페이지</span></a></li>
+			<li class="alram"><a href=""><span class="al_cnt bgColor">1</span><i class="fa-regular fa-bell"></i><span class="displaynone">알람</span></a></li>
+			<c:if test="${!empty mem_type}">
+				<li class="logout"><a href=""><i class="fa-solid fa-arrow-right-from-bracket"></i><span class="displaynone">로그아웃</span></a></li>
+			</c:if>
+		</ul>
+	</div>
+</header>
