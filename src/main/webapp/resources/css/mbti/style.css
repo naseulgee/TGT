@@ -1,0 +1,67 @@
+@charset "UTF-8";
+/*
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+*/
+@font-face { font-family: 'Pretendard Variable'; font-weight: 45 920; font-style: normal; font-display: swap; src: local('Pretendard Variable'), url('/resources/font/PretendardVariable.woff2') format('woff2-variations'); }
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+html { 
+	font-family: 'Pretendard Variable', 'Noto Sans KR', '돋움', Dotum, Tahoma, Geneva, sans-serif; 
+	font-feature-settings: 'case', 'ccmp', 'tnum', 'ss01', 'ss02', 'ss03', 'ss07', 'ss08'; 
+	-webkit-font-feature-settings: 'case', 'ccmp', 'tnum', 'ss01', 'ss02', 'ss03', 'ss07', 'ss08'; 
+	-moz-font-feature-settings: 'case', 'ccmp', 'tnum', 'ss01', 'ss02', 'ss03', 'ss07', 'ss08'; 
+} /* Pretendard 기준 대문자에 맞춘 숫자, 합성문자, 고정폭 숫자, 곧은 69, 열린4, 가운데 맞춤 :, 단층 a, 직선 3 */
+
+.container {
+	padding: 0px;
+	background-color: #A0774B;
+	margin: 0 auto;
+}
+
+article {
+	display :flex;
+	flex-direction: column;
+}
+
+img {
+	width: 500px;
+	margin: 0 auto;
+}
+
+button {
+	width: 500px;
+	margin: 0 auto;
+}
+
+.progress {
+	width: 500px;
+	margin: 0 auto;
+}
+
+.start {
+	text-align: center;
+
+	font-family: 'Pretendard Variable', 'Noto Sans KR', '돋움', Dotum, Tahoma, Geneva, sans-serif; 
+	-webkit-font-feature-settings: 'case', 'ccmp', 'tnum', 'ss01', 'ss02', 'ss03', 'ss07', 'ss08'; 
+	font-weight:900; 
+
+}/*	font-family: 'Black Han Sans', sans-serif;*/
+
+.result {
+	text-align: center;
+
+	font-family: 'Pretendard Variable', 'Noto Sans KR', '돋움', Dotum, Tahoma, Geneva, sans-serif; 
+	-webkit-font-feature-settings: 'case', 'ccmp', 'tnum', 'ss01', 'ss02', 'ss03', 'ss07', 'ss08'; 
+	font-weight: 900;
+}/*	font-family: 'Black Han Sans', sans-serif;*/
+
+.question {
+	display: none;
+} 
+
+.result {
+	display: none;
+}
+
+.share {
+	margin: 0 auto;
+}
