@@ -1,5 +1,5 @@
 /* header */
-header{ width: 100%; padding: 10px 0; border-bottom: 1px solid var(--mainColor); backdrop-filter: blur(3px); position: fixed; top: 0; left: 0; z-index: 99; transition: 0.5s; }
+header{ width: 100%; padding: 10px 0; border-bottom: 1px solid var(--mainColor); background-color: #ffffff80; backdrop-filter: blur(3px); position: fixed; top: 0; left: 0; z-index: 99; transition: 0.5s; }
 
 /* header-로고 */
 header .header_wrap .logo_wrap img{ width: 60px; }
@@ -12,6 +12,7 @@ header .header_wrap #search input[type="text"]{ width: 100%; }
 /* header-서브 페이지 */
 header .header_wrap .menu_btn{ display:none; }
 header .header_wrap .sub_pages{ gap: 40px; }
+header .header_wrap .sub_pages .paw_hover{ background-size: 1em; }
 header .header_wrap .sub_pages nav{ display: none; }
 header .header_wrap .sub_icons{ gap: 20px; }
 header .header_wrap .sub_icons .alram{ position: relative; }
