@@ -10,15 +10,26 @@ import paw.togaether.common.dao.AbstractDAO;
 @Repository("boardDAO")
 public class BoardDAO extends AbstractDAO {
 	
+	// 멍멍왈왈 게시판 리스트 띄우기
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> boardList(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList("Board.boardList", map);
+	}
+	
 	//멍멍왈왈 게시판 글쓰기
 	public void boardWrite(Map<String, Object> map) throws Exception {
 		insert("Board.boardWrite", map);
 	}
 	
-	//멍멍왈왈 게시판 리스트 띄우기
+	//멍멍왈왈 조회수
+	public void boardHit(Map<String, Object> map) throws Exception{
+		update("Board.boardDetail", map);
+	}
+	
+	//멍멍왈왈 디테일
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> boardList(Map<String, Object> map) throws Exception{
-		return (List<Map<String, Object>>)selectList("Board.boardList", map);
+	public Map<String, Object> boardDetail(Map<String, Object> map) throws Exception{
+		return (Map<String, Object>) selectOne("Board.boardDetail", map);
 	}
 	
 
