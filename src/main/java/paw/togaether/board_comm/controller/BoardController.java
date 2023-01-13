@@ -78,7 +78,6 @@ public class BoardController {
 
 		boardService.boardModify(commandMap.getMap());
 		mv.addObject("BC_IDX", commandMap.get("BC_IDX"));
-
 		return mv;
 	}
 		
