@@ -1,0 +1,3 @@
+<%@ page pageEncoding="utf-8"%>
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/member/memberJoin_ui.css'/>" />
+<script src="<c:url value='/resources/js/member/member.js'/>" charset="utf-8"></script>

@@ -30,10 +30,10 @@ public class JoinController {
 	     
 	    String error = joinService.joinMember(commandMap.getMap());
 	    ModelAndView mv = null;;
-	    if(error.equals("완료")) {
-	        mv = new ModelAndView("redirect:/sample.paw");
-	    }else {
-	        mv = new ModelAndView("redirect:/member/openMemberJoin.paw");
+	    if(error.equals("완료")) {   //회원가입 성공시
+	        mv = new ModelAndView("redirect:/sample.paw");	//메인화면으로 리다이렉트
+	    }else {	//아이디, 이메일이 중복된다면 
+	        mv = new ModelAndView("redirect:/member/openMemberJoin.paw");	//다시 회원가입 페이지로 리다이렉트
 	        mv.addObject("error", error);
 	    }
 	    return mv;
