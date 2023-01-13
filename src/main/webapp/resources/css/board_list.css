@@ -1,0 +1,7 @@
+.main_wrap article div.title{ align-items: flex-end; margin-bottom: 10px; }
+.main_wrap article div.title .more{ display: inline-block; margin-bottom: 5px; border-bottom: 1px solid var(--subGray_30); color: var(--subGray_60); }
+.main_wrap article table{ margin-bottom: 50px; text-align: center; }
+.main_wrap article table tr .title{ text-align: left; }
+.main_wrap article table tbody tr{ cursor: pointer; }
+.main_wrap article table tbody tr.empty{ cursor: default; }
+.main_wrap article table tbody tr.empty td{ padding: 50px 0; }

@@ -1,0 +1,18 @@
+/* 검색 */
+.search_wrarp { margin: 20px auto; padding: 20px; border: 2px solid var(--subGray_50); }
+
+/* 회원 리스트 */
+.member_info_wrap{ overflow-x: auto; }
+.member_info_wrap > table{ min-width: 1050px; }
+.member_info_wrap > table > tbody > tr{ cursor: pointer; }
+.member_info_wrap .bgSubColor:hover{ background-color: var(--subColor); }
+.member_info_wrap .detail_info:hover,
+.member_info_wrap .detail_info tr:hover{ background-color: #fff; }
+
+/* 회원 상세 정보 */
+.member_info_wrap #modifyUser{ padding: 0 15px; cursor: default; }
+.member_info_wrap #modifyUser tr th,
+.member_info_wrap #modifyUser tr td{ padding: 5px 10px; vertical-align: middle; }
+.member_info_wrap #modifyUser tr:last-of-type{ border-bottom: 1px dotted var(--subGray_40); }
+.member_info_wrap #modifyUser tr td input:not([type="radio"]):not([type="checkbox"]){ width: 100%; }
+.member_info_wrap #modifyUser .btn{ display: block; width: 95%; margin: 10px auto; }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="join">
+
+<insert id="insertBreed" parameterType="HashMap" >
+   <![CDATA[
+       INSERT INTO
+           BREED(
+           	  BR_IDX,
+           	  BR_NAME)
+          VALUES(
+              SEQ_BREED.NEXTVAL,
+              #{KINDOFDOG})
+   ]]>
+ </insert>
+
+
+ <insert id="insertMembers" parameterType="HashMap" >
+   <![CDATA[
+       INSERT INTO
+           MEMBERS(
+              MEM_ID,
+              MEM_PW,
+              MEM_CALL,
+              MEM_EMAIL,
+              MEM_ADDR,
+              MEM_TYPE,
+              MEM_PH_IDX,
+              MEM_DOG_NAME,
+              MEM_DOG_NUM,
+              MEM_BR_IDX,
+              MEM_BR_NAME,
+              MEM_DOG_WEIGHT,
+              MEM_DOG_MBTI,
+              MEM_DOG_ETC,
+              MEM_REG_DATE,
+              MEM_MOD_DATE,
+              MEM_DEL_GB)
+          VALUES(
+              #{MEM_ID},
+              #{MEM_PW},
+              #{MEM_CALL},
+              #{MEM_EMAIL},
+              #{MEM_ADDR},
+              #{MEM_TYPE},
+              null,
+              #{MEM_DOG_NAME},
+              #{MEM_DOG_NUM},
+              (SELECT BR_IDX FROM BREED WHERE BR_NAME = #{KINDOFDOG}),
+              #{KINDOFDOG},
+              #{MEM_DOG_WEIGHT},
+              null,
+              #{MEM_DOG_ETC},
+              sysdate,
+              sysdate,
+              'N')
+   ]]>
+ </insert>
+  
+ <select id="selectMemberID" parameterType="HashMap" resultType="HashMap">
+   <![CDATA[
+       SELECT
+		  MEM_ID,
+		  MEM_DOG_NAME,
+		  MEM_ADDR,
+		  MEM_DOG_WEIGHT
+       FROM
+           MEMBERS
+       WHERE
+           MEM_ID = #{MEM_ID}
+   ]]>
+ </select>
+  
+ <select id="selectMemberEmail" parameterType="HashMap" resultType="java.lang.String">
+   <![CDATA[
+       SELECT
+           MEM_EMAIL
+       FROM
+           MEMBERS
+       WHERE
+           MEM_EMAIL=#{MEM_EMAIL}
+   ]]>
+ </select>
+ 
+ </mapper>
