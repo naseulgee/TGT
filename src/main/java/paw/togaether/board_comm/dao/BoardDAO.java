@@ -21,15 +21,20 @@ public class BoardDAO extends AbstractDAO {
 		insert("Board.boardWrite", map);
 	}
 	
-	//멍멍왈왈 조회수
-	public void boardHit(Map<String, Object> map) throws Exception{
-		update("Board.boardDetail", map);
-	}
-	
 	//멍멍왈왈 디테일
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> boardDetail(Map<String, Object> map) throws Exception{
 		return (Map<String, Object>) selectOne("Board.boardDetail", map);
+	}
+	
+	//멍멍왈왈 수정하기
+	public void boardModify(Map<String, Object> map) throws Exception {
+		update("Board.boardModify", map);
+	}
+	
+	// 멍멍왈왈 조회수
+	public void boardHit(Map<String, Object> map) throws Exception {
+		update("Board.boardDetail", map);
 	}
 	
 

@@ -10,7 +10,7 @@
 <h4>멍멍왈왈 게시글 작성</h4>
 <br>
 <body>
-<form id="frm">
+<form id="frm" action="/board_write.paw" method="post">
 <div align="center">
 		<table class="board_view">
 			<colgroup>
@@ -32,38 +32,10 @@
 		</table>
 		<br>
 
-		<a class="btn submit" href="/board_list.paw" id="write">작성하기</a>
-		<a class="btn submit" href="/board_list.paw" id="list">목록으로</a>
+		<input class="btn submit" type="submit" value="작성하기">
+		<a class="btn submit" href="/board_list.paw">목록으로</a>
 		
 	</form>
-	
-	<script type="text/javascript">
-
-	$(document).ready(function(){
-		$("#list").on("click", function(e){ //목록으로 버튼
-			e.preventDefault();
-			fn_openBoardList();
-		});
-		
-		$("#write").on("click", function(e){ //작성하기 버튼
-			e.preventDefault();
-			fn_insertBoard();
-		});
-	});
-
-	function fn_openBoardList(){
-		var comSubmit = new ComSubmit();
-		comSubmit.setUrl("<c:url value='/board_list.paw' />");
-		comSubmit.submit();
-	}
-
-	function fn_insertBoard(){
-		var comSubmit = new ComSubmit("frm");
-		comSubmit.setUrl("<c:url value='/board_list.paw' />");
-		comSubmit.submit();
-	}
-	
-	</script>
 	
 </body>
 	

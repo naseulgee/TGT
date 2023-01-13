@@ -6,7 +6,6 @@
 </head>
 
 <main class="layoutCenter">
-<body>
 
 <body>
 	<table class="board_view">
@@ -20,7 +19,7 @@
 		<tbody>
 			<tr>
 				<th scope="row">글 번호</th>
-				<td>${map.BC_TITLE }</td>
+				<td>${map.BC_IDX }</td>
 				<th scope="row">조회수</th>
 				<td>${map.BC_READHIT }</td>
 			</tr>
@@ -39,36 +38,9 @@
 			</tr>
 		</tbody>
 	</table>
-	<a href="/board_list.paw" class="btn" id="list">목록으로</a>
-	<a href="" class="btn" id="update">수정하기</a>
-	
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$("#list").on("click", function(e){ //목록으로 버튼
-				e.preventDefault();
-				fn_openBoardList();
-			});
-			
-			$("#update").on("click", function(e){
-				e.preventDefault();
-				fn_openBoardUpdate();
-			});
-		});
-		
-		function fn_openBoardList(){
-			var comSubmit = new ComSubmit();
-			comSubmit.setUrl("<c:url value='/sample/openBoardList.do' />");
-			comSubmit.submit();
-		}
-		
-		function fn_openBoardUpdate(){
-			var idx = "${map.IDX}";
-			var comSubmit = new ComSubmit();
-			comSubmit.setUrl("<c:url value='/sample/openBoardUpdate.do' />");
-			comSubmit.addParam("IDX", idx);
-			comSubmit.submit();
-		}
-	</script>
+	<a href="/board_list.paw" class="btn">목록으로</a>
+	<a href="/board_modifyForm.paw" class="btn" >수정하기</a>
+
 </body>
 </body>
 </html>
