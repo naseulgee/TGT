@@ -3,7 +3,6 @@
 <!DOCTYPE>
 <head>
 <title>회원가입</title>
-<%@ include file="/WEB-INF/include/memberinclude-header.jspf" %>
 </head>
 <body>
     <div class="user_view wdp_30" >
@@ -104,7 +103,6 @@
         </form>
     </div>
 </body>
-    <%@ include file="/WEB-INF/include/memberinclude-body.jspf" %>
     <script type="text/javascript">
          
         function fn_joinMember(){
