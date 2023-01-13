@@ -4,11 +4,13 @@
 <mapper namespace="mbti">
 
 	<update id="mbti_modify" parameterType="hashmap">
-		<![CDATA[
-			UPDATE MEMBERS 
-			SET MEM_DOG_MBTI = #{MEM_DOG_MBTI}
-			WHERE MEM_ID = #{loginId}	
-		]]>
+<!-- 		<if test='paraName1 == "Y" or paraName2 == "N"'> -->
+			<![CDATA[
+				UPDATE MEMBERS 
+				SET MEM_DOG_MBTI = #{MEM_DOG_MBTI}
+				WHERE MEM_ID = #{loginId}	
+			]]>
+<!-- 		</if> -->
 	</update>
 
 </mapper>

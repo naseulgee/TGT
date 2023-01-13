@@ -1,13 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>멍BTI</title>
 
-<!-- 부트 스트랩보다 css가 더 우선적으로 작동할 수 있도록 css를 나중에 작성 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"/>
+
+<%@ include file="/WEB-INF/include/user-header.jspf" %>
+<!-- 부트 스트랩보다 css가 더 우선적으로 작동할 수 있도록 css를 나중에 작성 -->
 
 <link href="resources/css/mbti/style.css" rel="stylesheet">
 
@@ -16,45 +13,31 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
 -->
-
-</head>
-<body class="container">
+<main class="layoutCenter">
+<div class="container">
 
 	<article class="start">
-		<h2 class="mt-5 text-center" style="color: white;">내 강아지의 MBTI는?</h2>
+		<h1 class="mt-5 text-center" style="color: white;">내 강아지의 MBTI는?</h1>
 		<img alt="mbtiMain" src="resources/image/mbti/mbtiMain.jpg" width="100%">
-		<button type="button" class="btn btn-dark btn-lg" onclick="start();">테스트 시작하기</button>
+		<button id="mbtiButton" type="button" class="btn submit" onclick="start();">테스트 시작하기</button>
 		
 		<!-- 공유 버튼 -->
-		<h3 class="mt-5 text-center" style="color: white;">* 공유하기 *</h3><br>
+		<h4 class="text-center mt-5" style="color: white;">* 공유하기 *</h4><br>
 		<div class="addthis_inline_share_toolbox_j6rc share"></div><br><br><br>
 	</article> 
 	
 	<article class="question">
 		<div class="progress mt-5" role="progressbar" aria-label="Example 2px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 2px">
-			<div class="progress-bar bg-dark" style="width: calc(100/12*0%);"></div>
+			<div class="progress-bar bg-danger" style="width: calc(100/12*0%);"></div>
 		</div>
 		
 		<h4 id="title" class="text-center mt-5">문제</h4>
 			<input type="hidden" id="type" value="EI">
 		
-		<button id="A" type="button" class="btn btn-outline-dark mt-5">A</button>
-		<button id="B" type="button" class="btn btn-outline-dark mt-5">B</button>
+		<button id="A" type="button" class="btn mt-5">A</button>
+		<button id="B" type="button" class="btn mt-5">B</button>
 		
 		<img alt="bgImg" src="resources/image/mbti/bgImg.png" style="width: 400px; margin-top: 45px;">
-	</article>
-	
-	<article class="result">
-		<h2 id="mbti" class="text-center mt-5">MBTI</h2>
-		<img id="mbtiImg" alt="mbtiImg" src="resources/image/mbti/ENFJ.jpg">
-		<img id="explainImg" class="mt-3" alt="explainImg" src="resources/image/mbti/ENFJ0.JPG">
-		
-		<button type="button" class="btn btn-dark btn-lg mt-3" onclick="window.location.reload()">테스트 다시 하기</button>
-		<button type="button" class="btn btn-dark btn-lg mt-1">테스트 결과 저장</button><br><br>
-		
-		<!-- 공유 버튼 --> 
-		<h3 class="mt-5 text-center"">* 공유하기 *</h3><br>
-		<div class="addthis_inline_share_toolbox_j6rc share"></div><br><br><br>
 	</article>
 	
 		<input type="hidden" id="EI" value="0">
@@ -63,10 +46,11 @@
 		<input type="hidden" id="JP" value="0">
 	
 	<!-- 제이쿼리를 이용해 동적으로 움직이는 코드를 위한 js -->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" ></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 	
-	<script type="text/javascript">
+	<script src="/resources/js/mbti/mbti.js"></script>
+<!-- 	<script type="text/javascript">
 		function start() {
 			$(".start").hide();
 			$(".question").show();
@@ -105,45 +89,36 @@
 				12 : {"title":"자동 급식기를 집사가 사왔다", 				"type":"JP", "A":"아침 점식 저녁! 정확하게 나눠 먹겠어",			 	"B":"뷔페가.. 요기잉네?"}
 		}
 		
-		/* 테스트 결과 */
-		var result = {
-				"ENFJ" :  {"mbti":"ENFJ", "explainImg":"resources/image/mbti/ENFJ0.JPG", "mbtiImg":"resources/image/mbti/ENFJ.jpg"},
-				"ENFP" :  {"mbti":"ENFP", "explainImg":"resources/image/mbti/ENFP0.JPG", "mbtiImg":"resources/image/mbti/ENFP.jpg"},
-				"ENTJ" :  {"mbti":"ENTJ", "explainImg":"resources/image/mbti/ENTJ0.JPG", "mbtiImg":"resources/image/mbti/ENTJ.jpg"},
-				"ENTP" :  {"mbti":"ENTP", "explainImg":"resources/image/mbti/ENTP0.JPG", "mbtiImg":"resources/image/mbti/ENTP.jpg"},
-				"ESFJ" :  {"mbti":"ESFJ", "explainImg":"resources/image/mbti/ESFJ0.JPG", "mbtiImg":"resources/image/mbti/ESFJ.jpg"},
-				"ESFP" :  {"mbti":"ESFP", "explainImg":"resources/image/mbti/ESFP0.JPG", "mbtiImg":"resources/image/mbti/ESFP.jpg"},
-				"ESTJ" :  {"mbti":"ESTJ", "explainImg":"resources/image/mbti/ESTJ0.JPG", "mbtiImg":"resources/image/mbti/ESTJ.jpg"},
-				"ESTP" :  {"mbti":"ESTP", "explainImg":"resources/image/mbti/ESTP0.JPG", "mbtiImg":"resources/image/mbti/ESTP.jpg"},
-				"INFJ" :  {"mbti":"INFJ", "explainImg":"resources/image/mbti/INFJ0.JPG", "mbtiImg":"resources/image/mbti/INFJ.jpg"},
-				"INFP" :  {"mbti":"INFP", "explainImg":"resources/image/mbti/INFP0.JPG", "mbtiImg":"resources/image/mbti/INFP.jpg"},
-				"INTJ" :  {"mbti":"INTJ", "explainImg":"resources/image/mbti/INTJ0.JPG", "mbtiImg":"resources/image/mbti/INTJ.jpg"},
-				"INTP" :  {"mbti":"INTP", "explainImg":"resources/image/mbti/INTP0.JPG", "mbtiImg":"resources/image/mbti/INTP.jpg"},
-				"ISFJ" :  {"mbti":"ISFJ", "explainImg":"resources/image/mbti/ISFJ0.JPG", "mbtiImg":"resources/image/mbti/ISFJ.jpg"},
-				"ISFP" :  {"mbti":"ISFP", "explainImg":"resources/image/mbti/ISFP0.JPG", "mbtiImg":"resources/image/mbti/ISFP.jpg"},
-				"ISTJ" :  {"mbti":"ISTJ", "explainImg":"resources/image/mbti/ISTJ0.JPG", "mbtiImg":"resources/image/mbti/ISTJ.jpg"},
-				"ISTP" :  {"mbti":"ISTP", "explainImg":"resources/image/mbti/ISTP0.JPG", "mbtiImg":"resources/image/mbti/ISTP.jpg"}
-		
-		}
 		
 		var num = 1; 	//현재 문제 번호
+		var mbti = "";
 		
 		// 다음 문제로 넘어가는 함수
 		function next() {
 			if (num == 13) {				//12번이 지나 13번이 될 경우
-				$(".question").hide();		//question 클래스가 숨겨지고
-				$(".result").show();		//result 클래스가 나타남
-				$(".container").css("background-color", "#FFFFFF");
-
-				var mbti = "";
+				
 				($("#EI").val() > 1) ? mbti = mbti + "E" : mbti = mbti + "I";
 				($("#NS").val() > 1) ? mbti += "N" : mbti += "S";		
 				($("#TF").val() > 1) ? mbti += "T" : mbti += "F";
 				($("#JP").val() > 1) ? mbti += "J" : mbti += "P";
-
-				$("#mbti").html(result[mbti]["mbti"]);
-				$("#mbtiImg").attr("src", result[mbti]["mbtiImg"]);
-				$("#explainImg").attr("src", result[mbti]["explainImg"]);
+				
+				//result에mbti값을 넘겨야함
+				$(function() {
+					$.ajax({
+ 					url : '/mbti/result.paw',
+ 					async: false,
+ 					type : 'get',
+ 					success : function (result) {
+						let url = '/mbti/result.paw?mbti='+mbti
+						location.replace(url);
+//						alert("데이터 넘기기는 성공"+ mbti);
+	 					},
+ 					error : function() {
+ 						alert("error");
+ 					}
+	 				});
+				});
+ 				
 
 			} else {
 
@@ -156,9 +131,9 @@
 				num++;
 			}
 		}
-	</script>
+	</script> -->
 
 	<!-- Go to www.addthis.com/dashboard to customize your tools --> 
 	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63ba760d20bdd2c9"></script>
-</body>
-</html>
+</div>
+</main>

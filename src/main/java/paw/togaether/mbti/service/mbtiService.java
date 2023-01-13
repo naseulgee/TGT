@@ -2,8 +2,11 @@ package paw.togaether.mbti.service;
 
 import java.util.Map;
 
-public interface mbtiService {
+import javax.servlet.http.HttpServletRequest;
 
-	void mbti_modify(Map<String, Object> map) throws Exception;
+public interface mbtiService {
+	
+	
+	void mbti_modify(Map<String, Object> map, HttpServletRequest request) throws Exception;
 
 }
