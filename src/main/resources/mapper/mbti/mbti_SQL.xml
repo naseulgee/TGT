@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mbti">
+
+	<update id="mbti_modify" parameterType="hashmap">
+<!-- 		<if test='paraName1 == "Y" or paraName2 == "N"'> -->
+			<![CDATA[
+				UPDATE MEMBERS 
+				SET MEM_DOG_MBTI = #{MEM_DOG_MBTI}
+				WHERE MEM_ID = #{loginId}	
+			]]>
+<!-- 		</if> -->
+	</update>
+
+</mapper>

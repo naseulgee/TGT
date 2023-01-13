@@ -12,14 +12,24 @@ public class CommandMap {
 	
 	//Map과 동일하게 사용할 수 있도록, Map의 메소드를 만들어준다.
 	public Map<String, Object> getMap() { return map; }
+	
 	public Object get(String key) { return map.get(key); }
+	
 	public void put(String key, Object value) { map.put(key, value); }
+	
 	public void putAll(Map<? extends String, ? extends Object> m) { map.putAll(m); }
+	
 	public Object remove(String key) { return map.remove(key); }
+	
 	public boolean containsKey(String key) { return map.containsKey(key); }
+	
 	public boolean containsValue(Object value) { return map.containsValue(value); }
+	
 	public void clear() { map.clear(); }
+	
 	public Set<Entry<String, Object>> entrySet() { return map.entrySet(); }
+	
 	public Set<String> keySet() { return map.keySet(); }
+	
 	public boolean isEmpty() { return map.isEmpty(); }
 }

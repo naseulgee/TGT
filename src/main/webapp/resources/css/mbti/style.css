@@ -1,0 +1,103 @@
+
+.container {
+	padding: 0px;
+	background-color: #A0774B;
+	margin: 0 auto;
+}
+
+.container2 {
+	padding: 0px;
+	background-color: #FFFFFF;
+	margin: 0 auto;
+} 
+
+article {
+	display :flex;
+	flex-direction: column;
+}
+
+img {
+	width: 500px;
+	margin: 0 auto;
+}
+button {
+	font-family: 'Pretendard Variable', 'Noto Sans KR', '돋움', Dotum, Tahoma, Geneva, sans-serif; 
+	-webkit-font-feature-settings: 'case', 'ccmp', 'tnum', 'ss01', 'ss02', 'ss03', 'ss07', 'ss08'; 
+}
+#mbtiButton {
+	width: 430px;
+	margin: 0 auto;
+	padding: 10px 50px;
+	margin-top: 10px;
+	font-weight: 600;
+}
+
+#A {
+	width: 500px;
+	margin: 0 auto;
+	padding: 10px 50px;
+}
+
+#B {
+	width: 500px;
+	margin: 0 auto;
+	padding: 10px 50px;
+}
+
+.progress {
+	width: 500px;
+	margin: 0 auto;
+}
+
+.start {
+	background-color: #A0774B;
+	text-align: center;
+	font-family: 'Pretendard Variable', 'Noto Sans KR', '돋움', Dotum, Tahoma, Geneva, sans-serif; 
+	-webkit-font-feature-settings: 'case', 'ccmp', 'tnum', 'ss01', 'ss02', 'ss03', 'ss07', 'ss08'; 
+	font-weight:900; 
+
+}/*	font-family: 'Black Han Sans', sans-serif;*/
+
+.result {
+	padding: 0px;
+	background-color: #FFFFFF;
+	margin: 0 auto;
+	text-align: center;
+	font-family: 'Pretendard Variable', 'Noto Sans KR', '돋움', Dotum, Tahoma, Geneva, sans-serif; 
+	-webkit-font-feature-settings: 'case', 'ccmp', 'tnum', 'ss01', 'ss02', 'ss03', 'ss07', 'ss08'; 
+	font-weight: 900;
+}
+
+.question {
+	display: none;
+} 
+
+
+.share {
+	margin: 0 auto;
+}
+
+ul {
+    margin-bottom: 0;
+}
+
+a {
+    color: inherit;
+}
+
+/* h1 {
+	margin-top: 20px;
+}
+h2 {
+	margin-top: 10px;
+}
+h3 {
+	margin-top: 10px;
+}
+h4 {
+	margin-top: 10px;
+}
+#title {
+	margin-top: 50px;
+	text-align: center;
+} */
