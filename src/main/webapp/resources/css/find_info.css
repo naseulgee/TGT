@@ -1,0 +1,10 @@
+main form .find_type{ margin: 20px 0; }
+main form .user_info li input#m_id { width: 100%; }
+
+main form .result{ height: 250px; }
+main form .result .info{ margin: 25px 0; font-size: 1.2em; }
+main form .result .info strong{ display: block; margin: 10px 0; font-size: 1.5em; }
+
+main .a_wrap{ color: var(--subGray_60); }
+main .a_wrap li::before{ content: "|"; margin-right: 20px; }
+main .a_wrap li:first-child::before{ display: none; }

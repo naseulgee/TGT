@@ -1,0 +1,65 @@
+#admin_body{ padding-left: 250px; }
+
+/* header */
+#admin_body header{ width: 250px; height: 100vh; padding: 20px 0; overflow-x: hidden; overflow-y: auto; position: fixed; top: 0; left: 0; z-index: 99; }
+/* header-로고 */
+#admin_body header .logo_wrap{ margin: 30px 0 50px; font-size: 30px; text-align: center; }
+#admin_body header .logo_wrap img{ width: 50px; vertical-align: bottom; }
+
+/* header-서브 페이지 */
+#admin_body header .sub_pages li a{ display: block; width: 100%; padding: 20px; box-sizing: border-box; position: relative; top: 0; left: 0; z-index: 1; }
+#admin_body header .sub_pages li a:hover{ color: var(--subGray_90); }
+#admin_body header .sub_pages li a:hover::after{ display: block; content: ""; width: 100%; height: 100%; background-color: var(--subColor); position: absolute; top: 0; left: 0; z-index: -1; }
+#admin_body header .sub_pages li a i{ display: inline-block; margin-right: 5px; font-size: 20px; vertical-align: middle; }
+
+/* header-버튼 */
+#admin_body header .btn_wrap { width: 100%; padding: 20px; box-sizing: border-box; position: absolute; bottom: 40px; left: 0; font-size: 12px; text-align: center; }
+#admin_body header .btn_wrap i{ font-size: 28px; }
+#admin_body header .btn_wrap .arrow_wrap button{ margin-left: 10px; }
+
+/* header-닫혔을 때 */
+#admin_body.on{ padding-left: 70px; }
+#admin_body.on header{ width: 70px; font-size: 0; }
+#admin_body.on header .logo_wrap{ font-size: 16px; }
+#admin_body.on header .btn_wrap{ font-size: 0; }
+#admin_body.on header .btn_wrap .arrow_wrap button{ margin: 20px 0 0 0; }
+#admin_body.on header .btn_wrap .arrow_wrap button.toggle_header{ transform: rotate(180deg); }
+
+/* 스케쥴 리셋 버튼 */
+#admin_body .sche_reset{ position: fixed; bottom: 5px; right: 5px; }
+
+/* main */
+#admin_body main{ width: 100%; padding: 20px; min-height: 100vh; }
+#admin_body main .empty{ padding: 200px 0; text-align: center; }
+
+/* paging */
+#admin_body main .paging{ padding: 20px 0; text-align: center; font-size: 0; vertical-align: middle; }
+#admin_body main .paging a,
+#admin_body main .paging strong{ display: inline-block; width: 34px; height: 34px; margin-left: -1px; border: 1px solid var(--subGray_20); box-sizing: border-box; font-size: 1rem; line-height: 34px; }
+#admin_body main .paging a:hover,
+#admin_body main .paging strong:hover{ background: var(--subGray_5); }
+#admin_body main .paging strong{ border-bottom: 3px solid var(--mainColor); color: var(--mainColor); cursor: pointer; }
+#admin_body main .paging .first,
+#admin_body main .paging .before,
+#admin_body main .paging .next,
+#admin_body main .paging .end{ font-family: "Font Awesome 6 Free"; font-size: 0; font-weight: bold; text-decoration: inherit; }
+#admin_body main .paging .first::before{ content: "\f100"; font-size: 1rem; }
+#admin_body main .paging .before::before{ content: "\f104"; font-size: 1rem; }
+#admin_body main .paging .next::before{ content: "\f105"; font-size: 1rem; }
+#admin_body main .paging .end::before{ content: "\f101"; font-size: 1rem; }
+
+@media (max-width: 1200px){
+	#admin_body{ padding-left: 70px; }
+	#admin_body header { width: 70px; font-size: 0; }
+	#admin_body header .logo_wrap{ font-size: 16px; }
+	#admin_body header .btn_wrap{ font-size: 0; }
+	#admin_body header .btn_wrap .arrow_wrap button{ margin: 20px 0 0 0; }
+	#admin_body header .btn_wrap .arrow_wrap button.toggle_header{ transform: rotate(180deg); }
+	
+	#admin_body.on{ padding-left: 70px; }
+	#admin_body.on header { width: 250px; box-shadow: 0 0 50px #180054; font-size: inherit; }
+	#admin_body.on header .logo_wrap{ font-size: 30px; }
+	#admin_body.on header .btn_wrap{ font-size: 12px; }
+	#admin_body.on header .btn_wrap .arrow_wrap button{ margin: 0 0 0 10px; }
+	#admin_body.on header .btn_wrap .arrow_wrap button.toggle_header{ transform: rotate(0); }
+}

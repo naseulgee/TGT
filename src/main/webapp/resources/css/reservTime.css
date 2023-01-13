@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+/* 예약하기 */
+main article{ max-width: 600px; margin: 0 auto; }
+main article details{  }
+main article details table tbody tr td{ cursor:pointer; }
+main article details summary{ width: 100%; cursor:pointer; }
+main article details summary::marker{ font-size:0; }
+main article details summary i{ font-size: 30px; color: #674ea7; }
+
+main article details span input #count{ border: 1px solid #674ea7; }
+
+/* DATEPICKER 가운데 정렬 */
+main article div .gentle-flex { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1ch; } 
+
+/* 예약자 정보 */
+main article form{ max-width: 600px; margin: 0 auto; }
+main article form .reserv_info li label{ display: block; }
+main article form .reserv_info li label.req::after{ content: " * "; color: red; }
+main article form .reserv_info li input:not([type="button"]):not([type="checkbox"]):not([type="radio"]){ width: 100%; margin-bottom: 5px; }
+main article form .reserv_info li input[readonly]{ background-color: var(--subGray_10); }
+
+/* 서밋버튼 */
+main article form .submit{ width: 100%; margin: 20px 0; }
+
+/* DATEPICKER 디자인 */
+.ui-datepicker{ width:100%; box-sizing:border-box; }
+.ui-datepicker td span, .ui-datepicker td a{ padding: 15px; text-align: center; }
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover{ background: #674ea7; }
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{ border: 1px solid #674ea7; background: #f6f6f6; color: #674ea7; }
+
+
