@@ -1,115 +1,195 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/include/user-header.jspf" %>
 <!DOCTYPE>
 <head>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+	<script>
+		tailwind.config = {
+			important: true,
+			corePlugins: {
+				preflight: false,
+			}
+		}
+	</script>
 <title>회원가입</title>
 </head>
 <body>
-    <div class="user_view wdp_30" >
-        <div class="con_center under_line"><h5>회원 가입</h5></div>
-        <form id="frm" class="padding_5" onSubmit="JavaScript:fn_joinMember()">
-             <fieldset>
-                            	<div class="form-group" id="divInputId">
-                            		<label>아이디</label>
-                            		<input class="form-control" style="margin-bottom: 5px;" placeholder="아이디" name="MEM_ID" id="MEM_ID" type="text" />
-                            		<input type="button" class="btn btn-default" style="width: 30%;" value="중복확인" onclick="duplicationId();" />
-                            	</div>
-                            	<div class="form-group">
-                            		<label>비밀번호</label>
-                            		<input class="form-control" placeholder="비밀번호" name="MEM_PW" id="MEM_PW" type="password" />
-                            	</div>
-                            	<div class="form-group">
-                            		<label>비밀번호 확인</label>
-                            		<input class="form-control" placeholder="비밀번호 확인" name="MEM_PW2" id="MEM_PW2" type="password" />
-                            	</div>
-                            	<div class="form-group">
-                            		<label>전화번호</label>
-                            		<input class="form-control" placeholder="전화번호를 입력해주세요. ex)010-1234-5678" name="MEM_CALL" id="MEM_CALL" type="text" />
-                            	</div>
-                            	<div class="form-group">
-                            		<label>이메일</label>
-                            		<input class="form-control" placeholder="이메일" name="MEM_EMAIL" id="MEM_EMAIL" type="text" />
-                            	</div>
-                            	<div class="form-group">
-                            		<label style="display: block;" >주소</label>
-                            		<input class="form-control" style="width: 40%; display: inline;" placeholder="우편번호" name="MEM_ADDR" id="MEM_ADDR" type="text" readonly="readonly" >
-                            		<button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>
-                            		<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	                                <div class="modal-dialog">
-	                                    <div class="modal-content">
-	                                        <div class="modal-header">
-	                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	                                            <h4 class="modal-title" id="myModalLabel">우편번호 서비스</h4>
-	                                        </div>
-	                                        <div class="modal-body">
-	                                        	<label>주소 입력</label>
-	                                        	<div class="form-group input-group">
-		                                           <input type="text" class="form-control" name="dlgSearchAddress" onclick="execPostCode();">
-			                                           <span class="input-group-btn">
-			                                               <button class="btn btn-default" type="button"><i class="fa fa-search"></i>
-			                                               </button>
-			                                           </span>
-		                                       </div>
-	                                            <p class="help-block">아래와 같은 조합으로 검색을 하시면 더욱 정확한 결과가 검색됩니다.</p>
-	                                            <p class="help-block">도로명 + 건물번호</p>
-	                                            <p class="text-primary">예) 판교역로 235, 제주 첨단로 242</p>
-	                                            <p class="help-block">지역명(동/리) + 번지</p>
-	                                            <p class="text-primary">예) 삼평동 681, 제주 영평동 2181</p>
-	                                            <p class="help-block">지역명(동/리) + 건물명(아파트명)</p>
-	                                            <p class="text-primary">예) 분당 주공, 연수동 주공3차</p>
-	                                            <p class="help-block">사서함명 + 번호</p>
-	                                            <p class="text-primary">예) 분당우체국사서함 1~100</p>
-	                                        </div>
-	                                        <div class="modal-footer">
-	                                            <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-	                                            <button type="button" class="btn btn-primary">저장</button>
-	                                        </div>
-	                                    </div>
-	                                    /.modal-content
-	                                </div>
-	                                /.modal-dialog
-	                            </div> -->
-                            	</div>
-                            	<div class="form-group">
-                            		<input class="form-control" style="top: 5px;" placeholder="도로명 주소" name="signUpUserCompanyAddress" id="signUpUserCompanyAddress" type="text" readonly="readonly" />
-                            	</div>
-                            	<div class="form-group">
-                            		<input class="form-control" placeholder="상세주소" name="signUpUserCompanyAddressDetail" id="signUpUserCompanyAddressDetail" type="text"  />
-                            	</div>
-                            	<input type="hidden" id="MEM_TYPE" value="1">
-                            	<div class="form-group">
-                            		<label>강아지 이름</label>
-                            		<input class="form-control" placeholder="강아지 이름" name="MEM_DOG_NAME" id="MEM_DOG_NAME" type="text" />
-                            	</div>
-                            	<div class="form-group">
-                            		<label>동물등록번호</label>
-                            		<input class="form-control" placeholder="동물등록번호" name="MEM_DOG_NUM" id="MEM_DOG_NUM" type="text" />
-                            	</div>
-                            	<div class="form-group">
-                            		<label>견종명</label>
-                            		<input class="form-control" placeholder="견종명" name="KINDOFDOG" id="KINDOFDOG" type="text" />
-                            	</div>
-                            	<div class="form-group">
-                            		<label>몸무게</label>
-                            		<input class="form-control" placeholder="몸무게" name="MEM_DOG_WEIGHT" id="MEM_DOG_WEIGHT" type="text" />
-                            	</div>
-                            	<div class="form-group">
-                            		<label>강아지 특이사항</label>
-                            		<textarea rows="5" style="width: 80%; height: auto;" title="강아지 특이사항" id="MEM_DOG_ETC" name="MEM_DOG_ETC"></textarea>
-                            	</div>
-                            	
-                            </fieldset>    
-             <button type="submit" class="btn con_center">회원 가입</button>
-        </form>
-    </div>
+<div class="container mx-auto mt-24 border sm:px-6 lg:px-8">
+<form class="space-y-8 divide-y divide-gray-200 max-w-screen-lg" action="/member/joinMember.paw">
+	<div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
+		<div class="space-y-6 sm:space-y-5">
+			<div>
+				<h3 class="text-lg font-medium leading-6 text-gray-900">회원가입</h3>
+				<p class="mt-1 max-w-2xl text-sm text-gray-500">투개더 회원가입을 위한 내용을 작성해주세요.</p>
+			</div>
+				</div>
+
+		<div class="space-y-6 pt-8 sm:space-y-5 sm:pt-10">
+
+			<div class="space-y-6 sm:space-y-5">
+				<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+					<label for="MEM_ID" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">아이디</label>
+					<div class="mt-1 sm:mt-0">
+						<input type="text" name="MEM_ID" id="MEM_ID" autocomplete="username"  class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+					</div>
+					<input type="button" onclick="" value="중복확인" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mr-auto"  >
+				</div>
+
+				<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+					<label for="MEM_PW" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">비밀번호</label>
+					<div class="mt-1 sm:col-span-2 sm:mt-0">
+						<input type="password" name="MEM_PW" id="MEM_PW" autocomplete="current-password" class="block w-full max-w-md rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+					</div>
+				</div>
+
+				<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+					<label for="MEM_NEWPW" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">비밀번호확인</label>
+					<div class="mt-1 sm:col-span-2 sm:mt-0">
+						<input type="password" name="MEM_NEWPW" id="MEM_NEWPW" autocomplete="new-password" class="block w-full max-w-md rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+					</div>
+				</div>
+
+				<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+					<label for="MEM_CALL" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">전화번호</label>
+					<div class="mt-1 sm:col-span-2 sm:mt-0">
+						<input type="text" name="MEM_CALL" id="MEM_CALL"  placeholder="010-1234-5678"   class="block w-full max-w-md rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+					</div>
+				</div>
+
+				<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+					<label for="MEM_EMAIL" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">이메일</label>
+					<div class="mt-1 sm:col-span-2 sm:mt-0">
+						<input id="MEM_EMAIL" name="MEM_EMAIL" type="email" placeholder="example@naver.com" autocomplete="email" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+					</div>
+				</div>
+
+				<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5 max-w-screen-lg">
+					<label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">주소</label>
+					<input type="text" id="sample6_postcode" placeholder="우편번호"  class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+					<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mr-auto"  ><br>
+					<input type="text" id="sample6_address" placeholder="주소"  class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm col-span-2"><br>
+					<input type="text" id="sample6_detailAddress" placeholder="상세주소"  class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+					<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
+				</div>
+
+				<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+					<label for="MEM_DOG_NAME" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">강아지 이름</label>
+					<div class="mt-1 sm:col-span-2 sm:mt-0">
+						<input type="text" name="MEM_DOG_NAME" id="MEM_DOG_NAME"  class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+					</div>
+				</div>
+
+				<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+					<label for="KINDOFDOG" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">견종명</label>
+					<div class="mt-1 sm:col-span-2 sm:mt-0">
+						<select id="KINDOFDOG" name="KINDOFDOG"  class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+							<option value="1" selected>푸들</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5" id="brname" name="brname">
+					<label for="MEM_BR_NAME" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"></label>
+					<div class="mt-1 sm:col-span-2 sm:mt-0">
+						<input type="text" name="MEM_BR_NAME" id="MEM_BR_NAME" placeholder="견종명을 입력하세요." class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+					</div>
+				</div>
+
+				<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+					<label for="MEM_DOG_NUM" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">동물등록번호</label>
+					<div class="mt-1 sm:col-span-2 sm:mt-0">
+						<input type="text" name="MEM_DOG_NUM" id="MEM_DOG_NUM" placeholder="동물등록번호를 입력하세요. (생략 가능)" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+					</div>
+				</div>
+
+
+
+				<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5" name="">
+					<label for="MEM_DOG_NUM" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">강아지 몸무게</label>
+					<div class="mt-1 sm:mt-0">
+						<input type="text" name="MEM_DOG_WEIGHT" id="MEM_DOG_WEIGHT"  class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+					</div>
+					<span class="self-center">kg</span>
+				</div>
+
+				<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+					<label for="MEM_DOG_ETC" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">강아지 특이사항</label>
+					<div class="mt-1 sm:col-span-2 sm:mt-0">
+						<textarea id="MEM_DOG_ETC" name="MEM_DOG_ETC" rows="3" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
+					</div>
+
+			</div>
+		</div>
+
+	<div class="pt-5">
+		<div class="flex justify-end">
+			<button type="button" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" onclick="location.href='/sample.paw'">취소</button>
+			<button type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">회원가입</button>
+		</div>
+	</div>
+
+	</div>
+	</div>
+</form>
+</div>
 </body>
-    <script type="text/javascript">
-         
-        function fn_joinMember(){
-            var comSubmit = new ComSubmit("frm");
-            comSubmit.setUrl("<c:url value='/sample/joinUser.do'/>");
-            comSubmit.submit();
-        }
-         
-    </script>
+
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript">
+
+
+
+
+	function sample6_execDaumPostcode() {
+		new daum.Postcode({
+			oncomplete: function(data) {
+				// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+				// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+				// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+				var addr = ''; // 주소 변수
+				var extraAddr = ''; // 참고항목 변수
+
+				//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+				if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+					addr = data.roadAddress;
+				} else { // 사용자가 지번 주소를 선택했을 경우(J)
+					addr = data.jibunAddress;
+				}
+
+				// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+				if(data.userSelectedType === 'R'){
+					// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+					// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+					if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+						extraAddr += data.bname;
+					}
+					// 건물명이 있고, 공동주택일 경우 추가한다.
+					if(data.buildingName !== '' && data.apartment === 'Y'){
+						extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+					}
+					// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+					if(extraAddr !== ''){
+						extraAddr = ' (' + extraAddr + ')';
+					}
+					// 조합된 참고항목을 해당 필드에 넣는다.
+					document.getElementById("sample6_extraAddress").value = extraAddr;
+
+				} else {
+					document.getElementById("sample6_extraAddress").value = '';
+				}
+
+				// 우편번호와 주소 정보를 해당 필드에 넣는다.
+				document.getElementById('sample6_postcode').value = data.zonecode;
+				document.getElementById("sample6_address").value = addr;
+				// 커서를 상세주소 필드로 이동한다.
+				document.getElementById("sample6_detailAddress").focus();
+			}
+		}).open();
+	}
+</script>
+
 </html>
