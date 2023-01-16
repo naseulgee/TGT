@@ -12,7 +12,7 @@
 			<label for="pl_name"><strong>시설명</strong></label>
 			<div class="input_wrap">
 				<input type="text" id="pl_name" name="pl_name" value="${!empty PL_NAME?PL_NAME:''}" maxlength="25" placeholder="시설 이름을 적어주세요">
-				<p class="info_warn">dd</p>
+				<p class="info_warn">유효성 검증 결과</p>
 			</div>
 		</li>
 		<li class="addr req">
@@ -33,6 +33,12 @@
 					<label class="btn" for="ca2">샘플 카테2</label>
 					<input id="ca3" type="radio" name="pl_cate" value="샘플 카테3">
 					<label class="btn" for="ca3">샘플 카테3</label>
+					<input id="ca4" type="radio" name="pl_cate" value="샘플 카테4">
+					<label class="btn" for="ca4">샘플 카테4</label>
+					<input id="ca4" type="radio" name="pl_cate" value="샘플 카테4">
+					<label class="btn" for="ca4">샘플 카테4</label>
+					<input id="ca4" type="radio" name="pl_cate" value="샘플 카테4">
+					<label class="btn" for="ca4">샘플 카테4</label>
 					<input id="ca4" type="radio" name="pl_cate" value="샘플 카테4">
 					<label class="btn" for="ca4">샘플 카테4</label>
 					<c:if test="${!empty cate_list}">

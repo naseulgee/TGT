@@ -1,6 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="place">	
+<mapper namespace="place">
+	<!-- 23.01.16 나슬기: 시설 분류 조회하는 쿼리문 -->
+	<select id="se_pl_cate_list" resultType="hashmap">
+		select * from place_cate
+	</select>
+	<!-- 23.01.16 나슬기: 시설 분류 등록하는 쿼리문 / 받는값: 등록할 분류명 -->
+	<insert id="in_pl_cate">
+		insert into place_cate(pc_idx, pc_name)
+		values (seq_place_cate.nextval, #{pc_name})
+	</insert>
+	<!-- 23.01.16 나슬기: 시설 분류 수정하는 쿼리문 / 받는값: 분류 번호, 수정할 분류명 -->
+	<update id="up_pl_cate">
+		update place_cate set pc_name = #{pc_name} where pc_idx = ${pc_idx};
+	</update>
+	<!-- 23.01.16 나슬기: 시설 분류 삭제하는 쿼리문 / 받는값: 분류 번호 -->
+	<delete id="de_pl_cate">
+		delete place_cate where pc_idx = ${pc_idx};
+	</delete>
 	
+	<!-- 23.01.16 나슬기: (작업중)시설 조회하는 쿼리문. 시설명/주소/메뉴명 중 일치하는 값으로 모두 검색. 등록순/이름/리뷰/평점 순으로 정렬. -->
+	<select id="se_pl_cate_list" resultType="hashmap">
+		<include refid="common.pagingPre"/>
+		<![CDATA[
+		select rownum rnum,--행번호
+			pl_idx, pl_name, pl_cate, pl_loc,--시설 번호, 시설명, 시설 카테고리, 시설 주소
+			--수정중
+			cafe_idx, cafe_name, cafe_location loc, cafe_openhour open, cafe_closehour close, cafe_offday off,
+		    goodsreg_optionname op_name, op_price, r_avg, r_count, filename
+		from
+			place--시설정보
+			--리뷰 정보. 카페별 평균, 총 개수
+		    left join (select re_pl_idx, round(avg(re_star), 1) r_avg, count(re_pl_idx) r_count
+		            from review where re_del_gb = 'N' group by re_pl_idx
+		        ) on pl_idx = re_pl_idx
+		]]>
+		<where>
+			<if test="search_keyword != null">
+			<![CDATA[
+				--검색어를 넘겨받았다면, 시설명/주소/메뉴명 중 일치하는 값으로 모두 검색
+				and (pl_name like '%'||#{search_keyword}||'%'--시설명
+				or pl_loc like '%'||#{search_keyword}||'%'--주소
+				or pm_name like '%'||#{search_keyword}||'%')--메뉴명
+			]]>
+			</if>
+		</where>
+		order by
+			<choose>
+				<when test="order == 'name'.toString()">pl_name asc</when>
+				<when test="order == 'reviewcnt'.toString()">r_avg desc, r_count desc</when>
+				<when test="order == 'reviewavg'.toString()">r_count desc, r_avg desc</when>
+				<otherwise>pl_idx desc</otherwise>
+			</choose>
+		<include refid="common.pagingPost"/>
+	</select>
 </mapper>
