@@ -17,16 +17,16 @@ public class JoinController {
 	@Resource(name="joinService")
 	private JoinService joinService;
 	
-	@RequestMapping(value="/member/openMemberJoin.paw")
+	@RequestMapping(value="/member/openMemberJoin")
 	public ModelAndView openMemberJoin(CommandMap commandMap) throws Exception{
 	    ModelAndView mv = new ModelAndView("/member/memberJoin");
 	     
 	    return mv;
 	}
 	 
-	@RequestMapping(value="/member/joinMember.paw")
+	@RequestMapping(value="/member/joinMember")
 	public ModelAndView joinMember(CommandMap commandMap) throws Exception{	
-		ModelAndView mv = new ModelAndView("redirect:/sample.paw");
+		ModelAndView mv = new ModelAndView("redirect:/sample");
 		
 		joinService.joinMember(commandMap.getMap());
 	    

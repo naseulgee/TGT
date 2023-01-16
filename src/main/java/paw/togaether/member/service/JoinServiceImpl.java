@@ -18,8 +18,7 @@ public class JoinServiceImpl implements JoinService {
 
 	@Override
 	public void joinMember(Map<String, Object> map) throws Exception {
-		
-		joinDAO.insertBreed(map);
+
 		joinDAO.insertMembers(map);
 		
 	}
