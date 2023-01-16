@@ -49,4 +49,40 @@
 		<!-- <include refid="common.pagingPost"/> -->
 	</select>
 	
+	<!-- 23.01.13 박선영: 게시글 작성폼  -->
+	<insert id="togetherWrite" parameterType="hashmap">
+		<![CDATA[
+			insert into TOGETHER(
+				TO_IDX,
+				TO_TITLE,
+				TO_TC_NAME,
+				TO_CONTENTS,
+				TO_DATE,
+				TO_TIME,
+				TO_PEOPLE,
+				TO_LOC,
+				TO_BR_NAME,
+				TO_WT_IDX,
+				TO_REG_DATE,
+				TO_MOD_DATE,
+				TO_DEL_GB
+				) 
+				VALUES(
+				seq_together.nextval, 
+				#{TO_TITLE, jdbcType=VARCHAR},
+				#{TO_TC_NAME, jdbcType=VARCHAR},
+				#{TO_CONTENTS, jdbcType=VARCHAR},
+				#{TO_DATE, jdbcType=VARCHAR},
+				#{TO_TIME, jdbcType=VARCHAR},
+				#{TO_PEOPLE, jdbcType=VARCHAR},
+				#{TO_LOC, jdbcType=VARCHAR},
+				#{TO_BR_NAME, jdbcType=VARCHAR},
+				#{TO_WT_IDX, jdbcType=VARCHAR},
+				sysdate,
+				sysdate,
+				'N'
+				)
+		]]>
+	</insert>
+	
 </mapper>
