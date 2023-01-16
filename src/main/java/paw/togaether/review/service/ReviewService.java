@@ -4,6 +4,8 @@ import java.util.Map;
 
 public interface ReviewService {
 	
-	Map<String, Object> selectUserInfo(Map<String, Object> map)	throws Exception;
+	void insertReview(Map<String, Object> map)throws Exception;
+	
+	
 
 }

@@ -22,21 +22,38 @@ public class ReviewController {
 	private ReviewService reviewService;
 	
 	
-	/* 작업날짜 작업자: 메소드 설명
-	 * 23.01.11 신현지: 리뷰작성폼으로 이동하는 메서드
+	/*  23.01.11 신현지: 리뷰작성폼으로 이동하는 메서드
 	 */
 	@RequestMapping(value="/review/write")
 	public ModelAndView openReviewWrite(CommandMap commandMap) throws Exception{
 		ModelAndView m = new ModelAndView("/review/reviewWrite");
+		
+		//상세보기 구현될 때까지는 이걸 사용
+		m.addObject("re_pl_idx", "1");
+		
+		//상세보기 페이지까지 구현되면 아래 메서드 쓰기
+		//m.addObject("re_pl_idx",commandMap.get("re_pl_idx"));
 		return m;
 	}
 	
+	
+	/* 작업날짜 작업자: 메소드 설명
+	 * 23.01.13 신현지: 리뷰등록 메서드
+	 */
 	@RequestMapping(value="/review/insert")
-	public ModelAndView insertReview(CommandMap commandMap,MultipartFile[] uploadFile) throws Exception{
+	public ModelAndView insertReview(CommandMap commandMap, MultipartFile[] uploadFile) throws Exception{
 		ModelAndView m = new ModelAndView("jsonView");
 		
 		log.info("update ajax post.........");
 		String uploadFolder = "C:\\upload";
+		
+		System.out.println("업로드된 파일의 개수 : "+ uploadFile.length);
+		
+		
+		System.out.println(commandMap.getMap());
+		//review테이블에 데이터 삽입
+		//reviewService.insertReview(commandMap.getMap());
+		
 		
 		for (MultipartFile multipartFile : uploadFile) {
 			log.info("-------------------------------------");

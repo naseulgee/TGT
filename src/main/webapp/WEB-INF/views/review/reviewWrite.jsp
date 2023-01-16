@@ -135,10 +135,19 @@ $(document).ready( function() {
 		<div><span class="info_warn">본인이 직접 촬영한 사진만 올려주세요.</span></div>
 		<div><span class="info_warn">저작권에 대한 책임은 업로드한 회원에게 있습니다.</span></div>
 		<br><br><br>
+		
 		<input type="hidden" id="re_pl_idx" name="re_pl_idx" value="${re_pl_idx}"><!-- 시설번호 -->
+		<input type="hidden" id="re_writer_id" name="re_writer_id" value="aaa123"><!-- 작성자 아이디 -->
+        <input type="hidden" id="re_writer_name" name="re_writer_name" value="브라더"><!-- 강아지 이름 -->
+        
+        
+        
+        <%-- 세션이 전부 구현되면 사용
         <input type="hidden" id="re_writer_id" name="re_writer_id" value="${mem_id}"><!-- 작성자 아이디 -->
         <input type="hidden" id="re_writer_name" name="re_writer_name" value="${mem_dog_name}"><!-- 강아지 이름 -->
-		<button class="btn submit" id="uploadBtn">리뷰등록</button>
+        --%>
+		<button class="btn submit" id="uploadBtn">리뷰등록</button> 
+		
 		<a href="/user/mypage/review/reviewList" class="btn">목록으로</a>
 	</div> 
 	</div>
@@ -162,6 +171,12 @@ $(document).ready( function() {
 		return true;
 	} 
 	
+	//사진이 잘 들어간 <input type="file">만 formData에 삽입하는 함수
+	function checkPhotoVal () {
+		
+		
+	}
+	
 	//클릭시 
 	$("#uploadBtn").on("click", function(e) {
 		var formData = new FormData();
@@ -169,6 +184,9 @@ $(document).ready( function() {
 		var inputFile2 = $("input[name='photo2']")[0].files;
 		var inputFile3 = $("input[name='photo3']")[0].files;
 
+		console.log(inputFile1.length);
+		console.log(inputFile2.length);
+		console.log(inputFile3.length);
 		//★확장자 알맞지 않거나 파일용량이 크면 FormData객체에 삽입X★
 		if (inputFile1.length > 0) { //첫번째 파일을 formData에 삽입
 			if (checkExtension(inputFile1[0].name, inputFile1[0].size)) {
@@ -191,7 +209,19 @@ $(document).ready( function() {
 			} else {
 				formData.append("uploadFile", inputFile3[0]);
 			}	
-		}	
+		}
+		
+		
+		let target = $("main input");
+		for(let i=0; i<target.length ; i++) {
+			let in_name = target[i].name;
+			let in_value = target[i].value;
+			let in_type = target[i].type;
+			if ((in_type == 'radio'||in_type =='checkbox')&& !target[i].checked) {
+				continue;
+			}
+			formData.append(in_name, in_value);		
+		}
 		
 		 $.ajax({
 			url: '/review/insert.paw',

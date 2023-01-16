@@ -9,10 +9,9 @@ import paw.togaether.common.dao.AbstractDAO;
 @Repository("reviewDAO")
 public class ReviewDAO extends AbstractDAO{
 	
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> selectUserInfo(Map<String, Object> map) 
-			throws Exception {
-		return (Map<String, Object>) selectOne("review.selectUserInfo", map);
+	
+	public void insertReview(Map<String, Object> map) throws Exception {
+		 insert("review.insertReview", map);
 	}
 
 }
