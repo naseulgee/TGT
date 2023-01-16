@@ -16,5 +16,8 @@ public interface BoardService {
 	
 	//멍멍왈왈 수정하기
 	void boardModify(Map<String, Object> map) throws Exception;
+	
+	//멍멍왈왈 글 삭제하기
+	void boardDelete(Map<String, Object> map) throws Exception;
 		
 }
