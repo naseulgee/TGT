@@ -87,7 +87,11 @@
 			<artifactId>spring-tx</artifactId><!-- 트랜젝션 -->
 			<version>${org.springframework-version}</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
 		<!-- Maven -->
 		<dependency>
 			<groupId>org.apache.maven.plugins</groupId>
@@ -117,7 +121,8 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjtools</artifactId>
 			<version>${org.aspectj-version}</version>
-		</dependency>	
+		</dependency>
+
 		
 		<!-- Logging -->
 		<dependency>
@@ -147,6 +152,7 @@
 			<artifactId>log4j</artifactId>
 			<version>1.3alpha-8</version>
 		</dependency>
+
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>

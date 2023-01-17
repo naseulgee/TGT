@@ -3,18 +3,6 @@
 
 <mapper namespace="join">
 
-<insert id="insertBreed" parameterType="HashMap" >
-   <![CDATA[
-       INSERT INTO
-           BREED(
-           	  BR_IDX,
-           	  BR_NAME)
-          VALUES(
-              SEQ_BREED.NEXTVAL,
-              #{KINDOFDOG})
-   ]]>
- </insert>
-
 
  <insert id="insertMembers" parameterType="HashMap" >
    <![CDATA[
@@ -26,7 +14,6 @@
               MEM_EMAIL,
               MEM_ADDR,
               MEM_TYPE,
-              MEM_PH_IDX,
               MEM_DOG_NAME,
               MEM_DOG_NUM,
               MEM_BR_IDX,
@@ -43,12 +30,11 @@
               #{MEM_CALL},
               #{MEM_EMAIL},
               #{MEM_ADDR},
-              #{MEM_TYPE},
-              null,
+              1,
               #{MEM_DOG_NAME},
               #{MEM_DOG_NUM},
-              (SELECT BR_IDX FROM BREED WHERE BR_NAME = #{KINDOFDOG}),
-              #{KINDOFDOG},
+              #{KINDOFDOG}  ,
+              #{MEM_BR_NAME},
               #{MEM_DOG_WEIGHT},
               null,
               #{MEM_DOG_ETC},
@@ -57,30 +43,6 @@
               'N')
    ]]>
  </insert>
-  
- <select id="selectMemberID" parameterType="HashMap" resultType="HashMap">
-   <![CDATA[
-       SELECT
-		  MEM_ID,
-		  MEM_DOG_NAME,
-		  MEM_ADDR,
-		  MEM_DOG_WEIGHT
-       FROM
-           MEMBERS
-       WHERE
-           MEM_ID = #{MEM_ID}
-   ]]>
- </select>
-  
- <select id="selectMemberEmail" parameterType="HashMap" resultType="java.lang.String">
-   <![CDATA[
-       SELECT
-           MEM_EMAIL
-       FROM
-           MEMBERS
-       WHERE
-           MEM_EMAIL=#{MEM_EMAIL}
-   ]]>
- </select>
+
  
  </mapper>

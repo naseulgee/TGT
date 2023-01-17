@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import paw.togaether.common.domain.CommandMap;
@@ -17,14 +18,14 @@ public class JoinController {
 	@Resource(name="joinService")
 	private JoinService joinService;
 	
-	@RequestMapping(value="/member/openMemberJoin.paw")
+	@RequestMapping(value="/member/openMemberJoin")
 	public ModelAndView openMemberJoin(CommandMap commandMap) throws Exception{
 	    ModelAndView mv = new ModelAndView("/member/memberJoin");
 	     
 	    return mv;
 	}
 	 
-	@RequestMapping(value="/member/joinMember.paw")
+	@RequestMapping(value="/member/joinMember")
 	public ModelAndView joinMember(CommandMap commandMap) throws Exception{	
 		ModelAndView mv = new ModelAndView("redirect:/sample.paw");
 		
