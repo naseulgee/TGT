@@ -34,8 +34,13 @@ public class BoardDAO extends AbstractDAO {
 	
 	// 멍멍왈왈 조회수
 	public void boardHit(Map<String, Object> map) throws Exception {
-		update("Board.boardDetail", map);
+		update("Board.boardHit", map);
 	}
 	
-
+	//멍멍왈왈 글 삭제하기
+	public void boardDelete(Map<String, Object> map) throws Exception {
+		update("Board.boardDelete", map);
+	}
+	
+	
 }

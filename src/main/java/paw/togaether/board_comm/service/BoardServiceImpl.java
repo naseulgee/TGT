@@ -41,4 +41,12 @@ public class BoardServiceImpl implements BoardService {
 		boardDAO.boardModify(map);
 	}
 	
+	//멍멍왈왈 글 삭제하기
+	@Override
+	public void boardDelete(Map<String ,Object> map) throws Exception {
+		boardDAO.boardDelete(map);
+	}
+	
+	
+	
 }
