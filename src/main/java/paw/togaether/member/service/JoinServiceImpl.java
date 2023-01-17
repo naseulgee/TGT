@@ -19,10 +19,10 @@ public class JoinServiceImpl implements JoinService {
 
 	@Override
 	public void joinMember(Map<String, Object> map) throws Exception {
-		String originPassword = (String)map.get("MEM_PW");
+		/*String originPassword = (String)map.get("MEM_PW");
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String securePassword = encoder.encode(originPassword);
-		map.put("MEM_PW", securePassword);
+		map.put("MEM_PW", securePassword);*/
 
 		String address = (String)map.get("address");
 
