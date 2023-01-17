@@ -46,7 +46,7 @@
 			<!-- 원래 절대경로로 지정해야하나,
 			팀원들의 경로가 다 다르기 때문에 classpath를 이용한 상대경로로 지정해보았음.
 			오류가 생긴다면 각자 절대경로를 지정해야 함 -->
-			<location>classpath:/temp</location><!-- 업로드 폴더 지정 -->
+			<location>C:\Users\LENOVO\Desktop\upload</location><!-- 업로드 폴더 지정 -->
 			<max-file-size>20971520</max-file-size> <!--1MB * 20 -->
 			<max-request-size>41943040</max-request-size><!-- 40MB -->
 			<file-size-threshold>20971520</file-size-threshold> <!-- 20MB -->

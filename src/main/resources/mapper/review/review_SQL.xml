@@ -3,9 +3,18 @@
 
 <mapper namespace="review">
 
-	<select id="selectUserInfo">
-		select * from members where mem_id = {mem_id}
-	</select>
+	<!-- 리뷰테이블에 데이터 삽입 -->
+	<insert parameterType="hashmap" id="insertReview">
+		insert into review (
+		re_idx, re_pl_idx, re_writer_id, re_writer_name,
+		re_star, re_contents,
+		re_reg_date, re_mod_date, re_del_gb
+		) values (
+		re_seq.NEXTVAL, #{re_pl_idx} , #{re_writer_id} , #{re_writer_name},
+		#{re_star} , #{re_contents},
+		sysdate, sysdate, 'N'
+		)
+	</insert>
 
 
 </mapper>

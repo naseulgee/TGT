@@ -17,9 +17,10 @@ public class ReviewServiceImpl implements ReviewService {
 	@Resource(name="reviewDAO")
 	private ReviewDAO reviewDAO;
 
+
 	@Override
-	public Map<String, Object> selectUserInfo(Map<String, Object> map) throws Exception {
-		return reviewDAO.selectUserInfo(map);
+	public void insertReview(Map<String, Object> map) throws Exception {
+		reviewDAO.insertReview(map);
 	}
 
 }

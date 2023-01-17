@@ -52,6 +52,7 @@ label {
 
 #noImage1, #noImage2, #noImage3 {
 	font-size : 300%;
+	height : 50%;
 }
 
 input[type=file]{
@@ -77,8 +78,8 @@ $(document).ready( function() {
 	
 	<h1 class="txt_center">솔직한 리뷰를 남겨주세요:)</h1>
 	<br><br>
-<!-- 	<form action="./insertReview" method="post" onsubmit="return check()" name="reviewStars" id="reviewStars" class="txt_center">
- -->		
+ 	<div name="reviewStars" id="reviewStars" class="txt_center">
+		
 		<!-- 평점 -->
 		<div><h3>시설의 평점</h3></div>
 		<div><span class="color">시설의 만족도는 어느 정도인가요?</span></div><br>
@@ -134,12 +135,21 @@ $(document).ready( function() {
 		<div><span class="info_warn">본인이 직접 촬영한 사진만 올려주세요.</span></div>
 		<div><span class="info_warn">저작권에 대한 책임은 업로드한 회원에게 있습니다.</span></div>
 		<br><br><br>
+		
+		<input type="hidden" value="review" name="ph_board_type"><!-- 테이블명/ 시설과 회원에 각각 추가 필수 -->
 		<input type="hidden" id="re_pl_idx" name="re_pl_idx" value="${re_pl_idx}"><!-- 시설번호 -->
+		<!-- 세션이 구현되면 삭제 -->
+		<input type="hidden" id="re_writer_id" name="re_writer_id" value="aaa123"><!-- 작성자 아이디 -->
+        <input type="hidden" id="re_writer_name" name="re_writer_name" value="브라더"><!-- 강아지 이름 -->
+
+        <%-- 세션이 전부 구현되면 사용
         <input type="hidden" id="re_writer_id" name="re_writer_id" value="${mem_id}"><!-- 작성자 아이디 -->
         <input type="hidden" id="re_writer_name" name="re_writer_name" value="${mem_dog_name}"><!-- 강아지 이름 -->
-		<button class="btn submit" id="uploadBtn">리뷰등록</button>
+        --%>
+		<button class="btn submit" id="uploadBtn">리뷰등록</button> 
+		
 		<a href="/user/mypage/review/reviewList" class="btn">목록으로</a>
-<!-- 	</form> -->
+	</div> 
 	</div>
 </main><!-- //main 종료 -->
 
@@ -167,12 +177,10 @@ $(document).ready( function() {
 		var inputFile1 = $("input[name='photo1']")[0].files;
 		var inputFile2 = $("input[name='photo2']")[0].files;
 		var inputFile3 = $("input[name='photo3']")[0].files;
+
 		console.log(inputFile1.length);
-		console.log(inputFile1[0].name +"/" +  inputFile1[0].size);
 		console.log(inputFile2.length);
 		console.log(inputFile3.length);
-		console.log(checkExtension(inputFile1[0].name, inputFile1[0].size));
-
 		//★확장자 알맞지 않거나 파일용량이 크면 FormData객체에 삽입X★
 		if (inputFile1.length > 0) { //첫번째 파일을 formData에 삽입
 			if (checkExtension(inputFile1[0].name, inputFile1[0].size)) {
@@ -196,20 +204,26 @@ $(document).ready( function() {
 				formData.append("uploadFile", inputFile3[0]);
 			}	
 		}	
-		alert(formData.keys());
-		 
-		 
-		/*
+		
+		let target = $("main input:not([name^='photo']), textarea");
+		for(let i=0; i<target.length ; i++) {
+			let in_name = target[i].name;
+			let in_value = target[i].value;
+			let in_type = target[i].type;
+			if ((in_type == 'radio'||in_type =='checkbox')&& !target[i].checked) {
+				continue;
+			}
+			formData.append(in_name, in_value);		
+		}
+		
 		 $.ajax({
-			url: '/uploadAjaxAction',
+			url: '/review/insert.paw',
 			processData: false, 
 			contentType: false,
 		 	data: formData,
 		 	type: 'POST',
-		 	success: function(result){
-		 		alert("Uploaded");
-		 	}
-		 }); //$.ajax */ 
+		 	success: function(result){ alert("Uploaded");}
+		 }); //$.ajax
 
 	}); 
 </script>
