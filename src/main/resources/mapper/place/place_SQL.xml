@@ -45,4 +45,31 @@
 			</choose>
 		<include refid="common.pagingPost"/>
 	</select>
+	<!-- 23.01.17 나슬기: 시설 상세 조회하는 쿼리문 / 받는값: 시설 번호 -->
+	<select id="se_pl" resultType="hashmap">
+		select * from place where pl_idx = ${pl_idx}
+	</select>
+	
+	<!-- 23.01.17 나슬기: 시설 등록하는 쿼리문 / 받는값: 등록할 시설 번호와 수정날짜, 삭제 여부를 제외한 모든 값 -->
+	<insert id="in_pl">
+		insert into place(pl_idx, pl_name, pl_cate, pl_call, pl_loc, pl_offday, pl_open, pl_close)
+		values (seq_place.nextval, #{pl_name}, #{pl_cate}, #{pl_call}, #{pl_loc}, #{pl_offday}, #{pl_open}, #{pl_close})
+	</insert>
+
+	<!-- 23.01.17 나슬기: 시설 수정하는 쿼리문 / 받는값: 시설명, 삭제 여부를 제외한 모든 값 -->
+	<update id="up_pl">
+		update place
+		set (pl_cate, pl_call, pl_loc, pl_offday, pl_open, pl_close, pl_mod_date)
+			= (#{pl_cate}, #{pl_call}, #{pl_loc}, #{pl_offday}, #{pl_open}, #{pl_close}, sysdate)
+		where pl_idx = ${pl_idx}
+	</update>
+
+	<!-- 23.01.16 나슬기: 시설 삭제 요청하는 쿼리문 / 받는값: 시설 번호 -->
+	<update id="de_req_pl">
+		update place set pl_del_gb = "Y" where pl_idx = ${pl_idx}
+	</update>
+	<!-- 23.01.16 나슬기: 시설 삭제하는 쿼리문 / 받는값: 시설 번호 -->
+	<delete id="de_pl">
+		delete place where pl_idx = ${pl_idx}
+	</delete>
 </mapper>

@@ -18,11 +18,11 @@
 	<update id="up_pl_menu">
 		update place_menu
 		set (pm_name, pm_price) = (#{pm_name}, ${pm_price})
-		where pm_idx = ${pm_idx};
+		where pm_idx = ${pm_idx}
 	</update>
 
 	<!-- 23.01.16 나슬기: 시설 메뉴 삭제하는 쿼리문 / 받는값: 메뉴 번호 -->
 	<delete id="de_pl_menu">
-		delete place_menu where pm_idx = ${pm_idx};
+		delete place_menu where pm_idx = ${pm_idx}
 	</delete>
 </mapper>
