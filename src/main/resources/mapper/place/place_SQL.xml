@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 23.01.17 나슬기: 시설 관련 쿼리문 파일 생성 -->
+<mapper namespace="place">
+	<!-- 23.01.16 나슬기: (작업중)시설 조회하는 쿼리문. 시설명/주소/메뉴명 중 일치하는 값으로 모두 검색. 등록순/이름/리뷰/평점 순으로 정렬. -->
+	<select id="se_pl_list" resultType="hashmap">
+		<include refid="common.pagingPre"/>
+		<![CDATA[
+		select rownum rnum,--행번호
+			pl_idx, pl_name, pl_cate, pl_loc,--시설 번호, 시설명, 시설 카테고리, 시설 주소
+			r_avg, r_count,--리뷰 평균, 리뷰 개수
+			--수정중
+			cafe_idx, cafe_name, cafe_location loc, cafe_openhour open, cafe_closehour close, cafe_offday off,
+		    goodsreg_optionname op_name, op_price, filename
+		from
+			place--시설정보
+			--리뷰 정보. 시설별 평균(소숫점 한자리수로 반올림), 총 개수
+		    left join (select re_pl_idx, round(avg(re_star), 1) r_avg, count(re_pl_idx) r_count
+		            from review where re_del_gb = 'N' group by re_pl_idx
+		        ) on pl_idx = re_pl_idx
+		    --메뉴 정보. 메뉴명, 총 메뉴 개수
+		    --left join (select pm_pl_idx, pm_name, pm_count--시설 번호, 메뉴명, 메뉴 개수를
+		    		--from (select pm_pl_idx pmplidx, count(pm_name) pm_count--시설번호와 메뉴 개수를 가져와서
+						--from place_menu group by pm_pl_idx--시설번호 기준으로 그룹핑 한 후
+					--) inner join place_menu on pmplidx = pm_pl_idx--시설번호
+		    	--) on pl_idx = pm_pl_idx
+		]]>
+		<where>
+			<if test="search_keyword != null">
+			<![CDATA[
+				--검색어를 넘겨받았다면, 시설명/주소/메뉴명 중 일치하는 값으로 모두 검색
+				and (pl_name like '%'||#{search_keyword}||'%'--시설명
+				or pl_loc like '%'||#{search_keyword}||'%'--주소
+				or pm_name like '%'||#{search_keyword}||'%')--메뉴명
+			]]>
+			</if>
+		</where>
+		order by
+			<choose>
+				<when test="order == 'name'.toString()">pl_name asc<![CDATA[--이름 내림차순 정렬 ㄱ~ㅎ]]></when>
+				<when test="order == 'reviewcnt'.toString()">r_count desc, r_avg desc<![CDATA[--리뷰가 많은 순으로 정렬 후 같은 값에 한해 평점 높은 순으로 재정렬]]></when>
+				<when test="order == 'reviewavg'.toString()">r_avg desc, r_count desc<![CDATA[--평점 높은 순으로 정렬 후 같은 값에 한해 리뷰가 많은 순으로 재정렬]]></when>
+				<otherwise>pl_idx desc<![CDATA[--등록 순으로 오름차순 정렬. 최신글~오래된글]]></otherwise>
+			</choose>
+		<include refid="common.pagingPost"/>
+	</select>
+</mapper>
