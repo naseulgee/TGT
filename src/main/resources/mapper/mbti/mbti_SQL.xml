@@ -3,7 +3,7 @@
 
 <mapper namespace="mbti">
 
-	<update id="mbti_modify" parameterType="hashmap">
+	<update id="mbtiModify" parameterType="hashmap">
 <!-- 		<if test='paraName1 == "Y" or paraName2 == "N"'> -->
 			<![CDATA[
 				UPDATE MEMBERS 

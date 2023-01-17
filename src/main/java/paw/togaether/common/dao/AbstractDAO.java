@@ -48,22 +48,25 @@ public class AbstractDAO {
 		pringQueryId(queryId);
 		return sqlSession.selectList(queryId, params);
 	}
+	
 	@SuppressWarnings("unchecked")
-	public Object selectPagingList(String queryId, Object params) {
-		//전달받은 Object를 Map 타입으로 변환
-		Map<String, Object> map = (Map<String, Object>)params;
-		pringQueryId(queryId);//로그 찍기
-		 
-		//현재 페이지. 값이 없으면 1
-		int currentPageNo = StringUtils.isEmpty(map.get("CURRENT_PAGE_NO"))?1:Integer.parseInt(map.get("CURRENT_PAGE_NO").toString());
-		//한 페이지당 출력 게시물 개수. 값이 없으면 15
-		int page_row = StringUtils.isEmpty(map.get("PAGE_ROW"))?15:Integer.parseInt(map.get("PAGE_ROW").toString());
+	public Object selectPagingList(String queryId, Object params){
+		pringQueryId(queryId);
+		Map<String,Object> map = (Map<String,Object>)params;
 		
-		//페이징 SQL에 사용되는 rownum 값 세팅
-		int start = (currentPageNo-1) * page_row;//시작 게시물 번호
-		int end = start + page_row;//종료 게시물 번호
-		map.put("START", start+1);
-		map.put("END", end);
+		String strPageIndex = (String)map.get("PAGE_INDEX");
+		String strPageRow = (String)map.get("PAGE_ROW");
+		int nPageIndex = 0;
+		int nPageRow = 10;
+		
+		if(StringUtils.isEmpty(strPageIndex) == false){
+			nPageIndex = Integer.parseInt(strPageIndex)-1;
+		}
+		if(StringUtils.isEmpty(strPageRow) == false){
+			nPageRow = Integer.parseInt(strPageRow);
+		}
+		map.put("START", (nPageIndex * nPageRow) + 1);
+		map.put("END", (nPageIndex * nPageRow) + nPageRow);
 		
 		return sqlSession.selectList(queryId, map);
 	}

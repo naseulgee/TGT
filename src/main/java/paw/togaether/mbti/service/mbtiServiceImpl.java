@@ -7,16 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
-import paw.togaether.mbti.dao.mbtiDAO;
+import paw.togaether.mbti.dao.MbtiDAO;
 
 @Service("mbtiService")
-public class mbtiServiceImpl implements mbtiService {
+public class MbtiServiceImpl implements MbtiService {
 	
 	@Resource(name = "mbtiDAO")
-	private mbtiDAO mbtiDAO;
+	private MbtiDAO mbtiDAO;
 
 	@Override
-	public void mbti_modify(Map<String, Object> map, HttpServletRequest request) throws Exception {
-		mbtiDAO.mbti_modify(map);
+	public void mbtiModify(Map<String, Object> map, HttpServletRequest request) throws Exception {
+		mbtiDAO.mbtiModify(map);
 	}
 }

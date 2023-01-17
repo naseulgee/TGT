@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="main">
+
+	<select id="boardSearchList" parameterType="hashmap" resultType="hashmap">
+		<include refid="common.pagingPre"/>
+		<![CDATA[
+			SELECT ROW_NUMBER() OVER (ORDER BY BC_IDX DESC) RNUM, BC_IDX, BC_TITLE, TO_CHAR(BC_MOD_DATE, 'YYYY-MM-DD HH24:MI:SS') AS BC_MOD_DATE, BC_WRITER_ID
+			FROM BOARD_COMM
+			WHERE BC_DEL_GB = 'N'
+			ORDER BY BC_IDX DESC
+		]]>
+		<include refid="common.pagingPost"/>
+	</select>
+	
+	<!-- 게시판 검색 0 결과 : 제목 -->
+	<select id="boardSearch0" parameterType="hashmap" resultType="hashmap">
+		<include refid="common.pagingPre"/>
+		<![CDATA[
+			SELECT ROW_NUMBER() OVER (ORDER BY BC_IDX DESC) RNUM, BC_IDX, BC_TITLE, TO_CHAR(BC_MOD_DATE, 'YYYY-MM-DD HH24:MI:SS') AS BC_MOD_DATE, BC_WRITER_ID
+			FROM BOARD_COMM
+			WHERE BC_TITLE LIKE '%' || #{isSearch} || '%'
+			AND BC_DEL_GB = 'N'
+			ORDER BY BC_IDX DESC
+		]]>
+		<include refid="common.pagingPost"/>
+	</select>
+	
+	<!-- 게시판 검색 1 결과 : 작성자 -->
+	<select id="boardSearch1" parameterType="hashmap" resultType="hashmap">
+		<include refid="common.pagingPre"/>
+		<![CDATA[
+			SELECT ROW_NUMBER() OVER (ORDER BY BC_IDX DESC) RNUM, BC_IDX, BC_TITLE, TO_CHAR(BC_MOD_DATE, 'YYYY-MM-DD HH24:MI:SS') AS BC_MOD_DATE, BC_WRITER_ID
+			FROM BOARD_COMM
+			WHERE BC_WRITER_ID LIKE '%' || #{isSearch} || '%'
+			AND BC_DEL_GB = 'N'
+			ORDER BY BC_IDX DESC
+		]]>
+		<include refid="common.pagingPost"/>
+	</select>
+
+</mapper>

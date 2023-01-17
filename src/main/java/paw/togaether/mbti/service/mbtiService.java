@@ -4,9 +4,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-public interface mbtiService {
+public interface MbtiService {
 	
 	
-	void mbti_modify(Map<String, Object> map, HttpServletRequest request) throws Exception;
+	void mbtiModify(Map<String, Object> map, HttpServletRequest request) throws Exception;
 
 }

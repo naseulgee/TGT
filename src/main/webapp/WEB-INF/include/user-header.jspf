@@ -27,9 +27,9 @@
 		</ul>
 		<ul class="sub_icons flexCenter">
 			<li class="search flex">
-				<form id="search" name="search" method="post" action="/search">
+				<form id="search" name="search" method="post" action="/search.paw">
 					<input type="text" name="search_keyword" placeholder="무엇이 궁금하개?" autocomplete="off" value="${empty search_keyword?'':search_keyword}">
-					<input type="hidden" name="currentPageNo" value="${empty currentPageNo?'1':currentPageNo}">
+					<input type="hidden" name="nPageIndex" value="${empty nPageIndex?'1':nPageIndex}">
 				</form>
 				<button type="submit"><i class="fa-solid fa-magnifying-glass"></i><span class="displaynone">검색</span></button>
 			</li>

@@ -25,7 +25,7 @@ public class BoardController {
 	
 	// 멍멍왈왈 게시판 리스트
 	@RequestMapping(value = "board_list.paw")
-	public ModelAndView boardList(CommandMap commandMap, HttpServletRequest request) throws Exception {
+	public ModelAndView board_list(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("board_comm/board_list");
 		List<Map<String, Object>> list = boardService.boardList(commandMap.getMap());
 
