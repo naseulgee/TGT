@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,13 @@ public class TogetherServiceImpl implements TogetherService {
 	@Override
 	public List<Map<String, Object>> togetherList(Map<String, Object> map) throws Exception {
 		return togetherDAO.togetherList(map);
+	}
+	
+	//함께해요 게시글 작성
+	@Override
+	public void togetherWrite(Map<String, Object> map) throws Exception {
+
+		togetherDAO.togetherWrite(map);
 	}
 	
 	

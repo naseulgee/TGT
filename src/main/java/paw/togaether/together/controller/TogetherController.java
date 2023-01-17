@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,6 +32,7 @@ public class TogetherController {
 		
 		//서비스의 togetherList 메소드의 결과 map 형태의 resultMap 변수에 저장
 		List<Map<String, Object>> list = togetherService.togetherList(commandMap.getMap());
+			System.out.println(commandMap.getMap());
 		
 		//get()으로 받은 commandMap의 값들을 mv에 ""이름으로 저장
 		//mv.addObject("search_type", commandMap.get("search_type"));
@@ -39,5 +40,25 @@ public class TogetherController {
 		mv.addObject("list", list);
 		
 		return mv;		
+	}
+	
+	//23.01.16 박선영 : 게시글 작성 폼으로의 이동 
+	@RequestMapping(value="/together/writeForm.paw")
+	public ModelAndView openTogetherWrite(CommandMap commandMap) throws Exception {
+		
+		ModelAndView mv = new ModelAndView("/together/togetherWrite");
+		
+		return mv;
+	}
+	//23.01.16 박선영 : 작성한 게시글 insert 하기
+	@RequestMapping(value="/together/write.paw")
+	public ModelAndView togetherWrite(CommandMap commandMap) throws Exception {
+		System.out.println(commandMap.getMap());
+		//작성폼 작성 후 게시글 리스트로 리다이렉트
+		ModelAndView mv = new ModelAndView("redirect:/together/list.paw");
+		
+		togetherService.togetherWrite(commandMap.getMap());
+		
+		return mv;
 	}
 }

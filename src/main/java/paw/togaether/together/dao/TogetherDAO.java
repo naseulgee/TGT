@@ -23,5 +23,11 @@ public class TogetherDAO extends AbstractDAO {
 	public List<Map<String, Object>> togetherList(Map<String, Object> map)throws Exception {
 		return (List<Map<String, Object>>) selectList("together.togetherList", map);
 	}
+	
+	//함께해요 게시글 작성
+	//insert 메소드는 return 형태가 없어서 void로 표현
+	public void togetherWrite(Map<String, Object> map) throws Exception {
+		insert("together.togetherWrite", map);
+	}
 
 }
