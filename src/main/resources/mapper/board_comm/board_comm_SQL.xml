@@ -6,7 +6,6 @@
 <!-- 23.01.12 최선아: 멍멍왈왈 게시판 리스트 출력 및 등록  -->
 <!-- 23.01.13 최선아: 멍멍왈왈 게시판 수정 -->
 
-
 <!-- 게시판 리스트 -->
 <select id="boardList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
@@ -15,7 +14,9 @@
 			 BC_TITLE,
 			 BC_READHIT,
 			 BC_MOD_DATE,
-			 BC_WRITER_ID
+			 BC_READHIT,
+			 BC_WRITER_ID,
+			 BC_BCC_NAME
 		FROM
 			 BOARD_COMM
 		WHERE
@@ -35,7 +36,8 @@
 		    BC_READHIT, 
 		    BC_DEL_GB, 
 		    BC_REG_DATE, 
-		    BC_WRITER_NAME
+		    BC_WRITER_NAME,
+		    BC_BCC_NAME
 		)
 		VALUES
 		(
@@ -45,7 +47,8 @@
 		    0, 
 		    'N', 
 		    SYSDATE, 
-		    'Admin'
+		    'Admin',
+		    #{BC_BCC_NAME, jdbcType=VARCHAR}
         )
    ]]>
 </insert>
@@ -59,26 +62,14 @@
 			BC_WRITER_NAME,
 			BC_REG_DATE,
 			BC_TITLE,
-			BC_CONTENTS
+			BC_CONTENTS,
+			BC_BCC_NAME
 		FROM
 			BOARD_COMM
 		WHERE
 			BC_IDX = #{BC_IDX, jdbcType=VARCHAR}
 	]]>
 </select>
-
-<!-- 게시글 수정하기 -->
-<update id="boardModify" parameterType="hashmap">
-	<![CDATA[
-		UPDATE
-			BOARD_COMM
-		SET
-			BC_TITLE = #{BC_TITLE},
-			BC_CONTENTS = #{BC_CONTENTS}
-		WHERE
-			BC_IDX = #{BC_IDX}
-	]]>
-</update>
 
 <!-- 조회수 증가 -->
 <update id="boardHit" parameterType="hashmap">
@@ -90,5 +81,32 @@
 			BC_IDX = #{BC_IDX}	
 	]]>
 </update>
+
+
+<!-- 게시글 수정하기 -->
+ <update id="boardModify" parameterType="hashmap">
+	<![CDATA[
+		UPDATE
+			BOARD_COMM
+		SET
+			BC_TITLE = #{BC_TITLE},
+			BC_CONTENTS = #{BC_CONTENTS}
+		WHERE
+			BC_IDX = #{BC_IDX, jdbcType=VARCHAR}
+	]]>
+</update> 
+
+<!-- 게시글 삭제하기 -->
+<update id="boardDelete" parameterType="hashmap">
+	<![CDATA[
+	UPDATE 
+		BOARD_COMM
+	SET
+		 BC_DEL_GB='Y'
+	WHERE 
+		BC_IDX = #{BC_IDX}
+
+	]]>
+</update> 
 
 </mapper>

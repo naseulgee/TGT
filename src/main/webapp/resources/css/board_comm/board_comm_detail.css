@@ -21,7 +21,6 @@ section.notice {
 }
 .frame1{
     border-radius: 2em 2em 2em 2em;
-
     background-color: #e6b4ac;
 }
 .frame2{
@@ -37,17 +36,10 @@ display: inline-block;
 .fontPosition{
 text-align:right;
 font-size: 12px;
-float:right;
 margin-top: 20px;
 margin-right: 10px;
 }
+
 .lastFont{
 text-align:right;
-
-}
-.title{
-float:left;
-margin-bottom: 15px;
-margin-left: 30px;
-font-size: 30px;
 }
