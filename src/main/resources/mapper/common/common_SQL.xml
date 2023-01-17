@@ -10,19 +10,25 @@
 	<select id="sample2" resultType="hashmap"></select>
 	
 	<!-- 23.01.10 나슬기: 페이징 처리하는 쿼리 조각 -->
+	<!-- 23.01.16 이소영: 페이징 처리하는 쿼리 <![CDATA[ ]]> 추가 -->
 	<sql id="pagingPre">
-		select
-			AAA.*
-		from(
-			select
-				count(*) over() as TOTAL_COUNT,
-				AA.*
-			from(
-	</sql>
-	<sql id="pagingPost">
-			) AA
-		) AAA
-		where
-			AAA.rnum between #{START} and #{END}
-	</sql>
+		<![CDATA[
+   			SELECT 
+			    AAA.*
+			FROM(
+			    SELECT 
+			        COUNT(*) OVER() AS TOTAL_COUNT,
+			        AA.*
+			    FROM(  
+		]]>
+ 	</sql>
+ 	
+ 	<sql id="pagingPost">
+ 		<![CDATA[
+ 			 	) AA
+			) AAA
+			WHERE 
+			    AAA.RNUM BETWEEN #{START} AND #{END}
+		]]>
+ 	</sql>
 </mapper>

@@ -89,7 +89,7 @@ function set_paging(){
 	p.children().on("click", function(){//페이징의 자식 요소를 클릭하면
 		form.action = location.pathname;//폼을 제출할 링크는 현재 페이지와 동일하게 변경
 		//폼에 현재 페이지 번호 값을 클릭한 자식 요소의 내용으로 변경
-		form.querySelector("input[name='currentPageNo']").value = this.innerHTML;
+		form.querySelector("input[name='nPageIndex']").value = this.innerHTML;
 		form.submit();//폼 제출
 	});
 }
@@ -114,3 +114,11 @@ function move_nav(){
 	}
 	return false;
 }
+
+
+
+
+
+
+
+
