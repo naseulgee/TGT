@@ -32,6 +32,7 @@ public class TogetherController {
 		
 		//서비스의 togetherList 메소드의 결과 map 형태의 resultMap 변수에 저장
 		List<Map<String, Object>> list = togetherService.togetherList(commandMap.getMap());
+			System.out.println(commandMap.getMap());
 		
 		//get()으로 받은 commandMap의 값들을 mv에 ""이름으로 저장
 		//mv.addObject("search_type", commandMap.get("search_type"));
