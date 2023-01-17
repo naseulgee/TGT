@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 23.01.17 나슬기: 시설 메뉴 관련 쿼리문 파일 생성 -->
+<mapper namespace="place_menu">
+	<!-- 23.01.17 나슬기: 시설 메뉴 조회하는 쿼리문 / 받는값: 시설 번호 -->
+	<select id="se_pl_menu_list" resultType="hashmap">
+		select * from place_menu where pm_pl_idx = ${pl_idx}
+	</select>
+
+	<!-- 23.01.17 나슬기: 시설 메뉴 등록하는 쿼리문 / 받는값: 등록할 시설 번호, 메뉴명, 가격 -->
+	<insert id="in_pl_menu">
+		insert into place_menu(pm_idx, pm_pl_idx, pm_name, pm_price)
+		values (seq_place_menu.nextval, ${pl_idx}, #{pm_name}, ${pm_price})
+	</insert>
+
+	<!-- 23.01.17 나슬기: 시설 메뉴 수정하는 쿼리문 / 받는값: 시설 번호, 수정할 메뉴명, 수정할 가격 -->
+	<update id="up_pl_menu">
+		update place_menu
+		set (pm_name, pm_price) = (#{pm_name}, ${pm_price})
+		where pm_idx = ${pm_idx};
+	</update>
+
+	<!-- 23.01.16 나슬기: 시설 메뉴 삭제하는 쿼리문 / 받는값: 메뉴 번호 -->
+	<delete id="de_pl_menu">
+		delete place_menu where pm_idx = ${pm_idx};
+	</delete>
+</mapper>

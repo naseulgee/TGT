@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 23.01.17 나슬기: 시설 분류 관련 쿼리문 파일 생성 -->
+<mapper namespace="place_cate">
+	<!-- 23.01.16 나슬기: 시설 분류 조회하는 쿼리문 -->
+	<select id="se_pl_cate_list" resultType="hashmap">
+		select * from place_cate
+	</select>
+
+	<!-- 23.01.16 나슬기: 시설 분류 등록하는 쿼리문 / 받는값: 등록할 분류명 -->
+	<insert id="in_pl_cate">
+		insert into place_cate(pc_idx, pc_name)
+		values (seq_place_cate.nextval, #{pc_name})
+	</insert>
+
+	<!-- 23.01.16 나슬기: 시설 분류 수정하는 쿼리문 / 받는값: 분류 번호, 수정할 분류명 -->
+	<update id="up_pl_cate">
+		update place_cate set pc_name = #{pc_name} where pc_idx = ${pc_idx}
+	</update>
+
+	<!-- 23.01.16 나슬기: 시설 분류 삭제하는 쿼리문 / 받는값: 분류 번호 -->
+	<delete id="de_pl_cate">
+		delete place_cate where pc_idx = ${pc_idx}
+	</delete>
+</mapper>
