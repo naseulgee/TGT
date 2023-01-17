@@ -136,12 +136,12 @@ $(document).ready( function() {
 		<div><span class="info_warn">저작권에 대한 책임은 업로드한 회원에게 있습니다.</span></div>
 		<br><br><br>
 		
+		<input type="hidden" value="review" name="ph_board_type"><!-- 테이블명/ 시설과 회원에 각각 추가 필수 -->
 		<input type="hidden" id="re_pl_idx" name="re_pl_idx" value="${re_pl_idx}"><!-- 시설번호 -->
+		<!-- 세션이 구현되면 삭제 -->
 		<input type="hidden" id="re_writer_id" name="re_writer_id" value="aaa123"><!-- 작성자 아이디 -->
         <input type="hidden" id="re_writer_name" name="re_writer_name" value="브라더"><!-- 강아지 이름 -->
-        
-        
-        
+
         <%-- 세션이 전부 구현되면 사용
         <input type="hidden" id="re_writer_id" name="re_writer_id" value="${mem_id}"><!-- 작성자 아이디 -->
         <input type="hidden" id="re_writer_name" name="re_writer_name" value="${mem_dog_name}"><!-- 강아지 이름 -->
@@ -170,12 +170,6 @@ $(document).ready( function() {
 		}
 		return true;
 	} 
-	
-	//사진이 잘 들어간 <input type="file">만 formData에 삽입하는 함수
-	function checkPhotoVal () {
-		
-		
-	}
 	
 	//클릭시 
 	$("#uploadBtn").on("click", function(e) {
@@ -209,10 +203,9 @@ $(document).ready( function() {
 			} else {
 				formData.append("uploadFile", inputFile3[0]);
 			}	
-		}
+		}	
 		
-		
-		let target = $("main input");
+		let target = $("main input:not([name^='photo']), textarea");
 		for(let i=0; i<target.length ; i++) {
 			let in_name = target[i].name;
 			let in_value = target[i].value;

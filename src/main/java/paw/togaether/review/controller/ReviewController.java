@@ -51,8 +51,11 @@ public class ReviewController {
 		
 		
 		System.out.println(commandMap.getMap());
-		//review테이블에 데이터 삽입
-		//reviewService.insertReview(commandMap.getMap());
+		
+		//review등록에 대한 처리
+		reviewService.insertReview(commandMap.getMap());
+		
+		//photo등록에 대한 처리
 		
 		
 		for (MultipartFile multipartFile : uploadFile) {
