@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import paw.togaether.common.domain.CommandMap;
@@ -26,7 +27,7 @@ public class JoinController {
 	 
 	@RequestMapping(value="/member/joinMember")
 	public ModelAndView joinMember(CommandMap commandMap) throws Exception{	
-		ModelAndView mv = new ModelAndView("redirect:/sample");
+		ModelAndView mv = new ModelAndView("redirect:/sample.paw");
 		
 		joinService.joinMember(commandMap.getMap());
 	    
