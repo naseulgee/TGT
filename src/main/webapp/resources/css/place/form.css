@@ -23,3 +23,6 @@
 
 
 #placeWrite ul .sub_btn .btn{ width: 100%; }
+
+/* 분류 게시판 */
+#cate_list table tr th{}
