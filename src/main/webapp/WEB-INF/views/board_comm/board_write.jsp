@@ -29,7 +29,7 @@
 									  <option value="자유게시판">자유게시판</option>
 									  <option value="정보게시판">정보게시판</option>
 									  <option value="긴급실종유기견">긴급실종유기견</option>
-									  <option value="자원봉사&후원요청">자원봉사&후원요청</option>
+									  <option value="자원봉사구해요">자원봉사구해요</option>
 									</select>
 									
 									<input type="text" id="BC_TITLE" name="BC_TITLE"

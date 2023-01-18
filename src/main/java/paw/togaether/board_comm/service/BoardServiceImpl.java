@@ -47,6 +47,11 @@ public class BoardServiceImpl implements BoardService {
 		boardDAO.boardDelete(map);
 	}
 	
+	//멍멍왈왈 카테고리
+	@Override
+	public List<Map<String, Object>> boardCategory(Map<String, Object> map) throws Exception {
+		return boardDAO.boardCategory(map);
+	}
 	
 	
 }

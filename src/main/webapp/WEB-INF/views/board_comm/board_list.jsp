@@ -59,19 +59,26 @@ $(function() {
 						<thead>
 							<tr>
 								<th width="5%">NO.</th>
-								<th width="15%">카테고리</th>
+								<th width="15%">
+								<form action="">
+								
+								<select name="BC_BCC_NAME" class="BC_BCC_NAME" id="BC_BCC_NAME" style="height: 30px;">
+									  <option value="자유게시판" >자유게시판</option>
+									  <option value="정보게시판">정보게시판</option>
+									  <option value="긴급실종유기견">긴급실종유기견</option>
+									  <option value="자원봉사구해요">자원봉사구해요</option>
+								</select></th>
+								</form>
 								<th width="45%">제목</th>
 								<th width="5%">조회수</th>
 								<th width="10%">작성자</th>
 								<th width="10%">작성일</th>
-
 							</tr>
 						</thead>
 						<tbody>
 							<c:choose>
 								<c:when test="${fn:length(list) > 0}">
 									<c:forEach items="${list }" var="row">
-
 										<tr align="center" class="use_move" data-href="/board/detail.paw"
 											onclick="move(this,'BC_IDX:${row.BC_IDX}')">
 											<td width="5%">${row.BC_IDX }</td>
