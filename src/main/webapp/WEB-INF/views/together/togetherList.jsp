@@ -25,8 +25,17 @@ font-weight:bold;
 padding-right:100px;
 }
 
-.cate_list{
+.cate_button{
+border:1px solid #f0b1aa;
 
+}
+
+.cate_button li{
+text-align:center;
+}
+
+li{
+margin : 20px;
 }
 </style>
 <main class="layoutCenter">
@@ -35,7 +44,7 @@ padding-right:100px;
 	<br/>
 <div class="flexCenter">
 	
-	<!-- 카드 테이블로 게시글 리스트 출력 -->
+	<!-- 카드 테이블로 전체게시글 리스트 출력 -->
 	<div class="main_list">
 		<c:choose>
 			<c:when test="${!empty list}">
@@ -43,7 +52,7 @@ padding-right:100px;
 					<tbody class="bgSubColor">
 						<c:forEach items="${list}" var="to">
 							<!-- tr클래스 클릭시 상세보기 페이지로 이동-->
-							<tr class="use_move" data-href="/together/detail.paw" onclick="move(this,'TO_IDX:${to.TO_IDX}')">
+							<tr class="use_move" data-href="/together/detail/${to.TO_IDX}.paw" onclick="move(this,'TO_IDX:${to.TO_IDX}')">
 								<td class="color"><span class="fa-solid fa-paw"></span>[${to.TO_TC_NAME}] ${to.TO_TITLE }</td><!-- 글분류, 제목 -->
 								<td><span class="fa-solid fa-bone"></span> 참여가능하개(견종): ${to.TO_BR_NAME }</td><!-- 참여가능견종 -->
 								<td><span class="fa-solid fa-bone"></span> 참여가능하개(크기) : <c:if test="${to.TO_WT_IDX eq '1'}">XS</c:if>
@@ -79,10 +88,11 @@ padding-right:100px;
 	<div class="cate_button">
 		<ul>
 			<li><a class="btn submit" href="/together/writeForm.paw">글쓰기</a>
-			<li><input type="submit" class="btn" value="산책하개">
-			<li><input type="submit" class="btn" value="카페가개">
-			<li><input type="submit" class="btn" value="놀러가개">
-			<li><input type="submit" class="btn" value="친구하개">
+			<li><input type="submit" id="cate1" value="산책하개" class="btn"/>
+			<li><input type="submit" id="cate2" class="btn" value="카페가개">
+			<li><input type="submit" id="cate3" class="btn" value="놀러가개">
+			<li><input type="submit" id="cate4" class="btn" value="친구하개"><br/>
+			
 		</ul>
 	</div>
 </div>	

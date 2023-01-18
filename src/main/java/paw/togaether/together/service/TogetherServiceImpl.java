@@ -20,19 +20,23 @@ public class TogetherServiceImpl implements TogetherService {
 	@Resource(name="togetherDAO")
 	private TogetherDAO togetherDAO;
 	
-	//함께해요 페이지 리스트 및 검색
+	/* 함께해요 페이지 리스트 및 검색 */
 	@Override
 	public List<Map<String, Object>> togetherList(Map<String, Object> map) throws Exception {
 		return togetherDAO.togetherList(map);
 	}
 	
-	//함께해요 게시글 작성
+	/* 함께해요 게시글 작성 */
 	@Override
 	public void togetherWrite(Map<String, Object> map) throws Exception {
 
 		togetherDAO.togetherWrite(map);
 	}
 	
-	
+	/* 23.01.18 박선영 함께해요 상세보기 */
+	@Override
+	public Map<String, Object> togetherDetail(Map<String, Object> map) throws Exception {
+		return togetherDAO.togetherDetail(map);
+	}
 
 }
