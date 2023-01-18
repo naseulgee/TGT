@@ -67,10 +67,10 @@
 
 				<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5 max-w-screen-lg">
 					<label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">주소</label>
-					<input type="text" id="postcode" placeholder="우편번호"  class="block w-full max-w-lg rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+					<input type="text" id="postcode"  placeholder="우편번호"  class="block w-full max-w-lg rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
 					<input type="button" onclick="findPostcode()" value="우편번호 찾기" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mr-auto"  ><br>
-					<input type="text" id="address" placeholder="주소"  class="block w-full max-w-lg rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm col-span-2"><br>
-					<input type="text" id="detailAdress" placeholder="상세주소"  class="block w-full max-w-lg rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+					<input type="text" id="address" name="address"  placeholder="주소"  class="block w-full max-w-lg rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm col-span-2"><br>
+					<input type="text" id="detailAddress" name="detailAddress" placeholder="상세주소"  class="block w-full max-w-lg rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
 					<input type="hidden" id="extra" placeholder="참고항목">
 
 				</div>
@@ -118,7 +118,7 @@
 				<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
 					<label for="MEM_DOG_ETC" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">강아지 특이사항</label>
 					<div class="mt-1 sm:col-span-2 sm:mt-0">
-						<textarea id="MEM_DOG_ETC" name="MEM_DOG_ETC" rows="3" class="block w-full max-w-lg rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
+						<textarea id="MEM_DOG_ETC" name="MEM_DOG_ETC" maxlength="85" rows="3" class="block w-full max-w-lg rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
 					</div>
 			</div>
 		</div>
@@ -139,7 +139,18 @@
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
-/** 폼 검증하는 함수 */
+
+	<%--$(function(){--%>
+	<%--	var kindofdog = ${"KINDOFDOG"};--%>
+	<%--	if(kindofdog == "기타"){--%>
+	<%--		document.getElementById("MEM_BR_NAME").style.display = "";--%>
+	<%--	}else{//조건 1이 아닐떄--%>
+	<%--		document.getElementById("MEM_BR_NAME").style.display = "none";--%>
+	<%--	}--%>
+	<%--})--%>
+
+
+	/** 폼 검증하는 함수 */
 	function validate() {
 		const pass = document.querySelector('#MEM_PW');
 		const passErrMsg = document.querySelector('#pw-error');
@@ -224,7 +235,7 @@ function findPostcode() {
 			document.getElementById('postcode').value = data.zonecode;
 			document.getElementById("address").value = addr;
 			// 커서를 상세주소 필드로 이동한다.
-			document.getElementById("detailAdress").focus();
+			document.getElementById("detailAddress").focus();
 		}
 	}).open();
 }
