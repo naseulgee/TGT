@@ -21,15 +21,17 @@ public class FileUtils {
 
 	public List<Map<String,Object>> parseInsertFileInfo(Map<String,Object> map, MultipartFile[] uploadFile) throws Exception{
 		
-		//등록이 먼저 잘 되었다면
-		//시설일 경우 pl_idx를 가져오고, 리뷰일 경우 re_idx를 뽑아온다.
+		//등록이 먼저 잘 되었다면 시설일 경우 pl_idx를 가져오고, 리뷰일 경우 re_idx를 뽑아온다.
 		String idx = (String)map.get("idx");
 		System.out.println("시설번호 or 리뷰번호 : " + idx);
 		
 		String uploadFolder = "C:\\upload"; //저장경로(개인별로 수정할 것)
+
+		//디렉토리가 없다면 생성
+		File file = new File(uploadFolder);
+        if(!file.exists()){ file.mkdirs(); }
 		
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
-		Map<String, Object> listMap = null; 
 		
 		//photo파일 하나씩 꺼내오기
 		for (MultipartFile multipartFile : uploadFile) {
@@ -46,12 +48,11 @@ public class FileUtils {
 			//파일확장자구하기
 			String originalFileExtension = uploadFileName.substring(uploadFileName.lastIndexOf("."));
 			
-			listMap = new HashMap<String,Object>();
-			listMap.put("ph_original_file_name", uploadFileName); //ph_original_file_name(원본파일명)
+			map.put("ph_original_file_name", uploadFileName); //ph_original_file_name(원본파일명)
 			String storedFileName = UUID.randomUUID().toString().replaceAll("-", "")+ originalFileExtension; //파일저장시 사용할 uuid생성
-			listMap.put("ph_stored_file_name", storedFileName);//ph_stored_file_name(저장시파일명)
-			listMap.put("ph_file_size", multipartFile.getSize()); //ph_file_size(파일의 사이즈)
-			list.add(listMap); //list의 한 요소로 저장
+			map.put("ph_stored_file_name", storedFileName);//ph_stored_file_name(저장시파일명)
+			map.put("ph_file_size", multipartFile.getSize()); //ph_file_size(파일의 사이즈)
+			list.add(map); //list의 한 요소로 저장
 			//이미지 저장에 대한 처리
 			try {
 				//1.경로에 파일 저장
@@ -64,12 +65,8 @@ public class FileUtils {
 				thumbnail.close();
 				
 			} catch (Exception e) { log.error(e.getMessage()); }
-		
-		}
-        
-		return list;
+		}	return list;
 	}
-
 
 	
 }

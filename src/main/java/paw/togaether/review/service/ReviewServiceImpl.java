@@ -20,6 +20,7 @@ public class ReviewServiceImpl implements ReviewService {
 	@Resource(name="reviewDAO")
 	private ReviewDAO reviewDAO;
 	
+	//시설과 회원의 Service단에도 추가해줘야 할 것
 	@Resource(name="fileUtils")
 	private FileUtils fileUtils;
 
@@ -28,7 +29,7 @@ public class ReviewServiceImpl implements ReviewService {
 		
 		reviewDAO.insertReview(map); //리뷰등록
 		
-		//-----------여기서부터 따로 클래스로 빼서 메서드로 만들예정-------------
+		//사진등록 및 사진저장, 썸네일저장
 		List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(map, uploadFile);
 		for(int i=0, size=list.size(); i<size; i++) {
 			reviewDAO.insertPhoto(list.get(i));

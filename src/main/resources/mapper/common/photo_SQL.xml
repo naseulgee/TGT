@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="photo">
+
+	<!-- 23.01.17 신현지: photo테이블에 사진등록 -->
+	<select id="insertPhoto" parameterType="hashmap">
+	insert into photo (
+				ph_idx, ph_board_idx, ph_mem_id, 
+				ph_board_type, ph_original_file_name, ph_stored_file_name, 
+				ph_file_size, ph_reg_date, ph_del_gb )
+	values ( seq_photo.NEXTVAL, 
+			<if test='ph_board_type == "members".toString()'>
+				null, #{mem_id}
+			</if>
+			<if test='ph_board_type == "place".toString()'>
+				#{idx}, null
+			</if>
+			<if test='ph_board_type == "review".toString()'>
+				#{idx},null
+			</if>
+			, #{ph_board_type} , #{ph_original_file_name} , #{ph_stored_file_name}
+			, #{ph_file_size} ,sysdate , 'N')
+	</select>
+	
+
+</mapper>

@@ -47,12 +47,10 @@ public class ReviewController {
 	public ModelAndView insertReview(CommandMap commandMap, MultipartFile[] uploadFile) throws Exception{
 		ModelAndView m = new ModelAndView("jsonView");
 		
-		log.info("update ajax post.........");
-		System.out.println("업로드된 파일의 개수 : "+ uploadFile.length);
+		System.out.println("ajax로부터 업로드된 파일의 개수 : "+ uploadFile.length);
 		System.out.println(commandMap.getMap());
-		
 		//review등록과 photo등록에 대한 처리
-		reviewService.insertReview(commandMap.getMap(),uploadFile); //사용시 주석 풀어주기
+		//reviewService.insertReview(commandMap.getMap(),uploadFile); //사용시 주석 풀어주기
 		
 		return m;
 	}

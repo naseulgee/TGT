@@ -64,11 +64,12 @@ input[type=file]{
 <script>
 $(document).ready( function() {
 	//글자수 세기
-    $( '#re_contents' ).keyup(function() {
-    	if ($('#re_contents').val().length >= 950 ) {
-    		alert('글자수를 초과했습니다.');
-    	}
-    });
+	$("input[type='file']").on("propertychange change keyup paste input", function() {
+	    var currentVal = $(this).val();
+	    console.log(currentVal.split('\\')[2]);
+	 
+	});
+	 
   });
 </script>
 
@@ -157,15 +158,20 @@ $(document).ready( function() {
 	//사이즈와 확장자 설정
 	var regex = new RegExp("(.*?)\.(jpeg|jpg|gif|png|bmp)$"); //이미지 파일 확장자
 	var maxSize = 5242880; //5MB
+	var maxLength = 200; //파일명의 최대 길이
 	
 	//사이즈와 확장자가 잘못되었을 경우 제한하는 함수
-	function checkExtension(fileName, fileSize) {
+	function checkExtension(fileName, fileSize,fileNameLength) {
 		if (fileSize >= maxSize) {
-			alert("파일 사이즈 초과");
+			alert("파일 사이즈는 5MB이하여야 합니다.");
 			return false;
 		}
 		if (!regex.test(fileName)) {
 			alert("해당 종류의 파일은 업로드할 수 없습니다.");
+			return false;
+		}
+		if (fileNameLength > maxLength) {
+			alert("파일명이 너무 길어 업로드할 수 없습니다.");
 			return false;
 		}
 		return true;
@@ -177,28 +183,24 @@ $(document).ready( function() {
 		var inputFile1 = $("input[name='photo1']")[0].files;
 		var inputFile2 = $("input[name='photo2']")[0].files;
 		var inputFile3 = $("input[name='photo3']")[0].files;
-
-		console.log(inputFile1.length);
-		console.log(inputFile2.length);
-		console.log(inputFile3.length);
+		
 		//★확장자 알맞지 않거나 파일용량이 크면 FormData객체에 삽입X★
 		if (inputFile1.length > 0) { //첫번째 파일을 formData에 삽입
-			if (checkExtension(inputFile1[0].name, inputFile1[0].size)) {
+			if (checkExtension(inputFile1[0].name, inputFile1[0].size, inputFile1[0].name.length)) {
 				formData.append("uploadFile", inputFile1[0]);
-				console.log(formData.get("uploadFile"));
 			} else {
 				return false; 
 			}	
 		}	
 		if (inputFile2.length > 0) {//두번째 파일을 formData에 삽입
-			if (!checkExtension(inputFile2[0].name, inputFile2[0].size)) {
+			if (!checkExtension(inputFile2[0].name, inputFile2[0].size, inputFile2[0].name.length)) {
 				return false; 
 			} else {
 				formData.append("uploadFile", inputFile2[0]);
 			}	
 		}	
 		if (inputFile3.length > 0) {//세번째 파일을 formData에 삽입
-			if (!checkExtension(inputFile3[0].name, inputFile3[0].size)) {
+			if (!checkExtension(inputFile3[0].name, inputFile3[0].size, inputFile3[0].name.length)) {
 				return false; 
 			} else {
 				formData.append("uploadFile", inputFile3[0]);
