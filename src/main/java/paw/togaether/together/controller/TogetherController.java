@@ -64,7 +64,7 @@ public class TogetherController {
 	}
 	
 	/* 23.01.18 박선영 : 게시글 상세보기 이동 */
-	@RequestMapping(value="together/detail/{to_idx}.paw")
+	@RequestMapping(value="/together/detail/{to_idx}.paw")
 	public ModelAndView togetherDetail(@PathVariable("to_idx") int TO_IDX, CommandMap commandMap)throws Exception {
 		
 		//값을 잘 받아오는지 확인하는 용도
@@ -79,5 +79,22 @@ public class TogetherController {
 		
 		return mv;
 		
+	}
+	
+	/*23.01.19 박선영: 카테고리별 리스트 출력 */
+	@RequestMapping(value="/together/catelist.paw")
+	public ModelAndView togetherCateList(CommandMap commandMap) throws Exception {
+		
+		System.out.println(commandMap.getMap());
+		System.out.println(commandMap.get("TC_NAME"));
+		
+		ModelAndView mv = new ModelAndView("/together/togetherCateList");
+				
+		List<Map<String, Object>> catelist = togetherService.togetherCateList(commandMap.getMap());
+		
+		mv.addObject(commandMap.get("TC_NAME"));
+		mv.addObject("catelist",catelist);
+		
+		return mv;
 	}
 }

@@ -38,5 +38,11 @@ public class TogetherServiceImpl implements TogetherService {
 	public Map<String, Object> togetherDetail(Map<String, Object> map) throws Exception {
 		return togetherDAO.togetherDetail(map);
 	}
+	
+	/* 23.01.19 박선영 함께해요 카테고리별 리스트 출력 */
+	@Override
+	public List<Map<String, Object>> togetherCateList(Map<String, Object> map) throws Exception {
+		return togetherDAO.togetherCateList(map);
+	}
 
 }

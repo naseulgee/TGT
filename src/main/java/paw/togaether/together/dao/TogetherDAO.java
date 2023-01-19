@@ -35,5 +35,11 @@ public class TogetherDAO extends AbstractDAO {
 	public Map<String, Object> togetherDetail(Map<String, Object> map) throws Exception {
 		return (Map<String, Object>) selectOne("together.togetherDetail", map);
 	}
+	
+	/* 23.01.19 박선영 : 함께해요 게시글 카테고리별 리스트 출력 */
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> togetherCateList(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList("together.togetherCateList", map);
+	}
 
 }

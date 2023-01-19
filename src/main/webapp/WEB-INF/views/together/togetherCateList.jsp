@@ -47,24 +47,24 @@ margin : 20px;
 	<!-- 카드 테이블로 전체게시글 리스트 출력 -->
 	<div class="main_list">
 		<c:choose>
-			<c:when test="${!empty list}">
+			<c:when test="${!empty catelist}">
 				<table class="card_table row1">
 					<tbody class="bgSubColor">
-						<c:forEach items="${list}" var="to">
+						<c:forEach items="${catelist}" var="tc">
 							<!-- tr클래스 클릭시 상세보기 페이지로 이동-->
-							<tr class="use_move" data-href="/together/detail/${to.TO_IDX}.paw" onclick="move(this,'TO_IDX:${to.TO_IDX}')">
-								<td class="color"><span class="fa-solid fa-paw"></span>[${to.TO_TC_NAME}] ${to.TO_TITLE }</td><!-- 글분류, 제목 -->
-								<td><span class="fa-solid fa-bone"></span> 참여가능하개(견종): ${to.TO_BR_NAME }</td><!-- 참여가능견종 -->
-								<td><span class="fa-solid fa-bone"></span> 참여가능하개(크기) : <c:if test="${to.TO_WT_IDX eq '1'}">XS</c:if>
-								<c:if test="${to.TO_WT_IDX eq '2'}">S</c:if>
-								<c:if test="${to.TO_WT_IDX eq '3'}">M</c:if>
-								<c:if test="${to.TO_WT_IDX eq '4'}">L</c:if>
-								<c:if test="${to.TO_WT_IDX eq '5'}">XL</c:if>
+							<tr class="use_move" data-href="/together/detail/${tc.TO_IDX}.paw" onclick="move(this,'TO_IDX:${tc.TO_IDX}')">
+								<td class="color"><span class="fa-solid fa-paw"></span>[${tc.TO_TC_NAME}] ${tc.TO_TITLE }</td><!-- 글분류, 제목 -->
+								<td><span class="fa-solid fa-bone"></span> 참여가능하개(견종): ${tc.TO_BR_NAME }</td><!-- 참여가능견종 -->
+								<td><span class="fa-solid fa-bone"></span> 참여가능하개(크기) : <c:if test="${tc.TO_WT_IDX eq '1'}">XS</c:if>
+								<c:if test="${tc.TO_WT_IDX eq '2'}">S</c:if>
+								<c:if test="${tc.TO_WT_IDX eq '3'}">M</c:if>
+								<c:if test="${tc.TO_WT_IDX eq '4'}">L</c:if>
+								<c:if test="${tc.TO_WT_IDX eq '5'}">XL</c:if>
 									</td><!-- 참여가능사이즈 -->
-								<td><span class="fa-solid fa-bone"></span> 언제개: ${to.TO_DATE }</td><!-- 모임날짜 -->
-								<td><span class="fa-solid fa-bone"></span> 몇시개: ${to.TO_TIME }</td><!-- 모임시간 -->
-								<td><span class="fa-solid fa-bone"></span> 몇명이개: ${to.TO_JOIN_PEOPLE }/${to.TO_PEOPLE}</td><!-- 참여인원/모임인원 -->
-								<td class="txt_right" style="font-size:15px;">${to.TO_REG_DATE }</td><!-- 등록날짜 -->
+								<td><span class="fa-solid fa-bone"></span> 언제개: ${tc.TO_DATE }</td><!-- 모임날짜 -->
+								<td><span class="fa-solid fa-bone"></span> 몇시개: ${tc.TO_TIME }</td><!-- 모임시간 -->
+								<td><span class="fa-solid fa-bone"></span> 몇명이개: ${tc.TO_JOIN_PEOPLE }/${tc.TO_PEOPLE}</td><!-- 참여인원/모임인원 -->
+								<td class="txt_right" style="font-size:15px;">${tc.TO_REG_DATE }</td><!-- 등록날짜 -->
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -81,8 +81,7 @@ margin : 20px;
 			</c:otherwise>
 		</c:choose>
 	</div>
-	
-	<br/>
+<br/>
 	
 	<!-- 카테고리별 게시글 리스트 출력, 글쓰기 버튼 -->
 	<div class="cate_button">
