@@ -1,18 +1,15 @@
 package paw.togaether.review.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.UUID;
-
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import net.coobird.thumbnailator.Thumbnailator;
 import paw.togaether.common.domain.CommandMap;
 import paw.togaether.review.service.ReviewService;
 
@@ -43,9 +40,10 @@ public class ReviewController {
 	/** 작업날짜 작업자: 메소드 설명
 	 * 23.01.13 신현지: 리뷰등록 메서드
 	 */
-	@RequestMapping(value="/review/insert")
+	@RequestMapping(value="/review/insert",produces =MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody 
 	public ModelAndView insertReview(CommandMap commandMap, MultipartFile[] uploadFile) throws Exception{
-		ModelAndView m = new ModelAndView("jsonView");
+		ModelAndView m = new ModelAndView("/mypage/review/list");
 		
 		System.out.println("ajax로부터 업로드된 파일의 개수 : "+ uploadFile.length);
 		System.out.println(commandMap.getMap());
