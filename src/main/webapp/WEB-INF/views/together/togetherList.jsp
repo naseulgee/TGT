@@ -1,15 +1,8 @@
 <%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<script src="https://kit.fontawesome.com/e9bd4d3977.js" crossorigin="anonymous"></script>
-<c:if test="${page != 'admin'}">
-	<!-- 어드민 제외한 모든 페이지의 헤더 -->
-	<%@ include file="/WEB-INF/include/user-header.jspf" %>
-</c:if>
-<c:if test="${page == 'admin'}">
-	<!-- 어드민 페이지의 헤더 -->
-	<%@ include file="/WEB-INF/include/admin-header.jspf" %>
-</c:if>
 
+<%@ include file="/WEB-INF/include/user-header.jspf" %>
+<script src="https://kit.fontawesome.com/e9bd4d3977.js" crossorigin="anonymous"></script>
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <style>
 .layoutCenter{

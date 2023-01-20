@@ -1,14 +1,8 @@
 <%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<script src="https://kit.fontawesome.com/e9bd4d3977.js" crossorigin="anonymous"></script>
-<c:if test="${page != 'admin'}">
-	<!-- 어드민 제외한 모든 페이지의 헤더 -->
+
 	<%@ include file="/WEB-INF/include/user-header.jspf" %>
-</c:if>
-<c:if test="${page == 'admin'}">
-	<!-- 어드민 페이지의 헤더 -->
-	<%@ include file="/WEB-INF/include/admin-header.jspf" %>
-</c:if>
+<script src="https://kit.fontawesome.com/e9bd4d3977.js" crossorigin="anonymous"></script>
 <style>
 .fa-solid {
 color:#f0b1aa;
