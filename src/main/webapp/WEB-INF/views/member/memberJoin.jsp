@@ -190,6 +190,9 @@
 		const newPassErrMsg = document.querySelector('#new-pw-error');
 		const email = document.querySelector('#MEM_EMAIL');
 		const emailErrMsg = document.querySelector('#email-error');
+		const dogname = document.querySelector('#MEM_DOG_NAME');
+		const dognameErrMsg = document.querySelector('#email-error');
+
 
 		let result = true;
 		if(idErrMsg.textContent == "이미 사용중인 아이디입니다.") {
