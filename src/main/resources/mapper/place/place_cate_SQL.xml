@@ -5,7 +5,7 @@
 <mapper namespace="place_cate">
 	<!-- 23.01.16 나슬기: 시설 분류 조회하는 쿼리문 -->
 	<select id="se_pl_cate_list" resultType="hashmap">
-		select * from place_cate
+		select * from place_cate order by pc_name
 	</select>
 
 	<!-- 23.01.16 나슬기: 시설 분류 등록하는 쿼리문 / 받는값: 등록할 분류명 -->

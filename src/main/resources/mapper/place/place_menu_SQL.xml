@@ -5,7 +5,7 @@
 <mapper namespace="place_menu">
 	<!-- 23.01.17 나슬기: 시설 메뉴 조회하는 쿼리문 / 받는값: 시설 번호 -->
 	<select id="se_pl_menu_list" resultType="hashmap">
-		select * from place_menu where pm_pl_idx = ${pl_idx}
+		select * from place_menu where pm_pl_idx = ${pl_idx} order by pm_name
 	</select>
 
 	<!-- 23.01.17 나슬기: 시설 메뉴 등록하는 쿼리문 / 받는값: 등록할 시설 번호, 메뉴명, 가격 -->
@@ -18,11 +18,11 @@
 	<update id="up_pl_menu">
 		update place_menu
 		set (pm_name, pm_price) = (#{pm_name}, ${pm_price})
-		where pm_idx = ${pm_idx};
+		where pm_idx = ${pm_idx}
 	</update>
 
 	<!-- 23.01.16 나슬기: 시설 메뉴 삭제하는 쿼리문 / 받는값: 메뉴 번호 -->
 	<delete id="de_pl_menu">
-		delete place_menu where pm_idx = ${pm_idx};
+		delete place_menu where pm_idx = ${pm_idx}
 	</delete>
 </mapper>

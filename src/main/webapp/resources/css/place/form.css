@@ -23,3 +23,31 @@
 
 
 #placeWrite ul .sub_btn .btn{ width: 100%; }
+
+/* 분류 게시판 */
+#cate_list .table_wrap{ gap: 10px; }
+#cate_list .table_wrap article{ width: calc((100% - 20px) / 3); }
+#cate_list .table_wrap article table tr td{ text-align: center; vertical-align: middle; white-space: inherit; text-overflow: inherit; }
+#cate_list .table_wrap article table tr .idx{ width: 5em; }
+#cate_list .table_wrap article table tr .btn_wrap{ width: 7.5em; box-sizing: border-box; }
+#cate_list .table_wrap article table tr td.btn_wrap,
+#cate_list .table_wrap article table tr td.btn_wrap .reflect{ display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 5px; }
+#cate_list .table_wrap article table tr .btn_wrap .reflect ~ input{ display: none; }
+/* 등록하기 버튼 */
+#cate_list .top_wrap{ gap: 20px; padding: 10px; position: sticky; top: 0; left: 0; }
+#cate_list .top_wrap > *{ gap: 5px; }
+#cate_list .top_wrap .first_list{ font-size: 1.2em; }
+#cate_list .top_wrap .first_list li a{ padding: 10px; text-decoration: underline; }
+#cate_list .top_wrap .first_list li a:hover{ color: var(--mainColorD); }
+
+/* 탭 */
+@media (max-width: 1200px) and (min-width: 769px){
+    /* 분류 게시판 */
+    #cate_list .table_wrap article { width: calc((100% - 10px) / 2); }
+}
+
+/* 모바일 */
+@media (max-width: 768px){
+    /* 분류 게시판 */
+    #cate_list .table_wrap article { width: 100%; }
+}
