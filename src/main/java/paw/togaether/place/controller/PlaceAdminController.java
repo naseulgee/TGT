@@ -61,7 +61,7 @@ public class PlaceAdminController {
 	public void placeDelete(CommandMap commandMap) {}
 	
 	//시설 카테고리 관련
-	/** 23.01.13 나슬기: 시설 카테고리 리스트 메소드 */
+	/** 23.01.19 나슬기: 시설 카테고리 리스트 메소드 */
 	@RequestMapping("/cate/list")
 	public ModelAndView cateList(CommandMap commandMap) throws Exception{
 		ModelAndView mv = new ModelAndView();
@@ -93,13 +93,6 @@ public class PlaceAdminController {
 		mv.addObject("first_map", first_map);
 		return mv;
 	}
-	/** 23.01.13 나슬기: 시설 카테고리 리스트 메소드 */
-//	@RequestMapping(value = "/cate/list", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//	@ResponseBody
-//	public ResponseEntity<List<Map<String, Object>>> cateList(CommandMap commandMap) throws Exception{
-//		List<Map<String, Object>> cate_list = placeService.cateList(commandMap.getMap());
-//		return new ResponseEntity<>(cate_list, HttpStatus.OK);//ResponseEntity객체에 응답할 데이터 list와 상태를 저장하여 전달
-//	}
 	
 	/** 23.01.19 나슬기: 시설 카테고리 등록 처리 메소드 */
 	@PostMapping(value = "/cate/write")
