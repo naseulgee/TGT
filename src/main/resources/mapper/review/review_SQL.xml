@@ -2,19 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="review">
-
-	<!-- 리뷰테이블에 데이터 삽입 -->
-	<insert parameterType="hashmap" id="insertReview">
+	
+	<!-- 23.01.15 신현지: review테이블에 리뷰등록 -->
+	<!-- 23.01.18 신현지 : commandMap에 시퀀스가 idx라는 이름으로 담기도록 설정 -->
+	<insert id="insertReview" parameterType="hashmap" useGeneratedKeys="true" keyProperty="idx">
+		<selectKey keyProperty="idx" resultType="string" order="BEFORE">
+			SELECT SEQ_REVIEW.NEXTVAL FROM DUAL
+		</selectKey>
 		insert into review (
 		re_idx, re_pl_idx, re_writer_id, re_writer_name,
 		re_star, re_contents,
 		re_reg_date, re_mod_date, re_del_gb
 		) values (
-		re_seq.NEXTVAL, #{re_pl_idx} , #{re_writer_id} , #{re_writer_name},
+		#{idx}, #{re_pl_idx} , #{re_writer_id} , #{re_writer_name},
 		#{re_star} , #{re_contents},
 		sysdate, sysdate, 'N'
 		)
 	</insert>
+	
+
 
 
 </mapper>

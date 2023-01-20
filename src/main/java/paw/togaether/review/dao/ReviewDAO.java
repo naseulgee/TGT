@@ -13,5 +13,9 @@ public class ReviewDAO extends AbstractDAO{
 	public void insertReview(Map<String, Object> map) throws Exception {
 		 insert("review.insertReview", map);
 	}
+	
+	public void insertPhoto(Map<String, Object> map) throws Exception {
+		 insert("photo.insertPhoto", map);
+	}
 
 }

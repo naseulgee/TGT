@@ -51,25 +51,68 @@ label {
 }
 
 #noImage1, #noImage2, #noImage3 {
-	font-size : 300%;
-	height : 50%;
+	font-size : 270%;
+	display: block;
 }
 
-input[type=file]{
-    display: none; /* 파일태그 감춤 */
-}
 </style>
 
 
 <script>
-$(document).ready( function() {
-	//글자수 세기
-    $( '#re_contents' ).keyup(function() {
-    	if ($('#re_contents').val().length >= 950 ) {
-    		alert('글자수를 초과했습니다.');
-    	}
-    });
+$(document).ready( function() {	
+	
+	//글자수 실시간 반영 메서드
+	$("textarea").on("propertychange change keyup paste input", function() {
+	    var contents = $(this).val();
+	    console.log(contents.length);
+	    if (contents.length == 0 || contents == '') {
+	    	$('#reCount').text('0 / 950');
+	    } else {
+	    	$('#reCount').text(contents.length +' / 950');
+	    }
+	});	
+	
+	//파일 input에 값이 들어있는지 실시간 체크하는 메서드
+	$("#photo1").on("propertychange change keyup paste input", function() {
+	    var currentVal = $(this).val();
+	    var reader = new FileReader();
+   	 	const imageSrc = URL.createObjectURL($(this)[0].files[0]);
+     	$("#thumbnail1").attr("src",imageSrc);
+     	$("#noImage1").hide();
+	});
+	$("#photo2").on("propertychange change keyup paste input", function() {
+	    var currentVal = $(this).val();
+	    var reader = new FileReader();
+   	 	const imageSrc = URL.createObjectURL($(this)[0].files[0]);
+     	$("#thumbnail2").attr("src",imageSrc);
+     	$("#noImage2").hide();
+	});
+	$("#photo3").on("propertychange change keyup paste input", function() {
+	    var currentVal = $(this).val();
+	    var reader = new FileReader();
+   	 	const imageSrc = URL.createObjectURL($(this)[0].files[0]);
+     	$("#thumbnail3").attr("src",imageSrc);
+     	$("#noImage3").hide();
+	});
+	 
   });
+  
+  
+  function checkForm() {
+		var re_star = $('input[name=re_star]:checked').val(); //별점
+		var re_contents = $("#re_contents").val(); //리뷰내용
+
+		if (re_star == "" || re_star == null) {
+			alert("별점을 평가해주세요.");
+			return false;
+		}
+
+		if (re_contents == "" || re_contents == null) {
+			alert("리뷰 내용을 작성해주세요.");
+			return false;
+		}  
+		return true;
+  }
 </script>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
@@ -102,7 +145,7 @@ $(document).ready( function() {
 			</fieldset>
 		</div>
 		
-		<br><br><br>
+		<br><br><br><br><br>
 		
 		<!-- 후기 -->
 		<div><h3>시설의 후기</h3></div>
@@ -113,25 +156,30 @@ $(document).ready( function() {
 		</div>	
 		<div class="txt_right"><span id="reCount">0 / 950</span></div>	
 		
-		<br><br><br>
-		
+		<br><br><br><br><br>
 		
 		<!-- 사진 -->
 		<div><h3>시설의 사진</h3></div>
-		<div><span class="color">시설을 이용하면서 찍은 사진을 올려주세요:)</span></div><br>
-		<span>
-			<!-- 사진1 : 파일태그는 숨기고 -->
-			<input type="file" accept="image/*" id="photo1" name="photo1" >
-			<!-- 아이콘을 누르면 file 선택이 되도록 설정 -->
-			<label for="photo1"><i class="fa-thin fa-image" id="noImage1"></i></label>
-			<!-- 사진2 -->
-			<input type="file" accept="image/*" id="photo2" name="photo2" >
-			<label for="photo2"><i class="fa-thin fa-image" id="noImage2"></i></label>
-			<!-- 사진3 -->
-			<input type="file" accept="image/*" id="photo3" name="photo3" >
-			<label for="photo3"><i class="fa-thin fa-image" id="noImage3"></i></label>
-		</span>
-		
+		<div><span class="color">시설 사진을 올려주세요:)</span></div><br>
+		<div>
+			<div class="images1"><!-- 사진1 : 파일태그는 숨기고 -->
+				<!-- 아이콘을 누르면 file 선택이 되도록 설정 -->
+				<label for="photo1"><i class="fa-thin fa-image" id="noImage1" ></i></label>
+				<img id="thumbnail1" src="" width="20%" style="border-radius:12px;">
+				<input type="file" accept="image/*" id="photo1" name="photo1" >
+			</div><br>
+			<div ><!-- 사진2 -->
+				<label for="photo2"><i class="fa-thin fa-image" id="noImage2"></i></label>
+				<img id="thumbnail2" src="" width="20%" style="border-radius:12px;">
+				<input type="file" accept="image/*" id="photo2" name="photo2" >
+			</div><br>
+			<div class="images3"><!-- 사진3 -->
+				<label for="photo3"><i class="fa-thin fa-image" id="noImage3"></i></label>
+				<img id="thumbnail3" src="" width="20%" style="border-radius:12px;">
+				<input type="file" accept="image/*" id="photo3" name="photo3" >
+			</div>
+		</div>
+		<br>
 		<div><span class="info_warn">본인이 직접 촬영한 사진만 올려주세요.</span></div>
 		<div><span class="info_warn">저작권에 대한 책임은 업로드한 회원에게 있습니다.</span></div>
 		<br><br><br>
@@ -146,7 +194,7 @@ $(document).ready( function() {
         <input type="hidden" id="re_writer_id" name="re_writer_id" value="${mem_id}"><!-- 작성자 아이디 -->
         <input type="hidden" id="re_writer_name" name="re_writer_name" value="${mem_dog_name}"><!-- 강아지 이름 -->
         --%>
-		<button class="btn submit" id="uploadBtn">리뷰등록</button> 
+		<button class="btn submit" id="uploadBtn" >리뷰등록</button> 
 		
 		<a href="/user/mypage/review/reviewList" class="btn">목록으로</a>
 	</div> 
@@ -157,15 +205,20 @@ $(document).ready( function() {
 	//사이즈와 확장자 설정
 	var regex = new RegExp("(.*?)\.(jpeg|jpg|gif|png|bmp)$"); //이미지 파일 확장자
 	var maxSize = 5242880; //5MB
+	var maxLength = 200; //파일명의 최대 길이
 	
 	//사이즈와 확장자가 잘못되었을 경우 제한하는 함수
-	function checkExtension(fileName, fileSize) {
+	function checkExtension(fileName, fileSize,fileNameLength) {
 		if (fileSize >= maxSize) {
-			alert("파일 사이즈 초과");
+			alert("파일 사이즈는 5MB이하여야 합니다.");
 			return false;
 		}
 		if (!regex.test(fileName)) {
 			alert("해당 종류의 파일은 업로드할 수 없습니다.");
+			return false;
+		}
+		if (fileNameLength > maxLength) {
+			alert("파일명이 너무 길어 업로드할 수 없습니다.");
 			return false;
 		}
 		return true;
@@ -173,32 +226,35 @@ $(document).ready( function() {
 	
 	//클릭시 
 	$("#uploadBtn").on("click", function(e) {
+		
+		//유효성 검증
+		if(!checkForm()) {
+			console.log("동작못함");
+			return false;
+		};
+		
 		var formData = new FormData();
 		var inputFile1 = $("input[name='photo1']")[0].files;
 		var inputFile2 = $("input[name='photo2']")[0].files;
 		var inputFile3 = $("input[name='photo3']")[0].files;
-
-		console.log(inputFile1.length);
-		console.log(inputFile2.length);
-		console.log(inputFile3.length);
+		
 		//★확장자 알맞지 않거나 파일용량이 크면 FormData객체에 삽입X★
 		if (inputFile1.length > 0) { //첫번째 파일을 formData에 삽입
-			if (checkExtension(inputFile1[0].name, inputFile1[0].size)) {
+			if (checkExtension(inputFile1[0].name, inputFile1[0].size, inputFile1[0].name.length)) {
 				formData.append("uploadFile", inputFile1[0]);
-				console.log(formData.get("uploadFile"));
 			} else {
 				return false; 
 			}	
 		}	
 		if (inputFile2.length > 0) {//두번째 파일을 formData에 삽입
-			if (!checkExtension(inputFile2[0].name, inputFile2[0].size)) {
+			if (!checkExtension(inputFile2[0].name, inputFile2[0].size, inputFile2[0].name.length)) {
 				return false; 
 			} else {
 				formData.append("uploadFile", inputFile2[0]);
 			}	
 		}	
 		if (inputFile3.length > 0) {//세번째 파일을 formData에 삽입
-			if (!checkExtension(inputFile3[0].name, inputFile3[0].size)) {
+			if (!checkExtension(inputFile3[0].name, inputFile3[0].size, inputFile3[0].name.length)) {
 				return false; 
 			} else {
 				formData.append("uploadFile", inputFile3[0]);
