@@ -5,14 +5,13 @@
 <script src="/resources/js/paging/paging.js"></script>
 
 	<div>
-		<form id="board_form">
 			<table id="board_list">
 				<thead>
 					<tr>
 						<th scope="col">글번호</th>
 						<th scope="col">제목</th>
 						<th scope="col">작성자</th>
-						<th scope="col">조회수</th>
+					<!-- <th scope="col">조회수</th> -->
 						<th scope="col">작성일</th>
 					</tr>
 				</thead>
@@ -20,11 +19,10 @@
 		
 				</tbody>
 			</table>
-		</form>
 	</div>
 	
 	
-	<div id="PAGE_NAVI"></div>
+	<div id="PAGE_NAVI_B"></div>
 	<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" />
 	<br />
 	
@@ -47,7 +45,7 @@
 		comAjax.setUrl("<c:url value='/paging/board.paw' />");
 		comAjax.setCallback("fn_selectBoardListCallback");
 
-		comAjax.addParam("PAGE_INDEX", $("#PAGE_INDEX").val());
+		comAjax.addParam("PAGE_INDEX", pageNo);
 		comAjax.addParam("PAGE_ROW", 10);
 
 		comAjax.addParam("keyword", $('#keyword').val());
@@ -68,7 +66,7 @@
 
 		} else {
 			var params = {
-				divId : "PAGE_NAVI",
+				divId : "PAGE_NAVI_B",
 				pageIndex : "PAGE_INDEX",
 				totalCount : total,
 				eventName : "fn_selectBoardList"
@@ -84,7 +82,7 @@
 							+ "<input type='hidden' name='title' id='IDX' value=" + value.BC_IDX + ">"
 							+ "</td>" 
 							+ "<td align='center'>" + value.BC_WRITER_ID + "</td>"
-							+ "<td align='center'>" + value.BC_READHIT + "</td>"
+							/* + "<td align='center'>" + value.BC_READHIT + "</td>" */
 							+ "<td align='center'>" + value.BC_MOD_DATE + "</td>" 
 						+ "</tr>";
 				});

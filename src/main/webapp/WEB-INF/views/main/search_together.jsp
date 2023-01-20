@@ -5,7 +5,6 @@
 <script src="/resources/js/paging/paging.js"></script>
 
 			<div >
-				<form id="together_form">
 					<table class="card_table" id="together_list">
 						<thead>
 							<tr>
@@ -19,10 +18,9 @@
 	
 						</tbody>
 					</table>
-				</form>
 			</div>
 
-			<div id="PAGE_NAVI"></div>
+			<div id="PAGE_NAVI_T"></div>
 			<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" /> <br />
 
 		<form id="commonForm" name="commonForm"></form>
@@ -43,7 +41,7 @@
 			comAjax.setUrl("<c:url value='/paging/together.paw' />");
 			comAjax.setCallback("fn_selectBoardListCallback2");
 
-			comAjax.addParam("PAGE_INDEX", $("#PAGE_INDEX").val());
+			comAjax.addParam("PAGE_INDEX", pageNo);
 			comAjax.addParam("PAGE_ROW", 6);
 
 			comAjax.addParam("keyword", $('#keyword').val());
@@ -65,7 +63,7 @@
 
 			} else {
 				var params2 = {
-					divId : "PAGE_NAVI",
+					divId : "PAGE_NAVI_T",
 					pageIndex : "PAGE_INDEX",
 					totalCount : total2,
 					eventName : "fn_selectBoardList2"
