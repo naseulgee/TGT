@@ -1,4 +1,4 @@
-<%@ page pageEncoding="UTF-8" %>
+<%@ page pageEncoding="UTF-8" %> 
 <!-- 공통 풋터 -->
 <footer>
 	<div class="footer_wrap layoutCenter">
@@ -17,4 +17,4 @@
 	</div>
 </footer>
 </body>
-</html>
+</html>  

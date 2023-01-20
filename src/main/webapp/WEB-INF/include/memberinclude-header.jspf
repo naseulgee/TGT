@@ -1,2 +1,2 @@
-<%@ page pageEncoding="utf-8"%>
-<script src="<c:url value='/resources/js/member/member.js'/>" charset="utf-8"></script>
+<%@ page pageEncoding="utf-8"%>  
+<script src="<c:url value='/resources/js/member/member.js'/>" charset="utf-8"></script> 

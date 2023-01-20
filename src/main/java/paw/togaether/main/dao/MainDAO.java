@@ -16,13 +16,13 @@ public class MainDAO extends AbstractDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> boardSearch0(Map<String, Object> map) throws Exception {
-		return (List<Map<String, Object>>)selectPagingList("main.boardSearch0", map);
+	public List<Map<String, Object>> togetherSearchList(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectPagingList("main.togetherSearchList", map);
 	}
-
+	
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> boardSearch1(Map<String, Object> map) throws Exception {
-		return (List<Map<String, Object>>)selectPagingList("main.boardSearch1", map);
+	public List<Map<String, Object>> placeSearchList(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectPagingList("main.placeSearchList", map);
 	}
 	
 

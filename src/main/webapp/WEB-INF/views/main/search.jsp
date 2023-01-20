@@ -1,122 +1,56 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
 <script src="/resources/js/paging/paging.js"></script>
+<link href="resources/css/main/main.css" rel="stylesheet">
 
 <main class="layoutCenter">
-	<section class="notice">
-		<div class="page-title">
-			<div class="container">
-
-				<form action="">
-					<select style="width: 80px;" class="form-control" name="searchNum"
-						id="searchNum">
-						<option value="0">제목</option>
-						<option value="1">내용</option>
-					</select> <input class="form-control" type="text" name="isSearch"
-						id="isSearch" style="width: 190px;" /> <span
-						class="input-group-btn">
-						<button type="submit" class="btn btn-primary">
-							<i class="fa fa-search"></i>
-						</button>
-					</span>
-				</form><br>
-
-				<table class="board_list">
-					<colgroup>
-						<col width="10%" />
-						<col width="*" />
-						<col width="15%" />
-						<col width="20%" />
-					</colgroup>
-					<thead>
-						<tr>
-							<th scope="col">글번호</th>
-							<th scope="col">제목</th>
-							<th scope="col">조회수</th>
-							<th scope="col">작성일</th>
-						</tr>
-					</thead>
-					<tbody>
-
-					</tbody>
-				</table>
-
-				<div id="PAGE_NAVI"></div>
-				<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" /> <br /> <a
-					href="#this" class="btn" id="write">글쓰기</a>
-
-				<form id="commonForm" name="commonForm"></form>
-			</div>
+	<div>
+		<br><br>
+		<!-- <h4>전체 검색</h4> -->
+	</div>
+	<div class="container2" >
+		<div align="center" class="search">
+			<form action="/search.paw" method="POST">
+				<div>
+					<select name="searchType" id="searchType">
+						<option value="all">-----</option>
+						<option value="t"
+							<c:out value="${searchType eq 't'?'selected':''}"/>>제목</option>
+						<option value="w"
+							<c:out value="${searchType eq 'w'?'selected':''}"/>>작성자</option>
+					</select> 
+					<input type="text" class="txt" placeholder="Search" name="keyword" id="keyword" value="${keyword}" width="150"/>&nbsp; 
+					<input type="submit" value="검색" class="btn submit" />
+				</div>
+			</form>
 		</div>
-	</section>
+		<br>
+		 
+		<div>
+			<div class="tab_radio">
+				<input type="radio" id="tab_a" name="tab" value="a" checked> <label for="tab_a">게시판</label> 
+				<input type="radio" id="tab_b" name="tab" value="b" > 		 <label for="tab_b">함께해요</label> 
+				<input type="radio" id="tab_c" name="tab" value="c"> 		 <label for="tab_c">시설</label>
+			</div>
+			
+			<div id="searchResult">
+				<div  id="boardForm">
+					<jsp:include page="/search/board.paw" ></jsp:include>
+				</div>
+				<br>
+				<div  id="togetherForm">
+					<jsp:include page="/search/together.paw"></jsp:include>
+				</div>
+				<div  id="placeForm">
+					<jsp:include page="/search/place.paw"></jsp:include>
+				</div>
+			</div>
+			
+	</div>
+	<!-- <div id="PAGE_NAVI"></div>
+				<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" />
+				<br /> -->
+	</div>
+	
+	<script type="text/javascript" src="/resources/js/main/main.js"></script>
 </main>
-<script src="http://code.jquery.com/jquery-latest.js"></script> 
-	<script type="text/javascript">
-	$(document).ready(function(){
-		fn_selectBoardList(1);
-			$("a[name='title']").on("click", function(e){ //제목 
-				e.preventDefault();
-				fn_openBoardDetail($(this));
-			});
-		});
-	
-	function fn_openBoardDetail(obj){			
-		var comSubmit = new ComSubmit();
-		comSubmit.setUrl("<c:url value='/board_detail.paw' />");
-		comSubmit.addParam("BC_IDX", obj.parent().find("#IDX").val());
-		comSubmit.submit();
-	}
-	
-		function fn_selectBoardList(pageNo){
-			var comAjax = new ComAjax();
-			comAjax.setUrl("<c:url value='/search0.paw' />");
-			comAjax.setCallback("fn_selectBoardListCallback");
-			comAjax.addParam("PAGE_INDEX",$("#PAGE_INDEX").val());
-			comAjax.addParam("PAGE_ROW", 10);
-			//comAjax.addParam("IDX_FE", $("#IDX_FE").val());
-			comAjax.ajax();
-		}
-		
-		function fn_selectBoardListCallback(data){
-			var total = data.TOTAL;
-			var body = $("table>tbody");
-			body.empty();
-			
-			if(total == 0){
-				var str = "<tr>" + 
-								"<td colspan='4'>조회된 결과가 없습니다.</td>" + 
-							"</tr>";
-				body.append(str);
-			
-			} else{
-				var params = {
-					divId : "PAGE_NAVI",
-					pageIndex : "PAGE_INDEX",
-					totalCount : total,
-					eventName : "fn_selectBoardList"
-				};
-				gfn_renderPaging(params);
-				
-				var str = "";
-				$.each(data.boardSearchList, function(key, value){
-					str += "<tr>" + 								// class='use_move' data-href='/board_detail.paw' onclick='move(this,'BC_IDX:"+value.BC_IDX+"')'
-								"<td align='center'>" + value.BC_IDX + "</td>" + 
-								"<td class='title'>" +
-									"<a href='#this' name='title'>" + value.BC_TITLE + "</a>" +
-									"<input type='hidden' name='title' id='IDX' value=" + value.BC_IDX + ">" + 
-								"</td>" +
-								"<td align='center'>" + value.BC_WRITER_ID + "</td>" + 
-								"<td align='center'>" + value.BC_MOD_DATE + "</td>" + 
-							"</tr>";
-				});
-				body.append(str);
-				
-				$("a[name='title']").on("click", function(e){ //제목 
-					e.preventDefault();
-					fn_openBoardDetail($(this));
-				});
-			
-			}
-		}
-	</script>	

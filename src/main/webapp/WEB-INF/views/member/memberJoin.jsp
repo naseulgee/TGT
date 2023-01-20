@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%> 
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
 <!DOCTYPE>
 <head>
@@ -8,7 +8,7 @@
 	<script>
 		tailwind.config = {
 			important: true,
-		}
+		} 
 	</script>
 <title>회원가입</title>
 </head>

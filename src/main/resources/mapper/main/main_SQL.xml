@@ -2,42 +2,123 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="main">
-
+	
+	<sql id="searchType_board">
+		<if test="searchType != null">
+			<if test="searchType == 'all'.toString()">
+			    AND BC_TITLE LIKE '%' || #{keyword} || '%' 
+			    OR BC_WRITER_ID LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 't'.toString()">
+			    AND BC_TITLE LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'w'.toString()">
+			    AND BC_WRITER_ID LIKE '%' || #{keyword} || '%'
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="searchType_together">
+		<if test="searchType != null">
+			<if test="searchType == 'all'.toString()">
+			    AND TO_TITLE LIKE '%' || #{keyword} || '%' 
+			    OR TO_LOC LIKE '%' || #{keyword} || '%'
+			    OR TO_CONTENTS LIKE '%' || #{keyword} || '%'
+			    OR TO_WRITER_ID LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 't'.toString()">
+			    AND TO_TITLE LIKE '%' || #{keyword} || '%'
+			    OR TO_LOC LIKE '%' || #{keyword} || '%'
+			    OR TO_CONTENTS LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'w'.toString()">
+			    AND TO_WRITER_ID LIKE '%' || #{keyword} || '%'
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="searchType_place">
+		<if test="searchType != null">
+			<if test="searchType == 'all'.toString()">
+			    AND PL_NAME LIKE '%' || #{keyword} || '%'
+			    OR PL_LOC LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 't'.toString()">
+			    AND PL_NAME LIKE '%' || #{keyword} || '%'
+			    OR PL_LOC LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'w'.toString()">
+			    AND PL_NAME LIKE '%' || #{keyword} || '%'
+			    OR PL_LOC LIKE '%' || #{keyword} || '%'
+			</if>
+		</if>
+	</sql>
+	
 	<select id="boardSearchList" parameterType="hashmap" resultType="hashmap">
 		<include refid="common.pagingPre"/>
 		<![CDATA[
-			SELECT ROW_NUMBER() OVER (ORDER BY BC_IDX DESC) RNUM, BC_IDX, BC_TITLE, TO_CHAR(BC_MOD_DATE, 'YYYY-MM-DD HH24:MI:SS') AS BC_MOD_DATE, BC_WRITER_ID
-			FROM BOARD_COMM
-			WHERE BC_DEL_GB = 'N'
+			SELECT 
+				ROW_NUMBER() OVER (ORDER BY BC_IDX DESC) RNUM, 
+				BC_IDX, 
+				BC_TITLE, 
+				TO_CHAR(BC_MOD_DATE, 'YYYY-MM-DD HH24:MI:SS') AS BC_MOD_DATE, 
+				BC_WRITER_ID
+			FROM 
+				BOARD_COMM
+			WHERE 
+				BC_DEL_GB = 'N'
+		]]>
+		 <include refid="searchType_board"></include>
+		<![CDATA[
 			ORDER BY BC_IDX DESC
 		]]>
 		<include refid="common.pagingPost"/>
 	</select>
 	
-	<!-- 게시판 검색 0 결과 : 제목 -->
-	<select id="boardSearch0" parameterType="hashmap" resultType="hashmap">
+	<select id="togetherSearchList" parameterType="hashmap" resultType="hashmap">
 		<include refid="common.pagingPre"/>
 		<![CDATA[
-			SELECT ROW_NUMBER() OVER (ORDER BY BC_IDX DESC) RNUM, BC_IDX, BC_TITLE, TO_CHAR(BC_MOD_DATE, 'YYYY-MM-DD HH24:MI:SS') AS BC_MOD_DATE, BC_WRITER_ID
-			FROM BOARD_COMM
-			WHERE BC_TITLE LIKE '%' || #{isSearch} || '%'
-			AND BC_DEL_GB = 'N'
-			ORDER BY BC_IDX DESC
+			SELECT 
+				ROW_NUMBER() OVER (ORDER BY TO_IDX DESC) RNUM, 
+				TO_IDX, TO_TITLE, 
+				TO_CONTENTS, 
+				TO_LOC, 
+				TO_CHAR(TO_DATE, 'YYYY-MM-DD HH24:MI:SS') AS TO_DATE, 
+				TO_WRITER_ID
+			FROM 
+				TOGETHER
+			WHERE 
+				TO_DEL_GB = 'N'
+			]]>
+			 <include refid="searchType_together"></include>
+			<![CDATA[
+			ORDER BY TO_IDX DESC
 		]]>
 		<include refid="common.pagingPost"/>
 	</select>
 	
-	<!-- 게시판 검색 1 결과 : 작성자 -->
-	<select id="boardSearch1" parameterType="hashmap" resultType="hashmap">
+	<select id="placeSearchList" parameterType="hashmap" resultType="hashmap">
 		<include refid="common.pagingPre"/>
 		<![CDATA[
-			SELECT ROW_NUMBER() OVER (ORDER BY BC_IDX DESC) RNUM, BC_IDX, BC_TITLE, TO_CHAR(BC_MOD_DATE, 'YYYY-MM-DD HH24:MI:SS') AS BC_MOD_DATE, BC_WRITER_ID
-			FROM BOARD_COMM
-			WHERE BC_WRITER_ID LIKE '%' || #{isSearch} || '%'
-			AND BC_DEL_GB = 'N'
-			ORDER BY BC_IDX DESC
+			SELECT 
+				ROW_NUMBER() OVER (ORDER BY PL_IDX DESC) RNUM, 
+				PL_NAME,
+				PL_CALL, 
+				PL_LOC, 
+				PL_OPEN,
+				PL_CLOSE,
+				TO_CHAR(PL_MOD_DATE, 'YYYY-MM-DD HH24:MI:SS') AS PL_MOD_DATE
+			FROM 
+				PLACE
+			WHERE 
+				PL_DEL_GB = 'N'
+		]]>
+		 <include refid="searchType_place"></include>
+		<![CDATA[
+			ORDER BY PL_IDX DESC
 		]]>
 		<include refid="common.pagingPost"/>
 	</select>
+	
 
 </mapper>

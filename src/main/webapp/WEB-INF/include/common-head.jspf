@@ -13,7 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"><!--화면 배율-->
 
 <title>투개더 :: 함께 키우는 반려동물</title>
-
+ 
 <!-- favicon -->
 <link rel="apple-touch-icon" sizes="180x180" href="/resources/image/favicon/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/resources/image/favicon/favicon-32x32.png">
@@ -21,7 +21,7 @@
 <link rel="manifest" href="/resources/image/favicon/site.webmanifest">
 <link rel="mask-icon" href="/resources/image/favicon/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="msapplication-TileColor" content="#de5446">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#ffffff"> 
 
 <!-- 캐쉬 파기 시간: 캐쉬가 쌓이지 않고 매번 새로운 페이지 로딩 세팅 -->
 <meta http-equiv="Cache-Control" content="no-cache"/> 
@@ -34,5 +34,5 @@
 
 <!-- js -->
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<script src="/resources/js/common/common.js"></script>
+<!-- <script src="/resources/js/common/common.js"></script> -->
 </head>

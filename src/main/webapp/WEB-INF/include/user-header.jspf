@@ -27,11 +27,11 @@
 		</ul>
 		<ul class="sub_icons flexCenter">
 			<li class="search flex">
-				<form id="search" name="search" method="post" action="/search.paw">
-					<input type="text" name="search_keyword" placeholder="무엇이 궁금하개?" autocomplete="off" value="${empty search_keyword?'':search_keyword}">
+				<form id="search" name="search" action="/search.paw" method="POST">
+					<input type="text" name="keyword" placeholder="무엇이 궁금하개?" autocomplete="off" value="${keyword}">
 					<input type="hidden" name="nPageIndex" value="${empty nPageIndex?'1':nPageIndex}">
 				</form>
-				<button type="submit"><i class="fa-solid fa-magnifying-glass"></i><span class="displaynone">검색</span></button>
+				<button type="submit"><i class="fa-solid fa-magnifying-glass" onClick="onSearch()"></i><span class="displaynone">검색</span></button>
 			</li>
 			<li class="mypage"><a href=""><i class="fa-solid fa-paw"></i><span class="displaynone">마이페이지</span></a></li>
 			<li class="alram"><a href=""><span class="al_cnt bgColor">1</span><i class="fa-regular fa-bell"></i><span class="displaynone">알람</span></a></li>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 	<head>
 		<%@ include file="/WEB-INF/include/user-header.jspf"%>
@@ -7,7 +7,7 @@
 		<script src="/resources/js/board_comm/board_comm.js"></script>
 	</head>
 <style>
-
+ 
 .title1{
 margin-top: 10px;
 margin-left: 10px;
@@ -17,7 +17,7 @@ border-radius: 2em 2em 2em 2em;
 padding: 6px;
 font-size: 15px;
 }
-.title2{
+.title2{ 
 margin-top: 15px;
 font-size: 13px;
 

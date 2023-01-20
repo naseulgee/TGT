@@ -5,11 +5,11 @@ import java.util.Map;
 
 public interface MainService {
 
-	List<Map<String, Object>> boardSearchList(Map<String, Object> map) throws Exception;
+	List<Map<String, Object>> boardSearchList(Map<String, Object> map, String keyword, String searchType) throws Exception;
 
-	List<Map<String, Object>> boardSearch0(Map<String, Object> map) throws Exception;
-	
-	List<Map<String, Object>> boardSearch1(Map<String, Object> map) throws Exception;
+	List<Map<String, Object>> togetherSearchList(Map<String, Object> map, String keyword, String searchType) throws Exception;
+
+	List<Map<String, Object>> placeSearchList(Map<String, Object> map, String keyword, String searchType) throws Exception;
 
 
 
