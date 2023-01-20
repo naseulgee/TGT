@@ -3,7 +3,7 @@
 
 <mapper namespace="review">
 	
-	<!-- 23.01.15 신현지: review테이블에 리뷰등록 -->
+	<!-- 23.01.16 신현지: review테이블에 리뷰등록 -->
 	<!-- 23.01.18 신현지 : commandMap에 시퀀스가 idx라는 이름으로 담기도록 설정 -->
 	<insert id="insertReview" parameterType="hashmap" useGeneratedKeys="true" keyProperty="idx">
 		<selectKey keyProperty="idx" resultType="string" order="BEFORE">
@@ -19,6 +19,13 @@
 		sysdate, sysdate, 'N'
 		)
 	</insert>
+	
+	
+	<select id="openMyReviews" parameterType="hashmap" resultType="hashmap">
+	select * from review
+	where re_writer_id = #{mem_id}
+	order by re_reg_date
+	</select>
 	
 
 
