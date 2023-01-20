@@ -6,4 +6,6 @@ public interface JoinService {
 	
 	void joinMember(Map<String, Object> map) throws Exception;
 
+	int idCheck(String id) throws Exception;
+
 }

@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="container mx-auto mt-24 sm:px-6 lg:px-8">
-<form class="space-y-8 divide-y divide-gray-200 max-w-screen-lg" action="/member/joinMember.paw" method="POST" onsubmit="return validate()">
+<form class="space-y-8 divide-y divide-gray-200 max-w-screen-lg" action="/member/joinMember" method="POST" onsubmit="return validate()">
 	<div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
 		<div class="space-y-6 sm:space-y-5">
 			<div>
@@ -31,7 +31,8 @@
 					<div class="mt-1 sm:mt-0">
 						<input type="text" name="MEM_ID" id="MEM_ID" maxlength="36" autocomplete="username"  class="block w-full max-w-lg rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
 					</div>
-					<input type="button" onclick="" value="중복확인" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mr-auto"  >
+					<input type="button" id="btnCheck" onclick="idValidate()" value="중복확인" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mr-auto"  >
+					<span class="mt-2 text-sm" id="verification" ></span>
 				</div>
 
 				<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
@@ -54,7 +55,9 @@
 					<label for="MEM_CALL" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">전화번호</label>
 					<div class="mt-1 sm:col-span-2 sm:mt-0">
 						<input type="text" name="MEM_CALL" id="MEM_CALL"  placeholder="010-1234-5678"  maxlength="55"  class="block w-full max-w-md rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+						<p class="mt-2 text-sm text-red-600" id="mem-call-error"></p>
 					</div>
+
 				</div>
 
 				<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
@@ -139,19 +142,48 @@
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
+	/** 아이디 검증 */
+	function idValidate() {
+		if ($('#MEM_ID').val() != '') {
 
-	<%--$(function(){--%>
-	<%--	var kindofdog = ${"KINDOFDOG"};--%>
-	<%--	if(kindofdog == "기타"){--%>
-	<%--		document.getElementById("MEM_BR_NAME").style.display = "";--%>
-	<%--	}else{//조건 1이 아닐떄--%>
-	<%--		document.getElementById("MEM_BR_NAME").style.display = "none";--%>
-	<%--	}--%>
-	<%--})--%>
+			// 아이디를 서버로 전송 > DB 유효성 검사 > 결과 반환받기
+			$.ajax({
+
+				type: 'GET',
+				url: '/idCheck',
+				data: 'id=' + $('#MEM_ID').val(),
+				dataType: 'json',
+				success: function(response) {
+					if (response == '0') {
+						$('#verification').text('사용 가능한 아이디입니다.');
+						$('#verification').css('color', 'green');
+					} else {
+						$('#verification').text('이미 사용중인 아이디입니다.');
+						$('#verification').css('color', 'red');
+					}
+				},
+				error: function(a, b, c) {
+					console.log(a, b, c);
+				}
+
+			});
+
+		} else {
+			$('#verification').text('아이디를 입력해주세요.');
+			$('#verification').css('color', 'red');
+			$('#MEM_ID').focus();
+		}
+	}
+
+
 
 
 	/** 폼 검증하는 함수 */
 	function validate() {
+		const id = document.querySelector('#MEM_ID');
+		const idErrMsg = document.querySelector('#verification');
+		const call = document.querySelector('#MEM_CALL');
+		const callErrMsg = document.querySelector('#mem-call-error');
 		const pass = document.querySelector('#MEM_PW');
 		const passErrMsg = document.querySelector('#pw-error');
 		const newPass = document.querySelector('#MEM_NEWPW');
@@ -160,6 +192,23 @@
 		const emailErrMsg = document.querySelector('#email-error');
 
 		let result = true;
+		if(idErrMsg.textContent == "이미 사용중인 아이디입니다.") {
+			result = false;
+		}else if (idErrMsg.textContent =="사용 가능한 아이디입니다.") {
+			result = true;
+		}else if (idErrMsg.textContent == "") {
+			$('#verification').text('아이디 중복 확인을 눌러주세요');
+			$('#verification').css('color', 'red');
+			result = false;
+		}
+		// if(id.value === ""){
+		// 	idErrMsg.textContent = "아이디를 입력해주세요."
+		// 	result = false;
+		// }else{
+		// 	idErrMsg.textContent = "";
+		// }
+
+
 		// password 검증
 		if(pass.value === ""){
 			passErrMsg.textContent = "비밀번호를 입력해주세요."
@@ -186,12 +235,19 @@
 		}else{
 			emailErrMsg.textContent = ""
 		}
+		// 전화번호 검증
+		if(call.value === ""){
+			callErrMsg.textContent = "전화번호를 입력해주세요."
+			result = false;
+		}else {
+			callErrMsg.textContent = ""
+		}
 		return result
 
 
 	}
 
-
+/** 우편번호 찾기 + 주소입력 */
 function findPostcode() {
 	new daum.Postcode({
 		oncomplete: function(data) {

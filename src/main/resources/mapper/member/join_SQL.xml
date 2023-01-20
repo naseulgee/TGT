@@ -44,6 +44,14 @@
    ]]>
  </insert>
 
+ <select id="findId" parameterType="String" resultType="Integer">
+     <![CDATA[
+        SELECT COUNT(*) FROM MEMBERS WHERE MEM_ID = #{MEM_ID}
+        ]]>
+	</select>
+
+
+
 
 
  
