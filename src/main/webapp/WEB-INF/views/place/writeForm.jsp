@@ -27,22 +27,8 @@
 			<strong>시설 분류</strong>
 			<div class="input_wrap slim_scroll">
 				<div class="scroll_wrap flex">
-					<input id="ca1" type="radio" name="pl_cate" value="샘플 카테1">
-					<label class="btn" for="ca1">샘플 카테1</label>
-					<input id="ca2" type="radio" name="pl_cate" value="샘플 카테2">
-					<label class="btn" for="ca2">샘플 카테2</label>
-					<input id="ca3" type="radio" name="pl_cate" value="샘플 카테3">
-					<label class="btn" for="ca3">샘플 카테3</label>
-					<input id="ca4" type="radio" name="pl_cate" value="샘플 카테4">
-					<label class="btn" for="ca4">샘플 카테4</label>
-					<input id="ca4" type="radio" name="pl_cate" value="샘플 카테4">
-					<label class="btn" for="ca4">샘플 카테4</label>
-					<input id="ca4" type="radio" name="pl_cate" value="샘플 카테4">
-					<label class="btn" for="ca4">샘플 카테4</label>
-					<input id="ca4" type="radio" name="pl_cate" value="샘플 카테4">
-					<label class="btn" for="ca4">샘플 카테4</label>
 					<c:if test="${!empty cate_list}">
-						<c:forEach var="c" items="cate_list">
+						<c:forEach var="c" items="${cate_list}">
 							<input id="ca${c.PC_IDX}" type="radio" name="pl_cate" value="${c.PC_NAME}">
 							<label class="btn" for="ca${c.PC_IDX}">${c.PC_NAME}</label>
 						</c:forEach>
@@ -71,6 +57,9 @@
 		<li class="offday">
 			<strong>휴무일</strong>
 			<div class="input_wrap flexWrap">
+				<c:forTokens var="day" items="월,화,수,목,금,토,일" delims="," varStatus="status">
+					${day}${index}<br>
+				</c:forTokens>
 				<input id="d1" type="checkbox" name="pl_offday" value="1">
 				<label class="btn round" for="d1">월</label>
 				<input id="d2" type="checkbox" name="pl_offday" value="2">
@@ -97,7 +86,7 @@
 		</li>
 		<li>
 			<label for=""><strong>이미지 정보</strong></label>
-			<div class="input_wrap">현지가 작성중..</div>
+			<div class="input_wrap">현지가 오열하면서 작성중..또륵..</div>
 		</li>
 		<li class="sub_btn"><input class="btn submit" type="submit" value="등록하기"></li>
 	</ul>

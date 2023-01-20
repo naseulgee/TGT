@@ -226,7 +226,5 @@
 	</c:if>
 </main><!-- //main 종료 -->
 
-<c:if test="${page != 'admin'}">
-	<!-- 풋터. 모든 페이지에 삽입! -->
-	<%@ include file="/WEB-INF/include/common-footer.jspf" %>
-</c:if>
+<!-- 풋터. 모든 페이지에 삽입! -->
+<%@ include file="/WEB-INF/include/common-footer.jspf" %>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import paw.togaether.common.domain.CommandMap;
 import paw.togaether.place.service.PlaceService;
@@ -38,7 +39,12 @@ public class PlaceController {
 	
 	/** 23.01.13 나슬기: 시설 등록 폼 메소드 */
 	@RequestMapping("/writeForm")
-	public void placeRegForm(CommandMap commandMap) {}
+	public ModelAndView placeRegForm(CommandMap commandMap) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		//카테고리 리스트 불러오기
+		mv.addObject("cate_list", placeService.cateList(commandMap.getMap()));
+		return mv;
+	}
 	/** 23.01.13 나슬기: 시설 등록 처리 메소드 */
 	@PostMapping("/write")
 	public void placeReg(CommandMap commandMap) {}
