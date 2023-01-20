@@ -6,10 +6,10 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -33,17 +33,25 @@ public class BoardController {
 	 * 23.01.13 최선아: 멍멍왈왈 게시판 수정 
 	 * 23.01.16 최선아: 멍멍왈왈 게시판 삭제
 	 * 23.01.17 최선아: 멍멍왈왈 게시판 등록 후 알러창 띄우기
-	 * 23.01.
+	 * 23.01.19 최선아: 멍멍왈왈 게시판 카테고리
 	 * */
 	
 	
 	// 멍멍왈왈 게시판 리스트
+	@ResponseBody
 	@RequestMapping(value = "/board/list")
 	public ModelAndView boardList(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("board_comm/board_list");
 		List<Map<String, Object>> list = boardService.boardList(commandMap.getMap());
-
+		 String tab_a = request.getParameter("tab_a");
+		 String tab_b = request.getParameter("tab_b");
+		 String tab_c = request.getParameter("tab_c");
+		 String tab_d = request.getParameter("tab_d");
+		 
 		mv.addObject("list", list); //글번호,제목,조회수,작성자,작성날짜 담아줌
+		/*
+		 * mv.addObject("kind", kind); log.info("카인드"+ kind);
+		 */
 		return mv;
 	}
 
@@ -121,31 +129,28 @@ public class BoardController {
 		return mv;
 	}
 	
-	// 멍멍왈왈 게시판 카테고리
-	@RequestMapping(value = "/board/category" )
-	public ModelAndView boardCategory(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("board_comm/board_list");
-			
-		List<Map<String, Object>> boardCategory = boardService.boardCategory(commandMap.getMap());
-		
-		isSearch = request.getParameter("isSearch");
-		if (isSearch != null) {
-			searchNum = Integer.parseInt(request.getParameter("searchNum"));
-			commandMap.put("searchNum", searchNum);
-			commandMap.put("isSearch", isSearch);
-
-			if (searchNum == 0) { // 
-				boardCategory = boardService.boardCategory(commandMap.getMap());
-			} else if (searchNum == 1) { // 작성자
-				boardCategory = boardService.boardCategory(commandMap.getMap());
-			}
-
-		mv.addObject("boardCategory", boardCategory); 
-		
-		log.fatal("boardCategory:"+ boardCategory);
-		
-		return mv;
-		}
-
-}
+	/*
+	 * // 멍멍왈왈 게시판 카테고리
+	 * 
+	 * @RequestMapping(value = "/board/category" ) public ModelAndView
+	 * boardCategory(CommandMap commandMap, HttpServletRequest request) throws
+	 * Exception { ModelAndView mv = new ModelAndView("board_comm/board_list");
+	 * 
+	 * List<Map<String, Object>> boardCategory =
+	 * boardService.boardCategory(commandMap.getMap());
+	 * 
+	 * isSearch = request.getParameter("isSearch"); if (isSearch != null) {
+	 * searchNum = Integer.parseInt(request.getParameter("searchNum"));
+	 * commandMap.put("searchNum", searchNum); commandMap.put("isSearch", isSearch);
+	 * 
+	 * if (searchNum == 0) { // boardCategory =
+	 * boardService.boardCategory(commandMap.getMap()); } else if (searchNum == 1) {
+	 * // 작성자 boardCategory = boardService.boardCategory(commandMap.getMap()); }
+	 * 
+	 * mv.addObject("boardCategory", boardCategory);
+	 * 
+	 * log.fatal("boardCategory:"+ boardCategory);
+	 * 
+	 * return mv; } }
+	 */
 }
