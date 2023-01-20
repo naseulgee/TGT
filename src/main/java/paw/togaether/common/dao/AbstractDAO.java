@@ -1,13 +1,13 @@
 package paw.togaether.common.dao;
 
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
+import java.util.Map;
 
 public class AbstractDAO {
 	protected Log log = LogFactory.getLog(AbstractDAO.class);
@@ -35,6 +35,10 @@ public class AbstractDAO {
 		return sqlSession.selectOne(queryId);
 	}
 	public Object selectOne(String queryId, Object params) {
+		pringQueryId(queryId);
+		return sqlSession.selectOne(queryId, params);
+	}
+	public int selectOneInt(String queryId, Object params){
 		pringQueryId(queryId);
 		return sqlSession.selectOne(queryId, params);
 	}
