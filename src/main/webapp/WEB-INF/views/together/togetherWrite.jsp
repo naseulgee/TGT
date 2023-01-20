@@ -9,6 +9,12 @@
 	<%@ include file="/WEB-INF/include/admin-header.jspf" %>
 </c:if>
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
+<style>
+.btn.submit{
+margin-right:5px;
+}
+
+</style>
 <main class="layoutCenter">
 	<%@ include file="/WEB-INF/include/nav_mypage.jspf"%>
 	
@@ -72,13 +78,12 @@
 					</tr>
 					<tr>
 						<th scope="row">참여가능사이즈
-						<p class="info_help">참고하개!:)
-											XS: 3kg 미만
-											S : 3 ~ 9kg 미만
-											M : 9 ~ 22kg 미만
-											L : 22 ~ 45kg 미만
-											XL : 45 ~ 90kg
-											<p></th>
+						<pre class="info_help"> 참고하개!:) XS: 3kg 미만
+S : 3 ~ 9kg 미만
+M : 9 ~ 22kg 미만
+L : 22 ~ 45kg 미만
+XL : 45 ~ 90kg
+											</pre></th><!-- css때문에 이렇게 씀ㅜ -->
 						<td><select id="TO_WT_IDX" name="TO_WT_IDX">
 								<option value="1" selected>XS</option>
 								<option value="2">S</option>
@@ -90,7 +95,6 @@
 				</tbody>
 			</table>
 			
-			<br/>
 			<br/>
 			<div class="flexCenter">
 				<input type="submit" class="btn submit" value="작성하기"/>

@@ -12,6 +12,9 @@
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <style>
+.layoutCenter{
+width:100%;
+}
 .fa-solid {
 color:#f0b1aa;
 }
@@ -21,28 +24,59 @@ font-size:20px;
 font-weight:bold;
 }
 
+table{
+width:100%;
+display:flex;
+}
+
+.cate_wrap{
+width:100%;
+display:flex;
+}
+
 .main_list{
-padding-right:100px;
+width:100%;
+padding-right:90px;
+padding-left:95px;
+position:relative;
 }
 
 .cate_button{
-border:1px solid #f0b1aa;
-
+position:relative;
+height:auto;
 }
 
 .cate_button li{
 text-align:center;
 }
 
+.button_list{
+border:1px solid #f0b1aa;
+width:100%;
+}
+
 li{
 margin : 20px;
+}
+
+.btn.submit{
+white-space :nowrap;
+font-size:20px;
+}
+
+input[type="button"]{
+border:1px solid #9ea7ad;
+padding-top: 5px;
+padding-right: 10px;
+padding-bottom: 5px;
+padding-left: 10px
 }
 </style>
 <main class="layoutCenter">
 
 	<h1 class="txt_center"><span class="fa-solid fa-paw"></span>함께해요<span class="fa-solid fa-paw"></span></h1>
 	<br/>
-<div class="flexCenter">
+<div class="cate_wrap">
 	
 	<!-- 카드 테이블로 전체게시글 리스트 출력 -->
 	<div class="main_list">
@@ -85,7 +119,7 @@ margin : 20px;
 	
 	<!-- 카테고리별 게시글 리스트 출력, 글쓰기 버튼 -->
 	<div class="cate_button">
-		<ul>
+		<ul class="button_list">
 			<li><a class="btn submit" href="/together/writeForm.paw">글쓰기</a></li>
 				<li>
 				<input type="button" name="category" data-href="/together/catelist.paw" value="산책하개" class="use_move" 
