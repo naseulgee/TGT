@@ -49,11 +49,8 @@ section.notice {
 }
 
 .frame1 {
-	border-radius: 2em 2em 2em 2em;
-	background-color: #e6b4ac;
-	float: left;
-	margin-top: 13px;
-	margin-left: 20px;
+border-radius: 2em 2em 2em 2em;
+    background-color: #e6b4ac;
 }
 
 .frame2 {
@@ -73,4 +70,10 @@ section.notice {
 }
 .title2{
 margin-top: 4px;
+}
+.fontPosition{
+text-align:right;
+font-size: 12px;
+margin-top: 20px;
+margin-right: 10px;
 }
