@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html> 
 	<head>
 		<%@ include file="/WEB-INF/include/user-header.jspf"%>
 		<link href="/resources/css/board_comm/board_comm_detail.css" rel="stylesheet">
@@ -15,7 +15,7 @@ color: black;
 background-color: #f6eeec;
 border-radius: 2em 2em 2em 2em;
   padding: 6px;
-}
+}  
 .title2{
 margin-top: 4px;
 }

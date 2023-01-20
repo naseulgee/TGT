@@ -16,19 +16,21 @@ public class MainServiceImpl implements MainService {
 	private MainDAO mainDAO;
 
 	@Override
-	public List<Map<String, Object>> boardSearchList(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> boardSearchList(Map<String, Object> map, String keyword, String searchType) throws Exception {
 		return mainDAO.boardSearchList(map);
 	}
 
+
 	@Override
-	public List<Map<String, Object>> boardSearch0(Map<String, Object> map) throws Exception {
-		return mainDAO.boardSearch0(map);
+	public List<Map<String, Object>> togetherSearchList(Map<String, Object> map, String keyword, String searchType) throws Exception {
+		return mainDAO.togetherSearchList(map);
 	}
 
 	@Override
-	public List<Map<String, Object>> boardSearch1(Map<String, Object> map) throws Exception {
-		return mainDAO.boardSearch1(map);
+	public List<Map<String, Object>> placeSearchList(Map<String, Object> map, String keyword, String searchType) throws Exception {
+		return mainDAO.placeSearchList(map);
 	}
+
 	
 	
 
