@@ -278,7 +278,9 @@ $(document).ready( function() {
 			contentType: false,
 		 	data: formData,
 		 	type: 'POST',
-		 	success: function(result){ alert("Uploaded");}
+		 	success: function(result){ 
+		 		alert("Uploaded");
+		 	}
 		 }); //$.ajax
 
 	}); 
