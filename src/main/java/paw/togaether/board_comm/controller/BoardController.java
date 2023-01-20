@@ -26,10 +26,14 @@ public class BoardController {
 	@Resource(name="boardService")
 	private BoardService boardService;
 	
-	/* 23.01.12 최선아: 멍멍왈왈 게시판 리스트, 등록, 상세보기
+	private int searchNum;
+	private String isSearch;
+	/* 
+	 * 23.01.12 최선아: 멍멍왈왈 게시판 리스트, 등록, 상세보기
 	 * 23.01.13 최선아: 멍멍왈왈 게시판 수정 
 	 * 23.01.16 최선아: 멍멍왈왈 게시판 삭제
 	 * 23.01.17 최선아: 멍멍왈왈 게시판 등록 후 알러창 띄우기
+	 * 23.01.
 	 * */
 	
 	
@@ -117,5 +121,31 @@ public class BoardController {
 		return mv;
 	}
 	
+	// 멍멍왈왈 게시판 카테고리
+	@RequestMapping(value = "/board/category" )
+	public ModelAndView boardCategory(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("board_comm/board_list");
+			
+		List<Map<String, Object>> boardCategory = boardService.boardCategory(commandMap.getMap());
+		
+		isSearch = request.getParameter("isSearch");
+		if (isSearch != null) {
+			searchNum = Integer.parseInt(request.getParameter("searchNum"));
+			commandMap.put("searchNum", searchNum);
+			commandMap.put("isSearch", isSearch);
 
+			if (searchNum == 0) { // 
+				boardCategory = boardService.boardCategory(commandMap.getMap());
+			} else if (searchNum == 1) { // 작성자
+				boardCategory = boardService.boardCategory(commandMap.getMap());
+			}
+
+		mv.addObject("boardCategory", boardCategory); 
+		
+		log.fatal("boardCategory:"+ boardCategory);
+		
+		return mv;
+		}
+
+}
 }

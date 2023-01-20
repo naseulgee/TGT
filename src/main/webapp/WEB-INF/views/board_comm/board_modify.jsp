@@ -1,11 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html> 
-<html>
-	<head>
-		<%@ include file="/WEB-INF/include/user-header.jspf"%>
-		<link href="/resources/css/board_comm/board_comm_modify.css" rel="stylesheet">
-		<script src="/resources/js/board_comm/board_comm.js"></script>
-	</head>
+<%@ include file="/WEB-INF/include/user-header.jspf"%>
+<link href="/resources/css/board_comm/board_comm_modify.css" rel="stylesheet">
+<script src="/resources/js/board_comm/board_comm.js"></script>
+
 <style>
  
 .title1{
@@ -24,6 +20,7 @@ font-size: 13px;
 }
 
 </style>
+
 
 <main class="layoutCenter">
 	<body>

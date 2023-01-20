@@ -3,8 +3,11 @@
 
 <mapper namespace="Board">
 
-<!-- 23.01.12 최선아: 멍멍왈왈 게시판 리스트 출력 및 등록  -->
-<!-- 23.01.13 최선아: 멍멍왈왈 게시판 수정 -->
+<!--  
+23.01.12 최선아: 멍멍왈왈 게시판 리스트 출력 및 등록 
+23.01.13 최선아: 멍멍왈왈 게시판 수정
+13.01.18 최선아: 멍멍왈왈 게시판 카테고리 설정 
+-->
 
 <!-- 게시판 리스트 -->
 <select id="boardList" parameterType="hashmap" resultType="hashmap">
@@ -108,5 +111,39 @@
 
 	]]>
 </update> 
+
+<!-- 선아: 카테고리 -->
+<select id="boardCategory" parameterType="hashmap" resultType="hashmap" >
+	<![CDATA[
+	SELECT 
+			 A.BC_IDX,
+			 A.BC_TITLE,
+			 A.BC_READHIT,
+			 A.BC_MOD_DATE,
+			 A.BC_READHIT,
+			 A.BC_WRITER_ID,
+			 A.BC_BCC_NAME,
+			 B.BCC_NAME
+	
+		FROM BOARD_COMM A
+	INNER JOIN BOARD_COMM_CATE B
+		ON A.BC_BCC_NAME = B.BCC_NAME
+	]]>
+	  <if test="searchType != null">
+			 <if test="searchType == 'A'.toString()">
+                AND BC_BCC_NAME LIKE '%' || 자유게시판 || '%' 
+             </if>
+           	 <if test="searchType == 'B'.toString()">
+                	AND BC_BCC_NAME LIKE '%' || 정보게시판 || '%' 
+           	 </if>
+           	 <if test="searchType == 'C'.toString()">
+                AND BC_BCC_NAME LIKE '%' || 긴급실종유기견 || '%' 
+             </if>
+             <if test="searchType == 'D'.toString()">
+                AND BC_BCC_NAME LIKE '%' || 자원봉사구해요  || '%' 
+             </if>
+		</if>
+</select>
+
 
 </mapper>

@@ -42,5 +42,10 @@ public class BoardDAO extends AbstractDAO {
 		update("Board.boardDelete", map);
 	}
 	
+	//멍멍왈왈 카테고리
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> boardCategory(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList("Board.boardCategory", map);
+	}
 	
 }
