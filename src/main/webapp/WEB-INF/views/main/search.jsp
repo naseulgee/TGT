@@ -24,8 +24,6 @@
 				</div>
 			</form>
 		</div>
-		<br>
-		 
 		<div>
 			<div class="tab_radio">
 				<input type="radio" id="tab_a" name="tab" value="a" checked> <label for="tab_a">게시판</label> 
