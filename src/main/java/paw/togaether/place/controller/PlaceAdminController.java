@@ -83,13 +83,12 @@ public class PlaceAdminController {
 				first = chs[uniVal];
 			}
 			//그룹에 해당 초성의 키가 없을 때
-			if(!first_map.containsKey(first)) {//키와 배열 값 생성
+			if(!first_map.containsKey(first)) {//키와 배열 생성
 				first_map.put(first, new ArrayList<>());
 			}
-			first_map.get(first).add(map);
+			first_map.get(first).add(map);//초성에 해당하는 배열에 맵형식의 값 추가
 		}
 		
-		System.out.println(first_map);
 		mv.addObject("first_map", first_map);
 		return mv;
 	}
