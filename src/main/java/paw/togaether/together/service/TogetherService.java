@@ -23,4 +23,7 @@ public interface TogetherService {
 	
 	/* 23.01.19 박선영 함께해요 게시글 카테고리별 리스트 */ 
 	List<Map<String, Object>> togetherCateList(Map<String, Object> map) throws Exception;
+	
+	/* 23.01.20 박선영 함께해요 게시글 수정 */
+	void togetherModi(Map<String, Object> map) throws Exception;
 }

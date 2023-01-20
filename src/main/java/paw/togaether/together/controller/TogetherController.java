@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import paw.togaether.common.domain.CommandMap;
@@ -94,6 +95,34 @@ public class TogetherController {
 		
 		mv.addObject(commandMap.get("TC_NAME"));
 		mv.addObject("catelist",catelist);
+		
+		return mv;
+	}
+	
+	/* 23.01.20 박선영 게시글 수정폼 */
+	@RequestMapping(value="/together/modifyForm.paw")
+	public ModelAndView openTogetherModi(CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView("/together/togetherModi");
+		
+		System.out.println(commandMap.getMap());
+		
+		//이미 써놨던 게시글 상세정보를 불러옴
+		Map<String, Object> map = togetherService.togetherDetail(commandMap.getMap());
+		
+		mv.addObject("map",map);
+		
+		return mv;
+	}
+	
+	/* 23.01.20 박선영 게시글 수정하기 */
+	@RequestMapping(value="/together/modify.paw", method = RequestMethod.POST)
+	public ModelAndView togetherModi(CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView("redirect:/together/list.paw");
+		
+		System.out.println(commandMap.get("TO_IDX"));
+		
+		togetherService.togetherModi(commandMap.getMap());
+		mv.addObject("TO_IDX", commandMap.get("TO_IDX"));
 		
 		return mv;
 	}

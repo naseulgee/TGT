@@ -148,4 +148,24 @@
 		]]>
 	</select>
 	
+	<!-- 23.01.20 박선영 : 게시글 수정 구현 -->
+	<update id="togetherModi" parameterType="hashmap">
+		<![CDATA[
+			update
+				TOGETHER
+			set
+				TO_TITLE = #{TO_TITLE},
+				TO_TC_NAME = #{TO_TC_NAME},
+				TO_CONTENTS = #{TO_CONTENTS},
+				TO_DATE = #{TO_DATE},
+				TO_TIME = #{TO_TIME},
+				TO_PEOPLE = #{TO_PEOPLE},
+				TO_LOC = #{TO_LOC},
+				TO_BR_NAME = #{TO_BR_NAME},
+				TO_WT_IDX = #{TO_WT_IDX}
+			where
+				TO_IDX = #{TO_IDX}
+		]]>
+	</update>
+	
 </mapper>

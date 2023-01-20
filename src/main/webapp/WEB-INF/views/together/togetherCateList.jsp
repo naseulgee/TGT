@@ -22,7 +22,7 @@ width:100%;
 display:flex;
 }
 
-.main_wrap{
+.cate_wrap{
 width:100%;
 display:flex;
 }
@@ -69,7 +69,7 @@ padding-left: 10px
 
 	<h1 class="txt_center"><span class="fa-solid fa-paw"></span>함께해요<span class="fa-solid fa-paw"></span></h1>
 	<br/>
-<div class="main_wrap">
+<div class="cate_wrap">
 	
 	<!-- 카드 테이블로 전체게시글 리스트 출력 -->
 	<div class="main_list">
@@ -126,7 +126,11 @@ padding-left: 10px
 		
 		</ul>
 	</div>
-</div>	
+</div>
+<br/>
+			<div class="flexCenter">
+				<a class="btn submit" style="font-size:15px;" href="/together/list.paw">전체목록으로</a>
+			</div>	
 </main>
 
 <c:if test="${page != 'admin'}">
