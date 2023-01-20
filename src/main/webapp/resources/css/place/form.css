@@ -4,7 +4,7 @@
 #placeWrite ul{}
 #placeWrite ul li{ display: -ms-flexbox; display: -webkit-box; display: flex; margin: 1.2em 0; }
 #placeWrite ul li > *:first-child{ display: block; width: 30%; min-width: 100px; }
-#placeWrite ul li .input_wrap{ display: block; width: calc(100% - min(30%, 100px)); }
+#placeWrite ul li .input_wrap{ width: calc(100% - min(30%, 100px)); }
 #placeWrite ul li input[type="radio"],
 #placeWrite ul li input[type="checkbox"]{ display: none; }
 #placeWrite ul li input[type="text"]{ width: 100%; }
@@ -12,7 +12,9 @@
 /* 필수 */
 #placeWrite ul .req strong::after{ content: " *"; color: red; }
 /* 주소 */
-#placeWrite ul .addr .input_wrap p{ margin-top: 10px; }
+#placeWrite ul .addr .input_wrap{ gap: 5px; }
+#placeWrite ul .addr .input_wrap .btn{ width: 105px; }
+#placeWrite ul .addr .input_wrap #address{ width: calc(100% - 110px); padding: 0; border: none; color: var(--mainTxtColor); }
 /* 분류 */
 #placeWrite ul .cate .input_wrap{ padding: 2px 5px 10px; overflow: auto hidden; }
 #placeWrite ul .cate .input_wrap .scroll_wrap{ width: max-content; gap: 10px; }

@@ -2,6 +2,7 @@
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
 <link rel="stylesheet" type="text/css" href="/resources/css/place/form.css"/>
 <script src="/resources/js/place/form.js"></script>
+<script src="/resources/js/common/daum_address.js"></script>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <main class="layoutCenter">
@@ -17,10 +18,23 @@
 		</li>
 		<li class="addr req">
 			<label for="pl_loc_btn"><strong>시설 주소</strong></label>
-			<div class="input_wrap">
-				<input id="pl_loc_btn" class="btn submit" type="button" value="주소 검색" onclick="search_addr()">
-				<p>${!empty PL_LOC?PL_LOC:''}</p>
-				<input type="hidden" name="pl_loc" value="${!empty PL_LOC?PL_LOC:''}">
+			<div class="input_wrap flex flexWrap">
+				<input id="pl_loc_btn" class="btn submit" type="button" value="주소 검색" onclick="findPostcode(); remove_addr();">
+				<c:choose>
+					<c:when test="${!empty PL_LOC}">
+						<input type="text" id="address" value="${fn:split(PL_LOC,',')[0]}" readonly>
+						<input type="text" id="detailAddress" value="${fn:split(PL_LOC,',')[1]}" placeholder="상세주소">
+						<input type="hidden" id="postcode">
+						<input type="hidden" id="extra">
+						<input type="hidden" id="pl_loc" name="pl_loc" value="${PL_LOC}">
+					</c:when>
+					<c:otherwise>
+						<input type="text" id="address" name="address" readonly>
+						<input type="text" id="detailAddress" name="detailAddress" placeholder="상세주소를 입력해주세요">
+						<input type="hidden" id="postcode">
+						<input type="hidden" id="extra" name="pl_loc">
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</li>
 		<li class="cate req">
@@ -40,45 +54,35 @@
 			<label for="pl_call1"><strong>전화번호</strong></label>
 			<div class="input_wrap">
 				<c:if test="${!empty PL_CALL}">
-					<c:set var="call" value="${fn:split(PL_CALL,'-')}" />
-					<input type="tel" name="pl_call1" value="${call[0]}"> - 
-					<input type="tel" name="pl_call2" value="${call[1]}"> - 
-					<input type="tel" name="pl_call3" value="${call[2]}">
-					<input type="hidden" name="pl_call" value="${PL_CALL}">
+					<input id="tel1" type="tel" name="tel1" value="${fn:split(PL_CALL,'-')[0]}"> - 
+					<input id="tel2" type="tel" name="tel2" value="${fn:split(PL_CALL,'-')[1]}"> - 
+					<input id="tel3" type="tel" name="tel3" value="${fn:split(PL_CALL,'-')[2]}">
+					<input id="pl_call" type="hidden" name="pl_call" value="${PL_CALL}">
 				</c:if>
 				<c:if test="${empty PL_CALL}">
-					<input type="tel" name="pl_call1"> - 
-					<input type="tel" name="pl_call2"> - 
-					<input type="tel" name="pl_call3">
-					<input type="hidden" name="pl_call">
+					<input id="tel1" type="tel" name="tel1"> - 
+					<input id="tel2" type="tel" name="tel2"> - 
+					<input id="tel3" type="tel" name="tel3">
+					<input id="pl_call" type="hidden" name="pl_call">
 				</c:if>
 			</div>
 		</li>
 		<li class="offday">
 			<strong>휴무일</strong>
+			<c:set var="PL_OFFDAY" value="월,화,금"/>
 			<div class="input_wrap flexWrap">
-				<c:forTokens var="day" items="월,화,수,목,금,토,일" delims="," varStatus="status">
-					${day}${index}<br>
-				</c:forTokens>
-				<input id="d1" type="checkbox" name="pl_offday" value="1">
-				<label class="btn round" for="d1">월</label>
-				<input id="d2" type="checkbox" name="pl_offday" value="2">
-				<label class="btn round" for="d2">화</label>
-				<input id="d3" type="checkbox" name="pl_offday" value="3">
-				<label class="btn round" for="d3">수</label>
-				<input id="d4" type="checkbox" name="pl_offday" value="4">
-				<label class="btn round" for="d4">목</label>
-				<input id="d5" type="checkbox" name="pl_offday" value="5">
-				<label class="btn round" for="d5">금</label>
-				<input id="d6" type="checkbox" name="pl_offday" value="6">
-				<label class="btn round" for="d6">토</label>
-				<input id="d0" type="checkbox" name="pl_offday" value="0">
-				<label class="btn round" for="d0">일</label>
+				<c:forEach var="day" items="${fn:split('월,화,수,목,금,토,일',',')}" varStatus="status">
+					<c:set var="i" value="${(status.index + 1)>=7?(status.index + 1)-7:(status.index + 1)}"/>
+					<input id="d${i}" type="checkbox" name="pl_offday" value="${i}" ${(!empty PL_OFFDAY&&1==1)?"checked":""}>
+					<label class="btn round" for="d${i}">${day}</label>
+				</c:forEach>
 			</div>
 		</li>
 		<li class="open">
 			<label for="pl_open"><strong>시작시간</strong></label>
-			<div class="input_wrap"><input type="time" id="pl_open" name="pl_open" value="${!empty PL_NAME?PL_NAME:''}"></div>
+			<div class="input_wrap">
+				<input type="time" id="pl_open" name="pl_open" value="${!empty PL_NAME?PL_NAME:''}">
+			</div>
 		</li>
 		<li class="close">
 			<label for="pl_close"><strong>종료시간</strong></label>
