@@ -49,6 +49,8 @@
 		<!-- <include refid="common.pagingPost"/> -->
 	</select>
 	
+	
+	
 	<!-- 23.01.13 박선영: 게시글 작성폼  -->
 	<insert id="togetherWrite" parameterType="hashmap">
 		<![CDATA[
@@ -84,5 +86,66 @@
 				)
 		]]>
 	</insert>
+	
+	<!-- 23.01.18 박선영: 함께해요 게시글 상세보기 -->
+	<select id="togetherDetail" resultType="hashmap">
+		<![CDATA[
+			SELECT t.TO_IDX,
+					t.TO_TITLE,
+					t.TO_TC_NAME,
+					t.TO_CONTENTS,
+					t.TO_WRITER_ID,
+					t.TO_WRITER_NAME,
+					t.TO_DATE,
+					t.TO_TIME,
+					t.TO_PEOPLE,
+					t.TO_JOIN_PEOPLE,
+					t.TO_LOC,
+					t.TO_BR_NAME,
+					t.TO_WT_IDX,
+					t.TO_REG_DATE,
+					t.TO_MOD_DATE,
+					t.TO_DEL_GB,
+					c.TC_IDX,
+					c.TC_NAME,
+					c.TC_COUNT,
+					w.TW_IDX,
+					w.TW_TO_IDX,
+					w.TW_MEM_ID
+					FROM TOGETHER t, TOGETHER_CATE c, TOGETHER_WITH w
+					WHERE t.TO_TC_NAME = c.TC_NAME
+					AND t.TO_IDX = w.TW_TO_IDX
+					AND t.TO_IDX=#{TO_IDX}
+		]]>
+	</select>
+	
+	<!-- 23.01.19 박선영 함께해요 카테고리별 리스트 출력 -->
+	<select id="togetherCateList" resultType="hashmap">
+		<![CDATA[
+			SELECT
+				t.TO_IDX,
+				t.TO_TITLE,
+				t.TO_TC_NAME,
+				t.TO_CONTENTS,
+				t.TO_WRITER_ID,
+				t.TO_WRITER_NAME,
+				t.TO_DATE,
+				t.TO_TIME,
+				t.TO_PEOPLE,
+				t.TO_JOIN_PEOPLE,
+				t.TO_LOC,
+				t.TO_BR_NAME,
+				t.TO_WT_IDX,
+				t.TO_REG_DATE,
+				t.TO_MOD_DATE,
+				t.TO_DEL_GB,
+				c.TC_IDX,
+				c.TC_NAME,
+				c.TC_COUNT 
+				from TOGETHER t, TOGETHER_CATE c
+				where t.TO_TC_NAME = c.TC_NAME
+				AND c.TC_NAME=#{TC_NAME}
+		]]>
+	</select>
 	
 </mapper>

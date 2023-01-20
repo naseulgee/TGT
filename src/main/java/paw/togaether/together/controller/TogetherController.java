@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,6 +32,7 @@ public class TogetherController {
 		
 		//서비스의 togetherList 메소드의 결과 map 형태의 resultMap 변수에 저장
 		List<Map<String, Object>> list = togetherService.togetherList(commandMap.getMap());
+		
 			System.out.println(commandMap.getMap());
 		
 		//get()으로 받은 commandMap의 값들을 mv에 ""이름으로 저장
@@ -58,6 +59,41 @@ public class TogetherController {
 		ModelAndView mv = new ModelAndView("redirect:/together/list.paw");
 		
 		togetherService.togetherWrite(commandMap.getMap());
+		
+		return mv;
+	}
+	
+	/* 23.01.18 박선영 : 게시글 상세보기 이동 */
+	@RequestMapping(value="/together/detail/{to_idx}.paw")
+	public ModelAndView togetherDetail(@PathVariable("to_idx") int TO_IDX, CommandMap commandMap)throws Exception {
+		
+		//값을 잘 받아오는지 확인하는 용도
+		System.out.println(TO_IDX);
+		System.out.println(commandMap.getMap());
+		
+		ModelAndView mv = new ModelAndView("/together/togetherDetail");
+		
+		Map<String, Object> map = togetherService.togetherDetail(commandMap.getMap());
+		
+		mv.addObject("map", map);
+		
+		return mv;
+		
+	}
+	
+	/*23.01.19 박선영: 카테고리별 리스트 출력 */
+	@RequestMapping(value="/together/catelist.paw")
+	public ModelAndView togetherCateList(CommandMap commandMap) throws Exception {
+		
+		System.out.println(commandMap.getMap());
+		System.out.println(commandMap.get("TC_NAME"));
+		
+		ModelAndView mv = new ModelAndView("/together/togetherCateList");
+				
+		List<Map<String, Object>> catelist = togetherService.togetherCateList(commandMap.getMap());
+		
+		mv.addObject(commandMap.get("TC_NAME"));
+		mv.addObject("catelist",catelist);
 		
 		return mv;
 	}
