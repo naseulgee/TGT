@@ -48,8 +48,14 @@ public class TogetherController {
 	@RequestMapping(value="/together/writeForm.paw")
 	public ModelAndView openTogetherWrite(CommandMap commandMap) throws Exception {
 		
+		System.out.println(commandMap.getMap());
+		
 		ModelAndView mv = new ModelAndView("/together/togetherWrite");
 		
+		/* 견종분류 셀렉트 박스 만들용도 */
+		List<Map<String, Object>> brlist = togetherService.togetherbreed(commandMap.getMap());
+		
+		mv.addObject("brlist", brlist);
 		return mv;
 	}
 	//23.01.16 박선영 : 작성한 게시글 insert 하기

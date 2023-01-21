@@ -4,6 +4,7 @@
 <mapper namespace="together">
 
 	<!-- 23.01.12 박선영: 함께해요 게시판 리스트 출력 및 검색  -->
+	<!-- 23.01.21 박선영 : 견종 테이블과 조인으로 변경 -->
 	<select id="togetherList" resultType="hashmap">
 		<!-- <include refid = "common.pagingPre"/> -->
 		<![CDATA[
@@ -19,16 +20,19 @@
 				t.to_people,
 				t.to_join_people,
 				t.to_loc,
-				t.to_br_name,
+				t.to_br_idx,
 				t.to_wt_idx,
 				t.to_reg_date,
 				t.to_mod_date,
 				t.to_del_gb,
 				c.tc_idx,
 				c.tc_name,
-				c.tc_count 
-				from together t, together_cate c
+				c.tc_count,
+				b.br_idx,
+				b.br_name
+				from together t, together_cate c, breed b
 				where t.to_tc_name = c.tc_name
+				and t.to_br_idx = b.br_idx
 		]]>
 		<if test="keyword != null">
 			<choose>
@@ -52,6 +56,7 @@
 	
 	
 	<!-- 23.01.13 박선영: 게시글 작성폼  -->
+	<!-- 23.01.21 박선영 : 견종명이 아닌 견종 번호로 입력 받을 수 있도록 변경 -->
 	<insert id="togetherWrite" parameterType="hashmap">
 		<![CDATA[
 			insert into TOGETHER(
@@ -63,7 +68,7 @@
 				TO_TIME,
 				TO_PEOPLE,
 				TO_LOC,
-				TO_BR_NAME,
+				TO_BR_IDX,
 				TO_WT_IDX,
 				TO_REG_DATE,
 				TO_MOD_DATE,
@@ -78,7 +83,7 @@
 				#{TO_TIME, jdbcType=VARCHAR},
 				#{TO_PEOPLE, jdbcType=VARCHAR},
 				#{TO_LOC, jdbcType=VARCHAR},
-				#{TO_BR_NAME, jdbcType=VARCHAR},
+				#{TO_BR_IDX, jdbcType=VARCHAR},
 				#{TO_WT_IDX, jdbcType=VARCHAR},
 				sysdate,
 				sysdate,
@@ -86,8 +91,10 @@
 				)
 		]]>
 	</insert>
+
 	
 	<!-- 23.01.18 박선영: 함께해요 게시글 상세보기 -->
+	<!-- 23.01.21 박선영 : 견종 테이블 조인하고 게시글 견종번호로 수정 -->
 	<select id="togetherDetail" resultType="hashmap">
 		<![CDATA[
 			SELECT t.TO_IDX,
@@ -101,7 +108,7 @@
 					t.TO_PEOPLE,
 					t.TO_JOIN_PEOPLE,
 					t.TO_LOC,
-					t.TO_BR_NAME,
+					t.TO_BR_IDX,
 					t.TO_WT_IDX,
 					t.TO_REG_DATE,
 					t.TO_MOD_DATE,
@@ -109,17 +116,20 @@
 					c.TC_IDX,
 					c.TC_NAME,
 					c.TC_COUNT,
-					w.TW_IDX,
 					w.TW_TO_IDX,
-					w.TW_MEM_ID
-					FROM TOGETHER t, TOGETHER_CATE c, TOGETHER_WITH w
+					w.TW_MEM_ID,
+					b.BR_IDX,
+					b.BR_NAME
+					FROM TOGETHER t, TOGETHER_CATE c, TOGETHER_WITH w, BREED b
 					WHERE t.TO_TC_NAME = c.TC_NAME
-					AND t.TO_IDX = w.TW_TO_IDX
+					AND t.TO_BR_IDX = b.BR_IDX
+					AND w.TW_TO_IDX = t.TO_IDX
 					AND t.TO_IDX=#{TO_IDX}
 		]]>
 	</select>
 	
 	<!-- 23.01.19 박선영 함께해요 카테고리별 리스트 출력 -->
+	<!-- 23.01.21 박선영 : 견종 테이블 조인하고 게시글 견종번호로 수정 -->
 	<select id="togetherCateList" resultType="hashmap">
 		<![CDATA[
 			SELECT
@@ -134,21 +144,25 @@
 				t.TO_PEOPLE,
 				t.TO_JOIN_PEOPLE,
 				t.TO_LOC,
-				t.TO_BR_NAME,
+				t.TO_BR_IDX,
 				t.TO_WT_IDX,
 				t.TO_REG_DATE,
 				t.TO_MOD_DATE,
 				t.TO_DEL_GB,
 				c.TC_IDX,
 				c.TC_NAME,
-				c.TC_COUNT 
-				from TOGETHER t, TOGETHER_CATE c
+				c.TC_COUNT,
+				b.BR_IDX,
+				b.BR_NAME 
+				from TOGETHER t, TOGETHER_CATE c, BREED b
 				where t.TO_TC_NAME = c.TC_NAME
+				AND t.TO_BR_IDX = b.BR_IDX
 				AND c.TC_NAME=#{TC_NAME}
 		]]>
 	</select>
 	
 	<!-- 23.01.20 박선영 : 게시글 수정 구현 -->
+	<!-- 23.01.21 박선영 : 견종이름을 견종번호로 수정 -->
 	<update id="togetherModi" parameterType="hashmap">
 		<![CDATA[
 			update
@@ -161,11 +175,19 @@
 				TO_TIME = #{TO_TIME},
 				TO_PEOPLE = #{TO_PEOPLE},
 				TO_LOC = #{TO_LOC},
-				TO_BR_NAME = #{TO_BR_NAME},
+				TO_BR_IDX = #{TO_BR_IDX},
 				TO_WT_IDX = #{TO_WT_IDX}
 			where
 				TO_IDX = #{TO_IDX}
 		]]>
 	</update>
+	
+	<!--23.01.21 박선영 : 견종분류 리스트  -->
+	<select id="togetherbreed" resultType="hashmap">
+		<![CDATA[
+			SELECT BR_IDX, BR_NAME
+			FROM BREED
+		]]>
+	</select>
 	
 </mapper>

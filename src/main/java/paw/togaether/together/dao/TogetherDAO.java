@@ -46,5 +46,11 @@ public class TogetherDAO extends AbstractDAO {
 	public void togetherModi(Map<String, Object> map) throws Exception {
 		update("together.togetherModi", map);
 	}
+	
+	/* 23.01.21 박선영 견종분류 */
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> togetherbreed(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList("together.togetherbreed", map);
+	}
 
 }

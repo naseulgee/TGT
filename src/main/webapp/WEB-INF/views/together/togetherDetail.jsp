@@ -62,7 +62,7 @@ padding-left: 10px
 					<td><strong>${map.TO_TITLE}</strong></td>
 				</tr>
 				<tr>
-					<td><strong>${map.TO_BR_NAME}</strong>(이)랑!</td>
+					<td><strong>${map.BR_NAME}</strong>(이)랑!</td>
 				</tr>
 				<tr>
 					<td>${map.TO_DATE}|${map.TO_TIME}</td>

@@ -81,7 +81,7 @@ padding-left: 10px
 							<!-- tr클래스 클릭시 상세보기 페이지로 이동-->
 							<tr class="use_move" data-href="/together/detail/${tc.TO_IDX}.paw" onclick="move(this,'TO_IDX:${tc.TO_IDX}')">
 								<td class="color"><span class="fa-solid fa-paw"></span>[${tc.TO_TC_NAME}] ${tc.TO_TITLE }</td><!-- 글분류, 제목 -->
-								<td><span class="fa-solid fa-bone"></span> 참여가능하개(견종): ${tc.TO_BR_NAME }</td><!-- 참여가능견종 -->
+								<td><span class="fa-solid fa-bone"></span> 참여가능하개(견종): ${tc.BR_NAME }</td><!-- 참여가능견종 -->
 								<td><span class="fa-solid fa-bone"></span> 참여가능하개(크기) : <c:if test="${tc.TO_WT_IDX eq '1'}">XS</c:if>
 								<c:if test="${tc.TO_WT_IDX eq '2'}">S</c:if>
 								<c:if test="${tc.TO_WT_IDX eq '3'}">M</c:if>
@@ -133,7 +133,4 @@ padding-left: 10px
 			</div>	
 </main>
 
-<c:if test="${page != 'admin'}">
-	<!-- 풋터. 모든 페이지에 삽입! -->
 	<%@ include file="/WEB-INF/include/common-footer.jspf" %>
-</c:if>

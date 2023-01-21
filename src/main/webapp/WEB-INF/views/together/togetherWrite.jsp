@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 	<!-- 어드민 제외한 모든 페이지의 헤더 -->
-	<%@ include file="/WEB-INF/include/user-header.jspf" %>
+<%@ include file="/WEB-INF/include/user-header.jspf" %>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <style>
@@ -73,7 +73,11 @@ top:100px;
 					</tr>
 					<tr>
 						<th scope="row">참여가능견종</th>
-						<td><input type="text" id="TO_BR_NAME" name="TO_BR_NAME" placeholder="입력해주개:)"/></td>
+						<td><select id="TO_BR_IDX" name="TO_BR_IDX">
+								<c:forEach items="${brlist}" var="br">
+									<option value="${br.BR_IDX}">${br.BR_NAME}</option>
+								</c:forEach>
+						</select></td>
 					</tr>
 					<tr>
 						<th scope="row">참여가능사이즈
