@@ -30,4 +30,7 @@ public interface TogetherService {
 	/* 23.01.20 박선영 견종분류 */
 	List<Map<String, Object>> togetherbreed(Map<String, Object> map) throws Exception;
 	
+	/* 23.01.21 박선영 참여자 리스트 */
+	List<Map<String, Object>> togetherWithList(Map<String, Object> map) throws Exception;
+	
 }

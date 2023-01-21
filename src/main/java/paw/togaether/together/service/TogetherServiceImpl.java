@@ -56,5 +56,11 @@ public class TogetherServiceImpl implements TogetherService {
 	public List<Map<String, Object>> togetherbreed(Map<String, Object> map) throws Exception {
 		return togetherDAO.togetherbreed(map);
 	}
+	
+	/* 23.01.21 박선영 함께해요 참여자 리스트 */
+	@Override
+	public List<Map<String, Object>> togetherWithList(Map<String, Object> map) throws Exception {
+		return togetherDAO.togetherWithList(map);
+	}
 
 }

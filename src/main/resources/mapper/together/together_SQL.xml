@@ -116,14 +116,11 @@
 					c.TC_IDX,
 					c.TC_NAME,
 					c.TC_COUNT,
-					w.TW_TO_IDX,
-					w.TW_MEM_ID,
 					b.BR_IDX,
 					b.BR_NAME
-					FROM TOGETHER t, TOGETHER_CATE c, TOGETHER_WITH w, BREED b
+					FROM TOGETHER t, TOGETHER_CATE c,BREED b
 					WHERE t.TO_TC_NAME = c.TC_NAME
 					AND t.TO_BR_IDX = b.BR_IDX
-					AND w.TW_TO_IDX = t.TO_IDX
 					AND t.TO_IDX=#{TO_IDX}
 		]]>
 	</select>
@@ -187,6 +184,17 @@
 		<![CDATA[
 			SELECT BR_IDX, BR_NAME
 			FROM BREED
+		]]>
+	</select>
+	
+	<!--23.01.21 박선영 : 참여자 리스트  -->
+	<select id="togetherWithList" resultType="hashmap">
+		<![CDATA[
+			SELECT  TW_IDX,
+					TW_TO_IDX,
+					TW_MEM_ID
+			FROM TOGETHER_WITH
+			WHERE TW_TO_IDX = #{TO_IDX}
 		]]>
 	</select>
 	

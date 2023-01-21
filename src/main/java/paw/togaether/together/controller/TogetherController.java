@@ -81,7 +81,9 @@ public class TogetherController {
 		ModelAndView mv = new ModelAndView("/together/togetherDetail");
 		
 		Map<String, Object> map = togetherService.togetherDetail(commandMap.getMap());
+		List<Map<String, Object>> withlist = togetherService.togetherWithList(commandMap.getMap());//참여자 리스트 메소드
 		
+		mv.addObject("withlist", withlist);
 		mv.addObject("map", map);
 		
 		return mv;
@@ -114,7 +116,10 @@ public class TogetherController {
 		
 		//이미 써놨던 게시글 상세정보를 불러옴
 		Map<String, Object> map = togetherService.togetherDetail(commandMap.getMap());
+		/* 견종분류 셀렉트 박스 만들용도 */
+		List<Map<String, Object>> brlist = togetherService.togetherbreed(commandMap.getMap());
 		
+		mv.addObject("brlist", brlist);
 		mv.addObject("map",map);
 		
 		return mv;

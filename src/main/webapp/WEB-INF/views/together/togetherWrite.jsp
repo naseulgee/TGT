@@ -5,6 +5,10 @@
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <style>
+.fa-solid {
+color:#f0b1aa;
+}
+
 .btn.submit{
 margin-right:5px;
 }
@@ -13,12 +17,17 @@ margin-right:5px;
 top:100px;
 }
 
+textarea{
+width:100%;
+height:100px;
+}
+
 </style>
 <main class="layoutCenter">
 	<%@ include file="/WEB-INF/include/nav_mypage.jspf"%>
 	
 	<!-- 23.01.16 박선영 : 글쓰기 폼, 구현완료 -->
-	<h1 class="txt_center">함께해요</h1>
+<h1 class="txt_center"><span class="fa-solid fa-paw"></span>함께해요<span class="fa-solid fa-paw"></span></h1>
 	
 	<div class="main_wrap">
 		<form method="post" action="/together/write.paw">
@@ -57,7 +66,8 @@ top:100px;
 					</tr>
 					<tr>
 						<th scope="row">내용</th>
-						<td><input type="text" id="TO_CONTENTS" name="TO_CONTENTS"/></td>
+						<td><pre><textarea class="slim_scroll" id="TO_CONTENTS" name="TO_CONTENTS" placeholder="내용입력해주게:)"></textarea></pre>
+						</td>
 					</tr>
 					<tr>
 						<th scope="row">날짜</th>

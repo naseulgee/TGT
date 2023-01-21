@@ -71,7 +71,7 @@ padding-left: 10px
 					<td>${map.TO_LOC}</td>
 				</tr>
 				<tr>
-					<td>${map.TO_CONTENTS}</td>
+					<td class="toggle_ellip">${map.TO_CONTENTS}</td>
 				</tr>
 			</tbody>
 		</table>
@@ -81,10 +81,10 @@ padding-left: 10px
 				<li><span class="fa-solid fa-paw"></span> 참여중이개!  ${map.TO_JOIN_PEOPLE }/${map.TO_PEOPLE }</li>
 				<li><span class="fa-solid fa-paw"></span> 대장이개!  ${map.TO_WRITER_ID}</li>
 				<c:choose>
-						<c:when test="${!empty map.TW_MEM_ID }">
+						<c:when test="${!empty withlist}">
 							<li><span class="fa-solid fa-paw"></span> 누구랑 가개?
-								<c:forEach items="${map.TW_MEM_ID }">
-									${map.TW_MEM_ID }
+								<c:forEach items="${withlist}" var="wili">
+									${wili.TW_MEM_ID }
 								</c:forEach>
 							</li>
 						</c:when>

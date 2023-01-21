@@ -14,6 +14,13 @@ top:100px;
 .btn.submit{
 margin-right:5px;
 }
+
+textarea{
+width:100%;
+height:100px;
+white-space:pre;
+}
+
 </style>
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <main class="layoutCenter">
@@ -57,7 +64,9 @@ margin-right:5px;
 					</tr>
 					<tr>
 						<th scope="row">내용</th>
-						<td><input type="text" id="TO_CONTENTS" name="TO_CONTENTS" value="${map.TO_CONTENTS}"/></td>
+						<td><textarea class="slim_scroll" id="TO_CONTENTS" name="TO_CONTENTS" placeholder="내용입력해주게:)">
+						${map.TO_CONTENTS}</textarea>
+						</td>
 					</tr>
 					<tr>
 						<th scope="row">날짜</th>
@@ -73,7 +82,11 @@ margin-right:5px;
 					</tr>
 					<tr>
 						<th scope="row">참여가능견종</th>
-						<td><input type="text" id="TO_BR_NAME" name="TO_BR_NAME" placeholder="입력해주개:)" value="${map.TO_BR_NAME }"/></td>
+						<td><select id="TO_BR_IDX" name="TO_BR_IDX">
+								<c:forEach items="${brlist}" var="br">
+									<option value="${br.BR_IDX}">${br.BR_NAME}</option>
+								</c:forEach>
+						</select></td>
 					</tr>
 					<tr>
 						<th scope="row">참여가능사이즈
