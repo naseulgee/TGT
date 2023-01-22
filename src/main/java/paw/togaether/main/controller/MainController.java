@@ -58,9 +58,9 @@ public class MainController {
 			mv.addObject("boardSearchList", boardSearchList);
 
 			if (boardSearchList.size() > 0) {
-				mv.addObject("TOTAL", boardSearchList.get(0).get("TOTAL_COUNT"));
+				mv.addObject("TOTAL_B", boardSearchList.get(0).get("TOTAL_COUNT"));
 			} else {
-				mv.addObject("TOTAL", 0);
+				mv.addObject("TOTAL_B", 0);
 			}
 			
 		return mv;
@@ -90,9 +90,9 @@ public class MainController {
 			mv.addObject("togetherSearchList", togetherSearchList);
 			
 			if (togetherSearchList.size() > 0) {
-				mv.addObject("TOTAL", togetherSearchList.get(0).get("TOTAL_COUNT"));
+				mv.addObject("TOTAL_T", togetherSearchList.get(0).get("TOTAL_COUNT"));
 			} else {
-				mv.addObject("TOTAL", 0);
+				mv.addObject("TOTAL_T", 0);
 			}
 			
 		return mv;
@@ -122,9 +122,9 @@ public class MainController {
 			mv.addObject("placeSearchList", placeSearchList);
 
 			if (placeSearchList.size() > 0) {
-				mv.addObject("TOTAL", placeSearchList.get(0).get("TOTAL_COUNT"));
+				mv.addObject("TOTAL_P", placeSearchList.get(0).get("TOTAL_COUNT"));
 			} else {
-				mv.addObject("TOTAL", 0);
+				mv.addObject("TOTAL_P", 0);
 			}
 			
 		return mv;

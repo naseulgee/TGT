@@ -1,6 +1,6 @@
 <html  lang="utf-8">
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <%@ include file="/WEB-INF/include/common-head.jspf" %>
 <script src="/resources/js/paging/paging.js"></script>
 
@@ -23,11 +23,11 @@
 	
 	
 	<div id="PAGE_NAVI_B"></div>
-	<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" />
+	<input type="hidden" id="PAGE_INDEX_B" name="PAGE_INDEX_B" />
 	<br />
 	
-	<form id="commonForm" name="commonForm"></form>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<form id="commonForm_B" name="commonForm_B"></form>
+
 <!-- <script type="text/javascript" src="/resources/js/main/search_board.js"></script>-->
 <script type="text/javascript">
 
@@ -40,12 +40,12 @@
 	});
 
 	function fn_selectBoardList(pageNo) {
-		var comAjax = new ComAjax();
+		var comAjax = new ComAjax("commonForm_B");
 
 		comAjax.setUrl("<c:url value='/paging/board.paw' />");
 		comAjax.setCallback("fn_selectBoardListCallback");
 
-		comAjax.addParam("PAGE_INDEX", pageNo);
+		comAjax.addParam("PAGE_INDEX", $("#PAGE_INDEX_B").val());
 		comAjax.addParam("PAGE_ROW", 10);
 
 		comAjax.addParam("keyword", $('#keyword').val());
@@ -55,7 +55,7 @@
 	}
 
 	function fn_selectBoardListCallback(data) {
-		var total = data.TOTAL;
+		var total = data.TOTAL_B;
 		var body = $(".board");
 		body.empty();
 
@@ -67,9 +67,10 @@
 		} else {
 			var params = {
 				divId : "PAGE_NAVI_B",
-				pageIndex : "PAGE_INDEX",
+				pageIndex : "PAGE_INDEX_B",
 				totalCount : total,
-				eventName : "fn_selectBoardList"
+				eventName : "fn_selectBoardList",
+				recordCount : 10
 			};
 			gfn_renderPaging(params);
 

@@ -38,13 +38,20 @@ function ComSubmit(opt_formId) {
 var gfv_ajaxCallback = "";
 function ComAjax(opt_formId){
 	this.url = "";		
-	this.formId = gfn_isNull(opt_formId) == true ? "commonForm" : opt_formId;
+	this.formId = opt_formId;
 	this.param = "";
 	
-	if(this.formId == "commonForm"){
-		$("#commonForm")[0].reset();
-		$("#commonForm").empty();
-	}
+	
+	if(this.formId == "commonForm_B"){
+		$("#commonForm_B")[0].reset();
+		$("#commonForm_B").empty();
+	} else if(this.formId == "commonForm_T"){
+		$("#commonForm_T")[0].reset();
+		$("#commonForm_T").empty();
+	} else if(this.formId == "commonForm_P"){
+		$("#commonForm_P")[0].reset();
+		$("#commonForm_P").empty();
+	} 
 	
 	this.setUrl = function setUrl(url){
 		this.url = url;
@@ -59,10 +66,8 @@ function ComAjax(opt_formId){
 	};
 	
 	this.ajax = function ajax(){
-		if(this.formId != "commonForm"){
-			this.param += "&" + $("#" + this.formId).serialize();
-		}
-		$.ajax({
+		if(this.formId == "commonForm"){
+			$.ajax({
 			url : this.url,    
 			type : "POST",   
 			data : this.param,
@@ -76,7 +81,55 @@ function ComAjax(opt_formId){
 				}
 			}
 		});
-	};
+		} else if(this.formId == "commonForm_B"){
+			$.ajax({
+			url : this.url,    
+			type : "POST",   
+			data : this.param,
+			async : false, 
+			success : function(data, status) {
+				if(typeof(fv_ajaxCallback) == "function"){
+					fv_ajaxCallback(data);
+				}
+				else {
+					eval(fv_ajaxCallback + "(data);");
+				}
+			}
+		});
+		} else if(this.formId == "commonForm_T"){
+			$.ajax({
+			url : this.url,    
+			type : "POST",   
+			data : this.param,
+			async : false, 
+			success : function(data, status) {
+				if(typeof(fv_ajaxCallback) == "function"){
+					fv_ajaxCallback(data);
+				}
+				else {
+					eval(fv_ajaxCallback + "(data);");
+				}
+			}
+		});
+		} else if(this.formId == "commonForm_P"){
+			$.ajax({
+			url : this.url,    
+			type : "POST",   
+			data : this.param,
+			async : false, 
+			success : function(data, status) {
+				if(typeof(fv_ajaxCallback) == "function"){
+					fv_ajaxCallback(data);
+				}
+				else {
+					eval(fv_ajaxCallback + "(data);");
+				}
+			}
+		});
+		} else {
+			this.param += "&" + $("#" + this.formId).serialize();
+		};
+	}
 }
 
 /*
@@ -100,7 +153,7 @@ function gfn_renderPaging(params){
 	
 	var recordCount = params.recordCount; //페이지당 레코드 수
 	if(gfn_isNull(recordCount) == true){
-		recordCount = 10;
+//		recordCount = 10;
 	}
 	var totalIndexCount = Math.ceil(totalCount / recordCount); // 전체 인덱스 수
 	gfv_eventName = params.eventName;
