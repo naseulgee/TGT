@@ -137,4 +137,17 @@ public class TogetherController {
 		
 		return mv;
 	}
+	
+	/* 23.01.23 박선영 게시글 삭제하기 */
+	@RequestMapping(value="/together/delete.paw", method = RequestMethod.POST)
+	public ModelAndView togetherDel(CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView("redirect:/together/list.paw");
+		
+		System.out.println(commandMap.get("TO_IDX"));
+		
+		togetherService.togetherDel(commandMap.getMap());
+		
+		return mv;
+	}
+	
 }

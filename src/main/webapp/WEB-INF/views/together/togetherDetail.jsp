@@ -99,7 +99,8 @@ padding-left: 10px
 		<br/>
 		<div class="flexCenter">
 			<a class="btn submit" href="/together/list.paw">목록으로</a>
-			<input type="button" class="use_move" data-href="/together/modifyForm.paw" onclick="move(this, 'TO_IDX:${map.TO_IDX}')" value="수정하기">
+			<input type="button" class="use_move" data-href="/together/modifyForm.paw" onclick="move(this, 'TO_IDX:${map.TO_IDX}')" value="수정하기" style="margin-right:5px;">
+			<input type="button" class="use_move" data-href="/together/delete.paw" onclick="move(this, 'TO_IDX:${map.TO_IDX}')" value="삭제하기">
 		</div>
 	</div>
 	

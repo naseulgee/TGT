@@ -5,6 +5,7 @@
 
 	<!-- 23.01.12 박선영: 함께해요 게시판 리스트 출력 및 검색  -->
 	<!-- 23.01.21 박선영 : 견종 테이블과 조인으로 변경 -->
+	<!-- 23.01.23 박선영 : 삭제 기능 구현하면서 삭제여부가 N 인 게시글만 출력조건 추가 -->
 	<select id="togetherList" resultType="hashmap">
 		<!-- <include refid = "common.pagingPre"/> -->
 		<![CDATA[
@@ -33,6 +34,7 @@
 				from together t, together_cate c, breed b
 				where t.to_tc_name = c.tc_name
 				and t.to_br_idx = b.br_idx
+				and t.to_del_gb ='N'
 		]]>
 		<if test="keyword != null">
 			<choose>
@@ -174,6 +176,7 @@
 				TO_LOC = #{TO_LOC},
 				TO_BR_IDX = #{TO_BR_IDX},
 				TO_WT_IDX = #{TO_WT_IDX}
+				TO_MOD_DATE = SYSDATE
 			where
 				TO_IDX = #{TO_IDX}
 		]]>
@@ -197,5 +200,15 @@
 			WHERE TW_TO_IDX = #{TO_IDX}
 		]]>
 	</select>
+	
+	
+	<!-- 23.01.23 박선영 : 게시글 삭제기능 구현 -->
+	<update id="togetherDel" parameterType="hashmap">
+		<![CDATA[
+			UPDATE TOGETHER
+			SET TO_DEL_GB = 'Y'
+			WHERE TO_IDX=#{TO_IDX}
+		]]>
+	</update>
 	
 </mapper>

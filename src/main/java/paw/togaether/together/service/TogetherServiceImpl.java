@@ -62,5 +62,11 @@ public class TogetherServiceImpl implements TogetherService {
 	public List<Map<String, Object>> togetherWithList(Map<String, Object> map) throws Exception {
 		return togetherDAO.togetherWithList(map);
 	}
+	
+	/* 23.01.23 박선영 게시글 삭제 */
+	@Override
+	public void togetherDel(Map<String, Object> map) throws Exception {
+		togetherDAO.togetherDel(map);
+	}
 
 }

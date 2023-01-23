@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 	<!-- 어드민 제외한 모든 페이지의 헤더 -->
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
-
+<script src="/resources/js/together/togewrite.js"></script>
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <style>
 .fa-solid {
@@ -30,7 +30,7 @@ height:100px;
 <h1 class="txt_center"><span class="fa-solid fa-paw"></span>함께해요<span class="fa-solid fa-paw"></span></h1>
 	
 	<div class="main_wrap">
-		<form method="post" action="/together/write.paw">
+		<form method="post" action="/together/write.paw" name="writefrm">
 			<table class="board_view">
 				<caption>게시글 등록</caption>
 				<tbody>
@@ -110,13 +110,12 @@ XL : 45 ~ 90kg
 			
 			<br/>
 			<div class="flexCenter">
-				<input type="submit" class="btn submit" value="작성하기"/>
+				<input type="button" class="btn submit" value="작성하기" onclick="writeform_check();"/>
 				<a class="btn" href="/together/list.paw">목록으로</a>
 			</div>
 		</form>
 	</div>
 
 </main>
-
 
 <%@ include file="/WEB-INF/include/common-footer.jspf" %>

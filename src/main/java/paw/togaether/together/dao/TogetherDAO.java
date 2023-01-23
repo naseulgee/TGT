@@ -58,5 +58,10 @@ public class TogetherDAO extends AbstractDAO {
 	public List<Map<String, Object>> togetherWithList(Map<String, Object> map) throws Exception {
 		return (List<Map<String, Object>>) selectList("together.togetherWithList", map);
 	}
+	
+	/* 23.01.23 박선영 게시글 삭제하기 */
+	public void togetherDel(Map<String, Object> map) throws Exception {
+		update("together.togetherDel", map);
+	}
 
 }
