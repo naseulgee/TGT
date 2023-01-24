@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/include/common-head.jspf" %>
-<script src="/resources/js/paging/paging.js"></script>
+<script src="/resources/js/paging/searchPaging_T.js"></script>
 
 	<div>
 			<table class="card_table" id="together_list">
@@ -23,7 +23,7 @@
 	<div id="PAGE_NAVI_T"></div>
 	<input type="hidden" id="PAGE_INDEX_T" name="PAGE_INDEX_T" /> <br />
 
-		<form id="commonForm_T" name="commonForm_T"></form>
+		<form id="commonForm" name="commonForm"></form>
 <!-- <script type="text/javascript" src="/resources/js/main/search_together.js"></script> -->
  
 <script type="text/javascript">
@@ -36,7 +36,7 @@
 		});
 
 		function fn_selectBoardList2(pageNo) {
-			var comAjax = new ComAjax("commonForm_T");
+			var comAjax = new ComAjax();
 			comAjax.setUrl("<c:url value='/paging/together.paw' />");
 			comAjax.setCallback("fn_selectBoardListCallback2");
 			
@@ -69,7 +69,7 @@
 					eventName : "fn_selectBoardList2",
 					recordCount : 6
 				};
-				gfn_renderPaging(params2);
+				gfn_renderPaging_T(params2);
 
 				var str = "";
 				$.each(data.togetherSearchList,

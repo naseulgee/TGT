@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <%@ include file="/WEB-INF/include/common-head.jspf" %>
-<script src="/resources/js/paging/paging.js"></script>
+<script src="/resources/js/paging/searchPaging_B.js"></script>
 
 	<div>
 			<table id="board_list">
@@ -26,7 +26,7 @@
 	<input type="hidden" id="PAGE_INDEX_B" name="PAGE_INDEX_B" />
 	<br />
 	
-	<form id="commonForm_B" name="commonForm_B"></form>
+	<form id="commonForm" name="commonForm"></form>
 
 <!-- <script type="text/javascript" src="/resources/js/main/search_board.js"></script>-->
 <script type="text/javascript">
@@ -40,7 +40,7 @@
 	});
 
 	function fn_selectBoardList(pageNo) {
-		var comAjax = new ComAjax("commonForm_B");
+		var comAjax = new ComAjax();
 
 		comAjax.setUrl("<c:url value='/paging/board.paw' />");
 		comAjax.setCallback("fn_selectBoardListCallback");
@@ -72,7 +72,7 @@
 				eventName : "fn_selectBoardList",
 				recordCount : 10
 			};
-			gfn_renderPaging(params);
+			gfn_renderPaging_B(params);
 
 			var str = "";
 			$.each(data.boardSearchList, function(key, value) {
