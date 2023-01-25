@@ -19,7 +19,7 @@ font-weight:bold;
 
 table{
 width:100%;
-display:flex;
+display:absolute;
 }
 
 .cate_wrap{
@@ -114,16 +114,10 @@ padding-left: 10px
 	<div class="cate_button">
 		<ul class="button_list">
 			<li><a class="btn submit" href="/together/writeForm.paw">글쓰기</a></li>
-				<li>
-				<input type="button" name="category" data-href="/together/catelist.paw" value="산책하개" class="use_move" 
-					onclick="move(this, 'TC_NAME:산책하개')"></li>
-				<li><input type="button" name="category" data-href="/together/catelist.paw" value="카페가개" class="use_move" 
-					onclick="move(this, 'TC_NAME:카페가개')"></li>
-				<li><input type="button" name="category" data-href="/together/catelist.paw" value="놀러가게" class="use_move" 
-					onclick="move(this, 'TC_NAME:놀러가개')"></li>
-				<li><input type="button" name="category" data-href="/together/catelist.paw" value="친구하개" class="use_move" 
-					onclick="move(this, 'TC_NAME:친구하개')"></li>
-		
+			<c:forEach items="${cate}" var="ct">	
+				<li><input type="button" name="TC_NAME" data-href="/together/catelist.paw" value="${ct.TC_NAME }" class="use_move" 
+					onclick="move(this, 'TC_NAME:${ct.TC_NAME}')"></li>	
+			</c:forEach>	
 		</ul>
 	</div>
 </div>

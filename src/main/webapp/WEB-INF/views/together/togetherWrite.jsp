@@ -42,10 +42,9 @@ height:100px;
 					<tr>
 						<th scope="row">게시글 분류</th>
 						<td><select name="TO_TC_NAME" id="TO_TC_NAME">
-								<option value="산책하개" selected>산책하개</option>
-								<option value="카페가개" >카페가개</option>
-								<option value="놀러가개" >놀러가개</option>
-								<option value="친구하개" >친구하개</option>
+								<c:forEach items="${catelist}" var="ct">
+									<option value="${ct.TC_NAME}">${ct.TC_NAME}</option>
+								</c:forEach>
 							</select>
 						</td>
 					</tr>

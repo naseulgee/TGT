@@ -18,7 +18,7 @@ font-weight:bold;
 
 table{
 width:100%;
-display:flex;
+display:absolute;
 }
 
 .cate_wrap{
@@ -89,7 +89,8 @@ padding-left: 10px
 									</td><!-- 참여가능사이즈 -->
 								<td><span class="fa-solid fa-bone"></span> 언제개: ${to.TO_DATE }</td><!-- 모임날짜 -->
 								<td><span class="fa-solid fa-bone"></span> 몇시개: ${to.TO_TIME }</td><!-- 모임시간 -->
-								<td><span class="fa-solid fa-bone"></span> 몇명이개: ${to.TO_JOIN_PEOPLE }/${to.TO_PEOPLE}</td><!-- 참여인원/모임인원 -->
+								<td><span class="fa-solid fa-bone"></span> 몇명이개: ${join}/${to.TO_PEOPLE}<!-- 참여인원/모임인원 -->
+									<input type="hidden" value="${to.TO_IDX}" id="TO_IDX" name="TO_IDX"/></td>
 								<td class="txt_right" style="font-size:15px;">${to.TO_REG_DATE }</td><!-- 등록날짜 -->
 							</tr>
 						</c:forEach>
@@ -114,16 +115,10 @@ padding-left: 10px
 	<div class="cate_button">
 		<ul class="button_list">
 			<li><a class="btn submit" href="/together/writeForm.paw">글쓰기</a></li>
-				<li>
-				<input type="button" name="category" data-href="/together/catelist.paw" value="산책하개" class="use_move" 
-					onclick="move(this, 'TC_NAME:산책하개')"></li>
-				<li><input type="button" name="category" data-href="/together/catelist.paw" value="카페가개" class="use_move" 
-					onclick="move(this, 'TC_NAME:카페가개')"></li>
-				<li><input type="button" name="category" data-href="/together/catelist.paw" value="놀러가게" class="use_move" 
-					onclick="move(this, 'TC_NAME:놀러가개')"></li>
-				<li><input type="button" name="category" data-href="/together/catelist.paw" value="친구하개" class="use_move" 
-					onclick="move(this, 'TC_NAME:친구하개')"></li>
-		
+			<c:forEach items="${catelist}" var="ct">	
+				<li><input type="button" name="TC_NAME" data-href="/together/catelist.paw" value="${ct.TC_NAME }" class="use_move" 
+					onclick="move(this, 'TC_NAME:${ct.TC_NAME}')"></li>	
+			</c:forEach>	
 		</ul>
 	</div>
 </div>	
