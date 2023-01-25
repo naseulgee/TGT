@@ -10,5 +10,9 @@ public interface ReviewService {
 	void insertReview(Map<String, Object> map, MultipartFile[] uploadFile)throws Exception;
 	
 	List<Map<String, Object>> openMyReviews(Map<String, Object> map) throws Exception;
+	
+	Map<String, Object> openMyReview(Map<String, Object> map) throws Exception;
+	
+	List<Map<String, Object>> openMyReviewPhoto(Map<String, Object> map) throws Exception;
 
 }

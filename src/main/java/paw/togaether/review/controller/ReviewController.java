@@ -58,8 +58,7 @@ public class ReviewController {
 		return new ResponseEntity<String>("/mypage/review/list.paw",HttpStatus.OK);
 	}
 	
-	/** 작업날짜 작업자: 메소드 설명
-	 * 23.01.20 신현지: 마이페이지에서 내리뷰 조회 메서드
+	/** 23.01.20 신현지: 마이페이지에서 내 리뷰목록 조회 메서드
 	 */
 	@RequestMapping(value="/mypage/review/list")
 	public ModelAndView openMyReviews(CommandMap commandMap, HttpSession session) throws Exception{
@@ -70,6 +69,24 @@ public class ReviewController {
 		
 		List<Map<String,Object>> reviewList = reviewService.openMyReviews(commandMap.getMap());
 		m.addObject("reviewList",reviewList);
+		return m;
+	}
+	
+	/** 작업날짜 작업자: 메소드 설명
+	 * 23.01.25 신현지: 마이페이지에서 내 리뷰(특정 하나) 조회 메서드
+	 */
+	@RequestMapping(value="/mypage/review/myReview")
+	public ModelAndView openMyReview(CommandMap commandMap, HttpSession session) throws Exception{
+		ModelAndView m = new ModelAndView("/mypage/review/myReview");
+		
+		//리뷰 가져오기
+		Map<String,Object> review =  reviewService.openMyReview(commandMap.getMap());
+		m.addObject("review",review);
+		
+		//사진 가져오기
+		List<Map<String,Object>> photos =  reviewService.openMyReviewPhoto(commandMap.getMap());
+		m.addObject("photos", photos); 
+		
 		return m;
 	}
 	

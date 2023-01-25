@@ -25,7 +25,9 @@ public class FileUtils {
 		String idx = (String)map.get("idx");
 		System.out.println("시설번호 or 리뷰번호 : " + idx);
 		
-		String uploadFolder = "C:\\upload"; //저장경로(개인별로 수정할 것)
+		
+		//저장경로(개인별로 수정할 것) webapp내 resources내 upload라는 폴더에 사진저장
+		String uploadFolder = "C:\\JAVA\\stsApp\\TGT\\src\\main\\webapp\\resources\\upload"; 
 
 		//디렉토리가 없다면 생성
 		File file = new File(uploadFolder);
@@ -61,7 +63,7 @@ public class FileUtils {
 				
 				//2.경로에 썸네일 이미지도 저장
 				FileOutputStream thumbnail = new FileOutputStream(new File(uploadFolder, "s_" +storedFileName));
-	 			Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 100,100);
+	 			Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 200,200);
 				thumbnail.close();
 				
 			} catch (Exception e) { log.error(e.getMessage()); }

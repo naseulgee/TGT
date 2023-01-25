@@ -41,4 +41,14 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDAO.openMyReviews(map);
 	}
 
+	@Override
+	public Map<String, Object> openMyReview(Map<String, Object> map) throws Exception {
+		return reviewDAO.openMyReview(map);
+	}
+
+	@Override
+	public List<Map<String, Object>> openMyReviewPhoto(Map<String, Object> map) throws Exception {
+		return reviewDAO.openMyReviewPhoto(map);
+	}
+
 }
