@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -25,33 +26,39 @@ public class BoardController {
 	
 	@Resource(name="boardService")
 	private BoardService boardService;
-	
-	private int searchNum;
-	private String isSearch;
+
+
 	/* 
 	 * 23.01.12 최선아: 멍멍왈왈 게시판 리스트, 등록, 상세보기
 	 * 23.01.13 최선아: 멍멍왈왈 게시판 수정 
 	 * 23.01.16 최선아: 멍멍왈왈 게시판 삭제
 	 * 23.01.17 최선아: 멍멍왈왈 게시판 등록 후 알러창 띄우기
 	 * 23.01.19 최선아: 멍멍왈왈 게시판 카테고리
+	 * 23.01.25 최선아: 멍멍왈왈 댓글처리
 	 * */
 	
 	
 	// 멍멍왈왈 게시판 리스트
-	@ResponseBody
-	@RequestMapping(value = "/board/list")
+	@RequestMapping(value = "/board/list", method=RequestMethod.GET)
 	public ModelAndView boardList(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("board_comm/board_list");
 		List<Map<String, Object>> list = boardService.boardList(commandMap.getMap());
-		 String tab_a = request.getParameter("tab_a");
-		 String tab_b = request.getParameter("tab_b");
-		 String tab_c = request.getParameter("tab_c");
-		 String tab_d = request.getParameter("tab_d");
-		 
+		  
 		mv.addObject("list", list); //글번호,제목,조회수,작성자,작성날짜 담아줌
-		/*
-		 * mv.addObject("kind", kind); log.info("카인드"+ kind);
-		 */
+		return mv;
+	}
+
+	// 멍멍왈왈 게시판 리스트
+	@RequestMapping(value = "/board/list2.paw", method=RequestMethod.POST)
+	public ModelAndView boardList2(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("board_comm/board_list2");
+		Map<String, Object> map = commandMap.getMap();
+		if (map.get("BC_BCC_NAME").equals("전체게시판")){
+			map.remove("BC_BCC_NAME");
+		};
+		List<Map<String, Object>> list = boardService.boardList(map);
+		log.info("BoadList2=============="+map);
+		mv.addObject("list", list); //글번호,제목,조회수,작성자,작성날짜 담아줌
 		return mv;
 	}
 
@@ -85,6 +92,9 @@ public class BoardController {
 		
 		Map<String,Object> map = boardService.boardDetail(commandMap.getMap());
 		mv.addObject("map", map);
+		
+		List<Map<String, Object>> comment = boardService.commentList(commandMap.getMap());
+		mv.addObject("comment", comment);
 		
 		log.fatal("Controller>detail>returned map:"+map);
 		
@@ -129,28 +139,17 @@ public class BoardController {
 		return mv;
 	}
 	
-	/*
-	 * // 멍멍왈왈 게시판 카테고리
-	 * 
-	 * @RequestMapping(value = "/board/category" ) public ModelAndView
-	 * boardCategory(CommandMap commandMap, HttpServletRequest request) throws
-	 * Exception { ModelAndView mv = new ModelAndView("board_comm/board_list");
-	 * 
-	 * List<Map<String, Object>> boardCategory =
-	 * boardService.boardCategory(commandMap.getMap());
-	 * 
-	 * isSearch = request.getParameter("isSearch"); if (isSearch != null) {
-	 * searchNum = Integer.parseInt(request.getParameter("searchNum"));
-	 * commandMap.put("searchNum", searchNum); commandMap.put("isSearch", isSearch);
-	 * 
-	 * if (searchNum == 0) { // boardCategory =
-	 * boardService.boardCategory(commandMap.getMap()); } else if (searchNum == 1) {
-	 * // 작성자 boardCategory = boardService.boardCategory(commandMap.getMap()); }
-	 * 
-	 * mv.addObject("boardCategory", boardCategory);
-	 * 
-	 * log.fatal("boardCategory:"+ boardCategory);
-	 * 
-	 * return mv; } }
-	 */
+	// 멍멍왈왈 게시판 댓글 등록
+	@RequestMapping(value = "/comment/write", method = RequestMethod.POST)
+	public ModelAndView commentInsert(CommandMap commandMap, RedirectAttributes redirect) throws Exception {
+		ModelAndView mv = new ModelAndView("redirect:/board/list.paw");
+		
+		boardService.commentInsert(commandMap.getMap());
+		
+		return mv;
+	}
+	
+	
+	
+	
 }

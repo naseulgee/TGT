@@ -48,4 +48,15 @@ public class BoardDAO extends AbstractDAO {
 		return (List<Map<String, Object>>) selectList("Board.boardCategory", map);
 	}
 	
+	//댓글쓰기
+	public void commentInsert(Map<String, Object> map) throws Exception {
+		insert("Board.commentInsert", map);
+	}
+	
+	//댓글 조회
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> commentList(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList("Board.commentList", map);
+	}
+	
 }
