@@ -1,20 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%> 
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
-<!DOCTYPE>
-<head>
-	<script src="https://cdn.tailwindcss.com"></script>
-	<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-	<script>
-		tailwind.config = {
-			important: true,
-		} 
-	</script>
-<title>회원가입</title>
-</head>
-<body>
+<script src="/resources/js/common/daum_address.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<script>
+	tailwind.config = {
+		important: true,
+	}
+</script>
+
+<!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
+<main class="layoutCenter">
 <div class="container mx-auto mt-24 sm:px-6 lg:px-8">
-<form class="space-y-8 divide-y divide-gray-200 max-w-screen-lg" action="/member/joinMember" method="POST" onsubmit="return validate()">
+<form class="space-y-8 divide-y divide-gray-200 max-w-screen-lg" action="/member/joinMember.paw" method="POST" onsubmit="return checkForm()">
 	<div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
 		<div class="space-y-6 sm:space-y-5">
 			<div>
@@ -82,15 +80,20 @@
 					<label for="MEM_DOG_NAME" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">강아지 이름</label>
 					<div class="mt-1 sm:col-span-2 sm:mt-0">
 						<input type="text" name="MEM_DOG_NAME" id="MEM_DOG_NAME" maxlength="16" class="block w-full max-w-lg rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+						<p class="mt-2 text-sm text-red-600" id="dogname-error"></p>
 					</div>
 				</div>
 
 				<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
 					<label for="KINDOFDOG" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">견종명</label>
 					<div class="mt-1 sm:col-span-2 sm:mt-0">
-						<select id="KINDOFDOG" name="KINDOFDOG"  class="block w-full max-w-lg rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
-							<option value="1" selected>푸들</option>
-						</select>
+						<c:if test="${!empty dogList}" >
+							<select name="KINDOFDOG" id="KINDOFDOG" style="width:80px;" onchange="showOrNot(this)" class="block w-full max-w-lg rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+								<c:forEach var="row" items="${dogList}" varStatus="i">
+									<option value="${row.BR_IDX}">${row.BR_NAME}</option>
+								</c:forEach>
+							</select>
+						</c:if>
 					</div>
 				</div>
 
@@ -114,6 +117,7 @@
 					<label for="MEM_DOG_NUM" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">강아지 몸무게</label>
 					<div class="mt-1 sm:mt-0">
 						<input type="text" name="MEM_DOG_WEIGHT" id="MEM_DOG_WEIGHT" maxlength="10"  class="block w-full max-w-lg rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm">
+						<p class="mt-2 text-sm text-red-600" id="weightofdog-error"></p>
 					</div>
 					<span class="self-center">kg</span>
 				</div>
@@ -128,8 +132,8 @@
 
 	<div class="pt-5">
 		<div class="flex justify-end">
-			<button type="button" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" onclick="location.href='/sample.paw'">취소</button>
-			<button type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">회원가입</button>
+			<button type="button"  class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" onclick="location.href='/sample.paw'">취소</button>
+			<button type="submit" id="uploadBtn" name="uploadBtn" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">회원가입</button>
 		</div>
 	</div>
 
@@ -140,46 +144,55 @@
 </body>
 
 
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 <script type="text/javascript">
 	/** 아이디 검증 */
-	function idValidate() {
-		if ($('#MEM_ID').val() != '') {
+	// function idValidate() {
+	// 	if ($('#MEM_ID').val() != '') {
+	//
+	// 		// 아이디를 서버로 전송 > DB 유효성 검사 > 결과 반환받기
+	// 		$.ajax({
+	//
+	// 			type: 'GET',
+	// 			url: '/idCheck',
+	// 			data: 'id=' + $('#MEM_ID').val(),
+	// 			dataType: 'json',
+	// 			success: function(response) {
+	// 				if (response == '0') {
+	// 					$('#verification').text('사용 가능한 아이디입니다.');
+	// 					$('#verification').css('color', 'green');
+	// 				} else {
+	// 					$('#verification').text('이미 사용중인 아이디입니다.');
+	// 					$('#verification').css('color', 'red');
+	// 				}
+	// 			},
+	// 			error: function(a, b, c) {
+	// 				console.log(a, b, c);
+	// 			}
+	//
+	// 		});
+	//
+	// 	} else {
+	// 		$('#verification').text('아이디를 입력해주세요.');
+	// 		$('#verification').css('color', 'red');
+	// 		$('#MEM_ID').focus();
+	// 	}
+	// }
 
-			// 아이디를 서버로 전송 > DB 유효성 검사 > 결과 반환받기
-			$.ajax({
+/** 셀렉트박스 선택에 따라 견종명 입력창 보여주기 여부 */
 
-				type: 'GET',
-				url: '/idCheck',
-				data: 'id=' + $('#MEM_ID').val(),
-				dataType: 'json',
-				success: function(response) {
-					if (response == '0') {
-						$('#verification').text('사용 가능한 아이디입니다.');
-						$('#verification').css('color', 'green');
-					} else {
-						$('#verification').text('이미 사용중인 아이디입니다.');
-						$('#verification').css('color', 'red');
-					}
-				},
-				error: function(a, b, c) {
-					console.log(a, b, c);
-				}
-
-			});
-
-		} else {
-			$('#verification').text('아이디를 입력해주세요.');
-			$('#verification').css('color', 'red');
-			$('#MEM_ID').focus();
-		}
+function showOrNot(element) {
+	if(element.value == 1) {
+		document.getElementById("MEM_BR_NAME").style.visibility = "";
+	} else {
+		document.getElementById("MEM_BR_NAME").style.visibility = "hidden";
+		document.getElementById("MEM_BR_NAME").value = "";
 	}
-
-
+}
 
 
 	/** 폼 검증하는 함수 */
-	function validate() {
+	function checkForm() {
 		const id = document.querySelector('#MEM_ID');
 		const idErrMsg = document.querySelector('#verification');
 		const call = document.querySelector('#MEM_CALL');
@@ -190,27 +203,38 @@
 		const newPassErrMsg = document.querySelector('#new-pw-error');
 		const email = document.querySelector('#MEM_EMAIL');
 		const emailErrMsg = document.querySelector('#email-error');
-		const dogname = document.querySelector('#MEM_DOG_NAME');
-		const dognameErrMsg = document.querySelector('#email-error');
+		const nameofdog = document.querySelector('#MEM_DOG_NAME');
+		const nameofdogErrMsg = document.querySelector('#dogname-error');
+		const weightofdog = document.querySelector('#MEM_DOG_WEIGHT');
+		const weightofdogErrMsg = document.querySelector('#weightofdog-error');
 
 
 		let result = true;
-		if(idErrMsg.textContent == "이미 사용중인 아이디입니다.") {
-			result = false;
-		}else if (idErrMsg.textContent =="사용 가능한 아이디입니다.") {
-			result = true;
-		}else if (idErrMsg.textContent == "") {
-			$('#verification').text('아이디 중복 확인을 눌러주세요');
-			$('#verification').css('color', 'red');
-			result = false;
-		}
-		// if(id.value === ""){
-		// 	idErrMsg.textContent = "아이디를 입력해주세요."
+		// if(idErrMsg.textContent == "이미 사용중인 아이디입니다.") {
 		// 	result = false;
-		// }else{
-		// 	idErrMsg.textContent = "";
+		// }else if (idErrMsg.textContent =="사용 가능한 아이디입니다.") {
+		// 	result = true;
+		// }else if (idErrMsg.textContent == "") {
+		// 	$('#verification').text('아이디 중복 확인을 눌러주세요');
+		// 	$('#verification').css('color', 'red');
+		// 	result = false;
 		// }
 
+		// 강아지몸무게 검증
+		if(weightofdog.value === "") {
+			weightofdogErrMsg.textContent = "강아지 몸무게를 입력해주세요."
+			result = false;
+		} else {
+			nameofdogErrMsg.textContent = ""
+		}
+
+		// 강아지이름 검증
+		if(nameofdog.value === "") {
+			nameofdogErrMsg.textContent = "강아지이름을 입력해주세요."
+			result = false;
+		}else {
+			nameofdogErrMsg.textContent = ""
+		}
 
 		// password 검증
 		if(pass.value === ""){
@@ -249,55 +273,8 @@
 
 
 	}
-
-/** 우편번호 찾기 + 주소입력 */
-function findPostcode() {
-	new daum.Postcode({
-		oncomplete: function(data) {
-			// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-			// 각 주소의 노출 규칙에 따라 주소를 조합한다.
-			// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-			var addr = ''; // 주소 변수
-			var extraAddr = ''; // 참고항목 변수
-
-			//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-			if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-				addr = data.roadAddress;
-			} else { // 사용자가 지번 주소를 선택했을 경우(J)
-				addr = data.jibunAddress;
-			}
-
-			// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-			if(data.userSelectedType === 'R'){
-				// 법정동명이 있을 경우 추가한다. (법정리는 제외)
-				// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-				if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-					extraAddr += data.bname;
-				}
-				// 건물명이 있고, 공동주택일 경우 추가한다.
-				if(data.buildingName !== '' && data.apartment === 'Y'){
-					extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-				}
-				// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-				if(extraAddr !== ''){
-					extraAddr = ' (' + extraAddr + ')';
-				}
-				// 조합된 참고항목을 해당 필드에 넣는다.
-				document.getElementById("extra").value = extraAddr;
-
-			} else {
-				document.getElementById("extra").value = '';
-			}
-
-			// 우편번호와 주소 정보를 해당 필드에 넣는다.
-			document.getElementById('postcode').value = data.zonecode;
-			document.getElementById("address").value = addr;
-			// 커서를 상세주소 필드로 이동한다.
-			document.getElementById("detailAddress").focus();
-		}
-	}).open();
-}
 </script>
+</main><!-- //main 종료 -->
 
-</html>
+<!-- 풋터. 모든 페이지에 삽입! -->
+<%@ include file="/WEB-INF/include/common-footer.jspf" %>

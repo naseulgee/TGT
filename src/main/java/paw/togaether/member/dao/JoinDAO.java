@@ -3,6 +3,7 @@ package paw.togaether.member.dao;
 import org.springframework.stereotype.Repository;
 import paw.togaether.common.dao.AbstractDAO;
 
+import java.util.List;
 import java.util.Map;
 
 @Repository("joinDAO")
@@ -18,4 +19,7 @@ public class JoinDAO extends AbstractDAO {
 	}
 
 
+	public List<Map<String, Object>> listOfDog(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>)selectList("join.selectListOfDog", map);
+	}
 }
