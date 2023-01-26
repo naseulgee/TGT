@@ -1,25 +1,27 @@
 <%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
+<link type="text/css" rel="stylesheet" href="/resources/css/common/photo.css"/>
 <link rel="stylesheet" type="text/css" href="/resources/css/place/form.css"/>
 <script src="/resources/js/place/form.js"></script>
 <script src="/resources/js/common/daum_address.js"></script>
+<script src="/resources/js/common/photo.js" defer></script>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <main class="layoutCenter">
 <h1 class="txt_center">우리동네 시설 등록</h1>
 <form id="placeWrite" action="write.paw" method="post">
+<input type="hidden" name="ph_board_type" value="place">
 <c:if test="${!empty pl_idx}"><input type="hidden" name="pl_idx" value="${pl_idx}"></c:if>
 	<ul>
 		<li class="name req">
 			<label for="pl_name"><strong>시설명</strong></label>
-			<div class="input_wrap">
+			<div class="input_wrap" data-check-type="one" data-check-id="pl_name">
 				<input type="text" id="pl_name" name="pl_name" value="${!empty detail.PL_NAME?detail.PL_NAME:''}" maxlength="25" placeholder="시설 이름을 적어주세요">
-				<p class="info_warn">유효성 검증 결과</p>
 			</div>
 		</li>
 		<li class="addr req">
 			<label for="pl_loc_btn"><strong>시설 주소</strong></label>
-			<div class="input_wrap flex flexWrap">
+			<div class="input_wrap flex flexWrap" data-check-type="one" data-check-id="pl_loc">
 				<input id="pl_loc_btn" class="btn submit" type="button" value="주소 검색" onclick="findPostcode(); remove_addr();">
 				<c:choose>
 					<c:when test="${!empty detail.PL_LOC}">
@@ -41,7 +43,7 @@
 		</li>
 		<li class="cate req">
 			<strong>시설 분류</strong>
-			<div class="input_wrap slim_scroll">
+			<div class="input_wrap slim_scroll" data-check-type="more" data-check-id="ca">
 				<div class="scroll_wrap flex">
 					<c:if test="${!empty cate_list}">
 						<c:forEach var="c" items="${cate_list}">
@@ -153,9 +155,28 @@
 		</li>
 		<li>
 			<label for=""><strong>이미지 정보</strong></label>
-			<div class="input_wrap">현지가 오열하면서 작성중..또륵..</div>
+			<div class="input_wrap">
+				<div id="img_upload" class="flex flexWrap">
+					<!-- 아이콘을 누르면 file 선택이 되도록 설정 -->
+					<label><!-- 사진1 : 파일태그는 숨기고 -->
+						<i class="fa-thin fa-image no-image"></i>
+						<input type="file" accept="image/*" id="photo1" name="photo1" >
+					</label>
+					<label><!-- 사진2 -->
+						<i class="fa-thin fa-image no-image"></i>
+						<input type="file" accept="image/*" id="photo2" name="photo2" >
+					</label>
+					<label><!-- 사진3 -->
+						<i class="fa-thin fa-image no-image"></i>
+						<input type="file" accept="image/*" id="photo3" name="photo3" >
+					</label>
+				</div>
+				<br>
+				<p class="info_warn">본인이 직접 촬영한 사진만 올려주세요.</p>
+				<p class="info_warn">저작권에 대한 책임은 업로드한 회원에게 있습니다.</p>
+			</div>
 		</li>
-		<li class="sub_btn"><input class="btn submit" type="submit" value="등록하기"></li>
+		<li class="sub_btn"><input class="btn submit" id="uploadBtn" type="button" value="등록하기"></li>
 	</ul>
 </form>
 </main><!-- //main 종료 -->

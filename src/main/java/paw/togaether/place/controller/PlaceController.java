@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import paw.togaether.common.domain.CommandMap;
@@ -55,9 +57,10 @@ public class PlaceController {
 		if(commandMap.get("pl_idx") != null) mv.addObject("detail", placeService.placeDetail(commandMap.getMap()));
 		return mv;
 	}
-	/** 23.01.22 나슬기: 시설 등록/수정 처리 메소드 */
+	/** 23.01.22 나슬기: 시설 등록/수정 처리 메소드
+	 * 23.01.26 나슬기: 사진 등록 관련 로직 추가 */
 	@PostMapping(value={"/write", "/modify"})
-	public String placeReg(CommandMap commandMap) {
+	public String placeReg(CommandMap commandMap, HttpSession session, MultipartFile[] uploadFile) {
 		//서비스 호출 전 체크박스로 넘어오는 휴일 정보에 대한 가공 처리 필수!
 		if(commandMap.get("pl_offday") != null) {
 			String[] off_check = (String[]) commandMap.get("pl_offday");//해당 값을 문자열로 이루어진 배열에 저장
@@ -73,15 +76,17 @@ public class PlaceController {
 		
 		//Mybatis에서 동적쿼리문으로 반복 처리하기 위해 신규 맵을 생성하여 다시 담아준다.
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("ph_board_type", commandMap.get("ph_board_type"));
+		commandMap.remove("ph_board_type");
 		map.put("map", commandMap.getMap());
 		try {
 			int idx;
 			//idx값을 넘겨받았다면 수정할 상세 정보 불러오기
 			if(commandMap.get("pl_idx") != null) {
-				placeService.placeModify(map);
+				placeService.placeModify(map, session, uploadFile);
 				idx = Integer.parseInt(map.get("pl_idx").toString());
 			}else {
-				placeService.placeWrite(map);
+				placeService.placeWrite(map, session, uploadFile);
 				idx = Integer.parseInt(map.get("PL_IDX_NEXT").toString());
 			}
 			System.out.println(idx);
