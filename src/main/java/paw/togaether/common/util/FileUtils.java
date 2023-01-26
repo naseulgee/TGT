@@ -3,10 +3,11 @@ package paw.togaether.common.util;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -16,18 +17,14 @@ import net.coobird.thumbnailator.Thumbnailator;
 //@Component어노테이션을 이용하여 이 객체의 관리를 스프링이 담당
 @Component("fileUtils")
 public class FileUtils {
+	private static final String filePath = "/resources/upload/";
 	
 	Logger log = Logger.getLogger(this.getClass());
 
-	public List<Map<String,Object>> parseInsertFileInfo(Map<String,Object> map, MultipartFile[] uploadFile) throws Exception{
-		
-		//등록이 먼저 잘 되었다면 시설일 경우 pl_idx를 가져오고, 리뷰일 경우 re_idx를 뽑아온다.
-		String idx = (String)map.get("idx");
-		System.out.println("시설번호 or 리뷰번호 : " + idx);
-		
+	public List<Map<String,Object>> parseInsertFileInfo(Map<String,Object> map,HttpSession session, MultipartFile[] uploadFile) throws Exception{
 		
 		//저장경로(개인별로 수정할 것) webapp내 resources내 upload라는 폴더에 사진저장
-		String uploadFolder = "C:\\JAVA\\stsApp\\TGT\\src\\main\\webapp\\resources\\upload"; 
+		String uploadFolder = session.getServletContext().getRealPath(filePath);
 
 		//디렉토리가 없다면 생성
 		File file = new File(uploadFolder);

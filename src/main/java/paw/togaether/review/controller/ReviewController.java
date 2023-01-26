@@ -45,12 +45,12 @@ public class ReviewController {
 	/** 23.01.13 신현지: 리뷰등록 메서드
 	 */
 	@RequestMapping(value="/review/insert")
-	public ResponseEntity<String> insertReview(CommandMap commandMap, MultipartFile[] uploadFile) throws Exception{
+	public ResponseEntity<String> insertReview(CommandMap commandMap,HttpSession session, MultipartFile[] uploadFile) throws Exception{
 
 		System.out.println("ajax로부터 업로드된 파일의 개수 : "+ uploadFile.length);
 		System.out.println(commandMap.getMap());
 		//review등록과 photo등록에 대한 처리
-		//reviewService.insertReview(commandMap.getMap(),uploadFile); //사용시 주석 풀어주기
+		reviewService.insertReview(commandMap.getMap(),session,uploadFile); //사용시 주석 풀어주기
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		//리다이렉트 url를 작성해주면 된다!
@@ -83,7 +83,12 @@ public class ReviewController {
 		Map<String,Object> review =  reviewService.openMyReview(commandMap.getMap());
 		m.addObject("review",review);
 		
-		//사진 가져오기
+		//시설썸넴 가져오기
+		commandMap.put("pl_idx",review.get("RE_PL_IDX"));   //시설번호를 가져오기
+		Map<String,Object> placePhoto =  reviewService.openMyReviewPlacePhoto(commandMap.getMap());
+		m.addObject("placePhoto",placePhoto);
+		
+		//후기사진 가져오기
 		List<Map<String,Object>> photos =  reviewService.openMyReviewPhoto(commandMap.getMap());
 		m.addObject("photos", photos); 
 		

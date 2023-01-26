@@ -45,8 +45,3 @@ span {
 label {
 	display: inline-block;
 }
-
-#noImage1, #noImage2, #noImage3 {
-	font-size : 270%;
-	display: block;
-}

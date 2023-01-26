@@ -1,0 +1,7 @@
+#img_upload{ gap: 20px; text-align: center; }
+#img_upload label{ display: block; width: 150px; height: 150px; }
+#img_upload label i,
+#img_upload label img{ width: 100%; height: 100%; object-fit: cover; border: 3px solid var(--mainColor); box-sizing: border-box; border-radius: 20px; overflow: hidden ;}
+#img_upload label i{ display: block; padding: 10px; border-style: dashed; color: var(--subGray_20); font-size: 80px; }
+#img_upload label:hover i{ color: var(--mainColor); }
+#img_upload label input{ display: none; }
