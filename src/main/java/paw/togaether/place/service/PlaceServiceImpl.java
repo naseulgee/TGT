@@ -4,10 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import paw.togaether.common.photo.dao.PhotoDAO;
+import paw.togaether.common.util.FileUtils;
 import paw.togaether.place.dao.PlaceCateDAO;
 import paw.togaether.place.dao.PlaceDAO;
 import paw.togaether.place.dao.PlaceMenuDAO;
@@ -25,6 +29,12 @@ public class PlaceServiceImpl implements PlaceService {
 	@Resource(name="placeMenuDAO")
 	private PlaceMenuDAO placeMenuDAO;
 	
+	//파일 저장 및 DB 등록 관련 DAO
+	@Resource(name="fileUtils")
+	private FileUtils fileUtils;
+	@Resource(name="photoDAO")
+	private PhotoDAO photoDAO;
+	
 	//시설 관련
 	/** 23.01.17 나슬기: 시설 리스트 & 페이징 & 검색 */
 	@Override
@@ -36,15 +46,24 @@ public class PlaceServiceImpl implements PlaceService {
 	public Map<String, Object> placeDetail(Map<String, Object> map) throws Exception {
 		return placeDAO.placeSelect(map);
 	}
-	/** 23.01.17 나슬기: 시설 글쓰기 */
+	/** 23.01.17 나슬기: 시설 글쓰기
+	 * 23.01.26 나슬기: 사진 등록 관련 로직 추가 */
 	@Override
-	public int placeWrite(Map<String, Object> map) throws Exception {
-		return placeDAO.placeInsert(map);
+	public int placeWrite(Map<String, Object> map, HttpSession session, MultipartFile[] uploadFile) throws Exception {
+		int result = placeDAO.placeInsert(map);
+		//사진등록 및 사진저장, 썸네일저장
+		map.put("idx", map.get("PL_IDX_NEXT"));
+		List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(map, session, uploadFile);
+		for(int i=0, size=list.size(); i<size; i++) {
+			photoDAO.insertPhoto(list.get(i));
+		}
+		return result;
 	}
 	/** 23.01.17 나슬기: 시설 수정 */
 	@Override
-	public int placeModify(Map<String, Object> map) throws Exception {
-		return placeDAO.placeUpdate(map);
+	public int placeModify(Map<String, Object> map, HttpSession session, MultipartFile[] uploadFile) throws Exception {
+		int result = placeDAO.placeUpdate(map);
+		return result;
 	}
 	/** 23.01.17 나슬기: 시설 삭제 요청 */
 	@Override

@@ -54,4 +54,17 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	
+	//댓글쓰기
+	@Override
+	public void commentInsert(Map<String, Object> map) throws Exception {
+		boardDAO.commentInsert(map);
+	}
+	
+	// 댓글 조회
+	@Override
+	public List<Map<String, Object>> commentList(Map<String, Object> map) throws Exception {
+		return boardDAO.commentList(map);
+	}
+		
+	
 }

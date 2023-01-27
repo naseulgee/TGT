@@ -1,20 +1,16 @@
 package paw.togaether.main.controller;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-//import org.apache.tiles.request.collection.AddableParameterMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import paw.togaether.board_comm.service.BoardService;
 import paw.togaether.common.domain.CommandMap;
 import paw.togaether.main.service.MainService;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MainController {

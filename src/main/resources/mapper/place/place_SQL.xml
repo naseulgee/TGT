@@ -8,7 +8,7 @@
 		<include refid="common.pagingPre"/>
 		<![CDATA[
 		select rownum rnum,--행번호
-			pl_idx, pl_name, pl_cate, pl_loc,--시설 번호, 시설명, 시설 카테고리, 시설 주소
+			pl_idx, pl_name, pl_pc_idx, pl_loc,--시설 번호, 시설명, 시설 카테고리, 시설 주소
 			r_avg, r_count,--리뷰 평균, 리뷰 개수
 			--수정중
 			cafe_idx, cafe_name, cafe_location loc, cafe_openhour open, cafe_closehour close, cafe_offday off,
@@ -50,18 +50,44 @@
 		select * from place where pl_idx = ${pl_idx}
 	</select>
 	
-	<!-- 23.01.17 나슬기: 시설 등록하는 쿼리문 / 받는값: 등록할 시설 번호와 수정날짜, 삭제 여부를 제외한 모든 값 -->
+	<!-- 23.01.17 나슬기: 시설 등록하는 쿼리문 / 받는값: 등록할 시설 번호와 수정날짜, 삭제 여부를 제외한 모든 값
+		23.01.22 나슬기: 받는값 동적 처리 및 selectKey 추가 -->
 	<insert id="in_pl">
-		insert into place(pl_idx, pl_name, pl_cate, pl_call, pl_loc, pl_offday, pl_open, pl_close)
-		values (seq_place.nextval, #{pl_name}, #{pl_cate}, #{pl_call}, #{pl_loc}, #{pl_offday}, #{pl_open}, #{pl_close})
+		<selectKey keyProperty="PL_IDX_NEXT" order="BEFORE" resultType="int">
+			select seq_place.nextval from dual
+		</selectKey>
+		insert into place(pl_idx
+		<foreach item="val" index="key" collection="map">
+			<trim prefix=",">
+				<if test="val != null and !val.equals('')">${key}</if>
+			</trim>
+		</foreach>
+		) values (${PL_IDX_NEXT}
+		<foreach item="val" index="key" collection="map">
+			<trim prefix=",">
+				<if test="val != null and !val.equals('')">#{val}</if>
+			</trim>
+		</foreach>
+		)
 	</insert>
 
-	<!-- 23.01.17 나슬기: 시설 수정하는 쿼리문 / 받는값: 시설명, 삭제 여부를 제외한 모든 값 -->
+	<!-- 23.01.17 나슬기: 시설 수정하는 쿼리문 / 받는값: 시설명, 삭제 여부를 제외한 모든 값
+		23.01.22 나슬기: 받는값 동적 처리 및 selectKey 추가 -->
 	<update id="up_pl">
 		update place
-		set (pl_cate, pl_call, pl_loc, pl_offday, pl_open, pl_close, pl_mod_date)
-			= (#{pl_cate}, #{pl_call}, #{pl_loc}, #{pl_offday}, #{pl_open}, #{pl_close}, sysdate)
-		where pl_idx = ${pl_idx}
+		set (pl_mod_date
+		<foreach item="val" index="key" collection="map">
+			<trim prefix=",">
+				<if test="val != null and !val.equals('')">${key}</if>
+			</trim>
+		</foreach>
+		) = (sysdate,
+		<foreach item="val" index="key" collection="map">
+			<trim prefix=",">
+				<if test="val != null and !val.equals('')">#{val}</if>
+			</trim>
+		</foreach>
+		) where pl_idx = ${pl_idx}
 	</update>
 
 	<!-- 23.01.16 나슬기: 시설 삭제 요청하는 쿼리문 / 받는값: 시설 번호 -->

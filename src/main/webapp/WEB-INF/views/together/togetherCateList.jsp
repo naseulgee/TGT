@@ -19,10 +19,10 @@ font-weight:bold;
 
 table{
 width:100%;
-display:flex;
+display:absolute;
 }
 
-.main_wrap{
+.cate_wrap{
 width:100%;
 display:flex;
 }
@@ -69,7 +69,7 @@ padding-left: 10px
 
 	<h1 class="txt_center"><span class="fa-solid fa-paw"></span>함께해요<span class="fa-solid fa-paw"></span></h1>
 	<br/>
-<div class="main_wrap">
+<div class="cate_wrap">
 	
 	<!-- 카드 테이블로 전체게시글 리스트 출력 -->
 	<div class="main_list">
@@ -81,7 +81,7 @@ padding-left: 10px
 							<!-- tr클래스 클릭시 상세보기 페이지로 이동-->
 							<tr class="use_move" data-href="/together/detail/${tc.TO_IDX}.paw" onclick="move(this,'TO_IDX:${tc.TO_IDX}')">
 								<td class="color"><span class="fa-solid fa-paw"></span>[${tc.TO_TC_NAME}] ${tc.TO_TITLE }</td><!-- 글분류, 제목 -->
-								<td><span class="fa-solid fa-bone"></span> 참여가능하개(견종): ${tc.TO_BR_NAME }</td><!-- 참여가능견종 -->
+								<td><span class="fa-solid fa-bone"></span> 참여가능하개(견종): ${tc.BR_NAME }</td><!-- 참여가능견종 -->
 								<td><span class="fa-solid fa-bone"></span> 참여가능하개(크기) : <c:if test="${tc.TO_WT_IDX eq '1'}">XS</c:if>
 								<c:if test="${tc.TO_WT_IDX eq '2'}">S</c:if>
 								<c:if test="${tc.TO_WT_IDX eq '3'}">M</c:if>
@@ -114,22 +114,17 @@ padding-left: 10px
 	<div class="cate_button">
 		<ul class="button_list">
 			<li><a class="btn submit" href="/together/writeForm.paw">글쓰기</a></li>
-				<li>
-				<input type="button" name="category" data-href="/together/catelist.paw" value="산책하개" class="use_move" 
-					onclick="move(this, 'TC_NAME:산책하개')"></li>
-				<li><input type="button" name="category" data-href="/together/catelist.paw" value="카페가개" class="use_move" 
-					onclick="move(this, 'TC_NAME:카페가개')"></li>
-				<li><input type="button" name="category" data-href="/together/catelist.paw" value="놀러가게" class="use_move" 
-					onclick="move(this, 'TC_NAME:놀러가개')"></li>
-				<li><input type="button" name="category" data-href="/together/catelist.paw" value="친구하개" class="use_move" 
-					onclick="move(this, 'TC_NAME:친구하개')"></li>
-		
+			<c:forEach items="${cate}" var="ct">	
+				<li><input type="button" name="TC_NAME" data-href="/together/catelist.paw" value="${ct.TC_NAME }" class="use_move" 
+					onclick="move(this, 'TC_NAME:${ct.TC_NAME}')"></li>	
+			</c:forEach>	
 		</ul>
 	</div>
-</div>	
+</div>
+<br/>
+			<div class="flexCenter">
+				<a class="btn submit" style="font-size:15px;" href="/together/list.paw">전체목록으로</a>
+			</div>	
 </main>
 
-<c:if test="${page != 'admin'}">
-	<!-- 풋터. 모든 페이지에 삽입! -->
 	<%@ include file="/WEB-INF/include/common-footer.jspf" %>
-</c:if>

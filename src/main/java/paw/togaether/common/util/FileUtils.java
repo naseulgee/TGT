@@ -3,10 +3,11 @@ package paw.togaether.common.util;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -16,16 +17,14 @@ import net.coobird.thumbnailator.Thumbnailator;
 //@Component어노테이션을 이용하여 이 객체의 관리를 스프링이 담당
 @Component("fileUtils")
 public class FileUtils {
+	private static final String filePath = "/resources/upload/";
 	
 	Logger log = Logger.getLogger(this.getClass());
 
-	public List<Map<String,Object>> parseInsertFileInfo(Map<String,Object> map, MultipartFile[] uploadFile) throws Exception{
+	public List<Map<String,Object>> parseInsertFileInfo(Map<String,Object> map,HttpSession session, MultipartFile[] uploadFile) throws Exception{
 		
-		//등록이 먼저 잘 되었다면 시설일 경우 pl_idx를 가져오고, 리뷰일 경우 re_idx를 뽑아온다.
-		String idx = (String)map.get("idx");
-		System.out.println("시설번호 or 리뷰번호 : " + idx);
-		
-		String uploadFolder = "C:\\upload"; //저장경로(개인별로 수정할 것)
+		//저장경로(개인별로 수정할 것) webapp내 resources내 upload라는 폴더에 사진저장
+		String uploadFolder = session.getServletContext().getRealPath(filePath);
 
 		//디렉토리가 없다면 생성
 		File file = new File(uploadFolder);
@@ -61,7 +60,7 @@ public class FileUtils {
 				
 				//2.경로에 썸네일 이미지도 저장
 				FileOutputStream thumbnail = new FileOutputStream(new File(uploadFolder, "s_" +storedFileName));
-	 			Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 100,100);
+	 			Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 200,200);
 				thumbnail.close();
 				
 			} catch (Exception e) { log.error(e.getMessage()); }

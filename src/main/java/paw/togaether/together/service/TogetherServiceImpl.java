@@ -44,5 +44,47 @@ public class TogetherServiceImpl implements TogetherService {
 	public List<Map<String, Object>> togetherCateList(Map<String, Object> map) throws Exception {
 		return togetherDAO.togetherCateList(map);
 	}
+	
+	/* 23.01.20 박선영 함께해요 게시글 수정하기 */
+	@Override
+	public void togetherModi(Map<String, Object> map) throws Exception {
+		togetherDAO.togetherModi(map);
+	}
+	
+	/* 23.01.21 박선영 함께해요 견종분류 */
+	@Override
+	public List<Map<String, Object>> togetherbreed(Map<String, Object> map) throws Exception {
+		return togetherDAO.togetherbreed(map);
+	}
+	
+	/* 23.01.21 박선영 함께해요 참여자 리스트 */
+	@Override
+	public List<Map<String, Object>> togetherWithList(Map<String, Object> map) throws Exception {
+		return togetherDAO.togetherWithList(map);
+	}
+	
+	/* 23.01.23 박선영 게시글 삭제 */
+	@Override
+	public void togetherDel(Map<String, Object> map) throws Exception {
+		togetherDAO.togetherDel(map);
+	}
+	
+	/* 23.01.25 박선영 카테고리 리스트 */ 
+	@Override
+	public List<Map<String, Object>> togetherCate(Map<String, Object> map) throws Exception {
+		return togetherDAO.togetherCate(map);
+	}
+	
+	/* 23.01.25 박선영 관리자 카테고리 등록 */
+	@Override
+	public void adminTogeCateWrite(Map<String, Object> map) throws Exception {
+		togetherDAO.adminTogeCateWrite(map);
+	}
+	
+	/* 23.01.25 박선영 참여인원 카운트 */
+	@Override
+	public int togetherJoinCount(Map<String, Object> map) throws Exception {
+		return togetherDAO.togetherJoinCount(map);
+	}
 
 }

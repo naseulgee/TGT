@@ -1,10 +1,10 @@
-#placeWrite{ width: 100%; max-width: 600px; margin: 30px auto; padding: 30px 10px; box-sizing: border-box; }
+#placeWrite{ width: 100%; max-width: 600px; margin: 50px auto; padding: 0 10px; box-sizing: border-box; }
 #placeWrite .round{ display: -ms-flexbox; display: -webkit-box; display: flex; -ms-flex-pack: center; -webkit-box-pack: center; justify-content: center; -ms-flex-align: center; -webkit-box-align: center; align-items: center; width: 40px; height: 40px; border-radius: 100%; }
 #placeWrite strong{ font-weight: inherit; }
 #placeWrite ul{}
-#placeWrite ul li{ display: -ms-flexbox; display: -webkit-box; display: flex; margin: 1.2em 0; }
+#placeWrite ul li{ display: -ms-flexbox; display: -webkit-box; display: flex; margin: 2.2em 0; }
 #placeWrite ul li > *:first-child{ display: block; width: 30%; min-width: 100px; }
-#placeWrite ul li .input_wrap{ display: block; width: calc(100% - min(30%, 100px)); }
+#placeWrite ul li .input_wrap{ width: calc(100% - min(30%, 100px)); }
 #placeWrite ul li input[type="radio"],
 #placeWrite ul li input[type="checkbox"]{ display: none; }
 #placeWrite ul li input[type="text"]{ width: 100%; }
@@ -12,7 +12,9 @@
 /* 필수 */
 #placeWrite ul .req strong::after{ content: " *"; color: red; }
 /* 주소 */
-#placeWrite ul .addr .input_wrap p{ margin-top: 10px; }
+#placeWrite ul .addr .input_wrap{ gap: 5px; }
+#placeWrite ul .addr .input_wrap .btn{ width: 105px; }
+#placeWrite ul .addr .input_wrap #address{ width: calc(100% - 110px); padding: 0; border: none; color: var(--mainTxtColor); }
 /* 분류 */
 #placeWrite ul .cate .input_wrap{ padding: 2px 5px 10px; overflow: auto hidden; }
 #placeWrite ul .cate .input_wrap .scroll_wrap{ width: max-content; gap: 10px; }
@@ -20,9 +22,14 @@
 #placeWrite ul .call .input_wrap input{ width: 20%; min-width: 69px; }
 /* 휴무일 */
 #placeWrite ul .offday .input_wrap{ display: flex; gap: 10px; }
+/* 시간 */
+#placeWrite ul .time .input_wrap{ justify-content: flex-start; gap: 5px; }
+#placeWrite ul .time .input_wrap > input{ width: 2em; height: 60px; font-size: 2em; text-align: center; line-height: 60px; }
+#placeWrite ul .time .input_wrap .ampm_wrap{ flex-direction: column; width: 20%; }
+#placeWrite ul .time .input_wrap .ampm_wrap label{ padding: 2px; }
+#placeWrite ul .time .input_wrap .ampm_wrap label:last-of-type{ border-radius: 0 0 10px 10px; }
 
-
-#placeWrite ul .sub_btn .btn{ width: 100%; }
+#placeWrite ul .sub_btn .btn{ width: 100%; margin-top: 30px; }
 
 /* 분류 게시판 */
 #cate_list .table_wrap{ gap: 10px; }
