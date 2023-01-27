@@ -45,6 +45,7 @@
 		<!-- 평점 -->
 		<div><h3>시설의 평점</h3></div>
 		<div><span class="color">시설의 만족도는 어느 정도인가요?</span></div><br>
+		${review.RE_STAR}
 		<div>
 			<fieldset>
 				<legend>이모지 별점</legend>
@@ -71,7 +72,7 @@
 		<div><span class="color">시설은 어떠셨나요?</span></div>
 		<div>
 			<textarea class="slim_scroll" id="re_contents" name="re_contents" 
-			placeholder="후기 내용을 작성해주세요." maxlength="950"></textarea>
+			placeholder="후기 내용을 작성해주세요." maxlength="950">${review.RE_CONTENTS}</textarea>
 		</div>	
 		<div class="txt_right"><span id="reCount">0 / 950</span></div>	
 		

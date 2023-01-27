@@ -153,10 +153,12 @@
 		최초작성일 : <fmt:formatDate value="${review.RE_REG_DATE}" pattern="yy.MM.dd" /><br>
 		최종수정일 : <fmt:formatDate value="${review.RE_MOD_DATE}" pattern="yy.MM.dd" />
 		</div>			
-		
+		${review.RE_IDX}
 		<div class="txt_right">
-			<button class="btn submit" id="uploadBtn" >수정</button> 
-			<a href="/user/mypage/review/reviewList" class="btn">삭제</a>
+			<a href="/mypage/review/updateForm.paw" class="use_move btn submit" 
+			onclick="move(this, 're_idx:${review.RE_IDX}')">수정</a>
+			<a href="/mypage/review/delete.paw" class="use_move btn"
+			onclick="move(this, 're_idx:${review.RE_IDX}')">삭제</a>
 		</div>
 	</div>	
 	</div> 

@@ -50,7 +50,7 @@ public class ReviewController {
 		System.out.println("ajax로부터 업로드된 파일의 개수 : "+ uploadFile.length);
 		System.out.println(commandMap.getMap());
 		//review등록과 photo등록에 대한 처리
-		reviewService.insertReview(commandMap.getMap(),session,uploadFile); //사용시 주석 풀어주기
+		//reviewService.insertReview(commandMap.getMap(),session,uploadFile); //사용시 주석 풀어주기
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		//리다이렉트 url를 작성해주면 된다!
@@ -91,7 +91,18 @@ public class ReviewController {
 		//후기사진 가져오기
 		List<Map<String,Object>> photos =  reviewService.openMyReviewPhoto(commandMap.getMap());
 		m.addObject("photos", photos); 
+		return m;
+	}
+	
+	/**23.01.25 신현지: 리뷰수정폼으로 이동
+	 */
+	@RequestMapping(value="/mypage/review/updateForm")
+	public ModelAndView openReviewUpdate(CommandMap commandMap, HttpSession session) throws Exception{
+		ModelAndView m = new ModelAndView("/mypage/review/updateForm");
 		
+		Map<String,Object> review =  reviewService.openMyReview(commandMap.getMap());
+		m.addObject("review",review);
+
 		return m;
 	}
 	
