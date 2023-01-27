@@ -7,7 +7,7 @@ import java.util.Map;
 @Repository("loginDAO")
 public class LoginDAO extends AbstractDAO {
 
-    public Object login(Map<String, Object> map) {
+    public Object login(Map<String, Object> map) throws Exception {
 
         return selectOne("login.MemberLogin", map);
     }

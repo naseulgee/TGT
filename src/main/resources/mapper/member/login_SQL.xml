@@ -5,7 +5,7 @@
 
     <select id="MemberLogin" parameterType="hashmap" resultType="hashmap">
      <![CDATA[
-        SELECT MEM_PW FROM MEMBERS WHERE MEM_ID =  #{MEM_ID}
+        SELECT * FROM MEMBERS WHERE MEM_ID =  #{MEM_ID}
         ]]>
  </select>
 
