@@ -6,7 +6,8 @@
 <!--  
 23.01.12 최선아: 멍멍왈왈 게시판 리스트 출력 및 등록 
 23.01.13 최선아: 멍멍왈왈 게시판 수정
-13.01.18 최선아: 멍멍왈왈 게시판 카테고리 설정 
+23.01.18 최선아: 멍멍왈왈 게시판 카테고리 설정 
+23.01.25 최선아: 게시판 댓글 처리
 -->
 
 <!-- 게시판 리스트 -->
@@ -114,5 +115,45 @@
 
 	]]>
 </update> 
+
+<!-- 댓글 등록 -->
+<insert id="commentInsert" parameterType="hashmap">
+	<![CDATA[
+		INSERT INTO BOARD_COMMENT
+		(
+		RNO, 
+		BNO, 
+		CONTENT, 
+		WRITER,
+		REGDATE
+		)
+		VALUES
+		(
+		SEQ_BOARD_COMMENT.NEXTVAL, 
+		#{BNO, jdbcType=VARCHAR}, 
+		#{CONTENT, jdbcType=VARCHAR}, 
+		'ADMIN',
+		sysdate
+		)
+	]]>
+</insert>
+
+<!-- 댓글 조회 -->
+
+<select id="commentList" parameterType="hashmap" resultType="hashmap" >
+	<![CDATA[
+		SELECT
+			BNO,
+			WRITER,
+			CONTENT,
+			REGDATE
+		FROM
+			BOARD_COMMENT
+		WHERE
+			BNO = #{BC_IDX, jdbcType=VARCHAR}
+	]]>
+</select>
+
+
 
 </mapper>
