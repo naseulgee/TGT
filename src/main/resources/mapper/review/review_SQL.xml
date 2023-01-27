@@ -3,8 +3,8 @@
 
 <mapper namespace="review">
 	
-	<!-- 23.01.15 신현지: review테이블에 리뷰등록 -->
-	<!-- 23.01.18 신현지 : commandMap에 시퀀스가 idx라는 이름으로 담기도록 설정 -->
+	<!-- 23.01.16 신현지: review테이블에 리뷰등록 -->
+	<!-- 23.01.18 신현지: commandMap에 시퀀스가 idx라는 이름으로 담기도록 설정 -->
 	<insert id="insertReview" parameterType="hashmap" useGeneratedKeys="true" keyProperty="idx">
 		<selectKey keyProperty="idx" resultType="string" order="BEFORE">
 			SELECT SEQ_REVIEW.NEXTVAL FROM DUAL
@@ -19,6 +19,46 @@
 		sysdate, sysdate, 'N'
 		)
 	</insert>
+	
+	<!-- 23.01.20 신현지: 마이페이지에서 내가 쓴 리뷰확인-->
+	<!-- 23.01.25 신현지: 리뷰테이블과 시설테이블, 사진테이블을 조인-->
+	<select id="openMyReviews" parameterType="hashmap" resultType="hashmap">
+	select  a.re_idx,a.re_star,a.re_contents,b.pl_name,a.re_reg_date,count(c.ph_board_type) PHCOUNT 
+	from(select * from review
+		where re_writer_id = #{mem_id} and re_del_gb='N'
+		) a left join place b 
+    	on a.re_pl_idx = b.pl_idx 
+    left join photo c on a.re_idx = c.ph_board_idx
+    <if test='ph_board_type == "review".toString()'>
+    	where  c.ph_board_type = 'review' and ph_del_gb='N'
+    </if>
+    group by a.re_idx,a.re_star,a.re_contents,b.pl_name,a.re_reg_date,c.ph_board_type
+    order by re_idx desc
+	</select>
+	
+	<!-- 23.01.25 신현지: 내가 작성한 하나의 리뷰 출력-->
+	<select id="openMyReview" parameterType="hashmap" resultType="hashmap">
+		select * from review a join place b
+		on a.re_pl_idx = b.pl_idx
+		where re_idx = #{re_idx}
+	</select>
+	
+	<!-- 23.01.25 신현지: 특정 리뷰에 대한 사진을 가져오기-->
+	<select id="openMyReviewPhoto" parameterType="hashmap" resultType="hashmap">
+		select * from photo
+		where ph_board_type='review'
+		and ph_del_gb = 'N'
+		and ph_board_idx = #{re_idx}
+	</select>
+	
+	<!-- 23.01.26 신현지: 리뷰에 불러올 시설썸네일 가져오기-->
+	<select id="openMyReviewPlacePhoto" parameterType="hashmap" resultType="hashmap">
+		select ph_stored_file_name from photo
+		where ph_board_type='place'
+		and ph_del_gb = 'N'
+		and ph_board_idx = #{pl_idx}
+	</select>
+
 	
 
 

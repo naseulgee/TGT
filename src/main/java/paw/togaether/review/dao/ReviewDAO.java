@@ -1,5 +1,6 @@
 package paw.togaether.review.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
@@ -13,9 +14,25 @@ public class ReviewDAO extends AbstractDAO{
 	public void insertReview(Map<String, Object> map) throws Exception {
 		 insert("review.insertReview", map);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> openMyReviews(Map<String, Object> map) throws Exception {
+		 return (List<Map<String, Object>>)selectList("review.openMyReviews", map);
+	}
 	
-	public void insertPhoto(Map<String, Object> map) throws Exception {
-		 insert("photo.insertPhoto", map);
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> openMyReview(Map<String, Object> map) throws Exception {
+		 return (Map<String, Object>)selectOne("review.openMyReview", map);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> openMyReviewPhoto(Map<String, Object> map) throws Exception {
+		 return (List<Map<String, Object>>)selectList("review.openMyReviewPhoto", map);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> openMyReviewPlacePhoto(Map<String, Object> map) throws Exception {
+		 return (Map<String, Object>)selectOne("review.openMyReviewPlacePhoto", map);
 	}
 
 }
