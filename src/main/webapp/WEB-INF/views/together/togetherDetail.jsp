@@ -2,8 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
 <script src="https://kit.fontawesome.com/e9bd4d3977.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/resources/js/together/togetherwith.js"></script>
 <style>
-.fa-solid {
+span.fa-solid.fa-paw {
 color:#f0b1aa;
 }
 
@@ -99,10 +100,23 @@ padding-left: 10px
 		<br/>
 		<div class="flexCenter">
 			<a class="btn submit" href="/together/list.paw">목록으로</a>
-			<input type="button" class="use_move" data-href="/together/modifyForm.paw" onclick="move(this, 'TO_IDX:${map.TO_IDX}')" value="수정하기" style="margin-right:5px;">
-			<input type="button" class="use_move" data-href="/together/delete.paw" onclick="move(this, 'TO_IDX:${map.TO_IDX}')" value="삭제하기">
+			<c:if test="${!empty mem_id}">
+				<c:if test="${mem_id eq map.TO_WRITER_ID}">
+					<input type="button" class="use_move" data-href="/together/modifyForm.paw" onclick="move(this, 'TO_IDX:${map.TO_IDX}')" value="수정하기" style="margin-right:5px;">
+					<input type="button" class="use_move" data-href="/together/delete.paw" onclick="move(this, 'TO_IDX:${map.TO_IDX}')" value="삭제하기">
+				</c:if>
+				<c:if test="${mem_id ne map.TO_WRITER_ID}">
+					<form id="withreg" name="withreg">
+						<input type="hidden" id="TW_TO_IDX" name="TO_IDX" value="${map.TO_IDX}">
+						<input type="hidden" id="TW_MEM_ID" name="TW_MEM_ID" value="${mem_id}">
+						<input type="button" class="btn" id="withmem" value="참여하개:)">
+					</form>
+				</c:if>
+			</c:if>
 		</div>
 	</div>
 	
 </main>
+
+
 <%@ include file="/WEB-INF/include/common-footer.jspf" %>

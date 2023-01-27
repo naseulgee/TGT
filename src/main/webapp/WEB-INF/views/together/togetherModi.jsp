@@ -31,6 +31,7 @@ white-space:pre;
 	<div class="main_wrap">
 		<form method="post" action="/together/modify.paw">
 		<input type="hidden" id="TO_IDX" name="TO_IDX" value="${map.TO_IDX }">
+		<input type="hidden" id="TO_WRITER_ID" name="TO_WRITER_ID" value="${mem_id}">
 			<table class="modi_table">
 				<tbody>
 					<tr>

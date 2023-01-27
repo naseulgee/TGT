@@ -1,17 +1,19 @@
 package paw.togaether.together.controller;
 
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import paw.togaether.common.domain.CommandMap;
@@ -85,15 +87,17 @@ public class TogetherController {
 	
 	/* 23.01.18 박선영 : 게시글 상세보기 이동 */
 	@RequestMapping(value="/together/detail/{to_idx}.paw")
-	public ModelAndView togetherDetail(@PathVariable("to_idx") int TO_IDX, CommandMap commandMap)throws Exception {
+	public ModelAndView togetherDetail(@PathVariable("to_idx") int TO_IDX, CommandMap commandMap, HttpSession session)throws Exception {
 		
+		session.setAttribute("mem_id", "with1");//로그인 테스트
 		//값을 잘 받아오는지 확인하는 용도
 		System.out.println(TO_IDX);
 		System.out.println(commandMap.getMap());
+		System.out.println(session.getAttribute("mem_id"));
 		
 		ModelAndView mv = new ModelAndView("/together/togetherDetail");
 		
-		Map<String, Object> map = togetherService.togetherDetail(commandMap.getMap());
+		Map<String, Object> map = togetherService.togetherDetail(commandMap.getMap(),session);
 		List<Map<String, Object>> withlist = togetherService.togetherWithList(commandMap.getMap());//참여자 리스트 메소드
 		
 		mv.addObject("withlist", withlist);
@@ -126,13 +130,15 @@ public class TogetherController {
 	/* 23.01.20 박선영 게시글 수정폼 */
 	/* 23.01.25 카테고리 분류 리스트 추가 */
 	@RequestMapping(value="/together/modifyForm.paw")
-	public ModelAndView openTogetherModi(CommandMap commandMap) throws Exception {
+	public ModelAndView openTogetherModi(CommandMap commandMap, HttpSession session) throws Exception {
+		
+		session.setAttribute("mem_id", "user1");//로그인 테스트임
 		ModelAndView mv = new ModelAndView("/together/togetherModi");
 		
 		System.out.println(commandMap.getMap());
-		
+		System.out.println(session.getAttribute("mem_id"));
 		//이미 써놨던 게시글 상세정보를 불러옴
-		Map<String, Object> map = togetherService.togetherDetail(commandMap.getMap());
+		Map<String, Object> map = togetherService.togetherDetail(commandMap.getMap(),session);
 		/* 견종분류 셀렉트 박스 만들용도 */
 		List<Map<String, Object>> brlist = togetherService.togetherbreed(commandMap.getMap());
 		/* 카테고리 분류 셀렉트박스 만들용도 */
@@ -147,12 +153,15 @@ public class TogetherController {
 	
 	/* 23.01.20 박선영 게시글 수정하기 */
 	@RequestMapping(value="/together/modify.paw", method = RequestMethod.POST)
-	public ModelAndView togetherModi(CommandMap commandMap) throws Exception {
+	public ModelAndView togetherModi(CommandMap commandMap, HttpSession session) throws Exception {
+		
+		session.setAttribute("mem_id", "user1");
 		ModelAndView mv = new ModelAndView("redirect:/together/list.paw");
 		
 		System.out.println(commandMap.get("TO_IDX"));
+		System.out.println(session.getAttribute("mem_id"));
 		
-		togetherService.togetherModi(commandMap.getMap());
+		togetherService.togetherModi(commandMap.getMap(),session);
 		mv.addObject("TO_IDX", commandMap.get("TO_IDX"));
 		
 		return mv;
@@ -160,14 +169,32 @@ public class TogetherController {
 	
 	/* 23.01.23 박선영 게시글 삭제하기 */
 	@RequestMapping(value="/together/delete.paw", method = RequestMethod.POST)
-	public ModelAndView togetherDel(CommandMap commandMap) throws Exception {
+	public ModelAndView togetherDel(CommandMap commandMap, HttpSession session) throws Exception {
+		
+		session.setAttribute("mem_id", "user1");
 		ModelAndView mv = new ModelAndView("redirect:/together/list.paw");
 		
 		System.out.println(commandMap.get("TO_IDX"));
 		
-		togetherService.togetherDel(commandMap.getMap());
+		togetherService.togetherDel(commandMap.getMap(),session);
 		
 		return mv;
 	}
 	
+	/* 23.01.27 박선영 참여하기 */
+	@RequestMapping(value="/together/withreg.paw" ,method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView togetherWith(@RequestBody CommandMap commandMap, HttpSession session) throws Exception {
+		
+		session.setAttribute("mem_id", "with1");
+		ModelAndView mv = new ModelAndView("jsonView");
+		
+		System.out.println("CommandMap : " +  commandMap);
+		System.out.println("mem_id:" + session.getAttribute("mem_id"));
+		
+		togetherService.togetherWith(commandMap.getMap(), session);
+		
+		return mv;
+		
+	}
 }

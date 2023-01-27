@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,9 @@ public class TogetherServiceImpl implements TogetherService {
 	
 	/* 23.01.18 박선영 함께해요 상세보기 */
 	@Override
-	public Map<String, Object> togetherDetail(Map<String, Object> map) throws Exception {
+	public Map<String, Object> togetherDetail(Map<String, Object> map, HttpSession session) throws Exception {
+		String mem_id = (String)session.getAttribute("MEM_ID"); //로그인 아이디가져오기
+		map.put("mem_id", mem_id);
 		return togetherDAO.togetherDetail(map);
 	}
 	
@@ -47,7 +50,9 @@ public class TogetherServiceImpl implements TogetherService {
 	
 	/* 23.01.20 박선영 함께해요 게시글 수정하기 */
 	@Override
-	public void togetherModi(Map<String, Object> map) throws Exception {
+	public void togetherModi(Map<String, Object> map, HttpSession session) throws Exception {
+		String mem_id = (String)session.getAttribute("MEM_ID"); //로그인 아이디가져오기
+		map.put("mem_id", mem_id);
 		togetherDAO.togetherModi(map);
 	}
 	
@@ -65,7 +70,9 @@ public class TogetherServiceImpl implements TogetherService {
 	
 	/* 23.01.23 박선영 게시글 삭제 */
 	@Override
-	public void togetherDel(Map<String, Object> map) throws Exception {
+	public void togetherDel(Map<String, Object> map, HttpSession session) throws Exception {
+		String mem_id = (String)session.getAttribute("MEM_ID"); //로그인 아이디가져오기
+		map.put("mem_id", mem_id);
 		togetherDAO.togetherDel(map);
 	}
 	
@@ -85,6 +92,14 @@ public class TogetherServiceImpl implements TogetherService {
 	@Override
 	public int togetherJoinCount(Map<String, Object> map) throws Exception {
 		return togetherDAO.togetherJoinCount(map);
+	}
+	
+	/* 23.01.27 박선영 참여하기 */
+	@Override
+	public void togetherWith(Map<String, Object> map, HttpSession session) throws Exception {
+		String mem_id = (String)session.getAttribute("MEM_ID"); //로그인 아이디가져오기
+		map.put("mem_id", mem_id);
+		togetherDAO.togetherWith(map);
 	}
 
 }

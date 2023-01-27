@@ -179,6 +179,8 @@
 				TO_MOD_DATE = SYSDATE
 			where
 				TO_IDX = #{TO_IDX}
+			and 
+				TO_WRITER_ID = #{TO_WRITER_ID, jdbcType=VARCHAR}
 		]]>
 	</update>
 	
@@ -243,6 +245,21 @@
 			WHERE TW_TO_IDX = #{TO_IDX, jdbcType=VARCHAR}
 		]]>
 	</select>
+	
+	<!-- 23.01. 27 박선영 : 참여하기 -->
+	<insert id="togetherWith" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO TOGETHER_WITH(
+			TW_IDX,
+			TW_TO_IDX,
+			TW_MEM_ID)
+			VALUES(
+			seq_together_with.NEXTVAL,
+			#{TO_IDX},
+			#{TW_MEM_ID}
+			)
+		]]>
+	</insert>
 	
 	
 </mapper>

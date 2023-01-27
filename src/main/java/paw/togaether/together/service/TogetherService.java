@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public interface TogetherService {
 	
@@ -19,13 +20,13 @@ public interface TogetherService {
 	void togetherWrite(Map<String, Object> map) throws Exception;
 	
 	/* 23.01.18 박선영 함께해요 게시글 상세보기 */ 
-	Map<String, Object> togetherDetail(Map<String, Object> map) throws Exception;
+	Map<String, Object> togetherDetail(Map<String, Object> map, HttpSession session) throws Exception;
 	
 	/* 23.01.19 박선영 함께해요 게시글 카테고리별 리스트 */ 
 	List<Map<String, Object>> togetherCateList(Map<String, Object> map) throws Exception;
 	
 	/* 23.01.20 박선영 함께해요 게시글 수정 */
-	void togetherModi(Map<String, Object> map) throws Exception;
+	void togetherModi(Map<String, Object> map, HttpSession session) throws Exception;
 	
 	/* 23.01.20 박선영 견종분류 */
 	List<Map<String, Object>> togetherbreed(Map<String, Object> map) throws Exception;
@@ -34,7 +35,7 @@ public interface TogetherService {
 	List<Map<String, Object>> togetherWithList(Map<String, Object> map) throws Exception;
 	
 	/* 23.01.23 박선영 게시글 삭제 */
-	void togetherDel(Map<String, Object> map) throws Exception;
+	void togetherDel(Map<String, Object> map, HttpSession session) throws Exception;
 	
 	/* 23.01.25 박선영 게시글 카테고리리스트 */
 	List<Map<String, Object>> togetherCate(Map<String, Object> map) throws Exception;
@@ -44,5 +45,8 @@ public interface TogetherService {
 	
 	/* 23.01.25 박선영 참여인원 카운트 */
 	int togetherJoinCount(Map<String, Object> map) throws Exception;
+	
+	/* 23.01.27 박선영 참여하기 */
+	void togetherWith(Map<String, Object> map, HttpSession session) throws Exception;
 	
 }
