@@ -33,7 +33,7 @@
               1,
               #{MEM_DOG_NAME},
               #{MEM_DOG_NUM},
-              #{KINDOFDOG}  ,
+              #{KINDOFDOG},
               #{MEM_BR_NAME},
               #{MEM_DOG_WEIGHT},
               null,
@@ -48,7 +48,14 @@
      <![CDATA[
         SELECT COUNT(*) FROM MEMBERS WHERE MEM_ID = #{MEM_ID}
         ]]>
-	</select>
+ </select>
+
+<select id="selectListOfDog" parameterType="hashmap" resultType="hashmap">
+     <![CDATA[
+        SELECT * FROM BREED WHERE ROWNUM <= 10
+    ]]>
+ </select>
+
 
 
 

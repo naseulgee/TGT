@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import paw.togaether.member.dao.JoinDAO;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 @Service("joinService")
@@ -28,9 +29,6 @@ public class JoinServiceImpl implements JoinService {
 		String MEM_ADDR = String.format("%5s%5s", address, detailAddress);
 		map.put("MEM_ADDR", MEM_ADDR);
 
-
-
-
 		joinDAO.insertMembers(map);
 		
 	}
@@ -39,6 +37,12 @@ public class JoinServiceImpl implements JoinService {
 	public int idCheck(String id) throws Exception {
 		int result = joinDAO.checkId(id);
 		return result;
+	}
+
+	@Override
+	public List<Map<String, Object>> listOfDog(Map<String, Object> map) throws Exception {
+		return joinDAO.listOfDog(map);
+
 	}
 
 
