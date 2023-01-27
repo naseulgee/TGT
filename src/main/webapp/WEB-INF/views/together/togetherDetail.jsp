@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="/WEB-INF/include/user-header.jspf" %>
+
+	<%@ include file="/WEB-INF/include/user-header.jspf" %>
 <script src="https://kit.fontawesome.com/e9bd4d3977.js" crossorigin="anonymous"></script>
 <style>
 .fa-solid {
@@ -24,26 +25,13 @@ top:100px;
 
 .with li{
 line-height:2em;
-font-size:20px;
+font-size:22px;
 }
 
 .main_detail{
 float:right;
 padding-right:100px;
 }
-
-.btn.submit{
-margin-right:5px;
-}
-
-input[type="button"]{
-border:1px solid #9ea7ad;
-padding-top: 5px;
-padding-right: 10px;
-padding-bottom: 5px;
-padding-left: 10px
-}
-
 </style>
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <main class="layoutCenter">
@@ -62,7 +50,7 @@ padding-left: 10px
 					<td><strong>${map.TO_TITLE}</strong></td>
 				</tr>
 				<tr>
-					<td><strong>${map.BR_NAME}</strong>(이)랑!</td>
+					<td><strong>${map.TO_BR_NAME}</strong>(이)랑!</td>
 				</tr>
 				<tr>
 					<td>${map.TO_DATE}|${map.TO_TIME}</td>
@@ -71,20 +59,21 @@ padding-left: 10px
 					<td>${map.TO_LOC}</td>
 				</tr>
 				<tr>
-					<td class="toggle_ellip">${map.TO_CONTENTS}</td>
+					<td>${map.TO_CONTENTS}</td>
 				</tr>
 			</tbody>
 		</table>
+		<br/>
 		<br/>
 		<div class="flexCenter">
 				<ul class="with">
 				<li><span class="fa-solid fa-paw"></span> 참여중이개!  ${map.TO_JOIN_PEOPLE }/${map.TO_PEOPLE }</li>
 				<li><span class="fa-solid fa-paw"></span> 대장이개!  ${map.TO_WRITER_ID}</li>
 				<c:choose>
-						<c:when test="${!empty withlist}">
+						<c:when test="${!empty map.TW_MEM_ID }">
 							<li><span class="fa-solid fa-paw"></span> 누구랑 가개?
-								<c:forEach items="${withlist}" var="wili">
-									${wili.TW_MEM_ID }
+								<c:forEach items="${map.TW_MEM_ID }">
+									${map.TW_MEM_ID }
 								</c:forEach>
 							</li>
 						</c:when>
@@ -96,13 +85,10 @@ padding-left: 10px
 					</c:choose>
 				</ul>
 		</div>
-		<br/>
-		<div class="flexCenter">
-			<a class="btn submit" href="/together/list.paw">목록으로</a>
-			<input type="button" class="use_move" data-href="/together/modifyForm.paw" onclick="move(this, 'TO_IDX:${map.TO_IDX}')" value="수정하기" style="margin-right:5px;">
-			<input type="button" class="use_move" data-href="/together/delete.paw" onclick="move(this, 'TO_IDX:${map.TO_IDX}')" value="삭제하기">
-		</div>
 	</div>
-	
+</div>
 </main>
-<%@ include file="/WEB-INF/include/common-footer.jspf" %>
+<c:if test="${page != 'admin'}">
+	<!-- 풋터. 모든 페이지에 삽입! -->
+	<%@ include file="/WEB-INF/include/common-footer.jspf" %>
+</c:if>

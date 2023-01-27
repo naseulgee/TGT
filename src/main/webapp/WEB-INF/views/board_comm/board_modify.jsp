@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/include/user-header.jspf"%>
 <link href="/resources/css/board_comm/board_comm_modify.css" rel="stylesheet">
 <script src="/resources/js/board_comm/board_comm.js"></script>
@@ -35,7 +33,7 @@ font-size: 13px;
 					</center>
 					<br> <br>
 					<div class="wrapper">
-						<div class="typing-demo">글을 수정중입니다... :)</div>
+						<div class="typing-demo">글을 수정 중입니다... :)</div>
 					</div>
 					<div class="mainContainer">
 					<form action="/board/modify.paw" method="post">
@@ -51,7 +49,7 @@ font-size: 13px;
 									  <option value="자유게시판">자유게시판</option>
 									  <option value="정보게시판">정보게시판</option>
 									  <option value="긴급실종유기견">긴급실종유기견</option>
-									  <option value="자원봉사구해요">자원봉사구해요</option>
+									  <option value="자원봉사&후원요청">자원봉사&후원요청</option>
 									</select>
 									</div>
 									
@@ -63,7 +61,7 @@ font-size: 13px;
 								</div>
 								
 								<div class="fontPosition" style="float:right">
-									<i class="fa-solid fa-user"> ${map.BC_WRITER_NAME } ë</i>
+									<i class="fa-solid fa-user"> ${map.BC_WRITER_NAME } 님</i>
 									<i class="fa-solid fa-list-ol"> ${map.BC_IDX } </i> 
 								</div>
 							</div>
@@ -79,7 +77,7 @@ font-size: 13px;
 							<a href="/board/list.paw" class="btn normal" onclick="returntoList();">목록으로</a> 
 							<input class="btn submit" type="submit" value="수정하기" onclick="return checkConfirm();">
 						</div>
-			</form>
+					</form>
 	</body>
 </main>
 </html>

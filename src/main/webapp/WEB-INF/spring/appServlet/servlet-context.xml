@@ -5,10 +5,13 @@
 		xmlns="http://www.springframework.org/schema/beans"
 		xmlns:mvc="http://www.springframework.org/schema/mvc"
 		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:websocket="http://www.springframework.org/schema/websocket"
 		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 				http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+				http://www.springframework.org/schema/websocket
+				http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 
 	<!-- 전송된 데이터를 자바빈이 아닌 맵으로 받기 위한 설정 -->
 	<mvc:annotation-driven>
@@ -37,4 +40,19 @@
 	
 	<!-- 빈 스캔 패키지 -->
 	<context:component-scan base-package="paw.togaether" />
+	
+	<!-- 웹 소켓 관련 -->
+	<!-- 웹소켓 핸들러 정의. 어떤 요청을 어떤 웹소켓 핸들러가 처리할것인지 맵핑/ path: 접속 주소의 엔드포인트 -->
+	<websocket:handlers>
+		<websocket:mapping handler="echoHandler" path="/echo"/>
+		<websocket:mapping handler="chattingHandler" path="/chatting"/>
+		<websocket:sockjs></websocket:sockjs>
+	</websocket:handlers>
+	
+	<bean id="echoHandler" class="paw.togaether.common.websocket.EchoHandler"/>
+	
+	<bean id="chattingHandler" class="paw.togaether.common.websocket.ChattingHandler"></bean>
+	
+	<mvc:default-servlet-handler/>
+	
 </beans>

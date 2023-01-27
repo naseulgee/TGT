@@ -83,6 +83,7 @@ function move(target, ...param){
 }
 
 /* ===================== 페이징 이동 및 세팅 함수 ===================== */
+
 function set_paging(){
 	let p = $(".paging");
 	if(isNull(p[0])){ return false; }//페이징이 없으면 함수 종료
