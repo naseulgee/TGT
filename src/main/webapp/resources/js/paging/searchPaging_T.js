@@ -101,7 +101,7 @@ function gfn_renderPaging_T(params){
 	
 	var recordCount = params.recordCount; //페이지당 레코드 수
 	if(gfn_isNull(recordCount) == true){
-//		recordCount = 10;
+		recordCount = 6;
 	}
 	var totalIndexCount = Math.ceil(totalCount / recordCount); // 전체 인덱스 수
 	gfv_eventName_T = params.eventName;
@@ -123,6 +123,9 @@ function gfn_renderPaging_T(params){
 	else if(totalIndexCount <=10 && totalIndexCount > 1){ //전체 인덱스가 10보다 작을경우, 맨앞 태그 작성
 		preStr += "<ul class='paging'><li href='#this' class='pad_5 first' onclick='_movePage_T(1)'>[<<]</li>";
 	}
+	else {
+		preStr += "<ul class='paging'>";
+	}
 	
 	if(totalIndexCount > 10){ //전체 인덱스가 10이 넘을 경우, 맨뒤, 뒤 태그 작성
 		postStr += "<li href='#this' class='next' onclick='_movePage_T("+next+")'>[>]</li>" +
@@ -131,13 +134,16 @@ function gfn_renderPaging_T(params){
 	else if(totalIndexCount <=10 && totalIndexCount > 1){ //전체 인덱스가 10보다 작을경우, 맨뒤 태그 작성
 		postStr += "<li href='#this' class='end' onclick='_movePage_T("+totalIndexCount+")'>[>>]</li></ul>";
 	}
+	else {
+		postStr += "</ul>";
+	}
 	
 	for(var i=first; i<(first+last); i++){
 		if(i != currentIndex){
 			str += "<li href='#this' class='' onclick='_movePage_T("+i+")'>"+i+"</li>";
 		}
 		else{
-			str += "<strong><li href='#this' class='' onclick='_movePage_T("+i+")'>"+i+"</li></strong>";
+			str += "<li href='#this' class='select' onclick='_movePage_T("+i+")'>"+i+"</li>";
 		}
 	}
 	$("#"+divId).append(preStr + str + postStr);

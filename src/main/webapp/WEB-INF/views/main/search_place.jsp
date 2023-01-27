@@ -64,7 +64,6 @@ $(document).ready(function(){
 				pageIndex : "PAGE_INDEX_P",
 				totalCount : total3,
 				eventName : "fn_selectPlaceList3",
-				recordCount : 6
 			};
 			gfn_renderPaging_P(params3);
 

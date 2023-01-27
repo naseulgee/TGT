@@ -52,7 +52,7 @@ function next() {
 		($("#TF").val() > 1) ? mbti += "T" : mbti += "F";
 		($("#JP").val() > 1) ? mbti += "J" : mbti += "P";
 		
-		// /mbti/result에 mbti값 넘기기
+		// /mbti/result에 mbti 결과 값 넘기기
 		$(function() {
 			$.ajax({
 			url : '/mbti/result.paw',

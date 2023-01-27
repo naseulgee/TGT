@@ -1,5 +1,8 @@
 package paw.togaether.mbti.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import paw.togaether.common.domain.CommandMap;
 import paw.togaether.mbti.service.MbtiService;
 
-	/* 23.01.11 이소영: MBTI 테스트 서버단, 프론트단 작성
-	 * 23.01.13 이소영: MBTI test/ result jsp 분리 작성, 기능 구현
+	/** 23.01.11 이소영: MBTI 테스트 서버단, 프론트단 작성
+	 *  23.01.13 이소영: MBTI test/ result jsp 분리 작성, 기능 구현
 	*/
 
 @Controller 		// 웹 클라이언트에서 들어온 요청을 해당 비지니스 로직 호출, 수행결과와 함께 응답해주는 Dispatcher
@@ -42,9 +45,11 @@ public class MbtiController {
 		ModelAndView mv = new ModelAndView("/mbti/result");
 		
 		String mbti =  request.getParameter("mbti");	// mtbi.pjsp에서 넘겨진 변수 mbti를 서버에서 저장
-		mv.addObject("mbti", mbti);
+		mv.addObject("MEM_DOG_MBTI", mbti);
 		
 		session = request.getSession(false);
+		String loginId = "aaa";
+		session.setAttribute("loginId", loginId);
 
 		return mv;
 	}
@@ -54,10 +59,11 @@ public class MbtiController {
 	public ModelAndView mbtiModify(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:/mbti/result.paw");
 		
-		String mbti =  request.getParameter("mbti");	// mtbi.pjsp에서 넘겨진 변수 mbti를 서버에서 저장
-		mv.addObject("mbti", mbti);
+		Map<String, Object> map =  new HashMap<String, Object>();
+		map = commandMap.getMap();
 		
-		session = request.getSession(false);
+		String mbti =  request.getParameter("mbti");	// mtbi.pjsp에서 넘겨진 변수 mbti를 서버에서 저장
+		mv.addObject("MEM_DOG_MBTI", mbti);
 		
 		mbtiService.mbtiModify(commandMap.getMap(), request);
 

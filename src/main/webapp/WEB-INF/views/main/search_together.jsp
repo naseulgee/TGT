@@ -67,7 +67,6 @@
 					pageIndex : "PAGE_INDEX_T",
 					totalCount : total2,
 					eventName : "fn_selectBoardList2",
-					recordCount : 6
 				};
 				gfn_renderPaging_T(params2);
 
