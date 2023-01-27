@@ -9,6 +9,8 @@ import paw.togaether.common.domain.CommandMap;
 import paw.togaether.member.service.LoginService;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
@@ -25,12 +27,16 @@ public class LoginController {
     }
 
     @PostMapping(value="/member/login")
-    public ModelAndView postLogin(CommandMap commandMap) throws Exception {
+    public ModelAndView postLogin(CommandMap commandMap, HttpServletRequest request) throws Exception {
         ModelAndView mv = new ModelAndView();
 
         Boolean isLoginSuccess = loginService.Login(commandMap.getMap());
 
         if (isLoginSuccess) {
+            HttpSession session = request.getSession();
+            String mem_id = commandMap.get("MEM_ID").toString();
+            session.setAttribute("mem_id", mem_id);
+
             mv.setViewName("redirect:/sample.paw");
         } else {
             mv.setViewName("redirect:/member/loginError.paw");
