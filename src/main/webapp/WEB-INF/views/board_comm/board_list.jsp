@@ -35,7 +35,6 @@ $(function() {
 });
 
 
-
 $(function(){
 
 	$("input:radio[name='BC_BCC_NAME']").on('click',function(){

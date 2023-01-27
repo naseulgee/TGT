@@ -20,11 +20,40 @@ border-radius: 2em 2em 2em 2em;
 margin-top: 4px;
 }
 </style>
-
 <script>
-
+$(function(){
+$('#btn').click(function() {
+	
+	const BNO = ${map.BC_IDX};
+	const CONTENT = $('#CONTENT').val();
+	
+	console.log(BNO);
+	console.log(CONTENT);
+	
+			$.ajax({
+				type:'post',
+				url: "/comment/write.paw",
+				data: 
+					{
+						"BNO":BNO,
+						"CONTENT":CONTENT
+					},		
+				
+				dataType: "text",
+				success: function (data) {
+					$("CONTENT").html(data);
+					$("BNO").html(data);
+					location.reload();
+				},
+				error:function(data){
+					alert('댓글 작성 실패');
+				}
+		});
+	});
+});
 
 </script>
+
 <main class="layoutCenter">
 		<section class="notice">
 			<div class="page-title">
@@ -83,9 +112,10 @@ margin-top: 4px;
 								<c:when test="${fn:length(comment) > 0}">
 									<c:forEach items="${comment}" var="comment">
 										<tr align="center">
-											<td >${comment.WRITER }</td>
-											<td >${comment.CONTENT }</td>
-											<td >${comment.REGDATE}</td>
+												<td >${comment.WRITER }</td>
+												<td >${comment.CONTENT }</td>
+												<td >${comment.REGDATE}</td>
+											
 										</tr>
 									</c:forEach>
 								</c:when>
@@ -98,44 +128,18 @@ margin-top: 4px;
 						</tbody>
 						</table>
 						<br>
-						<Br>
-						
-				<!-- 댓글 등록 -->
-				<form id="board_comment" name="board_comment" method="post" action="/comment/write.paw">
-				<div class="contentPosition">
-					<input type="hidden" name="BNO" id="BNO" value="${map.BC_IDX}" />
-						<textarea placeholder="댓글을 입력해주세요." name="CONTENT" id="CONTENT" style="width:1300px;height:100px;"></textarea>
-						</div>
-						<br>
-						<%-- <a class="use_move btn warn" href="/board/detail.paw" onclick="move(this,'BNO:${map.BC_IDX}');">댓글작성</a> --%>
-						<button class="btn submit" type="submit" style="float:right;">댓글 작성</button>
-				</form>
+							<input type="hidden" name="BNO" id="BNO" value="${map.BC_IDX}" />
+							<textarea placeholder="댓글을 입력해주세요." name="CONTENT" id="CONTENT" style="width:1300px;height:100px;"></textarea>
+								<br>
+								<br>
+				 					<button class="btn submit" id="btn" name="btn" style="float:right">댓글 작성</button>
+							<!-- <form id="board_comment" name="board_comment" method="post" action="/comment/write.paw"> -->
+							<%-- <a class="use_move btn warn" href="/board/detail.paw" onclick="move(this,'BNO:${map.BC_IDX}');">댓글작성</a> --%>
+							<!-- <button class="btn" id="btn" type="submit" style="float:right;">댓글 작성</button> -->
+							<!-- </form> -->
+				</div>
 			</div>
-			</div>
-		</section>
+		</section>	
+
+</main>
 </html>
-<script>
-
-$("#board_comment").on("click",function(e){
-	e.preventDefault();
-	$form=$(this).closest("form[name='board_comment']");
-	
-	$.ajax({
-		url:"<c:url value='/comment/write'/>"
-		,type : "POST"
-		,dataType :"data"
-		,data : $form.serialize()
-		,success: function(data){
-			console.log(data);
-			$form.find("textarea[name='CONTENT']").val('');
-			$("#comment-table").html('');
-			comment-table();
-		}
-		error: function (data) {
-			alert('error');
-		}
-		}
-	});//ajax 
-});//등록버튼
-
-</script>
