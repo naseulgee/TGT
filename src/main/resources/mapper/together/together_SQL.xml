@@ -255,8 +255,8 @@
 			TW_MEM_ID)
 			VALUES(
 			seq_together_with.NEXTVAL,
-			#{TO_IDX},
-			#{TW_MEM_ID}
+			#{TW_TO_IDX, jdbcType=VARCHAR},
+			#{TW_MEM_ID, jdbcType=VARCHAR}
 			)
 		]]>
 	</insert>

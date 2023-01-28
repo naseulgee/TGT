@@ -182,18 +182,19 @@ public class TogetherController {
 	}
 	
 	/* 23.01.27 박선영 참여하기 */
-	@RequestMapping(value="/together/withreg.paw" ,method = RequestMethod.POST)
+	@RequestMapping(value="/together/with.paw", method=RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView togetherWith(@RequestBody CommandMap commandMap, HttpSession session) throws Exception {
 		
 		session.setAttribute("mem_id", "with1");
+		
 		ModelAndView mv = new ModelAndView("jsonView");
 		
-		System.out.println("CommandMap : " +  commandMap);
+		System.out.println("tw_to_idx : " +  commandMap.get("TW_TO_IDX"));
 		System.out.println("mem_id:" + session.getAttribute("mem_id"));
 		
 		togetherService.togetherWith(commandMap.getMap(), session);
-		
+
 		return mv;
 		
 	}

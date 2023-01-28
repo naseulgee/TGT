@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
 <script src="https://kit.fontawesome.com/e9bd4d3977.js" crossorigin="anonymous"></script>
-<script type="text/javascript" src="/resources/js/together/togetherwith.js"></script>
+
 <style>
 span.fa-solid.fa-paw {
 color:#f0b1aa;
@@ -109,7 +109,7 @@ padding-left: 10px
 					<form id="withreg" name="withreg">
 						<input type="hidden" id="TW_TO_IDX" name="TO_IDX" value="${map.TO_IDX}">
 						<input type="hidden" id="TW_MEM_ID" name="TW_MEM_ID" value="${mem_id}">
-						<input type="button" class="btn" id="withmem" value="참여하개:)">
+						<input type="button" class="btn" id="withmem" name="withmem" value="참여하개:)">
 					</form>
 				</c:if>
 			</c:if>
@@ -117,6 +117,25 @@ padding-left: 10px
 	</div>
 	
 </main>
+<script type="text/javascript" src="/resources/js/together/togetherwith.js"></script>
 
+<script>
+$(document).ready(function(){
+
+	
+	$("input[name='withmem']").on("click",function(e){
+	      
+	      var togewith = {
+	            TW_TO_IDX: $("input[name='TO_IDX']").val(),
+	            TW_MEM_ID: $("input[name='TW_MEM_ID']").val(),
+	          };
+	      
+	      withService.add(togewith, function(result){
+	        
+	        alert(result);
+	      });
+	});
+});
+</script>
 
 <%@ include file="/WEB-INF/include/common-footer.jspf" %>
