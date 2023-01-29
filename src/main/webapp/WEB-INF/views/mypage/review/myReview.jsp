@@ -13,8 +13,6 @@
 	
 	#re_contents {
 		width:60%;
-		height:250px;
-
 	}
 	
 	#place {
@@ -24,12 +22,13 @@
 	
  	#place {
  		width : 75%;
-	    border: 3px solid;
-	    border-color : #f0b1aa;
+	    border: 1px solid;
+	    border-color : #9ea7ad;
 	    border-radius: 15px;
 	  	box-sizing: border-box;
 	    overflow: hidden;
 	    box-shadow: 3px 3px 5px #d1d5d9; 
+	    margin : auto;
 	} 
 	
 	
@@ -69,20 +68,32 @@
 	#mainTd {
 		width : 260px;
 	}
+	
+	#re_contents {
+		margin:auto;
+	}
 </style>
+
+<script type="text/javascript">
+	function recheck() {
+		return confirm("정말 삭제하시겠어요?");
+	};		
+</script>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <main class="layoutCenter">
 	<div id="wrap" >	
-	<div>
+	<div class="txt_center">
+	
 	<h1>나의 리뷰</h1>
-	<br><br><br><br>
+	<br><br>
+	
 		<div id="place">
 			<table>
 				<tbody>
 					<tr>
 						<td rowspan="5" id="mainTd">
-							<img id="placePhoto" width="250px" src="https://www.dailyvet.co.kr/wp-content/uploads/2022/04/20220405eyedeal1.jpg">
+							<img id="placePhoto" width="250px" src="https://www.dailypop.kr/news/photo/202207/61411_118467_5044.jpg">
 							<!-- 실제 실행할 때는 위코드를 지워주고 아래의 코드로 실행할 것 
 							<img id="placePhoto" src="https://www.dailyvet.co.kr/wp-content/uploads/2022/04/20220405eyedeal1.jpg">
 							-->
@@ -121,18 +132,10 @@
 		
 		<br><br><br>
 		
-		<!-- 사진 -->
-		<div>
-			<c:forEach items="${photos}" var="i" varStatus="status">	
-				<img width="200px" src="/resources/upload/${i.PH_STORED_FILE_NAME}" alt="카페 이미지" id="photo">			
-				&nbsp;&nbsp;
-			</c:forEach>
-		</div>
-		<br>
 		
 		<!-- 평점 -->
 		<span id="star1" class="bold">${review.RE_STAR}</span>
-		<span id="star2">/5점</span>
+		<span id="star2">/5점</span><br>
 		<span class="color">
 		    <c:forEach var="j" begin="1" end="${review.RE_STAR}">
     			<i class="fa-solid fa-paw color" id="stars"></i>
@@ -145,21 +148,40 @@
 		<br><br><br>
 		
 		<!-- 후기 -->
-		<div id="re_contents" class="slim_scroll">
+		<div id="re_contents">
 			${review.RE_CONTENTS}
 		</div>	
 		
-		<div id="writeDate" class="txt_left">
-		최초작성일 : <fmt:formatDate value="${review.RE_REG_DATE}" pattern="yy.MM.dd" /><br>
-		최종수정일 : <fmt:formatDate value="${review.RE_MOD_DATE}" pattern="yy.MM.dd" />
+		<!-- 사진 -->
+		<div>
+			<c:forEach items="${photos}" var="i" varStatus="status">	
+				<img width="200px" src="/resources/upload/${i.PH_STORED_FILE_NAME}" alt="카페 이미지" id="photo">			
+				&nbsp;&nbsp;
+			</c:forEach>
+		</div>
+		<br>
+		
+		
+		<div id="writeDate" class="txt_right">
+			최초작성일 : <fmt:formatDate value="${review.RE_REG_DATE}" pattern="yy.MM.dd" /><br>
+			최종수정일 : <fmt:formatDate value="${review.RE_MOD_DATE}" pattern="yy.MM.dd" />
 		</div>			
-		${review.RE_IDX}
-		<div class="txt_right">
+		<br>
+		
+		<div>
 			<a href="/mypage/review/updateForm.paw" class="use_move btn submit" 
 			onclick="move(this, 're_idx:${review.RE_IDX}')">수정</a>
-			<a href="/mypage/review/delete.paw" class="use_move btn"
-			onclick="move(this, 're_idx:${review.RE_IDX}')">삭제</a>
+			<table>
+				<form action="/mypage/review/delete.paw" method="post">
+					<input type="submit" class="btn" value="삭제" onClick="return recheck();">
+					<input type="hidden" id="re_idx" name="re_idx" value="${review.RE_IDX}">
+				</form>
+			</table>
 		</div>
+		
+		
+		
+
 	</div>	
 	</div> 
 </main><!-- //main 종료 -->

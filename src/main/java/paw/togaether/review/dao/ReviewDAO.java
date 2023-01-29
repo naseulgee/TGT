@@ -34,5 +34,15 @@ public class ReviewDAO extends AbstractDAO{
 	public Map<String, Object> openMyReviewPlacePhoto(Map<String, Object> map) throws Exception {
 		 return (Map<String, Object>)selectOne("review.openMyReviewPlacePhoto", map);
 	}
+	
+	public void deleteReview(Map<String, Object> map) throws Exception {
+		 update("review.deleteReview", map);
+	}
+	
+	public void deletePhoto(Map<String, Object> map) throws Exception {
+		 update("review.deletePhoto", map);
+	}
+	
+	
 
 }

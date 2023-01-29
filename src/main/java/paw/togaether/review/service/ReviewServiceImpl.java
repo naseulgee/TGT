@@ -62,4 +62,10 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDAO.openMyReviewPlacePhoto(map);
 	}
 
+	@Override
+	public void deleteReview(Map<String, Object> map) throws Exception {
+		reviewDAO.deleteReview(map); //리뷰삭제
+		reviewDAO.deletePhoto(map); //리뷰관련사진삭제
+	}
+
 }

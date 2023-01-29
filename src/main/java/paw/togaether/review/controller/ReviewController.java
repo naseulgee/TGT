@@ -67,6 +67,8 @@ public class ReviewController {
 		String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기
 		commandMap.put("mem_id", mem_id);
 		
+		
+		
 		List<Map<String,Object>> reviewList = reviewService.openMyReviews(commandMap.getMap());
 		m.addObject("reviewList",reviewList);
 		return m;
@@ -102,9 +104,23 @@ public class ReviewController {
 		
 		Map<String,Object> review =  reviewService.openMyReview(commandMap.getMap());
 		m.addObject("review",review);
-
+		
+		//후기사진 가져오기
+		List<Map<String,Object>> photos =  reviewService.openMyReviewPhoto(commandMap.getMap());
+		m.addObject("photos", photos); 
 		return m;
 	}
+	
+	
+	/** 23.01.29 신현지 : 리뷰삭제
+	  */
+	@RequestMapping(value="/mypage/review/delete")
+	public ModelAndView deleteReview(CommandMap commandMap, HttpSession session) throws Exception{
+		ModelAndView m = new ModelAndView("redirect:/mypage/review/list.paw"); //삭제 후 리뷰목록으로 이동
+		reviewService.deleteReview(commandMap.getMap());
+		return m;
+	}
+	
 	
 
 }

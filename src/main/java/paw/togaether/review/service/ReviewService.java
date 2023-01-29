@@ -18,5 +18,7 @@ public interface ReviewService {
 	List<Map<String, Object>> openMyReviewPhoto(Map<String, Object> map) throws Exception;
 	
 	Map<String, Object> openMyReviewPlacePhoto(Map<String, Object> map) throws Exception;
+	
+	void deleteReview(Map<String, Object> map) throws Exception;
 
 }

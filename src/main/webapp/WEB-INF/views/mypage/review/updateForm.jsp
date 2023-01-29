@@ -6,16 +6,25 @@
 
 <script>
 	$(document).ready( function() {	
+		//페이지 로딩 시 바로 글자수 파악		
+		var contents = $("textarea").val().length;
+		$('#reCount').text(contents +' / 950');
+
 		//글자수 실시간 반영 메서드
 		$("textarea").on("propertychange change keyup paste input", function() {
-			var contents = $(this).val();
+			contents = $(this).val();
 			console.log(contents.length);
 			if (contents.length == 0 || contents == '') {
 				$('#reCount').text('0 / 950');
 			} else {
 				$('#reCount').text(contents.length +' / 950');
 			}
-		});	  
+		});
+		
+		//기본별점 표시하기
+		var previousRate = $("#previousRate").val();
+		$("#rate"+previousRate).attr('checked', true);
+
 	});
 
 	//유효성 검사 메서드
@@ -45,7 +54,7 @@
 		<!-- 평점 -->
 		<div><h3>시설의 평점</h3></div>
 		<div><span class="color">시설의 만족도는 어느 정도인가요?</span></div><br>
-		${review.RE_STAR}
+		<div><input type="hidden" id="previousRate" value="${review.RE_STAR}"></div>
 		<div>
 			<fieldset>
 				<legend>이모지 별점</legend>
@@ -100,6 +109,12 @@
 		<p class="info_warn">본인이 직접 촬영한 사진만 올려주세요.</p>
 		<p class="info_warn">저작권에 대한 책임은 업로드한 회원에게 있습니다.</p>
 		<br><br><br>
+		
+		
+		<c:forEach items="${photos}" var="i" varStatus="status">	
+				<img width="200px" src="/resources/upload/${i.PH_STORED_FILE_NAME}" alt="카페 이미지" id="photo">			
+				&nbsp;&nbsp;
+		</c:forEach>
 		
 		<input type="hidden" value="review" name="ph_board_type"><!-- 테이블명/ 시설과 회원에 각각 추가 필수 -->
 		<input type="hidden" id="re_pl_idx" name="re_pl_idx" value="${re_pl_idx}"><!-- 시설번호 -->
