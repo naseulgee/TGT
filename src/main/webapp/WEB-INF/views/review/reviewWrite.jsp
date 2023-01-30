@@ -112,7 +112,7 @@
 		--%>
 		<button class="btn submit" id="uploadBtn" >리뷰등록</button> 
 		
-		<a href="/user/mypage/review/reviewList" class="btn">목록으로</a>
+		<a href="/mypage/review/list.paw" class="btn">목록으로</a>
 	</div> 
 	</div>
 </main><!-- //main 종료 -->

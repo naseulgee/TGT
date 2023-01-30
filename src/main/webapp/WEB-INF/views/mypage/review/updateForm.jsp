@@ -24,6 +24,14 @@
 		//기본별점 표시하기
 		var previousRate = $("#previousRate").val();
 		$("#rate"+previousRate).attr('checked', true);
+		
+		//이미지바뀌면 idx_n 제거
+		$("input[type='file']").on("propertychange change keyup paste input", function() {
+			console.log($(this).val());
+			var idx = $(this).previousElementSibling;
+			console.log("첫번째 노드 : " + idx);
+			idx.HTML("");
+		});
 
 	});
 
@@ -91,19 +99,23 @@
 		<div><h3>시설의 사진</h3></div>
 		<div><span class="color">시설 사진을 올려주세요:)</span></div><br>
 		<div id="img_upload" class="flexCenter flexWrap">
-			<!-- 아이콘을 누르면 file 선택이 되도록 설정 -->
-			<label><!-- 사진1 : 파일태그는 숨기고 -->
-				<i class="fa-thin fa-image no-image"></i>
-				<input type="file" accept="image/*" id="photo1" name="photo1" >
-			</label>
-			<label><!-- 사진2 -->
-				<i class="fa-thin fa-image no-image"></i>
-				<input type="file" accept="image/*" id="photo2" name="photo2" >
-			</label>
-			<label><!-- 사진3 -->
-				<i class="fa-thin fa-image no-image"></i>
-				<input type="file" accept="image/*" id="photo3" name="photo3" >
-			</label>
+		
+			<!-- 등록한 이미지가 있다면 썸넬 표시 / 사진이 수정이 되었으면 <input name="idx_${var.index+1}"> 없애기 -->
+			<c:forEach items="${photos}" var="i" varStatus="var">	
+				<label>
+					<input type="hidden" name="idx_${var.index+1}" value="${i.PH_IDX}">
+					<input type="file" accept="image/*" id="photo${var.index+1}" name="photo${var.index+1}" >
+					<img width="200px" src="/resources/upload/${i.PH_STORED_FILE_NAME}" >
+				</label>	
+			</c:forEach>
+			
+			<!-- 이미지 등록안한 <input type="file">태그 -->
+			<c:forEach var="i" begin="${fn:length(photos)+1}" end="3" step="1" varStatus="var">	
+				<label>
+					<i class="fa-thin fa-image no-image"></i>
+					<input type="file" accept="image/*" id="photo${var.index}" name="photo${var.index}" >
+				</label>
+			</c:forEach>
 		</div>
 		<br>
 		<p class="info_warn">본인이 직접 촬영한 사진만 올려주세요.</p>
@@ -111,10 +123,6 @@
 		<br><br><br>
 		
 		
-		<c:forEach items="${photos}" var="i" varStatus="status">	
-				<img width="200px" src="/resources/upload/${i.PH_STORED_FILE_NAME}" alt="카페 이미지" id="photo">			
-				&nbsp;&nbsp;
-		</c:forEach>
 		
 		<input type="hidden" value="review" name="ph_board_type"><!-- 테이블명/ 시설과 회원에 각각 추가 필수 -->
 		<input type="hidden" id="re_pl_idx" name="re_pl_idx" value="${re_pl_idx}"><!-- 시설번호 -->

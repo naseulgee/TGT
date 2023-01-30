@@ -50,11 +50,8 @@ public class ReviewController {
 		System.out.println("ajax로부터 업로드된 파일의 개수 : "+ uploadFile.length);
 		System.out.println(commandMap.getMap());
 		//review등록과 photo등록에 대한 처리
-		//reviewService.insertReview(commandMap.getMap(),session,uploadFile); //사용시 주석 풀어주기
+		reviewService.insertReview(commandMap.getMap(),session,uploadFile); //사용시 주석 풀어주기
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		//리다이렉트 url를 작성해주면 된다!
-		map.put("re_url", "/mypage/review/list.paw");
 		return new ResponseEntity<String>("/mypage/review/list.paw",HttpStatus.OK);
 	}
 	
@@ -67,15 +64,12 @@ public class ReviewController {
 		String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기
 		commandMap.put("mem_id", mem_id);
 		
-		
-		
 		List<Map<String,Object>> reviewList = reviewService.openMyReviews(commandMap.getMap());
 		m.addObject("reviewList",reviewList);
 		return m;
 	}
 	
-	/** 작업날짜 작업자: 메소드 설명
-	 * 23.01.25 신현지: 마이페이지에서 내 리뷰(특정 하나) 조회 메서드
+	/** 23.01.25 신현지: 마이페이지에서 내 리뷰(특정 하나) 조회 메서드
 	 */
 	@RequestMapping(value="/mypage/review/myReview")
 	public ModelAndView openMyReview(CommandMap commandMap, HttpSession session) throws Exception{

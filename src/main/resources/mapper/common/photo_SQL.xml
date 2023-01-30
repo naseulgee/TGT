@@ -11,7 +11,7 @@
 				ph_file_size, ph_reg_date, ph_del_gb )
 	values ( seq_photo.NEXTVAL, 
 			<if test='ph_board_type == "members".toString()'>
-				null, #{mem_id}
+				null, #{MEM_ID}
 			</if>
 			<if test='ph_board_type == "place".toString()'>
 				#{idx}, null

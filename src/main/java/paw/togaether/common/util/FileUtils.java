@@ -25,6 +25,7 @@ public class FileUtils {
 		
 		//저장경로(개인별로 수정할 것) webapp내 resources내 upload라는 폴더에 사진저장
 		String uploadFolder = session.getServletContext().getRealPath(filePath);
+		System.out.println("업로드 폴더명 : " + uploadFolder);
 
 		//디렉토리가 없다면 생성
 		File file = new File(uploadFolder);

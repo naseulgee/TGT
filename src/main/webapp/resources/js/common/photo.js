@@ -15,7 +15,7 @@ photo_inputs.each(function(index, item){
 		let img = photo_wrap.children("img");
 		let no_img = photo_wrap.children(".no-image");
 		//만약 자식태그로 img 태그가 이미 있다면 src 변경 => 수정 고려
-		if(img.length > 1){
+		if(img.length > 0){
 			img.attr("src",imageSrc);
 		}else{//없다면 img 태그 추가
 			photo_wrap.prepend("<img src='"+imageSrc+"'>");
@@ -58,7 +58,6 @@ function form_submit(insert_url) {
 		photo_inputs.each(function(index, item){
 			//1. 파일객체 가져오기
 			let inputFile = item.files[0];
-			console.log("파일값 들어있는지 확인"+inputFile);
 			//2. 확장자 알맞지 않거나 파일용량이 크면 FormData객체에 삽입X
 			if (!isNull(inputFile)) { //첫번째 파일을 formData에 삽입
 				//사이즈 및 확장자가 올바른 경우 formData 객체에 파일 추가
@@ -69,19 +68,26 @@ function form_submit(insert_url) {
 		});
 		
 		//main 자식 중 사진용 input이 아닌 input들과 textarea 선택
-		let target = $("main input:not([name^='photo']), textarea, option:selected");
+		let target = $("main input:not([name^='photo']), main textarea");
 		for(let i=0; i<target.length ; i++) {//target 갯수만큼 반복
 			//target의 name, value, type 변수에 담기
 			let in_name = target[i].name;
 			let in_value = target[i].value;
 			let in_type = target[i].type;
-			console.log(in_type);
 			//타입이 만약 라디오나 체크박스라면 통과
 			if ((in_type == 'radio'||in_type =='checkbox')&& !target[i].checked) {
 				continue;
 			}
-			
-			
+			//formData객체에 name, value 속성 추가
+			formData.append(in_name, in_value);
+		}
+		
+		//main 자식 중 select는 따로 처리
+		let target_select = $("main select");
+		for(let i=0; i<target_select.length ; i++){
+			//select의 이름과 선택된 option의 value 변수에 담기
+			let in_name = target_select[i].name;
+			let in_value = target_select[i].selectedOptions[0].value;
 			//formData객체에 name, value 속성 추가
 			formData.append(in_name, in_value);
 		}
@@ -92,10 +98,15 @@ function form_submit(insert_url) {
 			contentType: false,
 			data: formData,
 			type: 'POST',
-			success: function(result){ 
-				alert("글을 성공적으로 업로드했습니다!");
+			success: function(result){
+				console.log(result);
+				if (result == '/sample.paw') {
+					alert("회원가입이 성공적으로 되었습니다!");
+				} else {
+					alert("글을 성공적으로 업로드했습니다!");
+				}
 				location.href=result;
 			}
-			}); //$.ajax
+		}); //$.ajax
 	});
 }
