@@ -71,6 +71,7 @@ padding-left: 10px
 <div class="cate_wrap">
 	
 	<!-- 카드 테이블로 전체게시글 리스트 출력 -->
+	<!-- 23.01.30 박선영 참여인원 반영 구현 -->
 	<div class="main_list">
 		<c:choose>
 			<c:when test="${!empty list}">
@@ -89,8 +90,8 @@ padding-left: 10px
 									</td><!-- 참여가능사이즈 -->
 								<td><span class="fa-solid fa-bone" style="color:#f0b1aa;"></span> 언제개: ${to.TO_DATE }</td><!-- 모임날짜 -->
 								<td><span class="fa-solid fa-bone" style="color:#f0b1aa;"></span> 몇시개: ${to.TO_TIME }</td><!-- 모임시간 -->
-								<td><span class="fa-solid fa-bone" style="color:#f0b1aa;"></span> 몇명이개: ${join}/${to.TO_PEOPLE}<!-- 참여인원/모임인원 -->
-									<input type="hidden" value="${to.TO_IDX}" id="TO_IDX" name="TO_IDX"/></td>
+								<td><span class="fa-solid fa-bone" style="color:#f0b1aa;"></span> 몇명이개: ${to.C}/${to.TO_PEOPLE}<!-- 참여인원/모임인원 -->
+									<input type="hidden" value="${to.TO_IDX}" id="TW_TO_IDX" name="TW_TO_IDX"/></td>
 								<td class="txt_right" style="font-size:15px;">${to.TO_REG_DATE }</td><!-- 등록날짜 -->
 							</tr>
 						</c:forEach>

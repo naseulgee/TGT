@@ -41,15 +41,11 @@ public class TogetherController {
 		List<Map<String, Object>> catelist = togetherService.togetherCate(commandMap.getMap());
 		//참여인원수를 구하기 위함
 		
- 		int join = togetherService.togetherJoinCount(commandMap.getMap());
-		
-		System.out.println(join);
-		System.out.println(commandMap.getMap());
 		
 		//get()으로 받은 commandMap의 값들을 mv에 ""이름으로 저장
 		//mv.addObject("search_type", commandMap.get("search_type"));
 		//mv.addObject("search_keyword", commandMap.get("search_keyword"));
-		mv.addObject("join", join);
+		
 		mv.addObject("catelist", catelist);
 		mv.addObject("list", list);
 		
@@ -58,9 +54,9 @@ public class TogetherController {
 	
 	//23.01.16 박선영 : 게시글 작성 폼으로의 이동 
 	@RequestMapping(value="/together/writeForm.paw")
-	public ModelAndView openTogetherWrite(CommandMap commandMap) throws Exception {
+	public ModelAndView openTogetherWrite(CommandMap commandMap, HttpSession session) throws Exception {
 		
-		System.out.println(commandMap.getMap());
+		System.out.println(session.getAttribute("mem_id"));
 		
 		ModelAndView mv = new ModelAndView("/together/togetherWrite");
 		
@@ -75,12 +71,14 @@ public class TogetherController {
 	}
 	//23.01.16 박선영 : 작성한 게시글 insert 하기
 	@RequestMapping(value="/together/write.paw")
-	public ModelAndView togetherWrite(CommandMap commandMap) throws Exception {
+	public ModelAndView togetherWrite(CommandMap commandMap, HttpSession session) throws Exception {
 		System.out.println(commandMap.getMap());
 		//작성폼 작성 후 게시글 리스트로 리다이렉트
+		System.out.println(session.getAttribute("mem_id"));
+		
 		ModelAndView mv = new ModelAndView("redirect:/together/list.paw");
 		
-		togetherService.togetherWrite(commandMap.getMap());
+		togetherService.togetherWrite(commandMap.getMap(), session);
 		
 		return mv;
 	}
@@ -89,7 +87,7 @@ public class TogetherController {
 	@RequestMapping(value="/together/detail/{to_idx}.paw")
 	public ModelAndView togetherDetail(@PathVariable("to_idx") int TO_IDX, CommandMap commandMap, HttpSession session)throws Exception {
 		
-		session.setAttribute("mem_id", "with1");//로그인 테스트
+		//session.setAttribute("mem_id", "with2");//로그인 테스트
 		//값을 잘 받아오는지 확인하는 용도
 		System.out.println(TO_IDX);
 		System.out.println(commandMap.getMap());
@@ -132,7 +130,7 @@ public class TogetherController {
 	@RequestMapping(value="/together/modifyForm.paw")
 	public ModelAndView openTogetherModi(CommandMap commandMap, HttpSession session) throws Exception {
 		
-		session.setAttribute("mem_id", "user1");//로그인 테스트임
+		//session.setAttribute("mem_id", "user1");//로그인 테스트임
 		ModelAndView mv = new ModelAndView("/together/togetherModi");
 		
 		System.out.println(commandMap.getMap());
@@ -155,7 +153,7 @@ public class TogetherController {
 	@RequestMapping(value="/together/modify.paw", method = RequestMethod.POST)
 	public ModelAndView togetherModi(CommandMap commandMap, HttpSession session) throws Exception {
 		
-		session.setAttribute("mem_id", "user1");
+		//session.setAttribute("mem_id", "user1");
 		ModelAndView mv = new ModelAndView("redirect:/together/list.paw");
 		
 		System.out.println(commandMap.get("TO_IDX"));
@@ -171,7 +169,7 @@ public class TogetherController {
 	@RequestMapping(value="/together/delete.paw", method = RequestMethod.POST)
 	public ModelAndView togetherDel(CommandMap commandMap, HttpSession session) throws Exception {
 		
-		session.setAttribute("mem_id", "user1");
+		//session.setAttribute("mem_id", "user1");
 		ModelAndView mv = new ModelAndView("redirect:/together/list.paw");
 		
 		System.out.println(commandMap.get("TO_IDX"));
@@ -181,20 +179,24 @@ public class TogetherController {
 		return mv;
 	}
 	
-	/* 23.01.27 박선영 참여하기 */
-	@RequestMapping(value="/together/with.paw", method=RequestMethod.POST)
+	/* 23.01.27 박선영 참여하기 
+	 * 23.01.30 참여하기 기능 구현완료*/
+	@SuppressWarnings("unchecked")
 	@ResponseBody
-	public ModelAndView togetherWith(@RequestBody CommandMap commandMap, HttpSession session) throws Exception {
+	@RequestMapping(value="/together/with.paw", method=RequestMethod.POST)
+	public ModelAndView togetherWith(@RequestBody Map commandMap, HttpSession session) throws Exception {
 		
-		session.setAttribute("mem_id", "with1");
+		session.getAttribute("mem_id");
+		//commandMap.put("mem_id", session.getAttribute("mem_id"));
 		
 		ModelAndView mv = new ModelAndView("jsonView");
-		
-		System.out.println("tw_to_idx : " +  commandMap.get("TW_TO_IDX"));
+			
+		System.out.println("TW_TO_IDX :" + commandMap);
 		System.out.println("mem_id:" + session.getAttribute("mem_id"));
 		
-		togetherService.togetherWith(commandMap.getMap(), session);
+		togetherService.togetherWith(commandMap, session);
 
+		mv.addObject(commandMap);
 		return mv;
 		
 	}

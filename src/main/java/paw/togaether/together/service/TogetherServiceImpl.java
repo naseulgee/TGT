@@ -29,8 +29,9 @@ public class TogetherServiceImpl implements TogetherService {
 	
 	/* 함께해요 게시글 작성 */
 	@Override
-	public void togetherWrite(Map<String, Object> map) throws Exception {
-
+	public void togetherWrite(Map<String, Object> map, HttpSession session) throws Exception {
+		String mem_id = (String)session.getAttribute("MEM_ID"); //로그인 아이디가져오기
+		map.put("mem_id", mem_id);
 		togetherDAO.togetherWrite(map);
 	}
 	
@@ -88,16 +89,11 @@ public class TogetherServiceImpl implements TogetherService {
 		togetherDAO.adminTogeCateWrite(map);
 	}
 	
-	/* 23.01.25 박선영 참여인원 카운트 */
-	@Override
-	public int togetherJoinCount(Map<String, Object> map) throws Exception {
-		return togetherDAO.togetherJoinCount(map);
-	}
 	
 	/* 23.01.27 박선영 참여하기 */
 	@Override
 	public void togetherWith(Map<String, Object> map, HttpSession session) throws Exception {
-		String mem_id = (String)session.getAttribute("MEM_ID"); //로그인 아이디가져오기
+		String mem_id = (String)session.getAttribute("MEM_ID"); //로그인 아이디가져오기	
 		map.put("mem_id", mem_id);
 		togetherDAO.togetherWith(map);
 	}

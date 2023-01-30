@@ -31,6 +31,7 @@ height:100px;
 	
 	<div class="main_wrap">
 		<form method="post" action="/together/write.paw" name="writefrm">
+			<input type="hidden" id="TO_WRITER_ID" name="TO_WRITER_ID" value="${mem_id}">
 			<table class="board_view">
 				<caption>게시글 등록</caption>
 				<tbody>

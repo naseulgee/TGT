@@ -75,11 +75,6 @@ public class TogetherDAO extends AbstractDAO {
 		insert("together.adminTogeCateWrite", map);
 	} 
 	
-	/* 23.01.25 박선영 참여인원 수 */
-	public int togetherJoinCount(Map<String, Object> map) throws Exception {
-		return (int) selectOne("together.togetherJoinCount", map);
-	}
-	
 	/* 23.01.27 박선영 참여하기 */
 	public void togetherWith(Map<String, Object> map) throws Exception {
 		insert("together.togetherWith", map);

@@ -6,10 +6,11 @@
 	<!-- 23.01.12 박선영: 함께해요 게시판 리스트 출력 및 검색  -->
 	<!-- 23.01.21 박선영 : 견종 테이블과 조인으로 변경 -->
 	<!-- 23.01.23 박선영 : 삭제 기능 구현하면서 삭제여부가 N 인 게시글만 출력조건 추가 -->
+	<!-- 23.01.30 박선영 : 참여인원 쿼리문 수정 -->
 	<select id="togetherList" resultType="hashmap">
 		<!-- <include refid = "common.pagingPre"/> -->
 		<![CDATA[
-			select 
+		select 
 				t.to_idx,
 				t.to_title,
 				t.to_tc_name,
@@ -19,7 +20,7 @@
 				t.to_date,
 				t.to_time,
 				t.to_people,
-				t.to_join_people,
+				(select count(tw_idx) from together_with where tw_to_idx = to_idx) as C,
 				t.to_loc,
 				t.to_br_idx,
 				t.to_wt_idx,
@@ -35,6 +36,26 @@
 				where t.to_tc_name = c.tc_name
 				and t.to_br_idx = b.br_idx
 				and t.to_del_gb ='N'
+                group by t.to_idx,
+						t.to_title,
+						t.to_tc_name,
+						t.to_contents,
+						t.to_writer_id,
+						t.to_writer_name,
+						t.to_date,
+						t.to_time,
+						t.to_people,
+						t.to_loc,
+						t.to_br_idx,
+						t.to_wt_idx,
+						t.to_reg_date,
+						t.to_mod_date,
+						t.to_del_gb,
+						c.tc_idx,
+						c.tc_name,
+						c.tc_count,
+						b.br_idx,
+						b.br_name
 		]]>
 		<if test="keyword != null">
 			<choose>
@@ -59,6 +80,7 @@
 	
 	<!-- 23.01.13 박선영: 게시글 작성폼  -->
 	<!-- 23.01.21 박선영 : 견종명이 아닌 견종 번호로 입력 받을 수 있도록 변경 -->
+	<!-- 23.01.30 박선영 : 세션 이용 작성자 아이디 전송 -->
 	<insert id="togetherWrite" parameterType="hashmap">
 		<![CDATA[
 			insert into TOGETHER(
@@ -74,7 +96,8 @@
 				TO_WT_IDX,
 				TO_REG_DATE,
 				TO_MOD_DATE,
-				TO_DEL_GB
+				TO_DEL_GB,
+				TO_WRITER_ID
 				) 
 				VALUES(
 				seq_together.nextval, 
@@ -89,7 +112,8 @@
 				#{TO_WT_IDX, jdbcType=VARCHAR},
 				sysdate,
 				sysdate,
-				'N'
+				'N',
+				#{TO_WRITER_ID, jdbcType=VARCHAR}
 				)
 		]]>
 	</insert>
@@ -97,6 +121,7 @@
 	
 	<!-- 23.01.18 박선영: 함께해요 게시글 상세보기 -->
 	<!-- 23.01.21 박선영 : 견종 테이블 조인하고 게시글 견종번호로 수정 -->
+	<!-- 23.01.30 박선영 : 참여인원 쿼리문 수정 -->
 	<select id="togetherDetail" resultType="hashmap">
 		<![CDATA[
 			SELECT t.TO_IDX,
@@ -108,7 +133,7 @@
 					t.TO_DATE,
 					t.TO_TIME,
 					t.TO_PEOPLE,
-					t.TO_JOIN_PEOPLE,
+					(select count(tw_idx) from together_with where tw_to_idx = to_idx) as C,
 					t.TO_LOC,
 					t.TO_BR_IDX,
 					t.TO_WT_IDX,
@@ -123,7 +148,7 @@
 					FROM TOGETHER t, TOGETHER_CATE c,BREED b
 					WHERE t.TO_TC_NAME = c.TC_NAME
 					AND t.TO_BR_IDX = b.BR_IDX
-					AND t.TO_IDX=#{TO_IDX}
+					AND t.TO_IDX=#{TO_IDX, jdbcType=VARCHAR}
 		]]>
 	</select>
 	
@@ -238,13 +263,6 @@
 		]]>
 	</insert>
 	
-	<select id="togetherJoinCount" resultType="int">
-		<![CDATA[
-			SELECT COUNT(TW_IDX)
-			FROM TOGETHER_WITH
-			WHERE TW_TO_IDX = #{TO_IDX, jdbcType=VARCHAR}
-		]]>
-	</select>
 	
 	<!-- 23.01. 27 박선영 : 참여하기 -->
 	<insert id="togetherWith" parameterType="hashmap">
