@@ -279,5 +279,28 @@
 		]]>
 	</insert>
 	
+	<!-- 23.01.31 박선영 : 참여하기 취소 -->
+	<delete id="togetherWithDel">
+		<![CDATA[
+			DELETE 
+			FROM TOGETHER_WITH
+			WHERE 
+				TW_TO_IDX = #{TW_TO_IDX, jdbcType=VARCHAR}
+			AND 
+				TW_MEM_ID = #{TW_MEM_ID, jdbcType=VARCHAR}
+		]]>
+	</delete>
+	
+	<!-- 23.01.31 박선영 : 참여하기 여부 확인 -->
+	<select id="checkWith" resultType="hashmap">
+		<![CDATA[
+			SELECT * FROM TOGETHER_WITH
+			WHERE 
+				TW_TO_IDX = #{TO_IDX, jdbcType=VARCHAR}
+			AND 
+				TW_MEM_ID = #{mem_id, jdbcType=VARCHAR}
+		]]>
+	</select>
+	
 	
 </mapper>

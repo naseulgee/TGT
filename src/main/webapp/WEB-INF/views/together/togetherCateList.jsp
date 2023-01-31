@@ -112,9 +112,15 @@ padding-left: 10px
 <br/>
 	
 	<!-- 카테고리별 게시글 리스트 출력, 글쓰기 버튼 -->
+	<!-- 23.01.31 박선영 로그인여부에 따른 버튼 출력 -->
 	<div class="cate_button">
 		<ul class="button_list">
-			<li><a class="btn submit" href="/together/writeForm.paw">글쓰기</a></li>
+			<li><c:if test="${!empty mem_id }">
+				<a class="btn submit" id="writebtn" href="/together/writeForm.paw">글쓰개:)</a>
+				</c:if></li>
+			<li><c:if test="${empty mem_id}">
+				<a class="btn submit" id="nowritebtn" href="/member/login.paw">로그인하개:)</a>
+				</c:if></li>
 			<c:forEach items="${cate}" var="ct">	
 				<li><input type="button" name="TC_NAME" data-href="/together/catelist.paw" value="${ct.TC_NAME }" class="use_move" 
 					onclick="move(this, 'TC_NAME:${ct.TC_NAME}')"></li>	

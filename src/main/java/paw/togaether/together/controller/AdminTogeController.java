@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -23,13 +24,13 @@ public class AdminTogeController {
 	
 	/* 23.01.25 박선영 관리자 게시글 리스트 출력 */
 	@RequestMapping(value="/admin/together/list.paw")
-	public ModelAndView togetherList(CommandMap commandMap) throws Exception {
+	public ModelAndView togetherList(CommandMap commandMap, HttpSession session) throws Exception {
 		
 		ModelAndView mv = new ModelAndView("/admin/together/togeAdminList");
 		
 		System.out.println(commandMap.getMap());//값을 잘 받아오는지 확인
 		
-		List<Map<String, Object>> list = togetherService.togetherList(commandMap.getMap());
+		List<Map<String, Object>> list = togetherService.togetherList(commandMap.getMap(),session);
 		
 		mv.addObject("list", list);
 		

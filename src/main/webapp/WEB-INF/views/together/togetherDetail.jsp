@@ -99,25 +99,36 @@ padding-left: 10px
 				</ul>
 		</div>
 		<br/>
+		
 		<div class="flexCenter">
 			<a class="btn submit" href="/together/list.paw">목록으로</a>
 			<c:if test="${!empty mem_id}">
-			<c:choose>
-				<c:when test="${mem_id eq map.TO_WRITER_ID}">
+				<!--로그인 되어있고 로그인한 아이디가 작성자 아이디와 같을때  -->
+				<c:if test="${mem_id eq map.TO_WRITER_ID}">
 					<input type="button" class="use_move" data-href="/together/modifyForm.paw" onclick="move(this, 'TO_IDX:${map.TO_IDX}')" value="수정하기" style="margin-right:5px;">
 					<input type="button" class="use_move" data-href="/together/delete.paw" onclick="move(this, 'TO_IDX:${map.TO_IDX}')" value="삭제하기">
-				</c:when>
-				
-				<c:otherwise>
-					<form id="withreg" name="withreg">
-						<input type="hidden" id="TW_TO_IDX" name="TW_TO_IDX" value="${map.TO_IDX}">
-						<input type="hidden" id="TW_MEM_ID" name="TW_MEM_ID" value="${mem_id}">
-						<input type="button" class="btn" id="withmem" name="withmem" value="참여하개:)">
-					</form>
-				</c:otherwise>
-			</c:choose>
-			</c:if>
+				</c:if>
 			
+				<!-- 로그인한 아이다가 작성자 아이디와 같지 않을때 -->
+				<c:if test = "${mem_id ne map.TO_WRITER_ID}">
+					<c:if test="${empty checkwith}"><!-- 아직 참여하지 않은 상태라면 -->
+						<form id="withreg" name="withreg">
+							<input type="hidden" id="TW_TO_IDX" name="TW_TO_IDX" value="${map.TO_IDX}">
+							<input type="hidden" id="TW_MEM_ID" name="TW_MEM_ID" value="${mem_id}">
+							<input type="button" class="btn" id="withmem" name="withmem" value="참여하개:)">
+						</form>
+					</c:if>
+					
+					<!-- 이미 참여한 상태라면 -->
+					<c:if test="${!empty checkwith}">	
+						<form id="withdel" name="withdel">
+							<input type="hidden" id="TW_TO_IDX" name="TW_TO_IDX" value="${map.TO_IDX}">
+							<input type="hidden" id="TW_MEM_ID" name="TW_MEM_ID" value="${mem_id}">
+							<input type="button" class="btn" id="delwith" name="delwith" value="취소하개:(">
+						</form>
+					</c:if>		
+				</c:if>
+			</c:if>		
 		</div>
 	</div>
 	
@@ -126,23 +137,33 @@ padding-left: 10px
 
 <script>
 $(document).ready(function(){
+	
+	var togewith = {
+            "TW_TO_IDX": $("input[name='TW_TO_IDX']").val(),
+            "TW_MEM_ID": $("input[name='TW_MEM_ID']").val(),
+          };
 
 	$("input[name='withmem']").on("click",function(e){
 	      
-	      var togewith = {
-	            "TW_TO_IDX": $("input[name='TW_TO_IDX']").val(),
-	            "TW_MEM_ID": $("input[name='TW_MEM_ID']").val(),
-	          };
-	     
 	      
 	      withService.add(togewith, function(result){
 	        
 	        alert(result);
 	         
-	      });
-	      
+	      });//withService 함수 끝
 	      location.reload();
-	});
+	});//클릭함수 끝
+	
+	
+	$("input[name='delwith']").on("click",function(e){
+		
+		withService.remove(togewith, function(deleteResult){
+			
+			alert(deleteResult);
+			
+		});//withService 함수 끝
+		location.reload();
+	});//클릭함수 끝
 	
 });
 

@@ -30,13 +30,15 @@ public class TogetherController {
 	/* 23.01.12 박선영 : 함께해요 전체 게시판 리스트와 검색 메소드 작성 */
 	/* 23.01.25 박선영 : 함께해요 카테고리 수정 반영 */
 	@RequestMapping(value="/together/list.paw")
-	public ModelAndView togetherList(CommandMap commandMap) throws Exception { 
+	public ModelAndView togetherList(CommandMap commandMap, HttpSession session) throws Exception { 
+		
+		System.out.println("mem_id :" + session.getAttribute("mem_id"));
 		
 		//ModelAndView 객체 생성 후 데이터를 넘길 페이지의 값 지정
 		ModelAndView mv = new ModelAndView("/together/togetherList"); 
 		
 		//서비스의 togetherList 메소드의 결과 map 형태의 resultMap 변수에 저장
-		List<Map<String, Object>> list = togetherService.togetherList(commandMap.getMap());
+		List<Map<String, Object>> list = togetherService.togetherList(commandMap.getMap(), session);
 		/* 분류별 넘겨주는 데이터를 다르게 하기 위함 */
 		List<Map<String, Object>> catelist = togetherService.togetherCate(commandMap.getMap());
 		//참여인원수를 구하기 위함
@@ -87,17 +89,19 @@ public class TogetherController {
 	@RequestMapping(value="/together/detail/{to_idx}.paw")
 	public ModelAndView togetherDetail(@PathVariable("to_idx") int TO_IDX, CommandMap commandMap, HttpSession session)throws Exception {
 		
-		//session.setAttribute("mem_id", "with2");//로그인 테스트
 		//값을 잘 받아오는지 확인하는 용도
 		System.out.println(TO_IDX);
 		System.out.println(commandMap.getMap());
 		System.out.println(session.getAttribute("mem_id"));
 		
+		
 		ModelAndView mv = new ModelAndView("/together/togetherDetail");
 		
-		Map<String, Object> map = togetherService.togetherDetail(commandMap.getMap(),session);
+		Map<String, Object> map = togetherService.togetherDetail(commandMap.getMap(),session);//상세보기 정보
 		List<Map<String, Object>> withlist = togetherService.togetherWithList(commandMap.getMap());//참여자 리스트 메소드
+		Map<String, Object> checkwith = togetherService.checkWith(commandMap.getMap(),session);//참여여부 확인 메소드
 		
+		mv.addObject("checkwith", checkwith);	
 		mv.addObject("withlist", withlist);
 		mv.addObject("map", map);
 		
@@ -187,7 +191,6 @@ public class TogetherController {
 	public ModelAndView togetherWith(@RequestBody Map commandMap, HttpSession session) throws Exception {
 		
 		session.getAttribute("mem_id");
-		//commandMap.put("mem_id", session.getAttribute("mem_id"));
 		
 		ModelAndView mv = new ModelAndView("jsonView");
 			
@@ -200,4 +203,20 @@ public class TogetherController {
 		return mv;
 		
 	}
+	
+	/* 23.01.31 박선영 참여취소 기능 구현 */
+	@SuppressWarnings("unchecked")
+	@ResponseBody
+	@RequestMapping(value="/together/withdel.paw")
+	public ModelAndView togetherWithDel(@RequestBody Map commandMap) throws Exception {
+		
+		ModelAndView mv = new ModelAndView("jsonView");
+		
+		System.out.println("map: " + commandMap);
+		
+		togetherService.togetherWithDel(commandMap);
+		
+		return mv;
+	}
+	
 }

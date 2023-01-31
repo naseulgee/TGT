@@ -79,5 +79,16 @@ public class TogetherDAO extends AbstractDAO {
 	public void togetherWith(Map<String, Object> map) throws Exception {
 		insert("together.togetherWith", map);
 	}
+	
+	/* 23.01.31 박선영 참여취소 */
+	public void togetherWithDel(Map<String, Object> map) throws Exception {
+		delete("together.togetherWithDel", map);
+	}
+	
+	/* 23.01.31 박선영 참여여부 체크 */
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> checkWith(Map<String, Object> map) throws Exception {
+		return (Map<String, Object>) selectOne("together.checkWith", map);
+	}
 
 }

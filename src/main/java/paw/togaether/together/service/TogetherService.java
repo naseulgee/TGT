@@ -14,7 +14,7 @@ public interface TogetherService {
 	 */
 	
 	//함께해요 게시글 리스트
-	List<Map<String, Object>> togetherList(Map<String, Object> map) throws Exception;
+	List<Map<String, Object>> togetherList(Map<String, Object> map, HttpSession session) throws Exception;
 	
 	//함께해요 게시글 작성
 	void togetherWrite(Map<String, Object> map,HttpSession session ) throws Exception;
@@ -45,5 +45,11 @@ public interface TogetherService {
 	
 	/* 23.01.27 박선영 참여하기 */
 	void togetherWith(Map<String, Object> map, HttpSession session) throws Exception;
+	
+	/* 23.01.31 박선영 참여취소 */
+	void togetherWithDel(Map<String, Object> map) throws Exception;
+	
+	/* 23.01.31 박선영 참여여부확인 */
+	Map<String, Object> checkWith(Map<String, Object> map, HttpSession session) throws Exception;
 	
 }
