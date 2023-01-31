@@ -23,5 +23,13 @@
 			, #{ph_file_size} ,sysdate , 'N')
 	</select>
 	
+	<update id="updatePhoto" parameterType="hashmap">
+	<![CDATA[
+		update photo
+		set ph_del_gb = 'N'
+		where ph_idx = #{ph_idx}
+	]]>
+	</update>
+	
 
 </mapper>

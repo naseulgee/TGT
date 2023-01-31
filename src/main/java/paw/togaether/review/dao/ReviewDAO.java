@@ -43,6 +43,10 @@ public class ReviewDAO extends AbstractDAO{
 		 update("review.deletePhoto", map);
 	}
 	
+	public void updateReview(Map<String, Object> map) throws Exception {
+		 update("review.updateReview", map);
+	}
+	
 	
 
 }

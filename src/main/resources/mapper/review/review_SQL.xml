@@ -74,6 +74,14 @@
 		and ph_board_type = 'review'
 	</update>
 	
+	<!-- 23.01.31 신현지: 리뷰 수정 -->
+	<update id="updateReview" parameterType="hashmap">
+		update review
+		set re_contents = #{re_contents},
+		re_star = #{re_star},
+		re_mod_date = sysdate
+		where re_idx = #{re_idx}
+	</update>
 
 
 

@@ -13,5 +13,9 @@ public class PhotoDAO extends AbstractDAO{
 	public void insertPhoto(Map<String, Object> map) throws Exception {
 		 insert("photo.insertPhoto", map);
 	}
+	
+	public void updatePhoto(Map<String, Object> map) throws Exception{
+		update("photo.updatePhoto", map);
+	}
 
 }

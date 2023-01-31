@@ -12,25 +12,25 @@
 
 		//글자수 실시간 반영 메서드
 		$("textarea").on("propertychange change keyup paste input", function() {
-			contents = $(this).val();
-			console.log(contents.length);
+			contents = $(this).val(); //textarea의 내용
 			if (contents.length == 0 || contents == '') {
-				$('#reCount').text('0 / 950');
+				$('#reCount').text('0 / 950'); //내용이 아무것도 없다면 0으로 설정
 			} else {
-				$('#reCount').text(contents.length +' / 950');
+				$('#reCount').text(contents.length +' / 950'); //내용이 있다면 글자수 세기
 			}
 		});
 		
 		//기본별점 표시하기
 		var previousRate = $("#previousRate").val();
-		$("#rate"+previousRate).attr('checked', true);
+		$("#rate"+(6-previousRate)).attr('checked', true);
 		
-		//이미지바뀌면 idx_n 제거
-		$("input[type='file']").on("propertychange change keyup paste input", function() {
-			console.log($(this).val());
-			var idx = $(this).previousElementSibling;
-			console.log("첫번째 노드 : " + idx);
-			idx.HTML("");
+		//기존에 등록한 이미지가 바뀌면 idx_n 제거
+		$("#previousImg input[type='file']").on("propertychange change keyup paste input", function() {
+			var idx = $(this).parent().children().first();
+			console.log(idx);
+			idx.replaceWith("<input type='hidden'>");
+			//console.log(idx);
+			//console.log($(this).parent().children().last());	
 		});
 
 	});
@@ -102,9 +102,9 @@
 		
 			<!-- 등록한 이미지가 있다면 썸넬 표시 / 사진이 수정이 되었으면 <input name="idx_${var.index+1}"> 없애기 -->
 			<c:forEach items="${photos}" var="i" varStatus="var">	
-				<label>
+				<label id="previousImg">
 					<input type="hidden" name="idx_${var.index+1}" value="${i.PH_IDX}">
-					<input type="file" accept="image/*" id="photo${var.index+1}" name="photo${var.index+1}" >
+					<input type="file" accept="image/*" id="photo_${var.index+1}" name="photo_${var.index+1}" >
 					<img width="200px" src="/resources/upload/${i.PH_STORED_FILE_NAME}" >
 				</label>	
 			</c:forEach>
@@ -113,7 +113,7 @@
 			<c:forEach var="i" begin="${fn:length(photos)+1}" end="3" step="1" varStatus="var">	
 				<label>
 					<i class="fa-thin fa-image no-image"></i>
-					<input type="file" accept="image/*" id="photo${var.index}" name="photo${var.index}" >
+					<input type="file" accept="image/*" id="photo_${var.index}" name="photo_${var.index}" >
 				</label>
 			</c:forEach>
 		</div>
@@ -122,21 +122,12 @@
 		<p class="info_warn">저작권에 대한 책임은 업로드한 회원에게 있습니다.</p>
 		<br><br><br>
 		
+		<input type="hidden" id="re_idx" name="re_idx" value="${review.RE_IDX}" >
+		<input type="hidden" id="idx" name="idx" value="${review.RE_IDX}" >
+		<input type="hidden" value="review" name="ph_board_type">
 		
-		
-		<input type="hidden" value="review" name="ph_board_type"><!-- 테이블명/ 시설과 회원에 각각 추가 필수 -->
-		<input type="hidden" id="re_pl_idx" name="re_pl_idx" value="${re_pl_idx}"><!-- 시설번호 -->
-		<!-- 세션이 구현되면 삭제 -->
-		<input type="hidden" id="re_writer_id" name="re_writer_id" value="aaa123"><!-- 작성자 아이디 -->
-		<input type="hidden" id="re_writer_name" name="re_writer_name" value="브라더"><!-- 강아지 이름 -->
-		
-		<%-- 세션이 전부 구현되면 사용
-		<input type="hidden" id="re_writer_id" name="re_writer_id" value="${mem_id}"><!-- 작성자 아이디 -->
-		<input type="hidden" id="re_writer_name" name="re_writer_name" value="${mem_dog_name}"><!-- 강아지 이름 -->
-		--%>
-		<button class="btn submit" id="uploadBtn" >리뷰등록</button> 
-		
-		<a href="/user/mypage/review/reviewList" class="btn">목록으로</a>
+		<button type="button" class="btn submit" id="uploadBtn" >리뷰등록</button> 
+		<a href="/mypage/review/list.paw" class="btn">목록으로</a>
 	</div> 
 	</div>
 </main><!-- //main 종료 -->
@@ -144,7 +135,7 @@
 <script>
 $(document).ready(function(){
 	//등록작업을 해주는 url을 파라미터로 집어넣기!!
-	form_submit("/review/insert.paw");
+	form_submit("/mypage/review/update.paw");
 });
 </script>
 

@@ -115,6 +115,7 @@ img {
 	</c:if>
 	
 	<c:if test="${empty reviewList}">
+		<br><br>
 		<div class="center">
 			🤔<br>작성하신 리뷰가 없어요
 		</div>

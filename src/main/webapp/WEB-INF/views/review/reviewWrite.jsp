@@ -110,7 +110,7 @@
 		<input type="hidden" id="re_writer_id" name="re_writer_id" value="${mem_id}"><!-- 작성자 아이디 -->
 		<input type="hidden" id="re_writer_name" name="re_writer_name" value="${mem_dog_name}"><!-- 강아지 이름 -->
 		--%>
-		<button class="btn submit" id="uploadBtn" >리뷰등록</button> 
+		<button class="btn submit" type="button" id="uploadBtn" >리뷰등록</button> 
 		
 		<a href="/mypage/review/list.paw" class="btn">목록으로</a>
 	</div> 

@@ -72,7 +72,7 @@ public class ReviewController {
 	/** 23.01.25 신현지: 마이페이지에서 내 리뷰(특정 하나) 조회 메서드
 	 */
 	@RequestMapping(value="/mypage/review/myReview")
-	public ModelAndView openMyReview(CommandMap commandMap, HttpSession session) throws Exception{
+	public ModelAndView openMyReview(CommandMap commandMap) throws Exception{
 		ModelAndView m = new ModelAndView("/mypage/review/myReview");
 		
 		//리뷰 가져오기
@@ -93,7 +93,7 @@ public class ReviewController {
 	/**23.01.25 신현지: 리뷰수정폼으로 이동
 	 */
 	@RequestMapping(value="/mypage/review/updateForm")
-	public ModelAndView openReviewUpdate(CommandMap commandMap, HttpSession session) throws Exception{
+	public ModelAndView openReviewUpdate(CommandMap commandMap) throws Exception{
 		ModelAndView m = new ModelAndView("/mypage/review/updateForm");
 		
 		Map<String,Object> review =  reviewService.openMyReview(commandMap.getMap());
@@ -103,6 +103,19 @@ public class ReviewController {
 		List<Map<String,Object>> photos =  reviewService.openMyReviewPhoto(commandMap.getMap());
 		m.addObject("photos", photos); 
 		return m;
+	}
+	
+	/** 23.01.31 신현지 : 리뷰수정
+	  */
+	@RequestMapping(value="/mypage/review/update")
+	public ResponseEntity<String> updateReview(CommandMap commandMap,HttpSession session, MultipartFile[] uploadFile) throws Exception{
+
+		System.out.println("ajax로부터 업로드된 파일의 개수 : "+ uploadFile.length);
+		System.out.println(commandMap.getMap());
+		//review등록과 photo등록에 대한 처리
+		reviewService.updateReview(commandMap.getMap(),session,uploadFile); //사용시 주석 풀어주기
+ 
+		return new ResponseEntity<String>("/mypage/review/list.paw",HttpStatus.OK);
 	}
 	
 	

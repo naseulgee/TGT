@@ -20,5 +20,7 @@ public interface ReviewService {
 	Map<String, Object> openMyReviewPlacePhoto(Map<String, Object> map) throws Exception;
 	
 	void deleteReview(Map<String, Object> map) throws Exception;
+	
+	void updateReview(Map<String, Object> map,HttpSession session, MultipartFile[] uploadFile) throws Exception;
 
 }
