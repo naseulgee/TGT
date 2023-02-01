@@ -2,14 +2,17 @@ package paw.togaether.member.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import paw.togaether.common.domain.CommandMap;
 import paw.togaether.member.service.JoinService;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -36,12 +39,12 @@ public class JoinController {
 
 	/** 회원가입 완료 후 메인페이지로 이동(로그인페이지 구현 시 추후 로그인화면으로 리다이렉트 예정) */
 	@RequestMapping(value="/member/joinMember")
-	public ModelAndView joinMember(CommandMap commandMap) throws Exception{
-		ModelAndView mv = new ModelAndView("redirect:/sample.paw");
+	public ResponseEntity<String> joinMember(CommandMap commandMap, HttpSession session, MultipartFile[] uploadFile) throws Exception{
 
-		joinService.joinMember(commandMap.getMap());
+		joinService.joinMember(commandMap.getMap(), session, uploadFile);
 
-	    return mv;
+		return new ResponseEntity<String>("/sample",HttpStatus.OK);
+
 	}
 
 	/** 아이디 중복확인 */

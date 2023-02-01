@@ -7,6 +7,15 @@
      <![CDATA[
         SELECT * FROM MEMBERS WHERE MEM_ID =  #{MEM_ID}
         ]]>
- </select>
+     </select>
+
+    <select id="findID" parameterType="hashmap" resultType="hashmap">
+     <![CDATA[
+        SELECT MEM_CALL,
+               MEM_DOG_NAME,
+               MEM_ID
+        FROM MEMBERS WHERE MEM_CALL =  #{MEM_CALL}
+        ]]>
+     </select>
 
 </mapper>

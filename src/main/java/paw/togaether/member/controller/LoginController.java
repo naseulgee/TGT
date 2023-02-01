@@ -46,11 +46,11 @@ public class LoginController {
             session.setAttribute("mem_dog_weight", mem_dog_weight);
             session.setMaxInactiveInterval(3600);
 
-            mv.setViewName("redirect:/sample.paw");
+            mv.setViewName("redirect:/sample");
 
 
         } else {
-            mv.setViewName("redirect:/member/loginError.paw");
+            mv.setViewName("redirect:/member/loginError");
         }
 
         return mv;
@@ -63,5 +63,45 @@ public class LoginController {
 
         return mv;
     }
+
+    @GetMapping(value="/member/findID")
+    public ModelAndView findID(CommandMap commandMap) throws Exception {
+        ModelAndView mv = new ModelAndView("/member/findID");
+
+        return mv;
+    }
+
+    @PostMapping(value="/member/findID")
+    public ModelAndView postfindID(CommandMap commandMap) throws Exception {
+        ModelAndView mv = new ModelAndView();
+
+        Map<String, Object> toFindID = loginService.findID(commandMap.getMap());
+        boolean dataExists = (boolean)toFindID.get("dataExists");
+
+        if(dataExists) {
+            mv.addObject("ID", toFindID.get("MEM_ID"));
+            mv.setViewName("redirect:/member/foundID");
+        } else {
+            mv.setViewName("redirect:/member/findIDError");
+        }
+
+        return mv;
+
+    }
+
+    @GetMapping(value="/member/foundID")
+    public ModelAndView foundID() throws Exception{
+        ModelAndView mv = new ModelAndView("/member/foundID");
+
+        return mv;
+    }
+
+    @GetMapping(value="/member/findIDError")
+    public ModelAndView findIDError() throws Exception{
+        ModelAndView mv = new ModelAndView("/member/findIDError");
+
+        return mv;
+    }
+
 
 }
