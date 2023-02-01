@@ -169,12 +169,13 @@
 		<br>
 		
 		<div>
-			<a href="/mypage/review/updateForm.paw" class="use_move btn submit" 
-			onclick="move(this, 're_idx:${review.RE_IDX}')">수정</a>
+			<a href="/review/updateForm.paw" class="use_move btn submit" 
+			onclick="move(this, 're_idx:${review.RE_IDX}','ph_board_type:review')">수정</a>
 			<table>
-				<form action="/mypage/review/delete.paw" method="post">
+				<form action="/review/delete.paw" method="post">
 					<input type="submit" class="btn" value="삭제" onClick="return recheck();">
 					<input type="hidden" id="re_idx" name="re_idx" value="${review.RE_IDX}">
+					<input type="hidden" id="ph_board_type" name="ph_board_type" value="review">
 				</form>
 			</table>
 		</div>

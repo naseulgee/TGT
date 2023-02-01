@@ -71,7 +71,7 @@ public class ReviewController {
 	
 	/** 23.01.25 신현지: 마이페이지에서 내 리뷰(특정 하나) 조회 메서드
 	 */
-	@RequestMapping(value="/mypage/review/myReview")
+	@RequestMapping(value="/mypage/review/detail")
 	public ModelAndView openMyReview(CommandMap commandMap) throws Exception{
 		ModelAndView m = new ModelAndView("/mypage/review/myReview");
 		
@@ -92,7 +92,7 @@ public class ReviewController {
 	
 	/**23.01.25 신현지: 리뷰수정폼으로 이동
 	 */
-	@RequestMapping(value="/mypage/review/updateForm")
+	@RequestMapping(value="/review/updateForm")
 	public ModelAndView openReviewUpdate(CommandMap commandMap) throws Exception{
 		ModelAndView m = new ModelAndView("/mypage/review/updateForm");
 		
@@ -107,21 +107,18 @@ public class ReviewController {
 	
 	/** 23.01.31 신현지 : 리뷰수정
 	  */
-	@RequestMapping(value="/mypage/review/update")
+	@RequestMapping(value="/review/update")
 	public ResponseEntity<String> updateReview(CommandMap commandMap,HttpSession session, MultipartFile[] uploadFile) throws Exception{
 
-		System.out.println("ajax로부터 업로드된 파일의 개수 : "+ uploadFile.length);
-		System.out.println(commandMap.getMap());
 		//review등록과 photo등록에 대한 처리
 		reviewService.updateReview(commandMap.getMap(),session,uploadFile); //사용시 주석 풀어주기
- 
 		return new ResponseEntity<String>("/mypage/review/list.paw",HttpStatus.OK);
 	}
 	
 	
 	/** 23.01.29 신현지 : 리뷰삭제
 	  */
-	@RequestMapping(value="/mypage/review/delete")
+	@RequestMapping(value="/review/delete")
 	public ModelAndView deleteReview(CommandMap commandMap, HttpSession session) throws Exception{
 		ModelAndView m = new ModelAndView("redirect:/mypage/review/list.paw"); //삭제 후 리뷰목록으로 이동
 		reviewService.deleteReview(commandMap.getMap());

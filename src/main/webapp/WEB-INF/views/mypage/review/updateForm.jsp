@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
 <script src="/resources/js/common/photo.js" defer></script>
-<link type="text/css" rel="stylesheet" href="/resources/css/review/review.css" ></link>
 <link type="text/css" rel="stylesheet" href="/resources/css/common/photo.css" ></link>
+<link type="text/css" rel="stylesheet" href="/resources/css/review/review.css" ></link>
+
 
 <script>
 	$(document).ready( function() {	
@@ -23,15 +24,6 @@
 		//기본별점 표시하기
 		var previousRate = $("#previousRate").val();
 		$("#rate"+(6-previousRate)).attr('checked', true);
-		
-		//기존에 등록한 이미지가 바뀌면 idx_n 제거
-		$("#previousImg input[type='file']").on("propertychange change keyup paste input", function() {
-			var idx = $(this).parent().children().first();
-			console.log(idx);
-			idx.replaceWith("<input type='hidden'>");
-			//console.log(idx);
-			//console.log($(this).parent().children().last());	
-		});
 
 	});
 
@@ -135,7 +127,7 @@
 <script>
 $(document).ready(function(){
 	//등록작업을 해주는 url을 파라미터로 집어넣기!!
-	form_submit("/mypage/review/update.paw");
+	form_submit("/review/update.paw");
 });
 </script>
 

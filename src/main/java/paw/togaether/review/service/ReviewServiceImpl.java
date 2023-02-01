@@ -55,7 +55,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public List<Map<String, Object>> openMyReviewPhoto(Map<String, Object> map) throws Exception {
-		return reviewDAO.openMyReviewPhoto(map);
+		return photoDAO.selectMyPhoto(map);
 	}
 
 	@Override
@@ -66,14 +66,14 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public void deleteReview(Map<String, Object> map) throws Exception {
 		reviewDAO.deleteReview(map); //리뷰삭제
-		reviewDAO.deletePhoto(map); //리뷰관련사진삭제
+		photoDAO.deletePhoto(map); //리뷰관련사진삭제
 	}
 
 	@Override
 	public void updateReview(Map<String, Object> map, HttpSession session, MultipartFile[] uploadFile)
 			throws Exception {
 		reviewDAO.updateReview(map); //리뷰내용,별점 업데이트
-		reviewDAO.deletePhoto(map); //리뷰관련 사진 일단 전부 삭제 (re_del_gb='Y')
+		photoDAO.deletePhoto(map); //리뷰관련 사진 일단 전부 삭제 (re_del_gb='Y')
 		
 		//기존 사진 업데이트해주기
 		for (String key : map.keySet()) {

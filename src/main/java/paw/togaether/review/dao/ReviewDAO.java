@@ -26,21 +26,12 @@ public class ReviewDAO extends AbstractDAO{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> openMyReviewPhoto(Map<String, Object> map) throws Exception {
-		 return (List<Map<String, Object>>)selectList("review.openMyReviewPhoto", map);
-	}
-	
-	@SuppressWarnings("unchecked")
 	public Map<String, Object> openMyReviewPlacePhoto(Map<String, Object> map) throws Exception {
 		 return (Map<String, Object>)selectOne("review.openMyReviewPlacePhoto", map);
 	}
 	
 	public void deleteReview(Map<String, Object> map) throws Exception {
 		 update("review.deleteReview", map);
-	}
-	
-	public void deletePhoto(Map<String, Object> map) throws Exception {
-		 update("review.deletePhoto", map);
 	}
 	
 	public void updateReview(Map<String, Object> map) throws Exception {

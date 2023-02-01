@@ -84,8 +84,8 @@ img {
 									<i class="fa-solid fa-image" id="phIcon"></i>
 								</c:if>
 							</span> &nbsp;&nbsp;
-							<a class="use_move btn slim" href="/mypage/review/myReview.paw" 
-							onclick="move(this, 're_idx:${i.RE_IDX}')">
+							<a class="use_move btn slim" href="/mypage/review/detail.paw" 
+							onclick="move(this, 're_idx:${i.RE_IDX}', 'ph_board_type:review')">
 							더보기</a>
 						</div>
 						

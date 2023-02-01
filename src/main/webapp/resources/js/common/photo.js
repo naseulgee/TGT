@@ -1,5 +1,16 @@
 //!참고! 해당 자바스크립트는 defer 속성이 적용되어 호출됨으로 항상 DOM 로딩 완료 후 작동합니다.
 
+
+$(document).ready( function() {	
+		//기존에 등록한 이미지가 바뀌면 idx_n 제거
+		$("#previousImg input[type='file']").on("propertychange change keyup paste input", function() {
+			var idx = $(this).parent().children().first();
+			console.log(idx);
+			idx.replaceWith("<input type='hidden'>");
+		});
+});
+
+
 //파일 input에 값이 들어있는지 실시간 체크하는 메서드
 let photo_inputs = $("input[id^='photo']");//id가 photo로 시작하는 input들 모두 변수에 담기
 //photo_inputs 개수만큼 반복 적용
