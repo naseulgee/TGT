@@ -1,0 +1,8 @@
+/* 검색 */
+.search_wrap{ border: 1px solid red; }
+
+/* 리스트 */
+.list_wrap{ border: 1px solid skyblue; }
+
+/* 지도 */
+.map_wrap{ border: 1px solid green; }

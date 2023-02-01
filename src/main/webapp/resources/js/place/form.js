@@ -8,7 +8,10 @@ $(document).ready(function(){
 	//종료 시간 변경 감지
 	observe("#pl_close_hour, #pl_close_min, #close_AM, #close_PM", $("#pl_close")[0], 'time_set($("li.close"))');
 	
-	form_submit("/place/write.paw");
+	let url = "/place/write.paw";
+	console.log(url);
+	if(!isNull($("#pl_idx").val())) url = "/place/modify.paw";
+	form_submit(url);
 });
 
 //값이 바뀌는 것을 감지하여 특정 input의 값을 수정하는 함수

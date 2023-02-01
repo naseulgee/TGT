@@ -1,5 +1,6 @@
 package paw.togaether.place.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
@@ -11,8 +12,8 @@ import paw.togaether.common.dao.AbstractDAO;
 public class PlaceDAO extends AbstractDAO {
 	/** 23.01.17 나슬기: 시설 리스트 조회 메소드 */
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> placeSelectList(Map<String, Object> map) throws Exception{
-		return (Map<String, Object>)selectPagingList("place.se_pl_list", map);
+	public List<Map<String, Object>> placeSelectList(Map<String, Object> map) throws Exception{
+		return (List<Map<String, Object>>)selectPagingList("place.se_pl_list", map);
 	}
 	/** 23.01.17 나슬기: 시설 상세 조회 메소드 */
 	@SuppressWarnings("unchecked")
