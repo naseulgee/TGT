@@ -13,6 +13,10 @@ width:100%;
 color:#f0b1aa;
 }
 
+.fa-bone {
+color:#f0b1aa;
+}
+
 .color {
 font-size:20px;
 font-weight:bold;
@@ -58,6 +62,11 @@ white-space :nowrap;
 font-size:20px;
 }
 
+span.btn.submit{
+white-space : nowrap;
+font-size : 15px;
+}
+
 input[type="button"]{
 border:1px solid #9ea7ad;
 padding-top: 5px;
@@ -73,6 +82,7 @@ padding-left: 10px
 <div class="cate_wrap">
 	
 	<!-- 카드 테이블로 전체게시글 리스트 출력 -->
+	<!-- 23.02.01 박선영 모집여부 버튼 출력 구현 -->
 	<div class="main_list">
 		<c:choose>
 			<c:when test="${!empty catelist}">
@@ -81,18 +91,25 @@ padding-left: 10px
 						<c:forEach items="${catelist}" var="tc">
 							<!-- tr클래스 클릭시 상세보기 페이지로 이동-->
 							<tr class="use_move" data-href="/together/detail/${tc.TO_IDX}.paw" onclick="move(this,'TO_IDX:${tc.TO_IDX}')">
-								<td class="color"><span class="fa-solid fa-paw"></span>[${tc.TO_TC_NAME}] ${tc.TO_TITLE }</td><!-- 글분류, 제목 -->
-								<td><span class="fa-solid fa-bone" style="color:#f0b1aa;"></span> 참여가능하개(견종): ${tc.BR_NAME }</td><!-- 참여가능견종 -->
-								<td><span class="fa-solid fa-bone" style="color:#f0b1aa;"></span> 참여가능하개(크기) : <c:if test="${tc.TO_WT_IDX eq '1'}">XS</c:if>
+								<td class="color"><span class="fa-solid fa-paw"></span>[${tc.TO_TC_NAME}] ${tc.TO_TITLE }  
+									<c:if test="${tc.C eq tc.TO_PEOPLE}">
+										<span class="btn submit">모집완료</span>
+									</c:if>
+									<c:if test="${tc.C < tc.TO_PEOPLE}">
+										<span class="btn submit">모집중</span>
+									</c:if>
+								</td><!-- 글분류, 제목 -->
+								<td><span class="fa-solid fa-bone"></span> 참여가능하개(견종): ${tc.BR_NAME }</td><!-- 참여가능견종 -->
+								<td><span class="fa-solid fa-bone"></span> 참여가능하개(크기) : <c:if test="${tc.TO_WT_IDX eq '1'}">XS</c:if>
 								<c:if test="${tc.TO_WT_IDX eq '2'}">S</c:if>
 								<c:if test="${tc.TO_WT_IDX eq '3'}">M</c:if>
 								<c:if test="${tc.TO_WT_IDX eq '4'}">L</c:if>
 								<c:if test="${tc.TO_WT_IDX eq '5'}">XL</c:if>
 									</td><!-- 참여가능사이즈 -->
-								<td><span class="fa-solid fa-bone" style="color:#f0b1aa;"></span> 언제개: ${tc.TO_DATE }</td><!-- 모임날짜 -->
-								<td><span class="fa-solid fa-bone" style="color:#f0b1aa;"></span> 몇시개: ${tc.TO_TIME }</td><!-- 모임시간 -->
-								<td><span class="fa-solid fa-bone" style="color:#f0b1aa;"></span> 몇명이개: ${tc.TO_JOIN_PEOPLE }/${tc.TO_PEOPLE}</td><!-- 참여인원/모임인원 -->
-								<td class="txt_right" style="font-size:15px;">${tc.TO_REG_DATE }</td><!-- 등록날짜 -->
+								<td><span class="fa-solid fa-bone"></span> 언제개: <fmt:formatDate value="${tc.TO_DATE}" pattern="yyyy/MM/dd"/></td><!-- 모임날짜 -->
+								<td><span class="fa-solid fa-bone"></span> 몇시개: ${tc.TO_TIME }</td><!-- 모임시간 -->
+								<td><span class="fa-solid fa-bone"></span> 몇명이개: ${tc.C}/${tc.TO_PEOPLE}</td><!-- 참여인원/모임인원 -->
+								<td class="txt_right" style="font-size:15px;"><fmt:formatDate value="${tc.TO_REG_DATE }" pattern="yyyy/MM/dd"/></td><!-- 등록날짜 -->
 							</tr>
 						</c:forEach>
 					</tbody>

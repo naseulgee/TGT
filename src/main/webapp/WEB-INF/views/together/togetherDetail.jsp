@@ -111,23 +111,26 @@ padding-left: 10px
 			
 				<!-- 로그인한 아이다가 작성자 아이디와 같지 않을때 -->
 				<c:if test = "${mem_id ne map.TO_WRITER_ID}">
-					<c:if test="${empty checkwith}"><!-- 아직 참여하지 않은 상태라면 -->
-						<form id="withreg" name="withreg">
-							<input type="hidden" id="TW_TO_IDX" name="TW_TO_IDX" value="${map.TO_IDX}">
-							<input type="hidden" id="TW_MEM_ID" name="TW_MEM_ID" value="${mem_id}">
-							<input type="button" class="btn" id="withmem" name="withmem" value="참여하개:)">
-						</form>
-					</c:if>
-					
-					<!-- 이미 참여한 상태라면 -->
-					<c:if test="${!empty checkwith}">	
-						<form id="withdel" name="withdel">
-							<input type="hidden" id="TW_TO_IDX" name="TW_TO_IDX" value="${map.TO_IDX}">
-							<input type="hidden" id="TW_MEM_ID" name="TW_MEM_ID" value="${mem_id}">
-							<input type="button" class="btn" id="delwith" name="delwith" value="취소하개:(">
-						</form>
-					</c:if>		
-				</c:if>
+					<!-- 참여인원이 모집인원보다 작을때, 모집중일때-->
+					<c:if test="${map.C < map.TO_PEOPLE}">
+						<!-- 아직 참여하지 않은 상태라면 -->
+						<c:if test="${empty checkwith}">
+							<form id="withreg" name="withreg">
+								<input type="hidden" id="TW_TO_IDX" name="TW_TO_IDX" value="${map.TO_IDX}">
+								<input type="hidden" id="TW_MEM_ID" name="TW_MEM_ID" value="${mem_id}">
+								<input type="button" class="btn" id="withmem" name="withmem" value="참여하개:)">
+							</form>
+						</c:if>
+					</c:if>	
+						<!-- 이미 참여한 상태라면 -->
+						<c:if test="${!empty checkwith}">	
+							<form id="withdel" name="withdel">
+								<input type="hidden" id="TW_TO_IDX" name="TW_TO_IDX" value="${map.TO_IDX}">
+								<input type="hidden" id="TW_MEM_ID" name="TW_MEM_ID" value="${mem_id}">
+								<input type="button" class="btn" id="delwith" name="delwith" value="취소하개:(">
+							</form>
+						</c:if>	
+					</c:if>	
 			</c:if>		
 		</div>
 	</div>

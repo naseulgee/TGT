@@ -40,9 +40,6 @@ public interface TogetherService {
 	/* 23.01.25 박선영 게시글 카테고리리스트 */
 	List<Map<String, Object>> togetherCate(Map<String, Object> map) throws Exception;
 	
-	/* 23.01.25 박선영 관리자 분류 등록 */
-	void adminTogeCateWrite(Map<String, Object> map) throws Exception;
-	
 	/* 23.01.27 박선영 참여하기 */
 	void togetherWith(Map<String, Object> map, HttpSession session) throws Exception;
 	

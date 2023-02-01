@@ -85,12 +85,6 @@ public class TogetherServiceImpl implements TogetherService {
 		return togetherDAO.togetherCate(map);
 	}
 	
-	/* 23.01.25 박선영 관리자 카테고리 등록 */
-	@Override
-	public void adminTogeCateWrite(Map<String, Object> map) throws Exception {
-		togetherDAO.adminTogeCateWrite(map);
-	}
-	
 	
 	/* 23.01.27 박선영 참여하기 */
 	@Override

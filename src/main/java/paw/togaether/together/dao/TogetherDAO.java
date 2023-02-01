@@ -21,7 +21,7 @@ public class TogetherDAO extends AbstractDAO {
 	/* 함께해요 게시판 리스트 출력&검색기능 */
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> togetherList(Map<String, Object> map)throws Exception {
-		return (List<Map<String, Object>>) selectList("together.togetherList", map);
+		return (List<Map<String, Object>>) selectPagingList("together.togetherList", map);
 	}
 	
 	/*
@@ -69,11 +69,6 @@ public class TogetherDAO extends AbstractDAO {
 	public List<Map<String, Object>> togetherCate(Map<String, Object> map) throws Exception {
 		return (List<Map<String, Object>>) selectList("together.togetherCate", map);
 	}
-	
-	/* 23.01.25 박선영 관리자 카테고리 등록 */
-	public void adminTogeCateWrite(Map<String, Object> map) throws Exception {
-		insert("together.adminTogeCateWrite", map);
-	} 
 	
 	/* 23.01.27 박선영 참여하기 */
 	public void togetherWith(Map<String, Object> map) throws Exception {
