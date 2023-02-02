@@ -19,7 +19,6 @@
             <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                 <div class="space-y-6 sm:space-y-5">
                     <div>
-
                         <h3 class="text-lg font-medium leading-6 text-gray-900">회원가입</h3>
                         <p class="mt-1 max-w-2xl text-sm text-gray-500">투개더 회원가입을 위한 내용을 작성해주세요.</p>
                     </div>
@@ -77,12 +76,14 @@
                         <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
                             <label for="MEM_EMAIL"
                                    class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">이메일</label>
-                            <div class="mt-1 sm:col-span-2 sm:mt-0">
-                                <input id="MEM_EMAIL" name="MEM_EMAIL" type="email" maxlength="100"
-                                       placeholder="example@naver.com" autocomplete="email"
-                                       class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:text-sm">
+                            <div class="mt-1 sm:mt-0">
+                                <input type="email" name="MEM_EMAIL" id="MEM_EMAIL" maxlength="100" autocomplete="email" placeholder="example@naver.com"
+                                       class="block w-full max-w-lg rounded-md shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:max-w-xs sm:text-sm">
                                 <p class="mt-2 text-sm text-red-600" id="email-error"></p>
                             </div>
+                            <input type="button" id="checkEmail" onclick="emailValidate()" value="중복확인"
+                                   class="inline-flex justify-center rounded-md border border-transparent bg-[#f0b1aa] py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-[#f08080] focus:outline-none focus:ring-2 focus:ring-[#f08080] focus:ring-offset-2 mr-auto">
+
                         </div>
 
                         <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5 max-w-screen-lg">
@@ -251,106 +252,126 @@
             // 	$('#MEM_ID').focus();
             // }
         }
-
-        /** 셀렉트박스 선택에 따라 견종명 입력창 보여주기 여부 */
-
-        function showOrNot(element) {
-            if (element.value == 1) {
-                document.getElementById("MEM_BR_NAME").style.visibility = "";
-            } else {
-                document.getElementById("MEM_BR_NAME").style.visibility = "hidden";
-                document.getElementById("MEM_BR_NAME").value = "";
-            }
-        }
-
-
-        /** 폼 검증하는 함수 */
-        function checkForm() {
-            const idErrMsg = document.querySelector('#verification');
-            const call = document.querySelector('#MEM_CALL');
-            const callErrMsg = document.querySelector('#mem-call-error');
-            const pass = document.querySelector('#MEM_PW');
-            const passErrMsg = document.querySelector('#pw-error');
-            const newPass = document.querySelector('#MEM_NEWPW');
-            const newPassErrMsg = document.querySelector('#new-pw-error');
+        /**이메일 검증 */
+        function emailValidate() {
             const email = document.querySelector('#MEM_EMAIL');
             const emailErrMsg = document.querySelector('#email-error');
-            const nameofdog = document.querySelector('#MEM_DOG_NAME');
-            const nameofdogErrMsg = document.querySelector('#dogname-error');
-            const weightofdog = document.querySelector('#MEM_DOG_WEIGHT');
-            const weightofdogErrMsg = document.querySelector('#weightofdog-error');
-
-
-            let result = true;
-
-            // 아이디 검증
-            if(idErrMsg.textContent == "") {
-                result = false;
-                idErrMsg.textContent = "아이디 중복확인을 눌러주세요."
-            } else if(idErrMsg.textContent == "아이디 중복확인을 눌러주세요.") {
-                result = false;
-            } else if(idErrMsg.textContent == "중복된 아이디 입니다.") {
-                result = false;
-            }
-
-            // 강아지몸무게 검증
-            if (weightofdog.value === "") {
-                weightofdogErrMsg.textContent = "강아지 몸무게를 입력해주세요."
-                result = false;
+            if (email.value == "") {
+                emailErrMsg.textContent = "이메일을 입력하세요.";
             } else {
-                weightofdogErrMsg.textContent = ""
+                emailErrMsg.textContent = "";
+                fetch("/emailCheck?email=" + email.value)
+                    .then((response) => {
+                        if (response.ok) {
+                            emailErrMsg.textContent = "사용가능한 이메일 주소입니다.";
+                        } else {
+                            emailErrMsg.textContent = "중복된 이메일 주소입니다.";
+                        }
+                    })
             }
-
-            // 강아지이름 검증
-            if (nameofdog.value === "") {
-                nameofdogErrMsg.textContent = "강아지이름을 입력해주세요."
-                result = false;
-            } else {
-                nameofdogErrMsg.textContent = ""
-            }
-
-            // password 검증
-            if (pass.value === "") {
-                passErrMsg.textContent = "비밀번호를 입력해주세요."
-                result = false;
-            } else if (pass.value.length < 8) {
-                passErrMsg.textContent = "8글자 이상 입력해주세요."
-                result = false;
-            } else {
-                passErrMsg.textContent = ""
-            }
-
-            //비밀번호 확인 일치여부
-            if (pass.value !== newPass.value) {
-                newPassErrMsg.textContent = "비밀번호가 일치하지 않습니다."
-                result = false;
-            } else {
-                newPassErrMsg.textContent = ""
-            }
-
-            // email 검증
-            if (email.value === "") {
-                emailErrMsg.textContent = "이메일을 입력해주세요."
-                result = false;
-            } else {
-                emailErrMsg.textContent = ""
-            }
-            // 전화번호 검증
-            if (call.value === "") {
-                callErrMsg.textContent = "전화번호를 입력해주세요."
-                result = false;
-            } else {
-                callErrMsg.textContent = ""
-            }
-            return result
-
-
         }
 
-        $(document).ready(function(){
-            //등록작업을 해주는 url을 파라미터로 집어넣기!!
-            form_submit("/member/joinMember");
-        });
+            /** 셀렉트박스 선택에 따라 견종명 입력창 보여주기 여부 */
+            function showOrNot(element) {
+                if (element.value == 1) {
+                    document.getElementById("MEM_BR_NAME").style.visibility = "";
+                } else {
+                    document.getElementById("MEM_BR_NAME").style.visibility = "hidden";
+                    document.getElementById("MEM_BR_NAME").value = "";
+                }
+            }
+
+
+            /** 폼 검증하는 함수 */
+            function checkForm() {
+                const idErrMsg = document.querySelector('#verification');
+                const call = document.querySelector('#MEM_CALL');
+                const callErrMsg = document.querySelector('#mem-call-error');
+                const pass = document.querySelector('#MEM_PW');
+                const passErrMsg = document.querySelector('#pw-error');
+                const newPass = document.querySelector('#MEM_NEWPW');
+                const newPassErrMsg = document.querySelector('#new-pw-error');
+                const emailErrMsg = document.querySelector('#email-error');
+                const nameofdog = document.querySelector('#MEM_DOG_NAME');
+                const nameofdogErrMsg = document.querySelector('#dogname-error');
+                const weightofdog = document.querySelector('#MEM_DOG_WEIGHT');
+                const weightofdogErrMsg = document.querySelector('#weightofdog-error');
+
+
+                let result = true;
+
+                // 아이디 검증
+                if (idErrMsg.textContent == "") {
+                    result = false;
+                    idErrMsg.textContent = "아이디 중복확인을 눌러주세요."
+                } else if (idErrMsg.textContent == "이메일 중복확인을 눌러주세요.") {
+                    result = false;
+                } else if (idErrMsg.textContent == "중복된 아이디 입니다.") {
+                    result = false;
+                }
+
+                // 이메일 검증
+                if (emailErrMsg.textContent == "") {
+                    result = false;
+                    emailErrMsg.textContent = "이메일 중복확인을 눌러주세요."
+                } else if (emailErrMsg.textContent == "이메일 중복확인을 눌러주세요.") {
+                    result = false;
+                } else if (emailErrMsg.textContent == "중복된 이메일 주소입니다.") {
+                    result = false;
+                }
+
+                // 강아지몸무게 검증
+                if (weightofdog.value === "") {
+                    weightofdogErrMsg.textContent = "강아지 몸무게를 입력해주세요."
+                    result = false;
+                } else {
+                    weightofdogErrMsg.textContent = ""
+                }
+
+                // 강아지이름 검증
+                if (nameofdog.value === "") {
+                    nameofdogErrMsg.textContent = "강아지이름을 입력해주세요."
+                    result = false;
+                } else {
+                    nameofdogErrMsg.textContent = ""
+                }
+
+                // password 검증
+                if (pass.value === "") {
+                    passErrMsg.textContent = "비밀번호를 입력해주세요."
+                    result = false;
+                } else if (pass.value.length < 8) {
+                    passErrMsg.textContent = "8글자 이상 입력해주세요."
+                    result = false;
+                } else {
+                    passErrMsg.textContent = ""
+                }
+
+                //비밀번호 확인 일치여부
+                if (pass.value !== newPass.value) {
+                    newPassErrMsg.textContent = "비밀번호가 일치하지 않습니다."
+                    result = false;
+                } else {
+                    newPassErrMsg.textContent = ""
+                }
+
+                // 전화번호 검증
+                if (call.value === "") {
+                    callErrMsg.textContent = "전화번호를 입력해주세요."
+                    result = false;
+                } else {
+                    callErrMsg.textContent = ""
+                }
+                return result
+
+
+            }
+
+            $(document).ready(function () {
+                //등록작업을 해주는 url을 파라미터로 집어넣기!!
+                form_submit("/member/joinMember");
+            });
+
 
     </script>
 </main>

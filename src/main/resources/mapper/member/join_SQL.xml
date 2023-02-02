@@ -56,6 +56,14 @@
     ]]>
  </select>
 
+<select id="findEmail" parameterType="hashmap" resultType="Integer">
+     <![CDATA[
+        SELECT COUNT(*) FROM MEMBERS WHERE MEM_EMAIL = #{MEM_EMAIL}
+        ]]>
+ </select>
+
+
+
 
 
 

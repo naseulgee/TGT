@@ -11,11 +11,12 @@
 
     <select id="findID" parameterType="hashmap" resultType="hashmap">
      <![CDATA[
-        SELECT MEM_CALL,
-               MEM_DOG_NAME,
+        SELECT MEM_EMAIL,
                MEM_ID
-        FROM MEMBERS WHERE MEM_CALL =  #{MEM_CALL}
+        FROM MEMBERS WHERE MEM_EMAIL =  #{MEM_EMAIL}
         ]]>
      </select>
+
+
 
 </mapper>

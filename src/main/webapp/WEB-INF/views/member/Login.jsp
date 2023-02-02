@@ -31,7 +31,7 @@
 
                 <div class="flex items-center justify-between">
                     <div class="text-sm">
-                        <p class="text-[#f0b1aa]"><a href="/member/findID" class="font-medium text-[#f0b1aa]">아이디찾기</a>&nbsp&nbsp|&nbsp&nbsp<a href="#" class="font-medium text-[#f0b1aa]">비밀번호 찾기</a></p>
+                        <p class="text-[#f0b1aa]"><a href="/member/findID" class="font-medium text-[#f0b1aa]">아이디찾기</a>&nbsp&nbsp|&nbsp&nbsp<a href="/member/findPassword" class="font-medium text-[#f0b1aa]">비밀번호 찾기</a></p>
                     </div>
                 </div>
 

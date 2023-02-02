@@ -62,5 +62,11 @@ public class JoinServiceImpl implements JoinService {
 
 	}
 
+	@Override
+	public int emailCheck(String email) throws Exception {
+		int result = joinDAO.checkEmail(email);
+		return result;
+	}
+
 
 }

@@ -14,7 +14,7 @@
         <div class="w-full max-w-md space-y-8">
             <div>
                 <img class="mx-auto h-12 w-auto" src="/resources/image/logo.png" alt="투개더">
-                <p class="mt-6 text-2xl text-center font-bold tracking-tight text-[#f0b1aa]">강아지이름 또는 전화번호가 틀렸습니다.</p>
+                <p class="mt-6 text-2xl text-center font-bold tracking-tight text-[#f0b1aa]">회원가입시 입력했던 이메일주소가 아닙니다. </p>
 
             </div>
             <div>

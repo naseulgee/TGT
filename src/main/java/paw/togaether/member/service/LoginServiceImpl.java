@@ -43,8 +43,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public Map<String, Object> findID(Map<String, Object> map) throws Exception {
-        String formcallnumber = (String)map.get("MEM_CALL");
-        String formnameofdog = (String)map.get("MEM_DOG_NAME");
+        String formEmail = (String)map.get("MEM_EMAIL");
 
         Map<String, Object> thingsToFindID = (Map<String, Object>)loginDAO.findID(map);
         if(thingsToFindID == null){
@@ -52,10 +51,9 @@ public class LoginServiceImpl implements LoginService {
             newmap.put("dataExists", false);
             return newmap;
         } else {
-            String DBcallnumber = (String)thingsToFindID.get("MEM_CALL");
-            String DBnameofdog = (String)thingsToFindID.get("MEM_DOG_NAME");
+            String DBEmail = (String)thingsToFindID.get("MEM_EMAIL");
 
-            if(formcallnumber.equals(DBcallnumber) && formnameofdog.equals(DBnameofdog)) {
+            if(formEmail.equals(DBEmail)) {
                 thingsToFindID.put("dataExists", true);
             } else {
                 thingsToFindID.put("dataExists", false);

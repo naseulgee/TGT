@@ -13,4 +13,6 @@ public interface JoinService {
 	int idCheck(String id) throws Exception;
 
 	List<Map<String, Object>> listOfDog(Map<String, Object> map) throws Exception;
+
+	int emailCheck(String email) throws Exception;
 }
