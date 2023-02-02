@@ -13,18 +13,39 @@
 </section>
 <section class="flex">
 	<article class="list_wrap">
-		<!-- 분류 리스트 -->
-		<div class="cate_wrap"></div>
+		<div class="condition_wrap flexCenter">
+			<!-- 분류 리스트 -->
+			<div class="cate_slide slim_scroll">
+				<div class="cate_wrap flex">
+					<input id='caAll' type='radio' name='pl_pc_idx' value='caAll'>
+					<label for='caAll'>전체</label>
+				</div>
+			</div>
+			
+			<!-- 정렬 -->
+			<div class="sort_wrap">
+				<select id="order" name="order">
+					<option value="new">최신순</option>
+					<option value="name">이름순</option>
+					<option value="reviewcnt">리뷰순</option>
+					<option value="reviewavg">평점순</option>
+				</select>
+			</div>
+		</div>
 		
 		<!-- 시설 테이블 -->
 		<table>
 			<tbody class="pl_list">
+				<tr><td></td></tr>
 			</tbody>
 		</table>
 		<ul id="paging">
 		</ul>
 		<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" />
 		<form id="commonForm" name="commonForm"></form>
+		
+		<!-- 등록 버튼 -->
+		<a class="btn submit txt_center" href="/place/writeForm.paw">우리동네 시설 등록하기</a>
 	</article>
 	<article class="map_wrap"></article>
 </section>
