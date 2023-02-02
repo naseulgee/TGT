@@ -47,7 +47,9 @@ public class TogetherServiceImpl implements TogetherService {
 	
 	/* 23.01.19 박선영 함께해요 카테고리별 리스트 출력 */
 	@Override
-	public List<Map<String, Object>> togetherCateList(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> togetherCateList(Map<String, Object> map, HttpSession session) throws Exception {
+		String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기
+		map.put("mem_id", mem_id);
 		return togetherDAO.togetherCateList(map);
 	}
 	

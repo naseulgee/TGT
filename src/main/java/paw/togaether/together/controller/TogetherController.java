@@ -27,8 +27,8 @@ public class TogetherController {
 	@Resource(name="togetherService")
 	private TogetherService togetherService;
 	
-	
-	@RequestMapping(value="/together/openList")
+	/* 23.02.02 박선영 게시글리스트 페이징화면출력 */
+	@RequestMapping(value="/together/openList.paw")
 	public ModelAndView openList(CommandMap commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView("/together/togetherList");//JSP를 불러오는 역할
 		
@@ -36,8 +36,9 @@ public class TogetherController {
 	}
 	
 	/* 23.01.12 박선영 : 함께해요 전체 게시판 리스트와 검색 메소드 작성 */
-	/* 23.01.25 박선영 : 함께해요 카테고리 수정 반영 */
-	@RequestMapping(value="/together/list")
+	/* 23.01.25 박선영 : 함께해요 카테고리 수정 반영
+	 * 23.02.02 박선영 함께해요 게시글 리스트 페이징 완료 */
+	@RequestMapping(value="/together/list.paw")
 	public ModelAndView togetherList(CommandMap commandMap, HttpSession session) throws Exception { 
 		
 		System.out.println("mem_id :" + session.getAttribute("mem_id"));
@@ -50,7 +51,6 @@ public class TogetherController {
 		List<Map<String, Object>> list = togetherService.togetherList(commandMap.getMap(), session);
 		/* 분류별 넘겨주는 데이터를 다르게 하기 위함 */
 		List<Map<String, Object>> catelist = togetherService.togetherCate(commandMap.getMap());
-		//참여인원수를 구하기 위함
 		
 		
 		//get()으로 받은 commandMap의 값들을 mv에 ""이름으로 저장
@@ -93,7 +93,7 @@ public class TogetherController {
 		//작성폼 작성 후 게시글 리스트로 리다이렉트
 		System.out.println(session.getAttribute("mem_id"));
 		
-		ModelAndView mv = new ModelAndView("redirect:/together/list.paw");
+		ModelAndView mv = new ModelAndView("redirect:/together/openList.paw");
 		
 		togetherService.togetherWrite(commandMap.getMap(), session);
 		
@@ -102,8 +102,8 @@ public class TogetherController {
 	
 	/* 23.01.18 박선영 : 게시글 상세보기 이동 
 	 * 23.01.31 박선영 : 참여여부 확인 메소드 추가*/
-	@RequestMapping(value="/together/detail/{to_idx}")
-	public ModelAndView togetherDetail(@PathVariable("to_idx") int TO_IDX, CommandMap commandMap, HttpSession session)throws Exception {
+	@RequestMapping(value="/together/detail/{TO_IDX}")
+	public ModelAndView togetherDetail(@PathVariable("TO_IDX") int TO_IDX, CommandMap commandMap, HttpSession session)throws Exception {
 		
 		//값을 잘 받아오는지 확인하는 용도
 		System.out.println(TO_IDX);
@@ -125,22 +125,43 @@ public class TogetherController {
 		
 	}
 	
-	/*23.01.19 박선영: 카테고리별 리스트 출력 */
+	/* 23.02.02 박선영 게시글리스트 페이징화면출력 */
+	@RequestMapping(value="/together/openCateList")
+	public ModelAndView openCateList(CommandMap commandMap) throws Exception {
+		System.out.println(commandMap.getMap());
+		
+		ModelAndView mv = new ModelAndView("/together/togetherCateList");//JSP를 불러오는 역할
+		
+		String TC_NAME = (String) commandMap.get("TC_NAME");
+		
+		mv.addObject("TC_NAME", TC_NAME);
+		return mv;
+	}
+	
+	/*23.01.19 박선영: 카테고리별 리스트 출력 
+	 * 23.02.02 박선영 : 카테고리별 리스트 페이징*/
 	@RequestMapping(value="/together/catelist")
-	public ModelAndView togetherCateList(CommandMap commandMap) throws Exception {
+	public ModelAndView togetherCateList(CommandMap commandMap, HttpSession session) throws Exception {
 		
 		System.out.println(commandMap.getMap());
 		System.out.println(commandMap.get("TC_NAME"));
 		
-		ModelAndView mv = new ModelAndView("/together/togetherCateList");
-				
-		List<Map<String, Object>> catelist = togetherService.togetherCateList(commandMap.getMap());
-		//카테고리별 리스트도 버튼이 따라다녀야하기 때문
-		List<Map<String, Object>> cate = togetherService.togetherCate(commandMap.getMap());
+		ModelAndView mv = new ModelAndView("jsonView");
 		
-		mv.addObject("cate", cate);
-		mv.addObject(commandMap.get("TC_NAME"));
-		mv.addObject("catelist",catelist);
+		//전체 카테고리별 리스트
+		List<Map<String, Object>> list = togetherService.togetherCateList(commandMap.getMap(),session);
+		//카테고리별 리스트 버튼
+		List<Map<String, Object>> catelist = togetherService.togetherCate(commandMap.getMap());
+		
+		mv.addObject("catelist", catelist);
+		//mv.addObject(commandMap.get("TC_NAME"));
+		mv.addObject("list",list);
+		
+		if (list.size() > 0) {
+			mv.addObject("TOTAL_T", list.get(0).get("TOTAL_COUNT"));
+		} else {
+			mv.addObject("TOTAL_T", 0);
+		}//페이징
 		
 		return mv;
 	}
@@ -150,7 +171,6 @@ public class TogetherController {
 	@RequestMapping(value="/together/modifyForm")
 	public ModelAndView openTogetherModi(CommandMap commandMap, HttpSession session) throws Exception {
 		
-		//session.setAttribute("mem_id", "user1");//로그인 테스트임
 		ModelAndView mv = new ModelAndView("/together/togetherModi");
 		
 		System.out.println(commandMap.getMap());
@@ -174,7 +194,7 @@ public class TogetherController {
 	public ModelAndView togetherModi(CommandMap commandMap, HttpSession session) throws Exception {
 		
 		//session.setAttribute("mem_id", "user1");
-		ModelAndView mv = new ModelAndView("redirect:/together/list.paw");
+		ModelAndView mv = new ModelAndView("redirect:/together/openList.paw");
 		
 		System.out.println(commandMap.get("TO_IDX"));
 		System.out.println(session.getAttribute("mem_id"));
@@ -190,7 +210,7 @@ public class TogetherController {
 	public ModelAndView togetherDel(CommandMap commandMap, HttpSession session) throws Exception {
 		
 		//session.setAttribute("mem_id", "user1");
-		ModelAndView mv = new ModelAndView("redirect:/together/list.paw");
+		ModelAndView mv = new ModelAndView("redirect:/together/openList.paw");
 		
 		System.out.println(commandMap.get("TO_IDX"));
 		

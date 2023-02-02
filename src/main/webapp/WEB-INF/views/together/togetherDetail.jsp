@@ -101,7 +101,7 @@ padding-left: 10px
 		<br/>
 		
 		<div class="flexCenter">
-			<a class="btn submit" href="/together/list.paw">목록으로</a>
+			<a class="btn submit" href="/together/openList.paw">목록으로</a>
 			<c:if test="${!empty mem_id}">
 				<!--로그인 되어있고 로그인한 아이디가 작성자 아이디와 같을때  -->
 				<c:if test="${mem_id eq map.TO_WRITER_ID}">

@@ -10,15 +10,8 @@ import paw.togaether.common.dao.AbstractDAO;
 @Repository("togetherDAO")
 public class TogetherDAO extends AbstractDAO {
 	
-	/* 함께해요 게시판 페이징 리스트 출력 & 검색기능 */
 	
-	/*
-	 * @SuppressWarnings("unchecked") public Map<String,
-	 * Object>togetherList(Map<String, Object> map) throws Exception{
-	 * return(Map<String, Object>)selectPagingList("together.togetherList", map); }
-	 */
-	
-	/* 함께해요 게시판 리스트 출력&검색기능 */
+	/* 23.02.02 함께해요 게시판 리스트 페이징 */
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> togetherList(Map<String, Object> map)throws Exception {
 		return (List<Map<String, Object>>) selectPagingList("together.togetherList", map);
@@ -36,10 +29,11 @@ public class TogetherDAO extends AbstractDAO {
 		return (Map<String, Object>) selectOne("together.togetherDetail", map);
 	}
 	
-	/* 23.01.19 박선영 : 함께해요 게시글 카테고리별 리스트 출력 */
+	/* 23.01.19 박선영 : 함께해요 게시글 카테고리별 리스트 출력
+	 * 23.02.02 박선영 게시글 카테고리별 리스트 페이징 */
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> togetherCateList(Map<String, Object> map) throws Exception {
-		return (List<Map<String, Object>>) selectList("together.togetherCateList", map);
+		return (List<Map<String, Object>>) selectPagingList("together.togetherCateList", map);
 	}
 	
 	/* 23.01.20 박선영 함께해요 게시글 수정하기 */

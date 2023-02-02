@@ -111,7 +111,7 @@ XL : 45 ~ 90kg
 			<br/>
 			<div class="flexCenter">
 				<input type="button" class="btn submit" value="작성하기" onclick="writeform_check();"/><!-- 유효성 검사 -->
-				<a class="btn" href="/together/list.paw">목록으로</a>
+				<a class="btn" href="/together/openList.paw">목록으로</a>
 			</div>
 		</form>
 	</div>
