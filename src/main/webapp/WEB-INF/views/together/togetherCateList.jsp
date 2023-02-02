@@ -82,7 +82,7 @@
 			<ul id="paging">
 			</ul>
 			<!-- 23.02.02페이징처리 -->
-			<div id="PAGE_NAVI_T" class="flexCenter"></div>
+			<div id="PAGE_NAVI_T" class="flexCenter"><input type="hidden" id="TC_NAME" name="TC_NAME" value="${TC_NAME}"></div>
 			<input type="hidden" id="PAGE_INDEX_T" name="PAGE_INDEX_T" /> <br />
 			<input type="hidden" name="TC_NAME" value="${TC_NAME}">
 			<form id="commonForm" name="commonForm"></form>
@@ -104,7 +104,7 @@
 			
 			comAjax.addParam("PAGE_INDEX", $("#PAGE_INDEX_T").val());
 			comAjax.addParam("PAGE_ROW", 6);
-			comAjax.addParam("TC_NAME", $(".TC_NAME").val());
+			comAjax.addParam("TC_NAME", $("#TC_NAME").val());
 
 			//comAjax.addParam("keyword", $('#keyword').val());
 			//comAjax.addParam("searchType", $('#searchType').val());
