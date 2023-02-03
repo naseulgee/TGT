@@ -11,7 +11,8 @@ _ing/
 .classpath
 .project
 .settings/
-web.xml
+**/web.xml
+**/upload/*
 
 ###컴파일된 클래스 파일
 *.class

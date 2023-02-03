@@ -1,0 +1,10 @@
+/* 상단 시설 핵심 정보 */
+.summary_wrap{ gap: 20px; }
+/* 이미지 슬라이드 */
+.summary_wrap .img_wrap .no-image{ font-size: 300px; text-align: center; }
+.summary_wrap .img_wrap{ width: 100%; max-width: 500px; height: 500px; position: relative; background-color: var(--subGray_5); }
+.summary_wrap .img_wrap .imgs img{ width: 100%; height: 100%; object-fit: contain; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: opacity 0.5s; opacity: 0; }
+.summary_wrap .img_wrap .imgs img.on{ opacity: 1; }
+.summary_wrap .img_wrap .arrow{ position: absolute; top: 50%; transform: translateY(-50%); color: #fff; font-size: 40px; text-shadow: 0 0 10px black; }
+.summary_wrap .img_wrap .arrow.prev{ left: 0; }
+.summary_wrap .img_wrap .arrow.next{ right: 0; }

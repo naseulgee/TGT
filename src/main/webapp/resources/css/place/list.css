@@ -1,0 +1,39 @@
+/* 검색 영역 */
+.search_wrap{ display: block; width: 100%; margin: 30px auto; position: relative; }
+.search_wrap i{ position: absolute; top: 50%; left: 25px; transform: translate(-50%, -50%); font-size: 1.5em; }
+.search_wrap input{ width: 100%; height: 50px; padding: 10px; padding-left: 50px; font-size: 1.2em; }
+
+/* 리스트 영역 */
+.list_wrap{ flex: 1; overflow: hidden; }
+.list_wrap .condition_wrap{ justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid var(--subGray_60); }
+/* 카테고리 */
+.list_wrap .cate_slide{ width: calc(100% - 100px); overflow-x: auto; }
+.list_wrap .cate_slide .cate_wrap{ gap: 10px; width: fit-content; margin-bottom: 10px; }
+.list_wrap .cate_wrap input{ display: none; }
+.list_wrap .cate_wrap label{ width: max-content; border-color: #fff; }
+.list_wrap .cate_wrap label:hover{ color: var(--mainColor); }
+.list_wrap .cate_wrap input:checked + label{ padding: 0 10px; border: 1px solid var(--mainColorD); border-radius: 15px; box-sizing: border-box; background-color: var(--mainColor); color: #fff; }
+/* 정렬 */
+.list_wrap .sort_wrap{ width: 90px; }
+.list_wrap .sort_wrap select,
+.list_wrap .sort_wrap option{ width: 100%; }
+/* 리스트 */
+.list_wrap table tbody tr,
+.list_wrap table tbody td{ display: block; }
+.list_wrap table tbody tr{ padding: 10px; position: relative; }
+.list_wrap table tbody th{ display: none; }
+.list_wrap table tbody td{ padding: 0; }
+.list_wrap table tbody .img + td{ width: 100px; height: 100px; box-sizing: border-box; border-radius: 20px; overflow: hidden; position: absolute; top: 10px; right: 10px; text-align: center; }
+.list_wrap table tbody .img + td i{ color: var(--subGray_20); font-size: 100px; line-height: 100px; }
+.list_wrap table tbody .img + td img{ width: 100%; height: 100%; object-fit: cover; }
+.list_wrap table tbody .cate + td{ display: inline-block; padding: 0 10px; border: 1px solid var(--subGray_40); border-radius: 15px; box-sizing: border-box; font-size: 0.8em; }
+.list_wrap table tbody .name + td{ padding-right: 110px; font-size: 2em; }
+.list_wrap table tbody .review + td::before{ content: "\f005"; color: #ffb100; font-family: "Font Awesome 6 Free"; font-weight: bold; }
+.list_wrap table tbody .loc + td,
+.list_wrap table tbody .menu + td{ color: var(--subGray_60); font-size: 0.9em; }
+.list_wrap table tbody .loc + td{ margin: 5px 0; }
+/* 등록 버튼 */
+.list_wrap .btn.submit{ width: 100%; }
+
+/* 지도 영역 */
+.map_wrap{ flex: 2; overflow: hidden; border: 1px solid green; }

@@ -1,5 +1,7 @@
 package paw.togaether.place.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,13 +40,16 @@ public class PlaceServiceImpl implements PlaceService {
 	//시설 관련
 	/** 23.01.17 나슬기: 시설 리스트 & 페이징 & 검색 */
 	@Override
-	public Map<String, Object> placeList(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> placeList(Map<String, Object> map) throws Exception {
 		return placeDAO.placeSelectList(map);
 	}
-	/** 23.01.17 나슬기: 시설 상세 */
+	/** 23.01.17 나슬기: 시설 상세
+	 * 23.02.01 나슬기: 사진 불러오기 관련 로직 추가 */
 	@Override
 	public Map<String, Object> placeDetail(Map<String, Object> map) throws Exception {
-		return placeDAO.placeSelect(map);
+		map.put("place", placeDAO.placeSelect(map));
+		map.put("photos", photoDAO.selectMyPhoto(map));
+		return map;
 	}
 	/** 23.01.17 나슬기: 시설 글쓰기
 	 * 23.01.26 나슬기: 사진 등록 관련 로직 추가 */
@@ -59,9 +64,37 @@ public class PlaceServiceImpl implements PlaceService {
 		}
 		return result;
 	}
-	/** 23.01.17 나슬기: 시설 수정 */
+	/** 23.01.17 나슬기: 시설 수정
+	 * 23.02.01 나슬기: 사진 수정 관련 로직 추가 */
 	@Override
 	public int placeModify(Map<String, Object> map, HttpSession session, MultipartFile[] uploadFile) throws Exception {
+		Map<String, Object> cm = (Map<String, Object>)map.get("map");
+		map.put("pl_idx", cm.get("pl_idx"));
+		map.put("idx", cm.get("pl_idx"));
+
+		photoDAO.deletePhoto(map);//리뷰관련 사진 일단 전부 삭제 (re_del_gb='Y')
+		
+		List<String> or_photos = new ArrayList<String>();
+		//기존 사진 업데이트해주기
+		for (String key : cm.keySet()) {
+			Map<String,Object> photoMap = new HashMap<String,Object>();
+			if ((key.length()>=5) && key.substring(0, 4).equals("idx_")) {
+				photoMap.put("ph_idx",cm.get(key));//photo번호를 통해 ph_del_gb='N'로 변경
+				photoDAO.updatePhoto(photoMap);
+				or_photos.add(key);
+			}
+		}
+		//새로운 사진 있으면 저장
+		List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(map, session, uploadFile);
+		for(int i=0; i<list.size(); i++) {
+			photoDAO.insertPhoto(list.get(i));
+		}
+		
+		//기존 사진 키값 제거
+		for (int i = 0; i < or_photos.size(); i++) {
+			cm.remove(or_photos.get(i));
+		}
+		map.put("map", cm);
 		int result = placeDAO.placeUpdate(map);
 		return result;
 	}

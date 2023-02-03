@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface PlaceService {
 	//시설 리스트 & 페이징 & 검색
-	Map<String, Object>placeList(Map<String, Object> map) throws Exception;
+	List<Map<String, Object>>placeList(Map<String, Object> map) throws Exception;
 	//시설 상세
 	Map<String, Object>placeDetail(Map<String, Object> map) throws Exception;
 	//시설 글쓰기
