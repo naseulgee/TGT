@@ -66,6 +66,7 @@ public class PlaceController {
 		map.put("pl_idx", cafe_idx);
 		map.put("ph_board_type", "place");
 		mv.addObject("detail", placeService.placeDetail(map));
+		mv.addObject("menu", placeService.menuList(map));
 		return mv;
 	}
 	
@@ -80,12 +81,13 @@ public class PlaceController {
 		return mv;
 	}
 	/** 23.01.22 나슬기: 시설 등록/수정 처리 메소드
-	 * 23.01.26 나슬기: 사진 등록 관련 로직 추가 */
+	 * 23.01.26 나슬기: 사진 등록 관련 로직 추가
+	 * 23.02.03 나슬기: 휴무일 처리 로직을 형변환 오류때문에 String[]을 Object[]로 변환. */
 	@PostMapping(value={"/write", "/modify"})
 	public ResponseEntity<String> placeReg(CommandMap commandMap, HttpSession session, MultipartFile[] uploadFile) {
 		//서비스 호출 전 체크박스로 넘어오는 휴일 정보에 대한 가공 처리 필수!
 		if(commandMap.get("pl_offday") != null) {
-			String[] off_check = (String[]) commandMap.get("pl_offday");//해당 값을 문자열로 이루어진 배열에 저장
+			Object[] off_check = (Object[]) commandMap.get("pl_offday");//해당 값을 문자열로 이루어진 배열에 저장
 			commandMap.put("pl_offday",
 					Arrays.deepToString(off_check)
 					.toString()

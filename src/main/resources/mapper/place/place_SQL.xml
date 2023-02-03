@@ -66,14 +66,9 @@
 	<select id="se_pl" resultType="hashmap">
 		<![CDATA[
 		select pl_idx, pl_pc_idx, pl_name, pl_call, pl_loc, pl_offday, pl_open, pl_close, pl_mod_date, pl_del_gb,--시설관련 정보
-			r_avg, r_count,--리뷰 평균, 리뷰 개수
 			pc_name--카테고리 명
 		from place
 			inner join (select pc_idx, pc_name from place_cate) on pc_idx = pl_pc_idx
-			--리뷰 정보. 시설별 평균(소숫점 한자리수로 반올림), 총 개수
-		    left join (select re_pl_idx, round(avg(re_star), 1) r_avg, count(re_pl_idx) r_count
-		            from review where re_del_gb = 'N' group by re_pl_idx
-		        ) on pl_idx = re_pl_idx
 		where pl_idx = ${pl_idx}
 		]]>
 	</select>
