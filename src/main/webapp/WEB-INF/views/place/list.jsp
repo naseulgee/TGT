@@ -17,7 +17,7 @@
 			<!-- 분류 리스트 -->
 			<div class="cate_slide slim_scroll">
 				<div class="cate_wrap flex">
-					<input id='caAll' type='radio' name='pl_pc_idx' value='caAll'>
+					<input id='caAll' type='radio' name='pl_pc_idx' value='caAll' checked>
 					<label for='caAll'>전체</label>
 				</div>
 			</div>
