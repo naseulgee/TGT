@@ -94,14 +94,14 @@ public class LoginServiceImpl implements LoginService {
                 String content = System.getProperty("line.separator") + "안녕하세요 회원님" + System.getProperty("line.separator")
                         + "투개더 비밀번호찾기(변경) 인증번호는 " + num + " 입니다." + System.getProperty("line.separator"); //
 
-                try {
-                    MimeMessage message = mailSender.createMimeMessage();
-                    MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "utf-8");
-
-                    messageHelper.setFrom(setfrom);
-                    messageHelper.setTo(tomail);
-                    messageHelper.setSubject(title);
-                    messageHelper.setText(content);
+//                try {
+//                    MimeMessage message = mailSender.createMimeMessage();
+//                    MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "utf-8");
+//
+//                    messageHelper.setFrom(setfrom);
+//                    messageHelper.setTo(tomail);
+//                    messageHelper.setSubject(title);
+//                    messageHelper.setText(content);
 
                     mailSender.send(message);
                 } catch (Exception e) {
