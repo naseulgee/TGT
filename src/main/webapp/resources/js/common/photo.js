@@ -4,9 +4,8 @@
 $(document).ready( function() {	
 		//기존에 등록한 이미지가 바뀌면 idx_n 제거
 		$("#previousImg input[type='file']").on("propertychange change keyup paste input", function() {
-			var idx = $(this).parent().children().first();
-			console.log(idx);
-			idx.replaceWith("<input type='hidden'>");
+			let idx = $(this).parent().children("[name^='idx_']")[0];
+			if(!isNull(idx)) idx.remove();
 		});
 });
 

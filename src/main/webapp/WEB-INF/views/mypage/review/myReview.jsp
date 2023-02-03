@@ -69,8 +69,14 @@
 		width : 260px;
 	}
 	
-	#re_contents {
+	/* #re_contents {
 		margin:auto;
+	} */
+	
+	img {
+		border: 3px solid #f0b1aa;
+	    box-sizing: border-box;
+    	border-radius: 20px;
 	}
 </style>
 
@@ -83,9 +89,9 @@
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <main class="layoutCenter">
 	<div id="wrap" >	
-	<div class="txt_center">
+	<div >
 	
-	<h1>나의 리뷰</h1>
+	<h1 class="txt_center">나의 리뷰</h1>
 	<br><br>
 	
 		<div id="place">
@@ -151,15 +157,16 @@
 		<div id="re_contents">
 			${review.RE_CONTENTS}
 		</div>	
+		<br><br>
 		
 		<!-- 사진 -->
-		<div>
+		<div id="photos">
 			<c:forEach items="${photos}" var="i" varStatus="status">	
 				<img width="200px" src="/resources/upload/${i.PH_STORED_FILE_NAME}" alt="카페 이미지" id="photo">			
 				&nbsp;&nbsp;
 			</c:forEach>
 		</div>
-		<br>
+		<br><br>
 		
 		
 		<div id="writeDate" class="txt_right">
