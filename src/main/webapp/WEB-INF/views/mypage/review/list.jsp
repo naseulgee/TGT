@@ -85,7 +85,7 @@ img {
 								</c:if>
 							</span> &nbsp;&nbsp;
 							<a class="use_move btn slim" href="/mypage/review/detail.paw" 
-							onclick="move(this, 're_idx:${i.RE_IDX}', 'ph_board_type:review')">
+							onclick="move(this, 're_idx:${i.RE_IDX}','pl_idx:${i.RE_PL_IDX}', 'ph_board_type:review')">
 							더보기</a>
 						</div>
 						

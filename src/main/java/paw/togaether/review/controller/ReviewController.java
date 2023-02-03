@@ -33,11 +33,8 @@ public class ReviewController {
 	public ModelAndView openReviewWrite(CommandMap commandMap) throws Exception{
 		ModelAndView m = new ModelAndView("/review/reviewWrite");
 		
-		//상세보기 구현될 때까지는 이걸 사용
-		m.addObject("re_pl_idx", "1");
-		
-		//상세보기 페이지까지 구현되면 아래 메서드 쓰기
-		//m.addObject("re_pl_idx",commandMap.get("re_pl_idx"));
+		System.out.println("시설번호:"+commandMap);
+		m.addObject("re_pl_idx",commandMap.get("pl_idx"));
 		return m;
 	}
 	
@@ -60,7 +57,6 @@ public class ReviewController {
 	@RequestMapping(value="/mypage/review/list")
 	public ModelAndView openMyReviews(CommandMap commandMap, HttpSession session) throws Exception{
 		ModelAndView m = new ModelAndView("/mypage/review/list");
-		session.setAttribute("mem_id", "aaa123"); //★나중에 공유 시에는 지워줄 것!!★
 		String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기
 		commandMap.put("mem_id", mem_id);
 		
@@ -80,7 +76,6 @@ public class ReviewController {
 		m.addObject("review",review);
 		
 		//시설썸넴 가져오기
-		commandMap.put("pl_idx", commandMap.get("RE_PL_IDX"));   //시설번호를 가져오기
 		Map<String,Object> placePhoto =  reviewService.openMyReviewPlacePhoto(commandMap.getMap());
 		m.addObject("placePhoto",placePhoto);
 		
