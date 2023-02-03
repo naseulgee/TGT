@@ -31,6 +31,7 @@ height:100px;
 	
 	<div class="main_wrap">
 		<form method="post" action="/together/write.paw" name="writefrm">
+			<input type="hidden" id="TO_WRITER_ID" name="TO_WRITER_ID" value="${mem_id}">
 			<table class="board_view">
 				<caption>게시글 등록</caption>
 				<tbody>
@@ -109,8 +110,8 @@ XL : 45 ~ 90kg
 			
 			<br/>
 			<div class="flexCenter">
-				<input type="button" class="btn submit" value="작성하기" onclick="writeform_check();"/>
-				<a class="btn" href="/together/list.paw">목록으로</a>
+				<input type="button" class="btn submit" value="작성하기" onclick="writeform_check();"/><!-- 유효성 검사 -->
+				<a class="btn" href="/together/openList.paw">목록으로</a>
 			</div>
 		</form>
 	</div>

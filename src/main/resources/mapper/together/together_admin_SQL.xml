@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="togetherAdmin">
+	<!-- 23.02.01 박선영 관리자 쿼리 따로 분리, 게시글 리스트 출력 -->
+	<select id="togetherAdminList" resultType="hashmap">
+		<![CDATA[
+			select 
+				t.to_idx,
+				t.to_title,
+				t.to_tc_name,
+				t.to_contents,
+				t.to_writer_id,
+				t.to_writer_name,
+				t.to_date,
+				t.to_time,
+				t.to_people,
+				(select count(tw_idx) from together_with where tw_to_idx = to_idx) as C,
+				t.to_loc,
+				t.to_br_idx,
+				t.to_wt_idx,
+				t.to_reg_date,
+				t.to_mod_date,
+				t.to_del_gb,
+				c.tc_idx,
+				c.tc_name,
+				c.tc_count,
+				b.br_idx,
+				b.br_name
+				from together t, together_cate c, breed b
+				where t.to_tc_name = c.tc_name
+				and t.to_br_idx = b.br_idx
+				and t.to_del_gb ='N'
+                group by t.to_idx,
+						t.to_title,
+						t.to_tc_name,
+						t.to_contents,
+						t.to_writer_id,
+						t.to_writer_name,
+						t.to_date,
+						t.to_time,
+						t.to_people,
+						t.to_loc,
+						t.to_br_idx,
+						t.to_wt_idx,
+						t.to_reg_date,
+						t.to_mod_date,
+						t.to_del_gb,
+						c.tc_idx,
+						c.tc_name,
+						c.tc_count,
+						b.br_idx,
+						b.br_name
+		]]>
+	</select>
+	
+	<!-- 23.02.01 박선영 관리자 카테고리별 리스트 -->
+	<select id="togetherAdminCateList" resultType="hashmap">
+		<![CDATA[
+			SELECT
+				t.TO_IDX,
+				t.TO_TITLE,
+				t.TO_TC_NAME,
+				t.TO_CONTENTS,
+				t.TO_WRITER_ID,
+				t.TO_WRITER_NAME,
+				t.TO_DATE,
+				t.TO_TIME,
+				t.TO_PEOPLE,
+				(select count(tw_idx) from together_with where tw_to_idx = to_idx) as C,
+				t.TO_LOC,
+				t.TO_BR_IDX,
+				t.TO_WT_IDX,
+				t.TO_REG_DATE,
+				t.TO_MOD_DATE,
+				t.TO_DEL_GB,
+				c.TC_IDX,
+				c.TC_NAME,
+				c.TC_COUNT,
+				b.BR_IDX,
+				b.BR_NAME 
+				from TOGETHER t, TOGETHER_CATE c, BREED b
+				where t.TO_TC_NAME = c.TC_NAME
+				AND t.TO_BR_IDX = b.BR_IDX
+				AND c.TC_NAME=#{TC_NAME}
+		]]>
+	</select>
+	
+	<!--23.02.01 박선영 : 관리자 견종분류 리스트  -->
+	<select id="togetherAdminbreed" resultType="hashmap">
+		<![CDATA[
+			SELECT BR_IDX, BR_NAME
+			FROM BREED
+		]]>
+	</select>
+	
+	
+	<!--23.02.01 박선영 : 관리자 참여자 리스트  -->
+	<select id="togetherAdminWithList" resultType="hashmap">
+		<![CDATA[
+			SELECT  TW_IDX,
+					TW_TO_IDX,
+					TW_MEM_ID
+			FROM TOGETHER_WITH
+			WHERE TW_TO_IDX = #{TO_IDX}
+		]]>
+	</select>
+	
+	<!-- 23.02.01 박선영 : 관리자 카테고리 리스트 -->
+	<select id="togetherAdminCate" resultType="hashmap">
+		<![CDATA[
+			SELECT  TC_IDX,
+					TC_NAME,
+					TC_COUNT
+			FROM TOGETHER_CATE
+		]]>
+	</select>
+	
+	<!-- 23.01.25 박선영 : 관리자 분류 리스트 등록 -->
+	<!-- 23.02.01 박선영 관리자 쿼리 따로 분류 -->
+	<insert id="adminTogeCateWrite" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO TOGETHER_CATE(
+					TC_IDX,
+					TC_NAME,
+					TC_COUNT)
+					VALUES(
+					SEQ_TOGETHER_CATE.NEXTVAL,
+					#{TC_NAME},
+					#{TC_COUNT, jdbcType=VARCHAR}
+					)
+		]]>
+	</insert>
+	
+	
+</mapper>

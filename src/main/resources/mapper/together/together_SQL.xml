@@ -6,25 +6,27 @@
 	<!-- 23.01.12 박선영: 함께해요 게시판 리스트 출력 및 검색  -->
 	<!-- 23.01.21 박선영 : 견종 테이블과 조인으로 변경 -->
 	<!-- 23.01.23 박선영 : 삭제 기능 구현하면서 삭제여부가 N 인 게시글만 출력조건 추가 -->
+	<!-- 23.01.30 박선영 : 참여인원 쿼리문 수정 -->
 	<select id="togetherList" resultType="hashmap">
-		<!-- <include refid = "common.pagingPre"/> -->
+		<include refid="common.pagingPre"/>
 		<![CDATA[
-			select 
+		select 
+				ROW_NUMBER() OVER (ORDER BY TO_IDX DESC) RNUM, 
 				t.to_idx,
 				t.to_title,
 				t.to_tc_name,
 				t.to_contents,
 				t.to_writer_id,
 				t.to_writer_name,
-				t.to_date,
+				to_char(to_date, 'YYYY-MM-DD')as TO_DATE,
 				t.to_time,
 				t.to_people,
-				t.to_join_people,
+				(select count(tw_idx) from together_with where tw_to_idx = to_idx) as C,
 				t.to_loc,
 				t.to_br_idx,
 				t.to_wt_idx,
-				t.to_reg_date,
-				t.to_mod_date,
+				to_char(to_reg_date, 'YYYY-MM-DD')as TO_REG_DATE,
+				to_char(to_mod_date, 'YYYY-MM-DD')as TO_MOD_DATE,
 				t.to_del_gb,
 				c.tc_idx,
 				c.tc_name,
@@ -35,30 +37,40 @@
 				where t.to_tc_name = c.tc_name
 				and t.to_br_idx = b.br_idx
 				and t.to_del_gb ='N'
+                group by t.to_idx,
+						t.to_title,
+						t.to_tc_name,
+						t.to_contents,
+						t.to_writer_id,
+						t.to_writer_name,
+						t.to_date,
+						t.to_time,
+						t.to_people,
+						t.to_loc,
+						t.to_br_idx,
+						t.to_wt_idx,
+						t.to_reg_date,
+						t.to_mod_date,
+						t.to_del_gb,
+						c.tc_idx,
+						c.tc_name,
+						c.tc_count,
+						b.br_idx,
+						b.br_name
 		]]>
-		<if test="keyword != null">
-			<choose>
-				<when test="searchType == 'T'.toString()">
-					AND (to_title like '%' || #{keyword} || '%')
-				</when>
-				<when test="searchType == 'C'.toString()">
-					AND (to_tc_name like '%' || #{keyword} || '%')
-				</when>
-				<when test="searchType == 'B'.toString()">
-					AND (to_br_name like '%' || #{keyword} || '%')
-				</when>
-				<otherwise>
-					AND ((to_wt_idx like '%' || #{keyword} || '%') OR (to_contents like '%' || #{keyword} || '%'))
-				</otherwise>
-			</choose>
+		<if test="subKeyword != null">
+			AND (to_title like '%' || #{subKeyword} || '%')
+			OR (to_tc_name like '%' || #{subKeyword} || '%')
+			OR (to_br_name like '%' || #{subKeyword} || '%')
 		</if>
-		<!-- <include refid="common.pagingPost"/> -->
+		<include refid="common.pagingPost"/>
 	</select>
 	
 	
 	
 	<!-- 23.01.13 박선영: 게시글 작성폼  -->
 	<!-- 23.01.21 박선영 : 견종명이 아닌 견종 번호로 입력 받을 수 있도록 변경 -->
+	<!-- 23.01.30 박선영 : 세션 이용 작성자 아이디 전송 -->
 	<insert id="togetherWrite" parameterType="hashmap">
 		<![CDATA[
 			insert into TOGETHER(
@@ -74,7 +86,8 @@
 				TO_WT_IDX,
 				TO_REG_DATE,
 				TO_MOD_DATE,
-				TO_DEL_GB
+				TO_DEL_GB,
+				TO_WRITER_ID
 				) 
 				VALUES(
 				seq_together.nextval, 
@@ -89,7 +102,8 @@
 				#{TO_WT_IDX, jdbcType=VARCHAR},
 				sysdate,
 				sysdate,
-				'N'
+				'N',
+				#{TO_WRITER_ID, jdbcType=VARCHAR}
 				)
 		]]>
 	</insert>
@@ -97,6 +111,7 @@
 	
 	<!-- 23.01.18 박선영: 함께해요 게시글 상세보기 -->
 	<!-- 23.01.21 박선영 : 견종 테이블 조인하고 게시글 견종번호로 수정 -->
+	<!-- 23.01.30 박선영 : 참여인원 쿼리문 수정 -->
 	<select id="togetherDetail" resultType="hashmap">
 		<![CDATA[
 			SELECT t.TO_IDX,
@@ -108,7 +123,7 @@
 					t.TO_DATE,
 					t.TO_TIME,
 					t.TO_PEOPLE,
-					t.TO_JOIN_PEOPLE,
+					(select count(TW_IDX) from together_with where TW_TO_IDX = TO_IDX) as C,
 					t.TO_LOC,
 					t.TO_BR_IDX,
 					t.TO_WT_IDX,
@@ -123,30 +138,33 @@
 					FROM TOGETHER t, TOGETHER_CATE c,BREED b
 					WHERE t.TO_TC_NAME = c.TC_NAME
 					AND t.TO_BR_IDX = b.BR_IDX
-					AND t.TO_IDX=#{TO_IDX}
+					AND t.TO_IDX=#{TO_IDX, jdbcType=VARCHAR}
 		]]>
 	</select>
 	
 	<!-- 23.01.19 박선영 함께해요 카테고리별 리스트 출력 -->
 	<!-- 23.01.21 박선영 : 견종 테이블 조인하고 게시글 견종번호로 수정 -->
+	<!-- 23.01.31 박선영 : 참여인원 반영 수정 -->
+	<!-- 23.02.02 박선영 카테고리별 리스트 페이징 -->
 	<select id="togetherCateList" resultType="hashmap">
+		<include refid="common.pagingPre"/>
 		<![CDATA[
-			SELECT
+			SELECT ROW_NUMBER() OVER (ORDER BY TO_IDX DESC) RNUM,
 				t.TO_IDX,
 				t.TO_TITLE,
 				t.TO_TC_NAME,
 				t.TO_CONTENTS,
 				t.TO_WRITER_ID,
 				t.TO_WRITER_NAME,
-				t.TO_DATE,
+				TO_CHAR(TO_DATE, 'YYYY-MM-DD')as TO_DATE,
 				t.TO_TIME,
 				t.TO_PEOPLE,
-				t.TO_JOIN_PEOPLE,
+				(select count(tw_idx) from together_with where tw_to_idx = to_idx) as C,
 				t.TO_LOC,
 				t.TO_BR_IDX,
 				t.TO_WT_IDX,
-				t.TO_REG_DATE,
-				t.TO_MOD_DATE,
+				TO_CHAR(TO_REG_DATE, 'YYYY-MM-DD')as TO_REG_DATE,
+				TO_CHAR(TO_MOD_DATE, 'YYYY-MM-DD')as TO_MOD_DATE,
 				t.TO_DEL_GB,
 				c.TC_IDX,
 				c.TC_NAME,
@@ -156,8 +174,15 @@
 				from TOGETHER t, TOGETHER_CATE c, BREED b
 				where t.TO_TC_NAME = c.TC_NAME
 				AND t.TO_BR_IDX = b.BR_IDX
-				AND c.TC_NAME=#{TC_NAME}
+				AND t.TO_DEL_GB = 'N'
+				AND c.TC_NAME=#{TC_NAME, jdbcType=VARCHAR}
 		]]>
+		<if test="subKeyword != null">
+			AND (to_title like '%' || #{subKeyword} || '%')
+			OR (to_tc_name like '%' || #{subKeyword} || '%')
+			OR (to_br_name like '%' || #{subKeyword} || '%')
+		</if>
+		<include refid="common.pagingPost"/>
 	</select>
 	
 	<!-- 23.01.20 박선영 : 게시글 수정 구현 -->
@@ -179,6 +204,8 @@
 				TO_MOD_DATE = SYSDATE
 			where
 				TO_IDX = #{TO_IDX}
+			and 
+				TO_WRITER_ID = #{TO_WRITER_ID, jdbcType=VARCHAR}
 		]]>
 	</update>
 	
@@ -220,27 +247,43 @@
 			FROM TOGETHER_CATE
 		]]>
 	</select>
+
 	
-	<!-- 23.01.25 박선영 : 관리자 분류 리스트 등록 -->
-	<insert id="adminTogeCateWrite" parameterType="hashmap">
+	<!-- 23.01. 27 박선영 : 참여하기 -->
+	<insert id="togetherWith" parameterType="hashmap">
 		<![CDATA[
-			INSERT INTO TOGETHER_CATE(
-					TC_IDX,
-					TC_NAME,
-					TC_COUNT)
-					VALUES(
-					SEQ_TOGETHER_CATE.NEXTVAL,
-					#{TC_NAME},
-					#{TC_COUNT, jdbcType=VARCHAR}
-					)
+			INSERT INTO TOGETHER_WITH(
+			TW_IDX,
+			TW_TO_IDX,
+			TW_MEM_ID)
+			VALUES(
+			seq_together_with.NEXTVAL,
+			#{TW_TO_IDX, jdbcType=VARCHAR},
+			#{TW_MEM_ID, jdbcType=VARCHAR}
+			)
 		]]>
 	</insert>
 	
-	<select id="togetherJoinCount" resultType="int">
+	<!-- 23.01.31 박선영 : 참여하기 취소 -->
+	<delete id="togetherWithDel">
 		<![CDATA[
-			SELECT COUNT(TW_IDX)
+			DELETE 
 			FROM TOGETHER_WITH
-			WHERE TW_TO_IDX = #{TO_IDX, jdbcType=VARCHAR}
+			WHERE 
+				TW_TO_IDX = #{TW_TO_IDX, jdbcType=VARCHAR}
+			AND 
+				TW_MEM_ID = #{TW_MEM_ID, jdbcType=VARCHAR}
+		]]>
+	</delete>
+	
+	<!-- 23.01.31 박선영 : 참여하기 여부 확인 -->
+	<select id="checkWith" resultType="hashmap">
+		<![CDATA[
+			SELECT * FROM TOGETHER_WITH
+			WHERE 
+				TW_TO_IDX = #{TO_IDX, jdbcType=VARCHAR}
+			AND 
+				TW_MEM_ID = #{mem_id, jdbcType=VARCHAR}
 		]]>
 	</select>
 	

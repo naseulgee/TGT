@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -22,32 +23,41 @@ public class TogetherServiceImpl implements TogetherService {
 	
 	/* 함께해요 페이지 리스트 및 검색 */
 	@Override
-	public List<Map<String, Object>> togetherList(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> togetherList(Map<String, Object> map, HttpSession session) throws Exception {
+		String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기
+		map.put("mem_id", mem_id);
 		return togetherDAO.togetherList(map);
 	}
 	
 	/* 함께해요 게시글 작성 */
 	@Override
-	public void togetherWrite(Map<String, Object> map) throws Exception {
-
+	public void togetherWrite(Map<String, Object> map, HttpSession session) throws Exception {
+		String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기
+		map.put("mem_id", mem_id);
 		togetherDAO.togetherWrite(map);
 	}
 	
 	/* 23.01.18 박선영 함께해요 상세보기 */
 	@Override
-	public Map<String, Object> togetherDetail(Map<String, Object> map) throws Exception {
+	public Map<String, Object> togetherDetail(Map<String, Object> map, HttpSession session) throws Exception {
+		String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기
+		map.put("mem_id", mem_id);
 		return togetherDAO.togetherDetail(map);
 	}
 	
 	/* 23.01.19 박선영 함께해요 카테고리별 리스트 출력 */
 	@Override
-	public List<Map<String, Object>> togetherCateList(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> togetherCateList(Map<String, Object> map, HttpSession session) throws Exception {
+		String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기
+		map.put("mem_id", mem_id);
 		return togetherDAO.togetherCateList(map);
 	}
 	
 	/* 23.01.20 박선영 함께해요 게시글 수정하기 */
 	@Override
-	public void togetherModi(Map<String, Object> map) throws Exception {
+	public void togetherModi(Map<String, Object> map, HttpSession session) throws Exception {
+		String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기
+		map.put("mem_id", mem_id);
 		togetherDAO.togetherModi(map);
 	}
 	
@@ -65,7 +75,9 @@ public class TogetherServiceImpl implements TogetherService {
 	
 	/* 23.01.23 박선영 게시글 삭제 */
 	@Override
-	public void togetherDel(Map<String, Object> map) throws Exception {
+	public void togetherDel(Map<String, Object> map, HttpSession session) throws Exception {
+		String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기
+		map.put("mem_id", mem_id);
 		togetherDAO.togetherDel(map);
 	}
 	
@@ -75,16 +87,27 @@ public class TogetherServiceImpl implements TogetherService {
 		return togetherDAO.togetherCate(map);
 	}
 	
-	/* 23.01.25 박선영 관리자 카테고리 등록 */
+	
+	/* 23.01.27 박선영 참여하기 */
 	@Override
-	public void adminTogeCateWrite(Map<String, Object> map) throws Exception {
-		togetherDAO.adminTogeCateWrite(map);
+	public void togetherWith(Map<String, Object> map, HttpSession session) throws Exception {
+		String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기	
+		map.put("mem_id", mem_id);
+		togetherDAO.togetherWith(map);
 	}
 	
-	/* 23.01.25 박선영 참여인원 카운트 */
+	/* 23.01.31 박선영 참여취소 */
 	@Override
-	public int togetherJoinCount(Map<String, Object> map) throws Exception {
-		return togetherDAO.togetherJoinCount(map);
+	public void togetherWithDel(Map<String, Object> map) throws Exception {
+		togetherDAO.togetherWithDel(map);
+	}
+	
+	/* 23.01.31 박선영 참여여부확인 */
+	@Override
+	public Map<String, Object> checkWith(Map<String, Object> map, HttpSession session) throws Exception {
+		String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기	
+		map.put("mem_id", mem_id);
+		return togetherDAO.checkWith(map);
 	}
 
 }

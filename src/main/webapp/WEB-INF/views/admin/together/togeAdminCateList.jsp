@@ -7,6 +7,10 @@
 .fa-solid {
 color:#f0b1aa;
 }
+
+.btn.submit{
+margin-right:5px;
+}
 </style>
 
 <main class="layoutCenter">
@@ -48,6 +52,7 @@ color:#f0b1aa;
 <br/>
 <div class="flexCenter">
 	<a class="btn submit" href="/admin/together/catewriteForm.paw">함께해요 분류등록하기</a>
+	<a class="btn" href="/admin/together/list.paw">목록으로</a>
 </div>
 </main>
 <%@ include file="/WEB-INF/include/common-footer.jspf" %>

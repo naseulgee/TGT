@@ -22,12 +22,12 @@ font-weight:bold;
 	<table class="txt_center">
 		<colgroup>
 			<col width="10%"/>
+			<col width="7%"/>
 			<col width="10%"/>
-			<col width="16%"/>
 			<col width="12%"/>
 			<col width="10%"/>
 			<col width="7%"/>
-			<col width="10%"/>
+			<col width="7%"/>
 			<col width="13%"/>
 			<col width="13%"/>
 		</colgroup>
@@ -37,6 +37,7 @@ font-weight:bold;
 				<th>카테고리</th>
 				<th>제목</th>
 				<th>모임일자</th>
+				<th>마감여부</th>
 				<th>작성자</th>
 				<th>참여인원</th>
 				<th>참여견종</th>
@@ -52,12 +53,20 @@ font-weight:bold;
 							<td class="txt_center">${adli.TO_IDX}</td>
 							<td class="txt_center">${adli.TO_TC_NAME }</td>
 							<td class="txt_center">${adli.TO_TITLE}</td>
-							<td class="txt_center">${adli.TO_DATE }</td>
+							<td class="txt_center"><fmt:formatDate value="${adli.TO_DATE }" pattern="yyyy/MM/dd"/></td>
+							<td class="txt_center">
+								<c:if test="${adli.TO_PEOPLE eq adli.C}">
+									모집완료
+								</c:if>
+								<c:if test="${adli.TO_PEOPLE > adli.C}">
+									모집중
+								</c:if>
+							</td>
 							<td class="txt_center">${adli.TO_WRITER_ID }</td>
-							<td class="txt_center">${adli.TO_JOIN_PEOPLE }</td>
+							<td class="txt_center">${adli.C}</td>
 							<td class="txt_center">${adli.BR_NAME}</td>
-							<td class="txt_center">${adli.TO_REG_DATE }</td>
-							<td class="txt_center">${adli.TO_MOD_DATE }</td>
+							<td class="txt_center"><fmt:formatDate value="${adli.TO_REG_DATE }" pattern="yyyy/MM/dd"/></td>
+							<td class="txt_center"><fmt:formatDate value="${adli.TO_MOD_DATE }" pattern="yyyy/MM/dd"/></td>
 						</tr>
 					</c:forEach>
 				</c:when>
@@ -69,6 +78,10 @@ font-weight:bold;
 			</c:choose>
 		</tbody>
 	</table>
+	<br/>
+	<div class="flexCenter">
+		<a class="btn submit" id="catewrite" href="/admin/together/catewriteForm.paw">카테고리 등록:)</a>
+	</div>
 </div>	
 </main>
 <%@ include file="/WEB-INF/include/common-footer.jspf" %>

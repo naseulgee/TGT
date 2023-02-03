@@ -11,25 +11,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import paw.togaether.common.domain.CommandMap;
-import paw.togaether.together.service.TogetherService;
+import paw.togaether.together.service.TogetherAdminService;
 
 @Controller
 public class AdminTogeController {
 	
 	Logger log = Logger.getLogger(this.getClass());
 	
-	@Resource(name="togetherService")
-	private TogetherService togetherService;
+	@Resource(name="togetherAdminService")
+	private TogetherAdminService togetherAdminService;
 	
-	/* 23.01.25 박선영 관리자 게시글 리스트 출력 */
-	@RequestMapping(value="/admin/together/list.paw")
-	public ModelAndView togetherList(CommandMap commandMap) throws Exception {
+	/* 23.01.25 박선영 관리자 게시글 리스트 출력
+	 * 23.02.01 박선영 관리자 서비스 분리 */
+	@RequestMapping(value="/admin/together/list")
+	public ModelAndView togetherAdminList(CommandMap commandMap) throws Exception {
 		
 		ModelAndView mv = new ModelAndView("/admin/together/togeAdminList");
 		
 		System.out.println(commandMap.getMap());//값을 잘 받아오는지 확인
 		
-		List<Map<String, Object>> list = togetherService.togetherList(commandMap.getMap());
+		List<Map<String, Object>> list = togetherAdminService.togetherAdminList(commandMap.getMap());
 		
 		mv.addObject("list", list);
 		
@@ -37,14 +38,14 @@ public class AdminTogeController {
 	}
 	
 	/* 23.01.25 박선영 관리자 게시글 카테고리 리스트 출력 */
-	@RequestMapping(value="/admin/together/catelist.paw")
-	public ModelAndView togetherCate(CommandMap commandMap) throws Exception {
+	@RequestMapping(value="/admin/together/catelist")
+	public ModelAndView togetherAdminCate(CommandMap commandMap) throws Exception {
 	
 		ModelAndView mv = new ModelAndView("/admin/together/togeAdminCateList");
 		
 		System.out.println(commandMap.getMap());
 		
-		List<Map<String, Object>> catelist = togetherService.togetherCate(commandMap.getMap());
+		List<Map<String, Object>> catelist = togetherAdminService.togetherAdminCate(commandMap.getMap());
 		
 		mv.addObject("catelist", catelist);
 		
@@ -52,7 +53,7 @@ public class AdminTogeController {
 	}
 	
 	/* 23.01.25 박선영 관리자 카테고리 등록폼 */
-	@RequestMapping(value="/admin/together/catewriteForm.paw")
+	@RequestMapping(value="/admin/together/catewriteForm")
 	public ModelAndView openAdminTogeCateWrite(CommandMap commandMap) throws Exception {
 		
 		ModelAndView mv = new ModelAndView("/admin/together/togeAdminCateWrite");
@@ -61,14 +62,14 @@ public class AdminTogeController {
 	}
 	
 	/* 23.01.25 박선영 관리자 카테고리 등록 */
-	@RequestMapping(value="/admin/together/catewrite.paw")
+	@RequestMapping(value="/admin/together/catewrite")
 	public ModelAndView adminTogeCateWrite(CommandMap commandMap) throws Exception {
 		
 		System.out.println(commandMap.getMap());
 		
 		ModelAndView mv = new ModelAndView("redirect:/admin/together/catelist.paw");
 		
-		togetherService.adminTogeCateWrite(commandMap.getMap());
+		togetherAdminService.adminTogeCateWrite(commandMap.getMap());
 		
 		return mv;
 	}
