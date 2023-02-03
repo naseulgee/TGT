@@ -7,29 +7,39 @@
 23.01.12 최선아: 멍멍왈왈 게시판 리스트 출력 및 등록 
 23.01.13 최선아: 멍멍왈왈 게시판 수정
 23.01.18 최선아: 멍멍왈왈 게시판 카테고리 설정 
-23.01.25 최선아: 게시판 댓글 처리
+23.01.25 최선아: 게시판 댓글 등록, 조회
+23.01.27 최선아: 게시판 댓글 삭제
+23.01.30 최선아: 게시판 댓글 수정
+23.02.01 최선아: 게시판 전체 검색 및 페이징
 -->
-
+	
 <!-- 게시판 리스트 -->
 <select id="boardList" parameterType="hashmap" resultType="hashmap">
-		
+				<include refid="common.pagingPre"/>
 		SELECT
+		   	 ROW_NUMBER() OVER (ORDER BY BC_IDX DESC) RNUM, 
 			 BC_IDX,
 			 BC_TITLE,
 			 BC_READHIT,
 			 BC_MOD_DATE,
-			 BC_READHIT,
 			 BC_WRITER_ID,
 			 BC_BCC_NAME
 		FROM
 			 BOARD_COMM
 		WHERE
 			 BC_DEL_GB = 'N'
+	
 			<if test="BC_BCC_NAME != null">
 			AND BC_BCC_NAME = #{BC_BCC_NAME}
 			</if>
+			<if test="subKeyword != null">
+              AND BC_TITLE LIKE '%'||#{subKeyword}||'%' 
+               OR BC_CONTENTS LIKE '%' || #{subKeyword} || '%'
+            </if>
+            
 			ORDER BY BC_IDX DESC
-	
+			
+			<include refid="common.pagingPost"/>
 </select>
 
 <!-- 게시글쓰기-->
@@ -91,13 +101,14 @@
 
 
 <!-- 게시글 수정하기 -->
- <update id="boardModify" parameterType="hashmap">
+<update id="boardModify" parameterType="hashmap">
 	<![CDATA[
 		UPDATE
 			BOARD_COMM
 		SET
 			BC_TITLE = #{BC_TITLE},
-			BC_CONTENTS = #{BC_CONTENTS}
+			BC_CONTENTS = #{BC_CONTENTS},
+			BC_BCC_NAME = #{BC_BCC_NAME}
 		WHERE
 			BC_IDX = #{BC_IDX, jdbcType=VARCHAR}
 	]]>
@@ -139,20 +150,49 @@
 </insert>
 
 <!-- 댓글 조회 -->
-
 <select id="commentList" parameterType="hashmap" resultType="hashmap" >
 	<![CDATA[
 		SELECT
 			BNO,
 			WRITER,
 			CONTENT,
-			REGDATE
+			REGDATE,
+			RNO
 		FROM
 			BOARD_COMMENT
 		WHERE
 			BNO = #{BC_IDX, jdbcType=VARCHAR}
+			AND  COM_DEL_GB = 'N'
+			
 	]]>
 </select>
+
+
+<!-- 댓글 삭제 -->
+<update id="commentDelete" parameterType="hashmap">
+	<![CDATA[
+	UPDATE 
+		BOARD_COMMENT
+	SET
+		 COM_DEL_GB = 'Y'
+	WHERE 
+		RNO = #{RNO, jdbcType=VARCHAR} 
+	]]>
+</update>
+
+
+<!-- 댓글 수정하기 -->
+<update id="commentModify" parameterType="hashmap">
+	<![CDATA[
+		UPDATE
+			BOARD_COMMENT
+		SET
+			CONTENT = #{CONTENT}
+		WHERE
+			RNO = #{RNO, jdbcType=VARCHAR}
+	]]>
+</update> 
+
 
 
 

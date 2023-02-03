@@ -19,3 +19,6 @@ function returntoList(){
 			location.href='/board/list.paw';
 		}
 	}
+	
+	
+	

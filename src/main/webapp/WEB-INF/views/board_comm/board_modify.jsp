@@ -18,7 +18,6 @@ font-size: 15px;
 .title2{ 
 margin-top: 15px;
 font-size: 13px;
-
 }
 
 </style>
