@@ -23,10 +23,15 @@ public interface BoardService {
 	//멍멍왈왈 카테고리
 	List<Map<String, Object>> boardCategory(Map<String, Object> map) throws Exception;
 	
-	//게시판 댓글쓰기
+	//댓글쓰기
 	void commentInsert(Map<String, Object> map) throws Exception;
 	
-	//게시판 댓글조회
+	//댓글조회
 	List<Map<String, Object>> commentList(Map<String, Object> map) throws Exception;
 	
+	//댓글삭제
+	void commentDelete(Map<String, Object> map) throws Exception;
+	
+	//댓글 수정
+	void commentModify(Map<String, Object> map) throws Exception;
 }
