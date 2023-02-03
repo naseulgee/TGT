@@ -17,15 +17,15 @@
         <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-[#f0b1aa]">비밀번호를 잊으셨나요?</h2>
 
       </div>
-      <form class="mt-8 space-y-6" action="/member/findPassword" method="POST">
+      <form class="mt-8 space-y-6" action="/member/setPassword" method="POST">
         <div class="-space-y-px rounded-md shadow-sm">
           <div>
             <label for="MEM_ID" class="sr-only">ID</label>
-            <input id="MEM_ID" name="MEM_ID" autocomplete="username" required class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-[#f08080] focus:outline-none focus:ring-[#f08080] sm:text-sm" placeholder="ID">
+            <input id="MEM_ID" name="MEM_ID" autocomplete="username" class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-[#f08080] focus:outline-none focus:ring-[#f08080] sm:text-sm" placeholder="ID">
           </div>
           <div>
             <label for="MEM_EMAIL" class="sr-only">email</label>
-            <input id="MEM_EMAIL" name="MEM_EMAIL" type="text" autocomplete="email" required class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-[#f08080] focus:outline-none focus:ring-[#f08080] sm:text-sm" placeholder="회원가입시 입력했던 이메일주소를 적어주세요. ex)example@naver.com">
+            <input id="MEM_EMAIL" name="MEM_EMAIL" type="email" autocomplete="email" required class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-[#f08080] focus:outline-none focus:ring-[#f08080] sm:text-sm" placeholder="회원가입시 입력했던 이메일주소를 적어주세요. ex)example@naver.com">
           </div>
         </div>
 

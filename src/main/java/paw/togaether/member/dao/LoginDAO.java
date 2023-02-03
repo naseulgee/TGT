@@ -16,5 +16,10 @@ public class LoginDAO extends AbstractDAO {
 
         return selectOne("login.findID", map);
     }
+
+    public Map<String, Object> selectMemberInfo(Map<String, Object> map) throws Exception{
+
+        return (Map<String, Object>) selectOne("login.selectMemberInfo", map);
+    }
 }
 

@@ -20,6 +20,7 @@ public class LoginController {
     @Resource(name="loginService")
     private LoginService loginService;
 
+    /** 로그인 */
     @GetMapping(value="/member/login")
     public ModelAndView getLogin(CommandMap commandMap) throws Exception {
         ModelAndView mv = new ModelAndView("/member/Login");
@@ -64,12 +65,14 @@ public class LoginController {
         return mv;
     }
 
+    /** 아이디 찾기*/
     @GetMapping(value="/member/findID")
     public ModelAndView findID(CommandMap commandMap) throws Exception {
         ModelAndView mv = new ModelAndView("/member/findID");
 
         return mv;
     }
+
 
     @PostMapping(value="/member/findID")
     public ModelAndView postfindID(CommandMap commandMap) throws Exception {
@@ -103,5 +106,31 @@ public class LoginController {
         return mv;
     }
 
+    /** 비밀번호 찾기*/
+    @GetMapping(value="/member/findPassword")
+    public ModelAndView findPassword() throws Exception{
+        ModelAndView mv = new ModelAndView("/member/findPassword");
 
+        return mv;
+    }
+
+    @PostMapping (value = "/member/passwordAuth")
+    public ModelAndView passwordAuth(CommandMap commandMap, HttpSession session) throws Exception {
+        ModelAndView mv = new ModelAndView();
+
+        Map<String, Object> memberInfo = loginService.selectMemberInfo(commandMap.getMap(), session);
+        boolean dataExists = (boolean) memberInfo.get("dataExists");
+
+        if(dataExists){
+           mv.setViewName("/member/passwordAuth");
+        } else {
+            mv.setViewName("/member/failed");
+        }
+
+        return mv;
+    }
 }
+
+
+
+

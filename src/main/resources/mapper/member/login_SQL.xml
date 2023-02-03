@@ -17,6 +17,16 @@
         ]]>
      </select>
 
+    <select id="selectMemberInfo" parameterType="hashmap" resultType="hashmap">
+     <![CDATA[
+        SELECT MEM_EMAIL,
+               MEM_ID
+        FROM MEMBERS WHERE MEM_EMAIL =  #{MEM_EMAIL}
+        ]]>
+     </select>
+
+
+
 
 
 </mapper>
