@@ -23,7 +23,7 @@ function cate_add(target){
 	//클릭한 버튼 위치 내용 수정
 	target = $(target).parent();
 	target.addClass("edit");//클래스명 추가
-	target.html("<input type='text' name='pc_name' placeholder='분류명을 입력해주세요' maxlength='10'>"
+	target.html("<span class='name'><input type='text' name='pc_name' placeholder='분류명을 입력해주세요' maxlength='10'></span>"
 		+"<input value='반영' type='button' class='btn submit' onclick='cate_edit(1)'/> "
 		+"<input value='취소' type='button' class='btn' onclick='cancel()'/>");
 }

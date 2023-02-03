@@ -20,7 +20,7 @@
 			</svg>
 		</button>
 		<ul class="sub_pages flexCenter">
-			<li><a class="paw_hover" href="/together/list.paw">함께해요</a></li>
+			<li><a class="paw_hover" href="/together/openList.paw">함께해요</a></li>
 			<li><a class="paw_hover" href="/board/list.paw">멍멍왈왈</a></li>
 			<li><a class="paw_hover" href="/mbti.paw">개BTI</a></li>
 			<li><a class="paw_hover" href="/place/list.paw">우리동네</a></li>

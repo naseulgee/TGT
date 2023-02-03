@@ -66,8 +66,7 @@ white-space:pre;
 					</tr>
 					<tr>
 						<th scope="row">내용</th>
-						<td><textarea class="slim_scroll" id="TO_CONTENTS" name="TO_CONTENTS" placeholder="내용입력해주게:)">
-						${map.TO_CONTENTS}</textarea>
+						<td><textarea class="slim_scroll" id="TO_CONTENTS" name="TO_CONTENTS" placeholder="내용입력해주게:)">${map.TO_CONTENTS}</textarea>
 						</td>
 					</tr>
 					<tr>

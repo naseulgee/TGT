@@ -1,20 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-	<%@ include file="/WEB-INF/include/user-header.jspf"%>
-	<link href="/resources/css/board_comm/board_comm_list.css"
-		  rel="stylesheet">
-	<link rel="stylesheet" href="/resources/css/board_comm/toastr.css"
-		  integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
-		  crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<script src="/resources/js/board_comm/toastr.min.js"
-			integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
-			crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<!-- <script src="/resources/js/paging/paging.js"></script> -->
-<script src="/resources/js/paging/searchPaging_B.js"></script>
 						<table id="board_list">
 						<tbody class="board">
 							<c:choose>
@@ -124,5 +112,3 @@ function fn_selectBoardListCallback(data) {
 }
 	
 </script>  -->
-
-</html>

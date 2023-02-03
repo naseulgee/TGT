@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html> 
 <%@ include file="/WEB-INF/include/user-header.jspf"%>
 <link href="/resources/css/board_comm/board_comm_list.css"
 	rel="stylesheet">
@@ -14,8 +12,6 @@
 
 
 <script src="/resources/js/paging/searchPaging_B.js"></script>
-
-
 
 
 <main class="layoutCenter">
@@ -156,4 +152,4 @@ $(function() {
 	}); 
 
 </script>
-</html>
+<%@ include file="/WEB-INF/include/common-footer.jspf"%>

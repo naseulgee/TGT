@@ -80,7 +80,7 @@ public class ReviewController {
 		m.addObject("review",review);
 		
 		//시설썸넴 가져오기
-		commandMap.put("pl_idx",review.get("RE_PL_IDX"));   //시설번호를 가져오기
+		commandMap.put("pl_idx", commandMap.get("RE_PL_IDX"));   //시설번호를 가져오기
 		Map<String,Object> placePhoto =  reviewService.openMyReviewPlacePhoto(commandMap.getMap());
 		m.addObject("placePhoto",placePhoto);
 		

@@ -110,7 +110,7 @@ function form_submit(insert_url) {
 			type: 'POST',
 			success: function(result){
 				console.log(result);
-				if (result == '/sample.paw') {
+				if (result == '/member/login') {
 					alert("회원가입이 성공적으로 되었습니다!");
 				} else {
 					alert("글을 성공적으로 업로드했습니다!");
