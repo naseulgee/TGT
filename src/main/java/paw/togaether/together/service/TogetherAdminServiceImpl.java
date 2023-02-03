@@ -55,4 +55,10 @@ public class TogetherAdminServiceImpl implements TogetherAdminService {
 		return togetherAdminDAO.togetherAdminCate(map);
 	}
 	
+	/* 23.02.03 박선영 관리자 견종몸무게 등록 */
+	@Override
+	public void adminTogeWeight(Map<String, Object> map) throws Exception {
+		togetherAdminDAO.adminTogeWeight(map);
+	}
+	
 }

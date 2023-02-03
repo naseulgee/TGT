@@ -5,7 +5,7 @@
 <script src="/resources/js/together/togewrite.js"></script>
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <style>
-.fa-solid {
+span.fa-solid.fa-paw {
 color:#f0b1aa;
 }
 

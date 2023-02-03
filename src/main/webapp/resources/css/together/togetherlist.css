@@ -47,7 +47,7 @@ border:1px solid #f0b1aa;
 width:100%;
 }
 
-li{
+li.tcname{
 margin : 20px;
 }
 
@@ -60,6 +60,10 @@ span.btn.submit{
 white-space : nowrap;
 font-size : 15px;
 margin : 5px;
+}
+
+li.tc{
+margin: 20px;
 }
 
 input[type="button"]{

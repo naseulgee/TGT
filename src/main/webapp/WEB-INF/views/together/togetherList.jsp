@@ -49,30 +49,28 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				<!-- <ul id="paging">
-				</ul>
-				<div id="PAGE_NAVI_T"></div>
+				
+				<!-- <div id="PAGE_NAVI_T"></div>
 				<input type="hidden" id="PAGE_INDEX_T" name="PAGE_INDEX_T" />
 				<form id="commonForm" name="commonForm"></form> -->
 			<%-- </c:when> --%>
 			
 			<%-- <c:otherwise> --%>
-				<table id="not_together">
+			<!-- 	<table id="not_together">
 					<tbody>
-						<!-- <tr>
-							<td class="empty paw_hover">게시글이 없습니다:(</td> -->
+						<tr>
+							<td class="empty paw_hover">게시글이 없습니다:(</td>
 					</tbody>
-				</table>
+				</table> -->
 			<%-- </c:otherwise> --%>
 		<%-- </c:choose> --%>
-		<ul id="paging">
-		</ul>
+		
 		<!-- 23.02.02페이징처리 -->
 		<div id="PAGE_NAVI_T" class="flexCenter"></div>
 		<input type="hidden" id="PAGE_INDEX_T" name="PAGE_INDEX_T" /> <br />
 	
 		<form id="commonForm" name="commonForm"></form>
-	</div>
+		</div>
 	
 	<br/>
 	
@@ -80,10 +78,10 @@
 	<!-- 23.01.31 박선영 로그인여부에 따른 버튼 출력 -->
 	<div class="cate_button">
 		<ul class="button_list">
-			<li><c:if test="${!empty mem_id }">
+			<li class="tc"><c:if test="${!empty mem_id }">
 				<a class="btn submit" id="writebtn" href="/together/writeForm.paw">글쓰개:)</a>
 				</c:if></li>
-			<li><c:if test="${empty mem_id}">
+			<li class="tc"><c:if test="${empty mem_id}">
 				<a class="btn submit" id="nowritebtn" href="/member/login.paw">로그인하개:)</a>
 				</c:if></li>
 			<%-- <c:forEach items="${catelist}" var="ct"> --%>	
@@ -121,8 +119,8 @@
 		function fn_selectBoardListCallback2(data) {
 			var total2 = data.TOTAL_T;
 			
-			var body =$("#not_together")
-			var tbody = $(".together");
+			//var body =$("#not_together")
+			var body = $(".together");
 			body.empty();
 			
 			var cate = $(".tcname");
@@ -143,7 +141,7 @@
 			
 			//함께해요 리스트 세팅 로직
 			if (total2 == 0) {
-				var str = "<tr align='center'>" + "<td class='empty paw_hover'>게시글이 없습니다:(</td>"
+				var str = "<tr>" + "<td class='empty'>게시글이 없습니다:(</td>"
 						+ "</tr>";
 				body.append(str);
 
@@ -196,7 +194,7 @@
 							str +=	"</tr>";
 						});
 
-				tbody.append(str);
+				body.append(str);
 			}
 
 		}

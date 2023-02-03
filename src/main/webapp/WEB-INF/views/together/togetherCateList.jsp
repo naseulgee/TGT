@@ -49,27 +49,36 @@
 			<%-- </c:when>
 			
 			<c:otherwise> --%>
-				<table id="not_together">
+				<!-- <table id="not_together">
 					<tbody>
-						<!-- <tr>
+						<tr>
 							<td class="empty paw_hover">게시글이 없습니다:(</td>
-						</tr> -->
+						</tr>
 					</tbody>
-				</table>
+				</table> -->
 			<%-- </c:otherwise>
 		</c:choose> --%>
-		
+			
+			<!-- 23.02.02페이징처리 -->
+			<div id="PAGE_NAVI_T" class="flexCenter"><input type="hidden" id="TC_NAME" name="TC_NAME" value="${TC_NAME}"></div>
+			<input type="hidden" id="PAGE_INDEX_T" name="PAGE_INDEX_T" /> <br />
+			<input type="hidden" name="TC_NAME" value="${TC_NAME}">
+			<form id="commonForm" name="commonForm"></form>
+			<div class="flexCenter">
+				<a class="btn submit" style="font-size:15px;" href="/together/openList.paw">전체목록으로</a>
+			</div>	
 	</div>
+	
 <br/>
 	
 	<!-- 카테고리별 게시글 리스트 출력, 글쓰기 버튼 -->
 	<!-- 23.01.31 박선영 로그인여부에 따른 버튼 출력 -->
 	<div class="cate_button">
 		<ul class="button_list">
-			<li><c:if test="${!empty mem_id }">
+			<li class="tc"><c:if test="${!empty mem_id }">
 				<a class="btn submit" id="writebtn" href="/together/writeForm.paw">글쓰개:)</a>
 				</c:if></li>
-			<li><c:if test="${empty mem_id}">
+			<li class="tc"><c:if test="${empty mem_id}">
 				<a class="btn submit" id="nowritebtn" href="/member/login.paw">로그인하개:)</a>
 				</c:if></li>
 			<%-- <c:forEach items="${catelist}" var="ct"> --%>	
@@ -79,16 +88,6 @@
 	</div>
 </div>
 <br/>
-			<ul id="paging">
-			</ul>
-			<!-- 23.02.02페이징처리 -->
-			<div id="PAGE_NAVI_T" class="flexCenter"><input type="hidden" id="TC_NAME" name="TC_NAME" value="${TC_NAME}"></div>
-			<input type="hidden" id="PAGE_INDEX_T" name="PAGE_INDEX_T" /> <br />
-			<input type="hidden" name="TC_NAME" value="${TC_NAME}">
-			<form id="commonForm" name="commonForm"></form>
-			<div class="flexCenter">
-				<a class="btn submit" style="font-size:15px;" href="/together/openList.paw">전체목록으로</a>
-			</div>	
 			
 </main>
 <script type="text/javascript">
@@ -116,9 +115,9 @@
 		function fn_selectBoardListCallback2(data) {
 			var total2 = data.TOTAL_T;
 			
-			var body = $("#not_together");
-			var tbody = $(".together");
-			tbody.empty();
+			//var body = $("#not_together");
+			var body = $(".together");
+			body.empty();
 			
 			var cate = $(".tcname");
 			cate.empty();
@@ -138,7 +137,7 @@
 			
 			//함께해요 리스트 세팅 로직
 			if (total2 == 0) {
-				var str = "<tr>" + "<td class='empty paw_hover'>게시글이 없습니다:(</td>"
+				var str = "<tr>" + "<td class='empty'>게시글이 없습니다:(</td>"
 						+ "</tr>";
 				body.append(str);
 
@@ -191,7 +190,7 @@
 							str +=	"</tr>";
 						});
 
-				tbody.append(str);
+				body.append(str);
 			}
 
 		}

@@ -132,5 +132,19 @@
 		]]>
 	</insert>
 	
+	<!-- 23.02.03 박선영 : 견종 몸무게 등록 -->
+	<insert id="adminTogeWeight" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO WEIGHT(
+				WT_IDX,
+				WT_START,
+				WT_END)
+				VALUES(
+				SEQ_WEIGHT.NEXTVAL,
+				#{WT_START},
+				#{WT_START}
+				)
+		]]>
+	</insert>
 	
 </mapper>

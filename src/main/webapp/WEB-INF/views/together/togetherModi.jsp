@@ -4,7 +4,7 @@
 <script src="https://kit.fontawesome.com/e9bd4d3977.js" crossorigin="anonymous"></script>
 <script src="/resources/js/together/togewrite.js"></script>
 <style>
-.fa-solid {
+span.fa-solid.fa-paw {
 color:#f0b1aa;
 }
 
