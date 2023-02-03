@@ -8,7 +8,7 @@
 			<![CDATA[
 				UPDATE MEMBERS 
 				SET MEM_DOG_MBTI = #{MEM_DOG_MBTI}
-				WHERE MEM_ID = #{loginId}	
+				WHERE MEM_ID = #{mem_id}	
 			]]>
 <!-- 		</if> -->
 	</update>

@@ -34,14 +34,14 @@
 				
 				<div id="searchResult">
 					<div  id="boardForm">
-						<jsp:include page="/search/board.paw" ></jsp:include>
+						<jsp:include page="search_board.jsp" ></jsp:include>
 					</div>
 					<br>
 					<div  id="togetherForm">
-						<jsp:include page="/search/together.paw"></jsp:include>
+						<jsp:include page="search_together.jsp"></jsp:include>
 					</div>
 					<div  id="placeForm">
-						<jsp:include page="/search/place.paw"></jsp:include>
+						<jsp:include page="search_place.jsp"></jsp:include>
 					</div>
 				</div>
 				

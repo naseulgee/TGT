@@ -6,9 +6,7 @@
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
 
 <link href="/resources/css/mbti/style.css" rel="stylesheet">
-<%-- <script type="text/javascript">
-<%=session.setAttribute("mbti", ${MEM_DOG_MBTI});%>
-</script> --%>
+
 <main class="layoutCenter">
 <div class="container2">
  
@@ -29,32 +27,28 @@
 	</article>
 	
 		<input type="hidden" id="MEM_DOG_MBTI" name="MEM_DOG_MBTI" value="${MEM_DOG_MBTI}">
-		<input type="hidden" id="loginId" name="loginId" value="${loginId}">
 		
-		
-		<script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 
 		<script src="/resources/js/mbti/mbti.js"></script>
 		
 		<script type="text/javascript">
 			function mbti_modify() {
-				if(${loginId != "" || loginId != "null"}) {
+				 if(${mem_id == "" || mem_id == null}) {
+					if (confirm("로그인 후 정보를 저장하시겠습니까?")) {
+						location.replace("/member/login.paw");
+					}
+				} else {
 					$.ajax({
 						type : "POST",
-						url : "/mbti/modify.paw",
-						data : {MEM_DOG_MBTI:"${MEM_DOG_MBTI}", loginId:"${loginId}"},
+						url : "/mbti/modify",
+						data : {MEM_DOG_MBTI:"${MEM_DOG_MBTI}", mem_id:"${mem_id}"},
 						success : function () {
 							alert("저장 완");
-							/* 확인버튼 누르고 어디로 이동할지...? */
-							/* location.replace('/mbti.paw'); */
+							location.replace("/sample/admin.paw");
 							
-						}
-					});
-				} else {
-					if (confirm("로그인 후 정보를 저장하시겠습니까?")) {
-						location.replace("/login.paw");
-					}
+							}
+						});
 				}
 			}
 		</script>

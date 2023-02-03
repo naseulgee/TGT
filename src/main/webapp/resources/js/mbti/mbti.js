@@ -55,7 +55,8 @@ function next() {
 		// /mbti/result에 mbti 결과 값 넘기기
 		$(function() {
 			$.ajax({
-			url : '/mbti/result.paw',
+			url : '/mbti/result',
+			data : {MEM_DOG_MBTI:"${mbti}"},
 			async: false,
 			type : 'get',
 			success : function (result) {
@@ -81,3 +82,5 @@ function next() {
 		num++;
 	}
 }
+
+

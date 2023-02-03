@@ -123,6 +123,9 @@ function gfn_renderPaging(params){
 	else if(totalIndexCount <=10 && totalIndexCount > 1){ //전체 인덱스가 10보다 작을경우, 맨앞 태그 작성
 		preStr += "<ul class='paging'><li href='#this' class='pad_5 first' onclick='_movePage(1)'>[<<]</li>";
 	}
+	else {
+		preStr += "<ul class='paging'>";
+	}
 	
 	if(totalIndexCount > 10){ //전체 인덱스가 10이 넘을 경우, 맨뒤, 뒤 태그 작성
 		postStr += "<li href='#this' class='next' onclick='_movePage("+next+")'>[>]</li>" +
@@ -131,13 +134,17 @@ function gfn_renderPaging(params){
 	else if(totalIndexCount <=10 && totalIndexCount > 1){ //전체 인덱스가 10보다 작을경우, 맨뒤 태그 작성
 		postStr += "<li href='#this' class='end' onclick='_movePage("+totalIndexCount+")'>[>>]</li></ul>";
 	}
+	else {
+		postStr += "</ul>";
+	}
 	
 	for(var i=first; i<(first+last); i++){
+		
 		if(i != currentIndex){
 			str += "<li href='#this' class='' onclick='_movePage("+i+")'>"+i+"</li>";
 		}
 		else{
-			str += "<strong><li href='#this' class='' onclick='_movePage("+i+")'>"+i+"</li></strong>";
+			str += "<li href='#this' class='select' onclick='_movePage("+i+")'>"+i+"</li>";
 		}
 	}
 	$("#"+divId).append(preStr + str + postStr);
