@@ -1,5 +1,6 @@
 package paw.togaether.review.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,12 +55,41 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public List<Map<String, Object>> openMyReviewPhoto(Map<String, Object> map) throws Exception {
-		return reviewDAO.openMyReviewPhoto(map);
+		return photoDAO.selectMyPhoto(map);
 	}
 
 	@Override
 	public Map<String, Object> openMyReviewPlacePhoto(Map<String, Object> map) throws Exception {
 		return reviewDAO.openMyReviewPlacePhoto(map);
+	}
+
+	@Override
+	public void deleteReview(Map<String, Object> map) throws Exception {
+		reviewDAO.deleteReview(map); //리뷰삭제
+		photoDAO.deletePhoto(map); //리뷰관련사진삭제
+	}
+
+	@Override
+	public void updateReview(Map<String, Object> map, HttpSession session, MultipartFile[] uploadFile)
+			throws Exception {
+		reviewDAO.updateReview(map); //리뷰내용,별점 업데이트
+		photoDAO.deletePhoto(map); //리뷰관련 사진 일단 전부 삭제 (re_del_gb='Y')
+		
+		//기존 사진 업데이트해주기
+		for (String key : map.keySet()) {
+			Map<String,Object> photoMap = new HashMap<String,Object>();
+			if ((key.length()>=5) && key.substring(0, 4).equals("idx_")) {
+				photoMap.put("ph_idx",map.get(key)); //photo번호를 통해 re_del_gb='Y'로 변경
+				photoDAO.updatePhoto(photoMap);
+			}
+		}
+		
+		//새로운 사진 있으면 저장
+		List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(map,session, uploadFile);
+		for(int i=0, size=list.size(); i<size; i++) {
+			photoDAO.insertPhoto(list.get(i));
+		}
+		
 	}
 
 }

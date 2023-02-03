@@ -6,6 +6,29 @@
 #phIcon,#stars {
 	display: inline-block;
 }
+
+#stars {
+	font-size : 30px;
+}
+
+#place {
+	font-size : 20px;
+}
+
+#place, #contents, #phIcon,#regDate {
+	color : #b8bfc4;
+}
+
+#ppp {
+	line-height : 1.2;
+}
+
+
+img {
+	border-radius : 15px;
+	height : 100%;
+}
+
 </style>
 
 
@@ -17,52 +40,90 @@
 		<h1>나의 리뷰</h1>
 		<div class="color">${mem_id}님의 리뷰페이지입니다:)</div><br><br>
 
+	<c:if test="${!empty reviewList}">
 	<table>
-		<thead>
-			<tr>
-				<th>시설</th>
-				<th colspan="2">제목</th>
-				<th>별점</th>
-				<th>작성일</th>
-			</tr>
-		</thead>
 		<tbody>
 			<c:forEach items="${reviewList}" var="i" varStatus="status">
-			<tr>
-				<td>${i.PL_NAME}</td>
-				<td colspan="2">
-					<a class="use_move" href="/mypage/review/myReview.paw" onclick="move(this, 're_idx:${i.RE_IDX}')">
-					<c:choose>
-       					 <c:when test="${fn:length(i.RE_CONTENTS) gt 26}">
-        					${fn:substring(i.RE_CONTENTS, 0, 25)}...
-        				</c:when>
-        				<c:otherwise> ${i.RE_CONTENTS} </c:otherwise>
-					</c:choose>				
-					<c:if test="${i.PHCOUNT>0}">
-						<i class="fa-solid fa-image" id="phIcon"></i>
-					</c:if>
-					</a>
-				</td>
-				<td>
-					<c:forEach var="j" begin="1" end="${i.RE_STAR}">
-    					<i class="fa-solid fa-paw color" id="stars"></i>
-					</c:forEach>
-				</td>
-				<td><fmt:formatDate value="${i.RE_REG_DATE}" pattern="yyyy.MM.dd" /></td>	
+			<tr >
+				<td width="80%">
+					<div id="regDate" class="txt_right">
+							<fmt:formatDate value="${i.RE_REG_DATE}" pattern="yy.MM.dd" /> 
+					</div>
+				
+					<div class="pp flexBetween">
+						<!-- 시설사진 : 일단 임시사진표시 -->
+						<div id="photo">
+							<img src="https://www.dailypop.kr/news/photo/202207/61411_118467_5044.jpg" width="180" alt="시설썸네일">
+						</div>
+						
+						<div class="txt_left">
+							<p id="ppp">
+							<!-- 시설명 -->
+							<span id="place" >${i.PL_NAME}&nbsp;|&nbsp;</span>
+							
+			    			<!-- 별점 -->
+			    			<c:forEach var="j" begin="1" end="${i.RE_STAR}">
+		   						<i class="fa-solid fa-paw color" id="stars"></i>
+							</c:forEach>
+							<c:forEach var="j" begin="1" end="${5-i.RE_STAR}">
+		   						<i class="fa-solid fa-paw subColor" id="stars"></i>
+							</c:forEach>&nbsp; 
+							</p>
+							<br>
+							
+							<!-- 후기내용 -->
+							<span id="contents">
+								<c:choose>
+			       					 <c:when test="${fn:length(i.RE_CONTENTS) gt 51}">
+			        					${fn:substring(i.RE_CONTENTS, 0, 50)}...
+			        				</c:when>
+			        				<c:otherwise> ${i.RE_CONTENTS} </c:otherwise>
+								</c:choose>		
+								<!-- 사진후기 -->		
+								<c:if test="${i.PHCOUNT>0}">
+									<i class="fa-solid fa-image" id="phIcon"></i>
+								</c:if>
+							</span> &nbsp;&nbsp;
+							<a class="use_move btn slim" href="/mypage/review/detail.paw" 
+							onclick="move(this, 're_idx:${i.RE_IDX}', 'ph_board_type:review')">
+							더보기</a>
+						</div>
+						
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						
+					</div>					
+				</td>	
 			</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-
-
-
-
+	</c:if>
 	
-
-
+	<c:if test="${empty reviewList}">
+		<br><br>
+		<div class="center">
+			🤔<br>작성하신 리뷰가 없어요
+		</div>
+	</c:if>
 	
+	<br><br>
 		</div>
 </main><!-- //main 종료 -->
 
 <!-- 풋터. 모든 페이지에 삽입! -->
-<%@ include file="/WEB-INF/include/common-footer.jspf" %>
+<%@ include file="/WEB-INF/include/common-footer.jspf" %>		

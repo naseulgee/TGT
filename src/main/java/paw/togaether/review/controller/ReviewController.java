@@ -52,9 +52,6 @@ public class ReviewController {
 		//review등록과 photo등록에 대한 처리
 		reviewService.insertReview(commandMap.getMap(),session,uploadFile); //사용시 주석 풀어주기
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		//리다이렉트 url를 작성해주면 된다!
-		map.put("re_url", "/mypage/review/list.paw");
 		return new ResponseEntity<String>("/mypage/review/list.paw",HttpStatus.OK);
 	}
 	
@@ -72,11 +69,10 @@ public class ReviewController {
 		return m;
 	}
 	
-	/** 작업날짜 작업자: 메소드 설명
-	 * 23.01.25 신현지: 마이페이지에서 내 리뷰(특정 하나) 조회 메서드
+	/** 23.01.25 신현지: 마이페이지에서 내 리뷰(특정 하나) 조회 메서드
 	 */
-	@RequestMapping(value="/mypage/review/myReview")
-	public ModelAndView openMyReview(CommandMap commandMap, HttpSession session) throws Exception{
+	@RequestMapping(value="/mypage/review/detail")
+	public ModelAndView openMyReview(CommandMap commandMap) throws Exception{
 		ModelAndView m = new ModelAndView("/mypage/review/myReview");
 		
 		//리뷰 가져오기
@@ -91,9 +87,44 @@ public class ReviewController {
 		//후기사진 가져오기
 		List<Map<String,Object>> photos =  reviewService.openMyReviewPhoto(commandMap.getMap());
 		m.addObject("photos", photos); 
-		
 		return m;
 	}
+	
+	/**23.01.25 신현지: 리뷰수정폼으로 이동
+	 */
+	@RequestMapping(value="/review/updateForm")
+	public ModelAndView openReviewUpdate(CommandMap commandMap) throws Exception{
+		ModelAndView m = new ModelAndView("/mypage/review/updateForm");
+		
+		Map<String,Object> review =  reviewService.openMyReview(commandMap.getMap());
+		m.addObject("review",review);
+		
+		//후기사진 가져오기
+		List<Map<String,Object>> photos =  reviewService.openMyReviewPhoto(commandMap.getMap());
+		m.addObject("photos", photos); 
+		return m;
+	}
+	
+	/** 23.01.31 신현지 : 리뷰수정
+	  */
+	@RequestMapping(value="/review/update")
+	public ResponseEntity<String> updateReview(CommandMap commandMap,HttpSession session, MultipartFile[] uploadFile) throws Exception{
+
+		//review등록과 photo등록에 대한 처리
+		reviewService.updateReview(commandMap.getMap(),session,uploadFile); //사용시 주석 풀어주기
+		return new ResponseEntity<String>("/mypage/review/list.paw",HttpStatus.OK);
+	}
+	
+	
+	/** 23.01.29 신현지 : 리뷰삭제
+	  */
+	@RequestMapping(value="/review/delete")
+	public ModelAndView deleteReview(CommandMap commandMap, HttpSession session) throws Exception{
+		ModelAndView m = new ModelAndView("redirect:/mypage/review/list.paw"); //삭제 후 리뷰목록으로 이동
+		reviewService.deleteReview(commandMap.getMap());
+		return m;
+	}
+	
 	
 
 }

@@ -1,21 +1,30 @@
 <%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
 <script src="/resources/js/common/photo.js" defer></script>
-<link type="text/css" rel="stylesheet" href="/resources/css/review/review.css" ></link>
 <link type="text/css" rel="stylesheet" href="/resources/css/common/photo.css" ></link>
+<link type="text/css" rel="stylesheet" href="/resources/css/review/review.css" ></link>
+
 
 <script>
 	$(document).ready( function() {	
+		//페이지 로딩 시 바로 글자수 파악		
+		var contents = $("textarea").val().length;
+		$('#reCount').text(contents +' / 950');
+
 		//글자수 실시간 반영 메서드
 		$("textarea").on("propertychange change keyup paste input", function() {
-			var contents = $(this).val();
-			console.log(contents.length);
+			contents = $(this).val(); //textarea의 내용
 			if (contents.length == 0 || contents == '') {
-				$('#reCount').text('0 / 950');
+				$('#reCount').text('0 / 950'); //내용이 아무것도 없다면 0으로 설정
 			} else {
-				$('#reCount').text(contents.length +' / 950');
+				$('#reCount').text(contents.length +' / 950'); //내용이 있다면 글자수 세기
 			}
-		});	  
+		});
+		
+		//기본별점 표시하기
+		var previousRate = $("#previousRate").val();
+		$("#rate"+(6-previousRate)).attr('checked', true);
+
 	});
 
 	//유효성 검사 메서드
@@ -45,6 +54,7 @@
 		<!-- 평점 -->
 		<div><h3>시설의 평점</h3></div>
 		<div><span class="color">시설의 만족도는 어느 정도인가요?</span></div><br>
+		<div><input type="hidden" id="previousRate" value="${review.RE_STAR}"></div>
 		<div>
 			<fieldset>
 				<legend>이모지 별점</legend>
@@ -71,7 +81,7 @@
 		<div><span class="color">시설은 어떠셨나요?</span></div>
 		<div>
 			<textarea class="slim_scroll" id="re_contents" name="re_contents" 
-			placeholder="후기 내용을 작성해주세요." maxlength="950"></textarea>
+			placeholder="후기 내용을 작성해주세요." maxlength="950">${review.RE_CONTENTS}</textarea>
 		</div>	
 		<div class="txt_right"><span id="reCount">0 / 950</span></div>	
 		
@@ -81,37 +91,34 @@
 		<div><h3>시설의 사진</h3></div>
 		<div><span class="color">시설 사진을 올려주세요:)</span></div><br>
 		<div id="img_upload" class="flexCenter flexWrap">
-			<!-- 아이콘을 누르면 file 선택이 되도록 설정 -->
-			<label><!-- 사진1 : 파일태그는 숨기고 -->
-				<i class="fa-thin fa-image no-image"></i>
-				<input type="file" accept="image/*" id="photo1" name="photo1" >
-			</label>
-			<label><!-- 사진2 -->
-				<i class="fa-thin fa-image no-image"></i>
-				<input type="file" accept="image/*" id="photo2" name="photo2" >
-			</label>
-			<label><!-- 사진3 -->
-				<i class="fa-thin fa-image no-image"></i>
-				<input type="file" accept="image/*" id="photo3" name="photo3" >
-			</label>
+		
+			<!-- 등록한 이미지가 있다면 썸넬 표시 / 사진이 수정이 되었으면 <input name="idx_${var.index+1}"> 없애기 -->
+			<c:forEach items="${photos}" var="i" varStatus="var">	
+				<label id="previousImg">
+					<input type="hidden" name="idx_${var.index+1}" value="${i.PH_IDX}">
+					<input type="file" accept="image/*" id="photo_${var.index+1}" name="photo_${var.index+1}" >
+					<img width="200px" src="/resources/upload/${i.PH_STORED_FILE_NAME}" >
+				</label>	
+			</c:forEach>
+			
+			<!-- 이미지 등록안한 <input type="file">태그 -->
+			<c:forEach var="i" begin="${fn:length(photos)+1}" end="3" step="1" varStatus="var">	
+				<label>
+					<i class="fa-thin fa-image no-image"></i>
+					<input type="file" accept="image/*" id="photo_${var.index}" name="photo_${var.index}" >
+				</label>
+			</c:forEach>
 		</div>
 		<br>
 		<p class="info_warn">본인이 직접 촬영한 사진만 올려주세요.</p>
 		<p class="info_warn">저작권에 대한 책임은 업로드한 회원에게 있습니다.</p>
 		<br><br><br>
 		
-		<input type="hidden" value="review" name="ph_board_type"><!-- 테이블명/ 시설과 회원에 각각 추가 필수 -->
-		<input type="hidden" id="re_pl_idx" name="re_pl_idx" value="${re_pl_idx}"><!-- 시설번호 -->
-		<!-- 세션이 구현되면 삭제 -->
-		<input type="hidden" id="re_writer_id" name="re_writer_id" value="aaa123"><!-- 작성자 아이디 -->
-		<input type="hidden" id="re_writer_name" name="re_writer_name" value="브라더"><!-- 강아지 이름 -->
+		<input type="hidden" id="re_idx" name="re_idx" value="${review.RE_IDX}" >
+		<input type="hidden" id="idx" name="idx" value="${review.RE_IDX}" >
+		<input type="hidden" value="review" name="ph_board_type">
 		
-		<%-- 세션이 전부 구현되면 사용
-		<input type="hidden" id="re_writer_id" name="re_writer_id" value="${mem_id}"><!-- 작성자 아이디 -->
-		<input type="hidden" id="re_writer_name" name="re_writer_name" value="${mem_dog_name}"><!-- 강아지 이름 -->
-		--%>
-		<button class="btn submit" type="button" id="uploadBtn" >리뷰등록</button> 
-		
+		<button type="button" class="btn submit" id="uploadBtn" >리뷰등록</button> 
 		<a href="/mypage/review/list.paw" class="btn">목록으로</a>
 	</div> 
 	</div>
@@ -120,7 +127,7 @@
 <script>
 $(document).ready(function(){
 	//등록작업을 해주는 url을 파라미터로 집어넣기!!
-	form_submit("/review/insert.paw");
+	form_submit("/review/update.paw");
 });
 </script>
 

@@ -11,7 +11,7 @@
 				ph_file_size, ph_reg_date, ph_del_gb )
 	values ( seq_photo.NEXTVAL, 
 			<if test='ph_board_type == "members".toString()'>
-				null, #{mem_id}
+				null, #{MEM_ID}
 			</if>
 			<if test='ph_board_type == "place".toString()'>
 				#{idx}, null
@@ -22,6 +22,48 @@
 			, #{ph_board_type} , #{ph_original_file_name} , #{ph_stored_file_name}
 			, #{ph_file_size} ,sysdate , 'N')
 	</select>
+	
+	<!-- 23.01.31 신현지: 수정,삭제되지 않은 사진들을 복구  -->
+	<update id="updatePhoto" parameterType="hashmap">
+	<![CDATA[
+		update photo
+		set ph_del_gb = 'N'
+		where ph_idx = #{ph_idx}
+	]]>
+	</update>
+	
+	
+	<!-- 23.01.25 신현지: 회원이미지, 시설이미지, 리뷰이미지 가져오기-->
+	<select id="selectMyPhoto" parameterType="hashmap" resultType="hashmap">
+	select * from photo
+	where ph_del_gb = 'N'
+	and ph_board_type=#{ph_board_type}
+	<if test='ph_board_type == "members".toString()'>
+	and ph_mem_id = #{MEM_ID}
+	</if>
+	<if test='ph_board_type == "place".toString()'>
+	and ph_board_idx = #{pl_idx}
+	</if>
+	<if test='ph_board_type == "review".toString()'>
+	and ph_board_idx = #{re_idx}
+	</if>
+	</select>
+	
+	<!-- 23.01.29 신현지: 리뷰관련 사진 삭제 -->
+	<update id="deletePhoto" parameterType="hashmap">
+		update photo
+		set ph_del_gb = 'Y'
+		where ph_board_type=#{ph_board_type}
+		<if test='ph_board_type == "members".toString()'>
+		and ph_mem_id = #{MEM_ID}
+		</if>
+		<if test='ph_board_type == "place".toString()'>
+		and ph_board_idx = #{pl_idx}
+		</if>
+		<if test='ph_board_type == "review".toString()'>
+		and ph_board_idx = #{re_idx}
+		</if>	
+	</update>
 	
 
 </mapper>

@@ -21,19 +21,14 @@
 	</insert>
 	
 	<!-- 23.01.20 신현지: 마이페이지에서 내가 쓴 리뷰확인-->
-	<!-- 23.01.25 신현지: 리뷰테이블과 시설테이블, 사진테이블을 조인-->
+	<!-- 23.01.25 신현지: 리뷰테이블과 시설테이블을 조인하여 리뷰에 대한 정보 + 시설의 정보를 가져옴-->
 	<select id="openMyReviews" parameterType="hashmap" resultType="hashmap">
-	select  a.re_idx,a.re_star,a.re_contents,b.pl_name,a.re_reg_date,count(c.ph_board_type) PHCOUNT 
-	from(select * from review
-		where re_writer_id = #{mem_id} and re_del_gb='N'
-		) a left join place b 
-    	on a.re_pl_idx = b.pl_idx 
-    left join photo c on a.re_idx = c.ph_board_idx
-    <if test='ph_board_type == "review".toString()'>
-    	where  c.ph_board_type = 'review' and ph_del_gb='N'
-    </if>
-    group by a.re_idx,a.re_star,a.re_contents,b.pl_name,a.re_reg_date,c.ph_board_type
-    order by re_idx desc
+	select  a.re_idx,a.re_pl_idx,a.re_star,a.re_contents ,b.pl_name,a.re_reg_date 
+	from ( 
+	    select * from review    
+	    where re_writer_id = #{mem_id}
+	    and re_del_gb='N'
+	) a left join place b on a.re_pl_idx = b.pl_idx  
 	</select>
 	
 	<!-- 23.01.25 신현지: 내가 작성한 하나의 리뷰 출력-->
@@ -43,13 +38,6 @@
 		where re_idx = #{re_idx}
 	</select>
 	
-	<!-- 23.01.25 신현지: 특정 리뷰에 대한 사진을 가져오기-->
-	<select id="openMyReviewPhoto" parameterType="hashmap" resultType="hashmap">
-		select * from photo
-		where ph_board_type='review'
-		and ph_del_gb = 'N'
-		and ph_board_idx = #{re_idx}
-	</select>
 	
 	<!-- 23.01.26 신현지: 리뷰에 불러올 시설썸네일 가져오기-->
 	<select id="openMyReviewPlacePhoto" parameterType="hashmap" resultType="hashmap">
@@ -58,9 +46,33 @@
 		and ph_del_gb = 'N'
 		and ph_board_idx = #{pl_idx}
 	</select>
-
+	
+	<!-- 23.01.28 신현지 : 리뷰 삭제하기 -->
+	<update id="deleteReview" parameterType="hashmap">
+		update review
+		set re_del_gb = 'Y'
+		where re_idx = #{re_idx}
+	</update>
 	
 
+	
+	<!-- 23.01.31 신현지: 리뷰 수정 -->
+	<update id="updateReview" parameterType="hashmap">
+		update review
+		set re_contents = #{re_contents},
+		re_star = #{re_star},
+		re_mod_date = sysdate
+		where re_idx = #{re_idx}
+	</update>
+	
+	
+	<!-- 23.02.01 신현지: 관리자페이지에서 모든 리뷰 불러오기 -->
+	<select id="openReviews" parameterType="hashmap" resultType="hashmap">
+		select ph_stored_file_name from photo
+		where ph_board_type='place'
+		and ph_del_gb = 'N'
+		and ph_board_idx = #{pl_idx}
+	</select>
 
 
 </mapper>
