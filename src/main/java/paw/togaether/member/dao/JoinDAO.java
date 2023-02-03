@@ -22,4 +22,9 @@ public class JoinDAO extends AbstractDAO {
 	public List<Map<String, Object>> listOfDog(Map<String, Object> map) throws Exception {
 		return (List<Map<String, Object>>)selectList("join.selectListOfDog", map);
 	}
+
+	public int checkEmail(String email) throws Exception{
+		int result = selectOneInt("join.findEmail", email);
+		return result;
+	}
 }

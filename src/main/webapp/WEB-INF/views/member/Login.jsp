@@ -17,7 +17,7 @@
                 <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-[#f0b1aa]">당신의 반려견을 소개해보세요.</h2>
 
             </div>
-            <form class="mt-8 space-y-6" action="/member/login.paw" method="POST">
+            <form class="mt-8 space-y-6" action="/member/login" method="POST">
                 <div class="-space-y-px rounded-md shadow-sm">
                     <div>
                         <label for="MEM_ID" class="sr-only">ID</label>
@@ -31,7 +31,7 @@
 
                 <div class="flex items-center justify-between">
                     <div class="text-sm">
-                        <a href="#" class="font-medium text-[#f0b1aa]">비밀번호를 잊으셨나요?</a>
+                        <p class="text-[#f0b1aa]"><a href="/member/findID" class="font-medium text-[#f0b1aa]">아이디찾기</a>&nbsp&nbsp|&nbsp&nbsp<a href="/member/findPassword" class="font-medium text-[#f0b1aa]">비밀번호 찾기</a></p>
                     </div>
                 </div>
 

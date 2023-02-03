@@ -5,8 +5,28 @@
 
     <select id="MemberLogin" parameterType="hashmap" resultType="hashmap">
      <![CDATA[
-        SELECT MEM_PW FROM MEMBERS WHERE MEM_ID =  #{MEM_ID}
+        SELECT * FROM MEMBERS WHERE MEM_ID =  #{MEM_ID}
         ]]>
- </select>
+     </select>
+
+    <select id="findID" parameterType="hashmap" resultType="hashmap">
+     <![CDATA[
+        SELECT MEM_EMAIL,
+               MEM_ID
+        FROM MEMBERS WHERE MEM_EMAIL =  #{MEM_EMAIL}
+        ]]>
+     </select>
+
+    <select id="selectMemberInfo" parameterType="hashmap" resultType="hashmap">
+     <![CDATA[
+        SELECT MEM_EMAIL,
+               MEM_ID
+        FROM MEMBERS WHERE MEM_EMAIL =  #{MEM_EMAIL}
+        ]]>
+     </select>
+
+
+
+
 
 </mapper>
