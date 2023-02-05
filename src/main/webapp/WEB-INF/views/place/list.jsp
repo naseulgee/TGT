@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
 <link rel="stylesheet" type="text/css" href="/resources/css/place/list.css"/>
+<link rel="stylesheet" type="text/css" href="/resources/css/place/kakao_map.css"/>
 <script src="/resources/js/paging/searchPaging_B.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d678157a5b078cbbbb9fe15e8811eb2b&libraries=services"></script>
+<script src="/resources/js/place/kakao_map.js"></script>
 <script src="/resources/js/place/list.js"></script>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
@@ -47,7 +50,7 @@
 		<!-- 등록 버튼 -->
 		<a class="btn submit txt_center" href="/place/writeForm.paw">우리동네 시설 등록하기</a>
 	</article>
-	<article class="map_wrap"></article>
+	<article id="map" class="map_wrap"></article>
 </section>
 </main><!-- //main 종료 -->
 <%@ include file="/WEB-INF/include/common-footer.jspf" %>

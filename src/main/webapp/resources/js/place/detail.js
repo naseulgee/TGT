@@ -1,5 +1,6 @@
 $(document).ready(function() {
-	
+	//지도 세팅 함수
+	set_map();
 });
 //이미지 넘기기 함수
 function move_img(param){

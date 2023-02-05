@@ -21,17 +21,18 @@
 .list_wrap table tbody tr,
 .list_wrap table tbody td{ display: block; }
 .list_wrap table tbody tr{ padding: 10px; position: relative; }
+.list_wrap table tbody tr.on{ background-color: var(--subColor); }
 .list_wrap table tbody th{ display: none; }
 .list_wrap table tbody td{ padding: 0; }
-.list_wrap table tbody .img + td{ width: 100px; height: 100px; box-sizing: border-box; border-radius: 20px; overflow: hidden; position: absolute; top: 10px; right: 10px; text-align: center; }
-.list_wrap table tbody .img + td i{ color: var(--subGray_20); font-size: 100px; line-height: 100px; }
-.list_wrap table tbody .img + td img{ width: 100%; height: 100%; object-fit: cover; }
-.list_wrap table tbody .cate + td{ display: inline-block; padding: 0 10px; border: 1px solid var(--subGray_40); border-radius: 15px; box-sizing: border-box; font-size: 0.8em; }
-.list_wrap table tbody .name + td{ padding-right: 110px; font-size: 2em; }
-.list_wrap table tbody .review + td::before{ content: "\f005"; color: #ffb100; font-family: "Font Awesome 6 Free"; font-weight: bold; }
-.list_wrap table tbody .loc + td,
-.list_wrap table tbody .menu + td{ color: var(--subGray_60); font-size: 0.9em; }
-.list_wrap table tbody .loc + td{ margin: 5px 0; }
+.list_wrap table tbody .img{ width: 100px; height: 100px; box-sizing: border-box; border-radius: 20px; overflow: hidden; position: absolute; top: 10px; right: 10px; text-align: center; }
+.list_wrap table tbody .img i{ color: var(--subGray_20); font-size: 100px; line-height: 100px; }
+.list_wrap table tbody .img img{ width: 100%; height: 100%; object-fit: cover; }
+.list_wrap table tbody .cate{ display: inline-block; padding: 0 10px; border: 1px solid var(--subGray_40); border-radius: 15px; box-sizing: border-box; font-size: 0.8em; }
+.list_wrap table tbody .pl_name{ padding-right: 110px; font-size: 2em; }
+.list_wrap table tbody .review::before{ content: "\f005"; color: #ffb100; font-family: "Font Awesome 6 Free"; font-weight: bold; }
+.list_wrap table tbody .loc,
+.list_wrap table tbody .menu{ color: var(--subGray_60); font-size: 0.9em; }
+.list_wrap table tbody .loc{ margin: 5px 0; }
 /* 등록 버튼 */
 .list_wrap .btn.submit{ width: 100%; }
 

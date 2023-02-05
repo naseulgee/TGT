@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
 <link rel="stylesheet" type="text/css" href="/resources/css/place/detail.css"/>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d678157a5b078cbbbb9fe15e8811eb2b"></script>
+<link rel="stylesheet" type="text/css" href="/resources/css/place/kakao_map.css"/>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d678157a5b078cbbbb9fe15e8811eb2b&libraries=services"></script>
+<script src="/resources/js/place/kakao_map.js"></script>
 <script src="/resources/js/place/detail.js"></script>
-<script src="/resources/js/place/kakao_map.js" defer></script>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <main class="layoutCenter">
@@ -60,7 +61,7 @@
 		</p>
 		<p class="addr">
 			<strong>주소</strong>
-			<span>${detail.place.PL_LOC}</span>
+			<span class="loc">${detail.place.PL_LOC}</span>
 			<button type="button" class="btn slim" onclick="copy_addr();"><span class="displaynone">복사하기</span><i class="fa-solid fa-copy"></i></button>
 		</p>
 		<div id="map" style="width:100%;height:350px;"></div>
