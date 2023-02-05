@@ -4,7 +4,12 @@
 <style>
 	#stars { 
 		display: inline-block; 
-		font-size : 20px;
+		font-size : 50px;
+	}
+	
+	#img_upload label{
+		width : 120px;
+		height : 120px;
 	}
 	
 	#wrap {
@@ -13,7 +18,8 @@
 	}
 	
 	#re_contents {
-		width:60%;
+		color : #808991;
+		margin : auto;
 	}
 	
 	#place {
@@ -53,20 +59,23 @@
 	
 	#writeDate{
 		color : #d1d5d9;
+		font-style : italic;
+		font-size : 15px;
 	}
 	
 	#mainTd {
 		width : 260px;
 	}
 	
-	/* #re_contents {
-		margin:auto;
-	} */
-	
 	main img {
 		border: 3px solid #f0b1aa;
 	    box-sizing: border-box;
     	border-radius: 20px;
+	}
+	
+	hr {
+		/* background-color : #9ea7ad; */
+		border-top : 1px dashed #9ea7ad;
 	}
 </style>
 
@@ -101,24 +110,27 @@
 					</tr>
 					<tr>
 						<td>
-							
+							<c:if test="${!empty review.PL_OPEN}">
 							${fn:substring(review.PL_OPEN,0,2)}:${fn:substring(review.PL_OPEN,2,4)} -
 							${fn:substring(review.PL_CLOSE,0,2)}:${fn:substring(review.PL_CLOSE,2,4)}
-							&nbsp;
-							<%-- (
-							<c:if test="${review.PL_OFFDAY == 0}">일요일</c:if>
-							<c:if test="${review.PL_OFFDAY == 1}">월요일</c:if>
-							<c:if test="${review.PL_OFFDAY == 2}">화요일</c:if>
-							<c:if test="${review.PL_OFFDAY == 3}">수요일</c:if>
-							<c:if test="${review.PL_OFFDAY == 4}">목요일</c:if>
-							<c:if test="${review.PL_OFFDAY == 5}">금요일</c:if>
-							<c:if test="${review.PL_OFFDAY == 6}">토요일</c:if>휴무
-							) --%> 
+							</c:if>
+							<c:if test="${!empty review.PL_OFFDAY}"> 
+								<c:forEach items="${fn:split(review.PL_OFFDAY, ',')}" var="day">
+							    	<c:if test="${day == 0}">일</c:if>
+									<c:if test="${day == 1}">월</c:if>
+									<c:if test="${day == 2}">화</c:if>
+									<c:if test="${day == 3}">수</c:if>
+									<c:if test="${day == 4}">목</c:if>
+									<c:if test="${day == 5}">금</c:if>
+									<c:if test="${day == 6}">토</c:if>
+								</c:forEach>휴무
+							</c:if>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<a class="use_move btn slim" href="/place/detail/${ }" >상세보기</a>
+							<a class="use_move btn slim" href="/place/detail/${review.RE_PL_IDX}" 
+							onclick="move(this, 'test:value_a')">상세보기</a>
 						</td>
 					</tr>
 				</tbody>
@@ -129,41 +141,48 @@
 		
 		<div id="place">
 			<!-- 평점 -->
-			<span id="star1" class="bold">${review.RE_STAR}</span>
-			<span id="star2">/5점</span><br>
-			<span class="color">
-			    <c:forEach var="j" begin="1" end="${review.RE_STAR}">
-	    			<i class="fa-solid fa-paw color" id="stars"></i>
-				</c:forEach>
-				<c:forEach var="j" begin="1" end="${5-review.RE_STAR}">
-	    			<i class="fa-solid fa-paw subColor" id="stars"></i>
-				</c:forEach>&nbsp;
-			</span>
-			
-			<br><br><br>
+			<div class="txt_center">
+				<div  width="50%">
+				<i class="fa-solid fa-paw color" id="stars"></i> &nbsp;
+				<span id="star1" class="bold">${review.RE_STAR}</span>
+				<span id="star2">/5점</span><br>
+				</div>
+				<%-- 
+				<span class="color">
+				    <c:forEach var="j" begin="1" end="${review.RE_STAR}">
+		    			<i class="fa-solid fa-paw color" id="stars"></i>
+					</c:forEach>
+					<c:forEach var="j" begin="1" end="${5-review.RE_STAR}">
+		    			<i class="fa-solid fa-paw subColor" id="stars"></i>
+					</c:forEach>&nbsp;
+				</span> 
+				--%>
+			</div>
+			<br>
 			
 			<!-- 후기 -->
-			<div id="re_contents">
+			<div id="re_contents" class="txt_center">
 				${review.RE_CONTENTS}
 			</div>	
 			<br><br>
 			
-			<!-- 사진 -->
-			<div id="img_upload" class="flex">	
-				<c:forEach items="${photos}" var="i" varStatus="status">	
-					<label>
-						<img width="200px" src="/resources/upload/${i.PH_STORED_FILE_NAME}" id="photo">			
-						&nbsp;&nbsp;
-					</label>
-				</c:forEach>
-			</div>
-			
-			<br><br>
-			
+			<c:if test="${!empty photos}">
+				<!-- 사진 -->
+				<hr><br>
+				<div id="img_upload" class="flex">	
+					<c:forEach items="${photos}" var="i" varStatus="status">	
+						<label>
+							<img src="/resources/upload/${i.PH_STORED_FILE_NAME}" id="photo">			
+							&nbsp;&nbsp;
+						</label>
+					</c:forEach>
+				</div>
+				<br>
+			</c:if>
 			
 			<div id="writeDate" class="txt_right">
-				최초작성 <fmt:formatDate value="${review.RE_REG_DATE}" pattern="yy.MM.dd" /><br>
-				최종수정 <fmt:formatDate value="${review.RE_MOD_DATE}" pattern="yy.MM.dd" />
+				최초작성 <fmt:formatDate value="${review.RE_REG_DATE}" pattern="yy-MM-dd" /><br>
+				최종수정 <fmt:formatDate value="${review.RE_MOD_DATE}" pattern="yy-MM-dd" />
 			</div>			
 			
 		</div>

@@ -11,9 +11,6 @@
 	font-size : 30px;
 }
 
-#place {
-	font-size : 20px;
-}
 
 #place, #contents, #phIcon,#regDate {
 	color : #b8bfc4;
@@ -38,10 +35,10 @@ img {
 		<div class="main_wrap txt_center">
 		
 		<h1>나의 리뷰</h1>
-		<div class="color">${mem_id}님의 리뷰페이지입니다:)</div><br><br>
+		<div class="color">${mem_dog_name}(${mem_id})님의 리뷰페이지입니다 :)</div><br><br>
 
 	<c:if test="${!empty reviewList}">
-	<table>
+	<table class="">
 		<tbody>
 			<c:forEach items="${reviewList}" var="i" varStatus="status">
 			<tr >
@@ -51,15 +48,15 @@ img {
 					</div>
 				
 					<div class="pp flexBetween">
-						<!-- 시설사진 : 일단 임시사진표시 -->
+						<!-- 시설사진 : 일단 임시사진표시 
 						<div id="photo">
 							<img src="https://www.dailypop.kr/news/photo/202207/61411_118467_5044.jpg" width="180" alt="시설썸네일">
-						</div>
+						</div> -->
 						
 						<div class="txt_left">
 							<p id="ppp">
 							<!-- 시설명 -->
-							<span id="place" >${i.PL_NAME}&nbsp;|&nbsp;</span>
+							<span id="place" class="txt_big">${i.PL_NAME}&nbsp;|&nbsp;</span>
 							
 			    			<!-- 별점 -->
 			    			<c:forEach var="j" begin="1" end="${i.RE_STAR}">
