@@ -43,13 +43,20 @@ public class ReviewController {
 	 */
 	@RequestMapping(value="/review/insert")
 	public ResponseEntity<String> insertReview(CommandMap commandMap,HttpSession session, MultipartFile[] uploadFile) throws Exception{
-
-		System.out.println("ajax로부터 업로드된 파일의 개수 : "+ uploadFile.length);
-		System.out.println(commandMap.getMap());
-		//review등록과 photo등록에 대한 처리
-		reviewService.insertReview(commandMap.getMap(),session,uploadFile); //사용시 주석 풀어주기
 		
-		return new ResponseEntity<String>("/mypage/review/list.paw",HttpStatus.OK);
+		//오늘 이미 리뷰를 작성했는지 check
+		Map<String, Object> review = reviewService.checkTodayReview(commandMap.getMap());
+		
+		System.out.println(review);//null
+		//비어있다면
+		if(review == null)  {
+			//review등록과 photo등록에 대한 처리
+			reviewService.insertReview(commandMap.getMap(),session,uploadFile); //사용시 주석 풀어주기
+			return new ResponseEntity<String>("/mypage/review/list.paw",HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("리뷰는 하루에 1개만 작성할 수 있습니다.",HttpStatus.BAD_REQUEST);
+		}
+		
 	}
 	
 	/** 23.01.20 신현지: 마이페이지에서 내 리뷰목록 조회 메서드
@@ -120,6 +127,19 @@ public class ReviewController {
 		return m;
 	}
 	
+	/** 23.02.06 신현지 : 리뷰다섯개 가져오기
+	  */
+	@RequestMapping(value="/review/test")
+	public ModelAndView openFiveReviews(CommandMap commandMap, HttpSession session) throws Exception{
+		ModelAndView m = new ModelAndView("redirect:/sample.paw"); //삭제 후 리뷰목록으로 이동
+		commandMap.put("pl_idx", 2);
+		List<Map<String,Object>> reviews = reviewService.openFiveReviews(commandMap.getMap());
+		
+		m.addObject("reviews",reviews);
+		return m;
+	}
+	
+
 	
 
 }

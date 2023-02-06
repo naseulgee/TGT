@@ -89,7 +89,58 @@ public class ReviewServiceImpl implements ReviewService {
 		for(int i=0, size=list.size(); i<size; i++) {
 			photoDAO.insertPhoto(list.get(i));
 		}
-		
+	}
+
+	@Override
+	public List<Map<String, Object>> openFiveReviews(Map<String, Object> map) throws Exception {
+		List<Map<String, Object>> list = reviewDAO.openFiveReviews(map);
+		for (Map<String,Object> oneMap : list) {
+			oneMap.put("re_idx", oneMap.get("RE_IDX"));//re_idx 소문자로 재설정
+			
+			//하나의 리뷰에 대한 사진들가져오기
+			List<Map<String, Object>> photoList = reviewDAO.openReviewPhoto(oneMap);
+			oneMap.put("photoList", photoList);	
+		}
+		return list;
+	}
+
+	@Override
+	public List<Map<String, Object>> openAllPlaceReviews(Map<String, Object> map) throws Exception {
+		List<Map<String, Object>> list = reviewDAO.openAllPlaceReviews(map);
+		for (Map<String,Object> oneMap : list) {
+			oneMap.put("re_idx", oneMap.get("RE_IDX"));//re_idx 소문자로 재설정
+			
+			//하나의 리뷰에 대한 사진들가져오기
+			List<Map<String, Object>> photoList = reviewDAO.openReviewPhoto(oneMap);
+			oneMap.put("photoList", photoList);	
+		}
+		return list;
+	}
+
+	@Override
+	public Map<String, Object> openReviewInfo(Map<String, Object> map) throws Exception {
+		return reviewDAO.openReviewInfo(map);
+	}
+
+	
+	
+	//관리자 페이지에서 모든 리뷰 표시
+	@Override
+	public List<Map<String, Object>> openAllReviews(Map<String, Object> map) throws Exception {
+		List<Map<String, Object>> list = reviewDAO.openAllReviews(map);
+		for (Map<String,Object> oneMap : list) {
+			oneMap.put("re_idx", oneMap.get("RE_IDX"));//re_idx 소문자로 재설정
+			
+			//하나의 리뷰에 대한 사진들가져오기
+			List<Map<String, Object>> photoList = reviewDAO.openReviewPhoto(oneMap);
+			oneMap.put("photoList", photoList);	
+		}
+		return list;
+	}
+
+	@Override
+	public Map<String, Object> checkTodayReview(Map<String, Object> map) throws Exception {
+		return reviewDAO.checkTodayReview(map);
 	}
 
 }

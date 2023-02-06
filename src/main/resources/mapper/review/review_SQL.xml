@@ -70,13 +70,57 @@
 	</update>
 	
 	
-	<!-- 23.02.01 신현지: 관리자페이지에서 모든 리뷰 불러오기 -->
-	<select id="openReviews" parameterType="hashmap" resultType="hashmap">
-		select ph_stored_file_name from photo
-		where ph_board_type='place'
-		and ph_del_gb = 'N'
-		and ph_board_idx = #{pl_idx}
+	<!-- 23.02.01 신현지: 관리자페이지에서 모든 리뷰 최신순으로 불러오기 -->
+	<select id="openAllReviews" parameterType="hashmap" resultType="hashmap">
+		select * 
+		from review a left join place b on a.re_pl_idx = b.pl_idx  
+		order by re_reg_date desc
 	</select>
+	
+	<!-- 23.02.06 신현지: 시설상세보기 밑단에 표시할 최신리뷰 5개 -->
+	<select id="openFiveReviews" resultType="hashmap">
+		<![CDATA[
+		select * 
+		from review
+		where re_del_gb = 'N'
+		and rownum <=5
+		and re_pl_idx = #{pl_idx}
+		order by re_reg_date desc
+		]]>
+	</select>
+	
+	<!-- 23.02.06 신현지: 시설에 대한 모든 리뷰가져오기 -->
+	<select id="openAllPlaceReviews" resultType="hashmap">
+		select * 
+		from review
+		where re_del_gb = 'N'
+		and re_pl_idx = #{pl_idx}
+		order by re_reg_date desc
+	</select>
+	
+	<!-- 23.02.06 신현지: 리뷰에 대한 사진가져오기 -->
+	<select id="openReviewPhoto" parameterType="hashmap" resultType="hashmap">
+		select ph_idx, ph_stored_file_name from photo
+		where ph_board_idx = #{re_idx} 
+		and ph_board_type = 'review'
+		and ph_del_gb = 'N'
+	</select>
+	
+	<!-- 23.02.06 신현지: 리뷰의 개수,평균 구하기 -->
+	<select id="openReviewInfo" parameterType="hashmap" resultType="hashmap">
+		select count(re_idx) RCOUNT, round(avg(re_star),1) RAVG
+		from review
+		where re_pl_idx = #{pl_idx} and re_del_gb = 'N'
+	</select>
+	
+	<!-- 23.02.06 신현지: 오늘 작성한 리뷰가 있는지 확인-->
+	<select id="checkTodayReview" parameterType="hashmap" resultType="hashmap">
+		select TO_CHAR(re_reg_date,'YYMMDD') from review
+		where re_pl_idx = #{re_pl_idx}
+		and re_del_gb = 'N'
+		and TO_CHAR(re_reg_date,'YYMMDD') = TO_CHAR(SYSDATE,'YYMMDD')
+	</select>
+
 
 
 </mapper>

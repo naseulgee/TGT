@@ -116,6 +116,9 @@ function form_submit(insert_url) {
 					alert("글을 성공적으로 업로드했습니다!");
 				}
 				location.href=result;
+			},
+			error : function(a,b,c){
+				alert("리뷰는 하루에 1개만 작성가능합니다.");
 			}
 		}); //$.ajax
 	});

@@ -22,5 +22,18 @@ public interface ReviewService {
 	void updateReview(Map<String, Object> map,HttpSession session, MultipartFile[] uploadFile) throws Exception;
 	
 	List<Map<String, Object>> openMyReviewPhoto(Map<String, Object> map) throws Exception;
+	
+	public List<Map<String, Object>> openAllReviews(Map<String, Object> map) throws Exception ;
+	
+	//시설 상세보기에서 사용하는 메서드
+	public List<Map<String, Object>> openFiveReviews(Map<String, Object> map) throws Exception;
+
+	public List<Map<String, Object>> openAllPlaceReviews(Map<String, Object> map) throws Exception ;
+	
+	public Map<String, Object> openReviewInfo(Map<String, Object> map) throws Exception;
+	
+	public Map<String, Object> checkTodayReview(Map<String, Object> map) throws Exception;
+	
+	
 
 }

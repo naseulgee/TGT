@@ -2,6 +2,12 @@
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
 <link type="text/css" rel="stylesheet" href="/resources/css/common/photo.css" ></link>
 <style>
+
+	#highlight {
+	color : #db776c;
+	background-color: var(--subColor);
+	}
+	
 	#stars { 
 		display: inline-block; 
 		font-size : 50px;
@@ -89,7 +95,7 @@
 	<div id="wrap" >	
 	<div >
 	
-	<h1 class="txt_center">나의 리뷰</h1>
+	<h1 class="txt_center">리뷰상세</h1>
 	<br><br>
 	
 		<div id="place">
@@ -139,6 +145,11 @@
 		<br>
 		
 		<div id="place">
+			<!-- 누가, 언제, 어떤 시설에 대해 작성한 리뷰인지에 대한 설명 -->
+			<span id="highlight">${review.RE_WRITER_NAME}(${review.RE_WRITER_ID})</span>님이
+			<span id="highlight"><fmt:formatDate value="${review.RE_REG_DATE}" pattern="yy-MM-dd" /></span>에 작성하신 
+			<span id="highlight">${review.PL_NAME}</span>에 대한 리뷰입니다.
+
 			<!-- 평점 -->
 			<div class="txt_center">
 				<div  width="50%">
