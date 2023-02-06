@@ -4,13 +4,18 @@
 <%@ include file="/WEB-INF/include/admin-header.jspf" %>
 <script src="https://kit.fontawesome.com/e9bd4d3977.js" crossorigin="anonymous"></script>
 <style>
-.fa-solid {
+span.fa-solid {
 color:#f0b1aa;
 }
 
 .main_wrap thead{
 font-weight:bold;
 }
+
+#catewrite.btn.submit{
+margin-right:5px;
+}
+
 </style>
 <main class="layoutCenter">
 
@@ -80,7 +85,8 @@ font-weight:bold;
 	</table>
 	<br/>
 	<div class="flexCenter">
-		<a class="btn submit" id="catewrite" href="/admin/together/catewriteForm.paw">카테고리 등록:)</a>
+		<a class="btn submit" id="catewrite" href="/admin/together/catewriteForm">카테고리 등록:)</a>
+		<a class="btn" id="wtwrite" href="/admin/together/weightwriteForm">몸무게 등록:)</a>
 	</div>
 </div>	
 </main>
