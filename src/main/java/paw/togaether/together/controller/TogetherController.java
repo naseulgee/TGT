@@ -255,4 +255,18 @@ public class TogetherController {
 		return mv;
 	}
 	
+	/* 23.02.06 박선영 참여멤버 상세보기 */
+	@RequestMapping(value="/together/withdetail")
+	public ModelAndView checkMem(CommandMap commandMap, HttpSession session) throws Exception {
+		
+		ModelAndView mv = new ModelAndView("/together/togeWithDetail");
+		
+		System.out.println("map : " + commandMap.getMap());
+		
+		Map<String, Object> withdetail = togetherService.checkMem(commandMap.getMap(), session);
+		
+		mv.addObject("withdetail", withdetail);
+		return mv;
+	}
+	
 }

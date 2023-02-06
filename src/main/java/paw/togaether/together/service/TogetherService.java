@@ -45,4 +45,7 @@ public interface TogetherService {
 	/* 23.01.31 박선영 참여여부확인 */
 	Map<String, Object> checkWith(Map<String, Object> map, HttpSession session) throws Exception;
 	
+	/* 23.02.06 박선영 : 참여멤버 정보 확인 */
+	Map<String, Object> checkMem(Map<String, Object> map, HttpSession session) throws Exception;
+	
 }

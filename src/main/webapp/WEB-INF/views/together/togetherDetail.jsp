@@ -45,6 +45,44 @@ padding-bottom: 5px;
 padding-left: 10px
 }
 
+input#withmem.btn.slim{
+font-size : 15px;
+line-height:2em;
+}
+
+span#withmem{
+color:white; 
+}
+
+span#wtmem{
+color:#f0b1aa; 
+}
+
+button#wtmem{
+border:1px solid #9ea7ad;
+background-color : white;
+padding-top: 1px;
+padding-right: 2px;
+padding-bottom: 1px;
+padding-left: 5px;
+margin-right:5px;
+font-size : 17px;
+line-height:2em;
+}
+
+
+button#withmem{
+border:1px solid #9ea7ad;
+background-color : #f0b1aa;
+padding-top: 1px;
+padding-right: 2px;
+padding-bottom: 1px;
+padding-left: 5px;
+margin-right:5px;
+font-size : 17px;
+line-height:2em;
+}
+
 </style>
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <main class="layoutCenter">
@@ -80,13 +118,15 @@ padding-left: 10px
 		<br/>
 		<div class="flexCenter">
 				<ul class="with">
-				<li><span class="fa-solid fa-paw"></span> 참여중이개!  ${map.C}/${map.TO_PEOPLE }</li>
-				<li><span class="fa-solid fa-paw"></span> 대장이개!  ${map.TO_WRITER_ID}</li>
+				<li><span class="fa-solid fa-paw"></span> 참여중이개!   ${map.C}/${map.TO_PEOPLE }</li>
+				<li><span class="fa-solid fa-paw"></span> 대장이개!    <button class="use_move" data-href = "/together/withdetail" onclick="move(this, 'TW_MEM_ID:${map.TO_WRITER_ID}', 'TO_IDX:${map.TO_IDX}')" id="wtmem">
+									<span class="fa-solid fa-paw" id="wtmem"></span> ${map.TO_WRITER_ID} </button></li>
 				<c:choose>
 						<c:when test="${!empty withlist}">
 							<li><span class="fa-solid fa-paw"></span> 누구랑 가개?
 								<c:forEach items="${withlist}" var="wili">
-									${wili.TW_MEM_ID}
+									<button class="use_move" data-href = "/together/withdetail" onclick="move(this, 'TW_MEM_ID:${wili.TW_MEM_ID}', 'TO_IDX:${map.TO_IDX}')" id="withmem">
+									<span class="fa-solid fa-paw" id="withmem"></span> ${wili.TW_MEM_ID}</button>
 								</c:forEach>
 							</li>
 						</c:when>

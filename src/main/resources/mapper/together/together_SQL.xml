@@ -287,5 +287,35 @@
 		]]>
 	</select>
 	
+	<!-- 23.02.06 박선영 : 참여멤버 정보 확인 -->
+	<select id="checkMem" resultType="hashmap">
+		<![CDATA[
+			SELECT m.MEM_ID,
+				   m.MEM_DOG_NAME,
+				   m.MEM_DOG_WEIGHT,
+				   m.MEM_DOG_ETC,
+				   m.MEM_BR_IDX,
+				   b.BR_IDX,
+				   b.BR_NAME,
+				   w.TW_TO_IDX
+			FROM MEMBERS m, BREED b, TOGETHER_WITH w
+			WHERE 
+				MEM_ID = #{TW_MEM_ID, jdbcType=VARCHAR}
+			AND 
+				m.MEM_BR_IDX = b.BR_IDX
+			AND 
+				w.TW_TO_IDX = #{TO_IDX,jdbcType=VARCHAR}
+			 GROUP BY m.MEM_ID,
+					   m.MEM_DOG_NAME,
+					   m.MEM_DOG_WEIGHT,
+					   m.MEM_DOG_ETC,
+					   m.MEM_BR_IDX,
+					   b.BR_IDX,
+					   b.BR_NAME,
+					   w.TW_TO_IDX
+			
+		]]>
+	</select>
+	
 	
 </mapper>
