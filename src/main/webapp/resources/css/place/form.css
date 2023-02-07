@@ -58,3 +58,6 @@
     /* 분류 게시판 */
     #cate_list .table_wrap article { width: 100%; }
 }
+
+/* 관리자 */
+#admin_body #placeWrite { max-width: 100%; margin: 50px 0; }

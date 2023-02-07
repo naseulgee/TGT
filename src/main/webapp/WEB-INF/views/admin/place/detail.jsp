@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
-<%@ include file="/WEB-INF/include/user-header.jspf" %>
+<%@ include file="/WEB-INF/include/admin-header.jspf" %>
 <c:if test="${empty detail.place}">
 	<script>
 		alert("잘못된 접근입니다!");
@@ -11,9 +11,19 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d678157a5b078cbbbb9fe15e8811eb2b&libraries=services"></script>
 <script src="/resources/js/place/kakao_map.js"></script>
 <script src="/resources/js/place/detail.js"></script>
+<script src="/resources/js/place/admin_del_place.js"></script>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <main class="layoutCenter">
+<c:if test="${detail.place.PL_DEL_GB == 'Y'}">
+	<div class="del_pop flexCenter">
+		<div class="txt_center">
+			<p>삭제 요청이 들어온 시설입니다. 삭제하시겠습니까?</p><br>
+			<button class="btn" onclick="req_del('N')">반려</button>
+			<button class="btn warn" onclick="del('Y', ${detail.place.PL_IDX})">수락</button>
+		</div>
+	</div>
+</c:if>
 <!-- 이미지 슬라이드 -->
 <section class="img_wrap">
 	<c:if test="${empty detail.photos}"><i class="fa-thin fa-image no-image"></i></c:if>
@@ -37,12 +47,9 @@
 		<h1 class="pl_name">${detail.place.PL_NAME}<input type="hidden" name="pl_idx" value="${detail.place.PL_IDX}"></h1>
 		<!-- 시설 수정 및 삭제 요청/취소 버튼 -->
 		<div class="btn_wrap">
-			<button class="use_move btn" data-href="/place/modifyForm.paw" onclick="move(this, 'pl_idx:${detail.place.PL_IDX}', 'ph_board_type:place')">시설 수정</button>
+			<button class="use_move btn" data-href="/admin/place/modifyForm.paw" onclick="move(this, 'pl_idx:${detail.place.PL_IDX}', 'ph_board_type:place')">시설 수정</button>
 			<c:if test="${detail.place.PL_DEL_GB == 'N'}">
-				<button class="btn warn" onclick="req_del('Y')">삭제 요청</button>
-			</c:if>
-			<c:if test="${detail.place.PL_DEL_GB == 'Y'}">
-				<button class="btn warn" onclick="req_del('N')">삭제 요청 취소</button>
+				<button class="btn warn" onclick="del('Y', ${detail.place.PL_IDX})">시설 삭제</button>
 			</c:if>
 		</div>
 	</div>
@@ -154,8 +161,7 @@
 		<ul>
 			<li><h2>리뷰 모아보기</h2></li>
 			<li class="btn_wrap flex">
-				<button class="use_move btn submit" data-href="/review/write.paw" onclick="move(this, 'pl_idx:${detail.place.PL_IDX}')">리뷰 작성하기</button>
-				<a class="btn" href="/place/detail/${detail.place.PL_IDX}/review/list.paw">리뷰 더보기</a>
+				<a class="btn" href="/admin/place/detail/${detail.place.PL_IDX}/review/list.paw">리뷰 더보기</a>
 			</li>
 			<c:if test="${empty review_list}">
 				<li class="empty">등록된 리뷰가 없습니다</li>

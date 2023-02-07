@@ -17,11 +17,25 @@ function move_img(param){
 }
 
 //삭제요청/삭제취소 버튼 클릭 시 통신 함수
-function req_del(idx){
-
-}
-function req_del_cancel(idx){
-
+function req_del(param){
+	$.ajax({
+		url: "/place/delete",
+		type: "POST",
+		data: JSON.stringify({
+			pl_idx: document.querySelector("[name='pl_idx']").value,
+			pl_del_gb: param
+		}),
+		contentType: "application/json",
+		success: function(){
+			alert("처리되었습니다!");
+			return location.reload();
+		},
+		error: function(result){
+			console.log(result.status);
+			console.log(result.error);
+			console.log(result.responseText);
+		}
+	});
 }
 
 //메뉴 추가/수정/삭제 함수
@@ -79,6 +93,7 @@ function menu_check(where, what){
 	else{
 		_name = where.querySelector("[name='pm_name']").value,
 		_price = where.querySelector("[name='pm_price']").value;
+		if(isNull(_name) || isNull(_price)) return alert("메뉴명과 가격을 모두 입력해주세요!");
 		if(what == "add") _url = "/place/menu/write";//등록이라면
 		if(what == "modi") _url = "/place/menu/modify";//수정이라면
 	}

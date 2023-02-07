@@ -8,7 +8,8 @@
 		select * from place_menu where pm_pl_idx = ${pl_idx} order by pm_name
 	</select>
 
-	<!-- 23.01.17 나슬기: 시설 메뉴 등록하는 쿼리문 / 받는값: 등록할 시설 번호, 메뉴명, 가격 -->
+	<!-- 23.01.17 나슬기: 시설 메뉴 등록하는 쿼리문 / 받는값: 등록할 시설 번호, 메뉴명, 가격
+		23.02.07 나슬기: selectKey 추가 -->
 	<insert id="in_pl_menu">
 		<selectKey keyProperty="PM_IDX_NEXT" order="BEFORE" resultType="int">
 			select seq_place_menu.nextval from dual

@@ -8,9 +8,9 @@ $(document).ready(function(){
 	//종료 시간 변경 감지
 	observe("#pl_close_hour, #pl_close_min, #close_AM, #close_PM", $("#pl_close")[0], 'time_set($("li.close"))');
 	
-	let url = "/place/write.paw";
-	console.log(url);
-	if(!isNull($("#pl_idx").val())) url = "/place/modify.paw";
+	let is_admin = (isNull(document.querySelector("#admin_body")))?"":"/admin";
+	let url = is_admin+"/place/write.paw";
+	if(!isNull($("#pl_idx").val())) url = is_admin+"/place/modify.paw";
 	form_submit(url);
 });
 

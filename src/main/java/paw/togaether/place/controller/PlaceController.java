@@ -1,6 +1,5 @@
 package paw.togaether.place.controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -71,6 +70,7 @@ public class PlaceController {
 		mv.addObject("detail", placeService.placeDetail(map));
 		mv.addObject("menu", placeService.menuList(map));
 		mv.addObject("review_avg", reviewService.openReviewInfo(map));
+		mv.addObject("review_list", reviewService.openFiveReviews(map));
 		return mv;
 	}
 	
@@ -122,9 +122,19 @@ public class PlaceController {
 		return null;
 	}
 	
-	/** 23.01.13 나슬기: 시설 삭제요청 처리 메소드 */
-	@PostMapping("/delete")
-	public void placeDeleteReq(CommandMap commandMap) {}
+	/** 23.01.13 나슬기: 시설 삭제요청 처리 메소드
+	 * 23.02.07 나슬기: Ajax를 이용한 처리를 위해 리턴타입 변경 */
+	@PostMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<HttpStatus> placeDeleteReq(@RequestBody Map<String, Object> commandMap) {
+		try {
+			placeService.placeDeleteReq(commandMap);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);//정상적으로 삽입이 되었다면
+	}
 	
 	//시설 메뉴 관련
 	/** 23.02.07 나슬기: 시설 메뉴 등록 처리 메소드 */
@@ -139,7 +149,7 @@ public class PlaceController {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
 		}
-		return new ResponseEntity<>(result, HttpStatus.OK);//정상적으로 삽입이 되었다면;//ResponseEntity객체에 응답할 데이터 list와 상태를 저장하여 전달
+		return new ResponseEntity<>(result, HttpStatus.OK);//정상적으로 삽입이 되었다면
 	}
 	
 	/** 23.02.07 나슬기: 시설 메뉴 수정 처리 메소드 */
@@ -152,7 +162,7 @@ public class PlaceController {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
 		}
-		return new ResponseEntity<>(HttpStatus.OK);//정상적으로 삽입이 되었다면;//ResponseEntity객체에 응답할 데이터 list와 상태를 저장하여 전달
+		return new ResponseEntity<>(HttpStatus.OK);//정상적으로 삽입이 되었다면
 	}
 	
 	/** 23.02.07 나슬기: 시설 메뉴 삭제 처리 메소드 */
@@ -165,6 +175,6 @@ public class PlaceController {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
 		}
-		return new ResponseEntity<>(HttpStatus.OK);//정상적으로 삽입이 되었다면;//ResponseEntity객체에 응답할 데이터 list와 상태를 저장하여 전달
+		return new ResponseEntity<>(HttpStatus.OK);//정상적으로 삽입이 되었다면
 	}
 }

@@ -1,3 +1,5 @@
+header{ background-color: #fff; }
+
 /* 이미지 슬라이드 */
 .img_wrap{}
 .img_wrap .no-image{ font-size: 300px; text-align: center; }
@@ -13,7 +15,7 @@
 .detail_wrap .title_wrap{ justify-content: space-between; align-items: flex-end; }
 .detail_wrap .reveiw_avg{ margin: 10px 0 30px; }
 .detail_wrap .reveiw_avg i{ display: inline; color: #ffb100; }
-.detail_wrap .tab_wrap{ position: sticky; top: 60px; left: 0; z-index: 2; }
+.detail_wrap .tab_wrap{ background-color: #fff; position: sticky; top: 60px; left: 0; z-index: 2; }
 .detail_wrap .tab_wrap li{ flex: 1; }
 .detail_wrap article > ul > li { padding: 20px; border-bottom: 1px dotted var(--subGray_20); box-sizing: border-box; }
 .detail_wrap article > ul > li:first-child{ border: none; }
@@ -36,3 +38,20 @@
 #menu_wrap .menu_list li p span:nth-child(2) input{ text-align: right; }
 #menu_wrap .menu_list li .btn_wrap{ width: 125px; }
 #menu_wrap .menu_list li .btn_wrap .btn{ width: 47%; height: 2.5em; }
+
+/* 리뷰 리스트 */
+#review_wrap .btn_wrap{ justify-content: space-between; align-items: center; gap: 10px; }
+#review_wrap .btn_wrap .btn{ flex: 1; height: 50px; font-size: 1.2em; text-align: center; line-height: 2; }
+#review_wrap li{ gap: 20px; }
+#review_wrap li img{ width: 50px; height: 50px; object-fit: cover; border-radius: 10px; }
+#review_wrap .re_wrap .summary{ align-items: center; gap: 10px; font-size: 1.2em; }
+#review_wrap .re_wrap .summary span:not(:last-child)::after{ content: "|"; margin-left: 10px; }
+#review_wrap .re_wrap .summary .star i{ padding-bottom: 0.3em; color: #ffb100; }
+#review_wrap .re_wrap .summary .reg{ color: var(--subGray_50); font-size: 0.8em; }
+
+/* 관리자 */
+#admin_body .detail_wrap .tab_wrap{ top: 0; }
+#admin_body .del_pop{ width: calc(100% - 250px); height: 100vh; position: fixed; top: 0; left: 250px; z-index: 999; font-size: 1.5em; }
+#admin_body.on .del_pop{ width: calc(100% - 70px); left: 70px; }
+#admin_body .del_pop::after{ display: block; content: ""; width: 100%; height: 100%; background-color: #00000080; position: absolute; top: 0; left: 0; z-index: -1; }
+#admin_body .del_pop p{ color: #fff; }
