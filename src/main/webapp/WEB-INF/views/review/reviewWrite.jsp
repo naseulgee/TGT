@@ -32,8 +32,6 @@
 		return false;
 	} return true;
 	}
-	
-	
 </script>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->

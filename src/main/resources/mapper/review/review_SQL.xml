@@ -24,13 +24,16 @@
 	<!-- 23.01.25 신현지: 리뷰테이블과 시설테이블을 조인하여 리뷰에 대한 정보 + 시설의 정보를 가져옴-->
 	<!-- 23.02.05 신현지: 최근작성 순으로 정렬 -->
 	<select id="openMyReviews" parameterType="hashmap" resultType="hashmap">
-	select  a.re_idx,a.re_pl_idx,a.re_star,a.re_contents ,b.pl_name,a.re_reg_date 
-	from ( 
-	    select * from review    
-	    where re_writer_id = #{mem_id}
-	    and re_del_gb='N'
-	) a left join place b on a.re_pl_idx = b.pl_idx  
-	order by a.re_reg_date desc
+		<include refid="common.pagingPre"/>
+			<![CDATA[
+			select  a.re_idx,a.re_pl_idx,a.re_star,a.re_contents ,b.pl_name,a.re_reg_date 
+			from ( 
+			    select * from review    
+			    where re_writer_id = #{mem_id}
+			    and re_del_gb='N'
+			) a left join place b on a.re_pl_idx = b.pl_idx  
+			order by a.re_reg_date desc]]>
+		<include refid="common.pagingPost"/>
 	</select>
 	
 	<!-- 23.01.25 신현지: 내가 작성한 하나의 리뷰 출력-->

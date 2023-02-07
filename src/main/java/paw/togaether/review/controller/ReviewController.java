@@ -54,7 +54,7 @@ public class ReviewController {
 			reviewService.insertReview(commandMap.getMap(),session,uploadFile); //사용시 주석 풀어주기
 			return new ResponseEntity<String>("/mypage/review/list.paw",HttpStatus.OK);
 		} else {
-			return new ResponseEntity<String>("리뷰는 하루에 1개만 작성할 수 있습니다.",HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("reviewForOneDay",HttpStatus.BAD_REQUEST);
 		}
 		
 	}
@@ -63,12 +63,39 @@ public class ReviewController {
 	 */
 	@RequestMapping(value="/mypage/review/list")
 	public ModelAndView openMyReviews(CommandMap commandMap, HttpSession session) throws Exception{
+		
+		//list만 호출
 		ModelAndView m = new ModelAndView("/mypage/review/list");
-		String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기
+		
+		/*String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기
 		commandMap.put("mem_id", mem_id);
 		
 		List<Map<String,Object>> reviewList = reviewService.openMyReviews(commandMap.getMap());
+		m.addObject("reviewList",reviewList);*/
+		return m;
+	}
+	
+	/** 23.02.07 신현지: list출력 메서드를 호출하여 
+	 * 목록 정보를 조회하고 그 값을 화면에 전달하는 역할
+	 */
+	@RequestMapping(value="/mypage/review/selectList")
+	public ModelAndView selectMyReviews(CommandMap commandMap, HttpSession session) throws Exception{
+		
+		ModelAndView m = new ModelAndView("jsonView");
+		
+		String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기
+		commandMap.put("mem_id", mem_id);
+		
+		
+		List<Map<String,Object>> reviewList = reviewService.selectMyReviews(commandMap.getMap());
 		m.addObject("reviewList",reviewList);
+
+		if(reviewList.size() > 0){
+			m.addObject("TOTAL", reviewList.get(0).get("TOTAL_COUNT"));
+		}
+		else{
+			m.addObject("TOTAL", 0);
+		}
 		return m;
 	}
 	

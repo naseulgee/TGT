@@ -16,7 +16,7 @@ public class ReviewDAO extends AbstractDAO{
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> openMyReviews(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> selectMyReviews(Map<String, Object> map) throws Exception {
 		 return (List<Map<String, Object>>)selectList("review.openMyReviews", map);
 	}
 	
@@ -68,7 +68,6 @@ public class ReviewDAO extends AbstractDAO{
 	public Map<String, Object> checkTodayReview(Map<String, Object> map) throws Exception {
 		 return (Map<String, Object>)selectOne("review.checkTodayReview", map);
 	}
-	
 	
 
 }

@@ -44,11 +44,6 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public List<Map<String, Object>> openMyReviews(Map<String, Object> map) throws Exception {
-		return reviewDAO.openMyReviews(map);
-	}
-
-	@Override
 	public Map<String, Object> openMyReview(Map<String, Object> map) throws Exception {
 		return reviewDAO.openMyReview(map);
 	}
@@ -141,6 +136,11 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public Map<String, Object> checkTodayReview(Map<String, Object> map) throws Exception {
 		return reviewDAO.checkTodayReview(map);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectMyReviews(Map<String, Object> map) throws Exception {
+		return reviewDAO.selectMyReviews(map);
 	}
 
 }
