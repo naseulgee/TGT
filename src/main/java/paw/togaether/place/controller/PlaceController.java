@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -18,14 +17,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import paw.togaether.common.domain.CommandMap;
 import paw.togaether.place.service.PlaceService;
+import paw.togaether.review.service.ReviewService;
 
 @Controller
 @RequestMapping("/place")
@@ -35,6 +35,9 @@ public class PlaceController {
 	//시설, 시설 카테고리, 시설 메뉴 관련 서비스
 	@Resource(name="placeService")
 	private PlaceService placeService;
+	//리뷰 관련 서비스
+	@Resource(name="reviewService")
+	private ReviewService reviewService;
 	
 	/** 23.01.30 나슬기: 시설 리스트 메소드 */
 	@GetMapping("/list")
@@ -67,6 +70,7 @@ public class PlaceController {
 		map.put("ph_board_type", "place");
 		mv.addObject("detail", placeService.placeDetail(map));
 		mv.addObject("menu", placeService.menuList(map));
+		mv.addObject("review_avg", reviewService.openReviewInfo(map));
 		return mv;
 	}
 	
@@ -118,32 +122,49 @@ public class PlaceController {
 		return null;
 	}
 	
-	/** 23.01.13 나슬기: 시설 삭제 처리 메소드 */
+	/** 23.01.13 나슬기: 시설 삭제요청 처리 메소드 */
 	@PostMapping("/delete")
 	public void placeDeleteReq(CommandMap commandMap) {}
 	
 	//시설 메뉴 관련
-	/** 23.01.13 나슬기: 시설 메뉴 등록 처리 메소드 */
+	/** 23.02.07 나슬기: 시설 메뉴 등록 처리 메소드 */
 	@PostMapping(value = "/menu/write", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<Map<String, Object>>> menuReg(CommandMap commandMap) {
-		List<Map<String, Object>> list = new ArrayList<>();
-		return new ResponseEntity<>(list, HttpStatus.OK);//ResponseEntity객체에 응답할 데이터 list와 상태를 저장하여 전달
+	public ResponseEntity<Integer> menuReg(@RequestBody Map<String, Object> commandMap) {
+		int result;
+		try {
+			placeService.menuWrite(commandMap);
+			result = Integer.parseInt(commandMap.get("PM_IDX_NEXT").toString());
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+		}
+		return new ResponseEntity<>(result, HttpStatus.OK);//정상적으로 삽입이 되었다면;//ResponseEntity객체에 응답할 데이터 list와 상태를 저장하여 전달
 	}
 	
-	/** 23.01.13 나슬기: 시설 메뉴 수정 처리 메소드 */
+	/** 23.02.07 나슬기: 시설 메뉴 수정 처리 메소드 */
 	@PostMapping(value = "/menu/modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<Map<String, Object>>> menuModi(CommandMap commandMap) {
-		List<Map<String, Object>> list = new ArrayList<>();
-		return new ResponseEntity<>(list, HttpStatus.OK);//ResponseEntity객체에 응답할 데이터 list와 상태를 저장하여 전달
+	public ResponseEntity<HttpStatus> menuModi(@RequestBody Map<String, Object> commandMap) {
+		try {
+			placeService.menuModify(commandMap);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);//정상적으로 삽입이 되었다면;//ResponseEntity객체에 응답할 데이터 list와 상태를 저장하여 전달
 	}
 	
-	/** 23.01.13 나슬기: 시설 메뉴 삭제 처리 메소드 */
+	/** 23.02.07 나슬기: 시설 메뉴 삭제 처리 메소드 */
 	@PostMapping(value = "/menu/delete", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<Map<String, Object>>> menuDelete(CommandMap commandMap) {
-		List<Map<String, Object>> list = new ArrayList<>();
-		return new ResponseEntity<>(list, HttpStatus.OK);//ResponseEntity객체에 응답할 데이터 list와 상태를 저장하여 전달
+	public ResponseEntity<HttpStatus> menuDelete(@RequestBody Map<String, Object> commandMap) {
+		try {
+			placeService.menuDelete(commandMap);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);//정상적으로 삽입이 되었다면;//ResponseEntity객체에 응답할 데이터 list와 상태를 저장하여 전달
 	}
 }

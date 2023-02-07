@@ -68,7 +68,7 @@ function set_map() {
 					map: map,
 					position: coords,
 					content: content,
-					yAnchor: 0
+					yAnchor: -0.3
 				});
 
 				//지도 중심을 계산하기 위한 좌표 추가
