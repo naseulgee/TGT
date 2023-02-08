@@ -26,7 +26,9 @@
 	<select id="openMyReviews" parameterType="hashmap" resultType="hashmap">
 		<include refid="common.pagingPre"/>
 			<![CDATA[
-			select  a.re_idx,a.re_pl_idx,a.re_star,a.re_contents ,b.pl_name,a.re_reg_date 
+			select  
+			ROW_NUMBER() OVER (ORDER BY a.re_reg_date DESC) RNUM,
+			a.re_idx,a.re_pl_idx,a.re_star,a.re_contents ,b.pl_name,a.re_reg_date 
 			from ( 
 			    select * from review    
 			    where re_writer_id = #{mem_id}
@@ -94,11 +96,16 @@
 	
 	<!-- 23.02.06 신현지: 시설에 대한 모든 리뷰가져오기 -->
 	<select id="openAllPlaceReviews" resultType="hashmap">
-		select * 
-		from review
+		<include refid="common.pagingPre"/>
+			<![CDATA[
+		select ROW_NUMBER() OVER (ORDER BY re_reg_date DESC) RNUM,
+		re_idx,re_pl_idx,re_writer_id, re_writer_name, 
+		re_star, re_contents, re_reg_date, re_mod_date,re_del_gb
+		from review a
 		where re_del_gb = 'N'
 		and re_pl_idx = #{pl_idx}
-		order by re_reg_date desc
+		]]>
+		<include refid="common.pagingPost"/>
 	</select>
 	
 	<!-- 23.02.06 신현지: 리뷰에 대한 사진가져오기 -->

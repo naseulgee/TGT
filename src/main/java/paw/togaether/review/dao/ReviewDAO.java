@@ -17,7 +17,7 @@ public class ReviewDAO extends AbstractDAO{
 
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectMyReviews(Map<String, Object> map) throws Exception {
-		 return (List<Map<String, Object>>)selectList("review.openMyReviews", map);
+		 return (List<Map<String, Object>>)selectPagingList("review.openMyReviews", map);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -51,7 +51,7 @@ public class ReviewDAO extends AbstractDAO{
 	
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> openAllPlaceReviews(Map<String, Object> map) throws Exception {
-		 return (List<Map<String, Object>>)selectList("review.openAllPlaceReviews", map);
+		 return (List<Map<String, Object>>)selectPagingList("review.openAllPlaceReviews", map);
 	}
 	
 	@SuppressWarnings("unchecked")

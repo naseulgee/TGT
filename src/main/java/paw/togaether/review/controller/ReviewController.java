@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,20 +28,16 @@ public class ReviewController {
 	private ReviewService reviewService;
 	
 	
-	/** 23.01.11 신현지: 리뷰작성폼으로 이동하는 메서드
-	 */
+	/** 23.01.11 신현지: 리뷰작성폼으로 이동하는 메서드 */
 	@RequestMapping(value="/review/write")
 	public ModelAndView openReviewWrite(CommandMap commandMap) throws Exception{
 		ModelAndView m = new ModelAndView("/review/reviewWrite");
-		
-		System.out.println("시설번호:"+commandMap);
 		m.addObject("re_pl_idx",commandMap.get("pl_idx"));
 		return m;
 	}
 	
 	
-	/** 23.01.13 신현지: 리뷰등록 메서드
-	 */
+	/** 23.01.13 신현지: 리뷰등록 메서드 */
 	@RequestMapping(value="/review/insert")
 	public ResponseEntity<String> insertReview(CommandMap commandMap,HttpSession session, MultipartFile[] uploadFile) throws Exception{
 		
@@ -59,25 +56,16 @@ public class ReviewController {
 		
 	}
 	
-	/** 23.01.20 신현지: 마이페이지에서 내 리뷰목록 조회 메서드
-	 */
+	/** 23.01.20 신현지: 마이페이지에서 내 리뷰목록 조회 메서드*/
 	@RequestMapping(value="/mypage/review/list")
 	public ModelAndView openMyReviews(CommandMap commandMap, HttpSession session) throws Exception{
-		
 		//list만 호출
 		ModelAndView m = new ModelAndView("/mypage/review/list");
-		
-		/*String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기
-		commandMap.put("mem_id", mem_id);
-		
-		List<Map<String,Object>> reviewList = reviewService.openMyReviews(commandMap.getMap());
-		m.addObject("reviewList",reviewList);*/
 		return m;
 	}
 	
 	/** 23.02.07 신현지: list출력 메서드를 호출하여 
-	 * 목록 정보를 조회하고 그 값을 화면에 전달하는 역할
-	 */
+	 * 목록 정보를 조회하고 그 값을 화면에 전달하는 역할*/
 	@RequestMapping(value="/mypage/review/selectList")
 	public ModelAndView selectMyReviews(CommandMap commandMap, HttpSession session) throws Exception{
 		
@@ -85,9 +73,10 @@ public class ReviewController {
 		
 		String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기
 		commandMap.put("mem_id", mem_id);
-		
-		
 		List<Map<String,Object>> reviewList = reviewService.selectMyReviews(commandMap.getMap());
+		for(Map<String,Object> review : reviewList) {
+			System.out.println(review);
+		}
 		m.addObject("reviewList",reviewList);
 
 		if(reviewList.size() > 0){
@@ -99,8 +88,7 @@ public class ReviewController {
 		return m;
 	}
 	
-	/** 23.01.25 신현지: 마이페이지에서 내 리뷰(특정 하나) 조회 메서드
-	 */
+	/** 23.01.25 신현지: 마이페이지에서 내 리뷰(특정 하나) 조회 메서드*/
 	@RequestMapping(value="/mypage/review/detail")
 	public ModelAndView openMyReview(CommandMap commandMap) throws Exception{
 		ModelAndView m = new ModelAndView("/mypage/review/myReview");
@@ -119,8 +107,7 @@ public class ReviewController {
 		return m;
 	}
 	
-	/**23.01.25 신현지: 리뷰수정폼으로 이동
-	 */
+	/**23.01.25 신현지: 리뷰수정폼으로 이동*/
 	@RequestMapping(value="/review/updateForm")
 	public ModelAndView openReviewUpdate(CommandMap commandMap) throws Exception{
 		ModelAndView m = new ModelAndView("/mypage/review/updateForm");
@@ -134,8 +121,7 @@ public class ReviewController {
 		return m;
 	}
 	
-	/** 23.01.31 신현지 : 리뷰수정
-	  */
+	/** 23.01.31 신현지 : 리뷰수정*/
 	@RequestMapping(value="/review/update")
 	public ResponseEntity<String> updateReview(CommandMap commandMap,HttpSession session, MultipartFile[] uploadFile) throws Exception{
 
@@ -145,8 +131,7 @@ public class ReviewController {
 	}
 	
 	
-	/** 23.01.29 신현지 : 리뷰삭제
-	  */
+	/** 23.01.29 신현지 : 리뷰삭제*/
 	@RequestMapping(value="/review/delete")
 	public ModelAndView deleteReview(CommandMap commandMap, HttpSession session) throws Exception{
 		ModelAndView m = new ModelAndView("redirect:/mypage/review/list.paw"); //삭제 후 리뷰목록으로 이동
@@ -154,19 +139,30 @@ public class ReviewController {
 		return m;
 	}
 	
-	/** 23.02.06 신현지 : 리뷰다섯개 가져오기
-	  */
-	@RequestMapping(value="/review/test")
-	public ModelAndView openFiveReviews(CommandMap commandMap, HttpSession session) throws Exception{
-		ModelAndView m = new ModelAndView("redirect:/sample.paw"); //삭제 후 리뷰목록으로 이동
-		commandMap.put("pl_idx", 2);
-		List<Map<String,Object>> reviews = reviewService.openFiveReviews(commandMap.getMap());
-		
-		m.addObject("reviews",reviews);
+	
+	/** 23.02.08 신현지 : 시설에 대한 모든 리뷰 출력*/
+	@RequestMapping(value="/place/detail/{pl_idx}/review/list")
+	public ModelAndView openPlaceAllReviews(@PathVariable("pl_idx") int pl_idx , HttpSession session) throws Exception{
+		ModelAndView m = new ModelAndView("/review/list");
+		m.addObject("pl_idx", pl_idx);
 		return m;
 	}
 	
-
+	/** 23.02.08 신현지 : 시설에 대한 모든 리뷰를 페이징해서 출력*/
+	@RequestMapping(value="/place/detail/{pl_idx}/review/selectList")
+	public ModelAndView selectPlaceAllReviews(@PathVariable("pl_idx") int pl_idx , HttpSession session) throws Exception{
+		ModelAndView m = new ModelAndView("jsonView");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pl_idx", pl_idx);		
+		List<Map<String,Object>> reviewList = reviewService.openAllPlaceReviews(map);
+		m.addObject("reviewList", reviewList);
+		
+		if(reviewList.size() > 0){
+			m.addObject("TOTAL", reviewList.get(0).get("TOTAL_COUNT"));
+		} else{ m.addObject("TOTAL", 0); }
+		return m;
+	}
 	
 
 }

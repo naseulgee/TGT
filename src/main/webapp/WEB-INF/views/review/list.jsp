@@ -10,15 +10,15 @@
 img { border-radius : 15px; height : 100%;}
 </style>
 
-<!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <main class="layoutCenter">
 	<%@ include file="/WEB-INF/include/nav_mypage.jspf" %>
 		<div class="main_wrap txt_center">
 		
-		<h1>나의 리뷰</h1>
-		<div class="color">${mem_dog_name}(${mem_id})님의 리뷰페이지입니다 :)</div><br><br>
+		<h1>시설리뷰</h1>
+		<!-- 시설번호 -->
+		<input type="hidden" value="${pl_idx}" id="pl_idx" name="pl_idx">
 
-			<table >
+			<table>
 				<tbody class="r_list">
 					<!-- 나의 리뷰리스트가 담기는 위치 -->
 				</tbody>
@@ -36,12 +36,13 @@ img { border-radius : 15px; height : 100%;}
 <script>
 $(document).ready(function(){
 	fn_selectBoardList(1); //1페이지 받기
-
 });
 
 function fn_selectBoardList(pageNo){
 	var comAjax = new ComAjax();
-	comAjax.setUrl("<c:url value='/mypage/review/selectList.paw' />"); //페이징실행 컨트롤러url
+	let pl_idx = $("#pl_idx").val();
+	console.log(pl_idx);
+	comAjax.setUrl("<c:url value='/place/detail/"+pl_idx+"/review/selectList.paw' />"); //페이징실행 컨트롤러url
 	comAjax.setCallback("fn_selectBoardListCallback"); //setCallback은 Ajax 요청이 완료된 후 호출될 함수의 이름을 지정
 	
 	//페이징 세팅
@@ -60,7 +61,7 @@ function fn_selectBoardListCallback(data){
 	let total = data.TOTAL;
 	let body = $(".r_list");
 	body.empty();
-	
+	console.log("글 총개수 : "+ total);
 	if(total == 0){
 		let str = "<div class='center'><br><br>🤔<br>작성하신 리뷰가 없어요</div>";
 		body.html(str);
@@ -81,7 +82,7 @@ function fn_selectBoardListCallback(data){
 			str+= "<tr><td><div id='regDate' class='txt_right'>"+ rDate+"</div>" 
 					+"<div class='pp flexBetween'>"
 					+"<div class='txt_left'><p id='ppp'>"
-					+"<span id='place' class='txt_big'>" + i.PL_NAME + "&nbsp;|&nbsp;</span>";
+					+"<span id='place' class='txt_big'>" + i.RE_WRITER_NAME+(i.RE_WRITER_ID)+ "&nbsp;|&nbsp;</span>";
 					
 					for(let j =1 ; j<=i.RE_STAR;j++) {
 						str+= "<i class='fa-solid fa-star color' id='stars'></i>";
@@ -103,19 +104,30 @@ function fn_selectBoardListCallback(data){
 			}
 			
 			
-			str+="</span> &nbsp;&nbsp;</div>";
-			str+="<div><form action='/mypage/review/detail.paw' method='POST'>";
-			str+="<input type='submit' class='btn slim' value='상세보기'>"; 
-			str+="<input type='hidden' name='re_idx' value='"+i.RE_IDX+"'>"
-			str+="<input type='hidden' name='pl_idx' value='"+i.RE_PL_IDX+"'>"
-			str+="<input type='hidden' name='ph_board_type' value='review'>"
-			str+="</form></div></div>";
-			str+="</div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>";
-			str+="<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td></tr>";
+			/* str+="<li class="flex">
+			<c:if test="${!empty i.photoList}">
+			<img class="pop_img" alt="${i.RE_WRITER_NAME}님의 리뷰 이미지" src="/resources/upload/s_${i.photoList[0].PH_STORED_FILE_NAME}">
+		</c:if>
+		<div class="re_wrap">
+			<p class="summary flex">
+				<span class="writer">${i.RE_WRITER_NAME}</span>
+				<span class="star flexCenter">
+					<c:forEach var="star" begin="1" end="5">
+						<c:choose>
+							<c:when test="${i.RE_STAR >= star}"><i class="fa-solid fa-star"></i></c:when>
+							<c:otherwise><i class="fa-regular fa-star"></i></c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</span>
+				<span class="reg">${fn:split(i.RE_REG_DATE, " ")[0]}</span>
+			</p>
+			<p>${i.RE_CONTENTS}</p>
+		</div>
+	</li> */
 		});
+		console.log(str);
 		body.append(str);
 
 	}
 }
 </script>
-<%@ include file="/WEB-INF/include/common-footer.jspf" %>		

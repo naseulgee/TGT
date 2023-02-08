@@ -112,12 +112,11 @@ public class ReviewServiceImpl implements ReviewService {
 		return list;
 	}
 
+	//시설별 리뷰 개수와 평균
 	@Override
 	public Map<String, Object> openReviewInfo(Map<String, Object> map) throws Exception {
 		return reviewDAO.openReviewInfo(map);
 	}
-
-	
 	
 	//관리자 페이지에서 모든 리뷰 표시
 	@Override
@@ -133,6 +132,7 @@ public class ReviewServiceImpl implements ReviewService {
 		return list;
 	}
 
+	//오늘 내가 작성한 리뷰가 있는지 확인
 	@Override
 	public Map<String, Object> checkTodayReview(Map<String, Object> map) throws Exception {
 		return reviewDAO.checkTodayReview(map);
@@ -140,7 +140,15 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public List<Map<String, Object>> selectMyReviews(Map<String, Object> map) throws Exception {
-		return reviewDAO.selectMyReviews(map);
+		List<Map<String, Object>> list = reviewDAO.selectMyReviews(map);
+		for (Map<String,Object> oneMap : list) {
+			oneMap.put("re_idx", oneMap.get("RE_IDX"));//re_idx 소문자로 재설정
+			
+			//하나의 리뷰에 대한 사진들가져오기
+			List<Map<String, Object>> photoList = reviewDAO.openReviewPhoto(oneMap);
+			oneMap.put("photoList", photoList);	
+		}
+		return list;
 	}
 
 }
