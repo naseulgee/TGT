@@ -122,6 +122,9 @@ public class LoginController {
         boolean dataExists = (boolean) memberInfo.get("dataExists");
 
         if(dataExists){
+           session.setAttribute("num", memberInfo.get("num"));
+           session.setAttribute("before", System.currentTimeMillis());
+
            mv.setViewName("/member/passwordAuth");
         } else {
             mv.setViewName("/member/failed");
@@ -129,7 +132,88 @@ public class LoginController {
 
         return mv;
     }
+
+    @GetMapping(value="/member/passwordAuth")
+    public ModelAndView passwordAuth() throws Exception{
+        ModelAndView mv = new ModelAndView("/member/passwordAuth");
+
+        return mv;
+    }
+
+    @GetMapping(value="/member/failed")
+    public ModelAndView failed() throws Exception{
+        ModelAndView mv = new ModelAndView("/member/failed");
+
+        return mv;
+    }
+
+
+    @PostMapping(value="/member/setPassword")
+    public ModelAndView setPassword(CommandMap commandMap,HttpSession session) throws Exception {
+        ModelAndView mv = new ModelAndView();
+
+        Map<String, Object> AuthNum = loginService.isNumCorrect(commandMap.getMap(), session);
+        boolean isNumCorrect = (boolean)AuthNum.get("isNumCorrect");
+
+        long before = (long)session.getAttribute("before");
+        long after = System.currentTimeMillis ();
+        long interval = (long)((after -before) / 1000.0);
+
+        if(interval < 180) {
+            if(isNumCorrect) {
+                mv.setViewName("member/setNewPassword");
+            } else {
+                session.removeAttribute("num");
+                session.removeAttribute("before");
+                mv.addObject("errorMessage", "인증번호가 틀렸습니다.");
+                mv.setViewName("/member/errorPage");
+            }
+            return mv;
+        } else {
+            session.removeAttribute("num");
+            session.removeAttribute("before");
+            mv.setViewName("member/timeout");
+        }
+
+        return mv;
+    }
+
+    @GetMapping(value="/member/incorrectAuthNum")
+    public ModelAndView incorrectAuthNum() throws Exception {
+        ModelAndView mv = new ModelAndView("errorPage");
+
+        return mv;
+    }
+
+    @GetMapping(value="/member/setNewPassword")
+    public ModelAndView setNewPassword() throws Exception {
+        ModelAndView mv = new ModelAndView("member/setNewPassword");
+
+        return mv;
+    }
+
+    @PostMapping(value="/member/postsetNewPassword")
+    public ModelAndView postsetNewPassword(CommandMap commandMap, HttpSession session) throws Exception {
+        ModelAndView mv = new ModelAndView("member/succesSetNewPassword");
+
+        loginService.setNewPassword(commandMap.getMap(), session);
+
+        return mv;
+    }
+
+    @GetMapping(value="/member/timeout")
+    public ModelAndView timeout() throws Exception {
+        ModelAndView mv = new ModelAndView("member/timeout");
+
+        return mv;
+    }
+
+
+
+
 }
+
+
 
 
 

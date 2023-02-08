@@ -25,6 +25,13 @@
         ]]>
      </select>
 
+    <update id = "setNewPassword" parameterType="hashmap">
+        UPDATE MEMBERS
+            SET MEM_PW = #{MEM_PW}
+        WHERE
+            MEM_EMAIL = #{MEM_EMAIL}
+    </update>
+
 
 
 

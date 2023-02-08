@@ -21,5 +21,10 @@ public class LoginDAO extends AbstractDAO {
 
         return (Map<String, Object>) selectOne("login.selectMemberInfo", map);
     }
+
+    public void setNewPassword(Map<String, Object> map) throws Exception{
+
+        update("login.setNewPassword", map);
+    }
 }
 

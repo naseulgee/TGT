@@ -17,7 +17,7 @@
         <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-[#f0b1aa]">비밀번호를 잊으셨나요?</h2>
 
       </div>
-      <form class="mt-8 space-y-6" action="/member/setPassword" method="POST">
+      <form class="mt-8 space-y-6" action="/member/passwordAuth" method="POST">
         <div class="-space-y-px rounded-md shadow-sm">
           <div>
             <label for="MEM_ID" class="sr-only">ID</label>

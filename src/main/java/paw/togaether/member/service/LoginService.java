@@ -10,4 +10,8 @@ public interface LoginService {
 
 
     Map<String, Object> selectMemberInfo(Map<String, Object> map, HttpSession session) throws Exception;
+
+    Map<String, Object> isNumCorrect(Map<String, Object> map, HttpSession session) throws Exception;
+
+    void setNewPassword(Map<String, Object> map, HttpSession session) throws Exception;
 }

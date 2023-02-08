@@ -2,6 +2,7 @@
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<script src = "https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script>
     tailwind.config = {
         important: true,
@@ -15,23 +16,23 @@
             <div>
                 <img class="mx-auto h-12 w-auto" src="/resources/image/logo.png" alt="투개더">
                 <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-[#f0b1aa]">당신의 반려견을 소개해보세요.</h2>
-
             </div>
             <form class="mt-8 space-y-6" action="/member/login" method="POST">
                 <div class="-space-y-px rounded-md shadow-sm">
                     <div>
                         <label for="MEM_ID" class="sr-only">ID</label>
-                        <input id="MEM_ID" name="MEM_ID" autocomplete="username" required class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-[#f08080] focus:outline-none focus:ring-[#f08080] sm:text-sm" placeholder="ID">
+                        <input id="MEM_ID" name="MEM_ID" autocomplete="username" class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-[#f08080] focus:outline-none focus:ring-[#f08080] sm:text-sm" placeholder="ID">
                     </div>
                     <div>
                         <label for="MEM_PW" class="sr-only">Password</label>
-                        <input id="MEM_PW" name="MEM_PW" type="password" autocomplete="current-password" required class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-[#f08080] focus:outline-none focus:ring-[#f08080] sm:text-sm" placeholder="Password">
+                        <input id="MEM_PW" name="MEM_PW" type="password" autocomplete="current-password" class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-[#f08080] focus:outline-none focus:ring-[#f08080] sm:text-sm" placeholder="Password">
                     </div>
                 </div>
 
                 <div class="flex items-center justify-between">
                     <div class="text-sm">
-                        <p class="text-[#f0b1aa]"><a href="/member/findID" class="font-medium text-[#f0b1aa]">아이디찾기</a>&nbsp&nbsp|&nbsp&nbsp<a href="/member/findPassword" class="font-medium text-[#f0b1aa]">비밀번호 찾기</a></p>
+                        <p class="text-[#f0b1aa]"><a href="/member/findID.paw" class="font-medium text-[#f0b1aa]">아이디찾기</a>&nbsp&nbsp|&nbsp&nbsp<a href="/member/findPassword.paw" class="font-medium text-[#f0b1aa]">비밀번호 찾기</a>
+                            <a href="/member/openMemberJoin.paw" class="font-medium text-[#f0b1aa] text-align:right;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp회원가입</a></p>
                     </div>
                 </div>
 
@@ -45,6 +46,11 @@
           </span>
                         Login
                     </button>
+                </div>
+                <div class="button-login" align ="center" >
+                    <a id="kakao-login-btn" >
+                        <img src="//k.kakaocdn.net/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="100%" height ="50px" />
+                    </a>
                 </div>
             </form>
         </div>
