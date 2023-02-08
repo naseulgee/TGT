@@ -7,26 +7,26 @@
 	</script>
 </c:if>
 <link rel="stylesheet" type="text/css" href="/resources/css/place/detail.css"/>
+<script src="/resources/js/place/detail.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/resources/css/common/img_pop_slide.css"/>
+<script src="/resources/js/common/img_pop_slide.js"></script>
+
 <link rel="stylesheet" type="text/css" href="/resources/css/place/kakao_map.css"/>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d678157a5b078cbbbb9fe15e8811eb2b&libraries=services"></script>
 <script src="/resources/js/place/kakao_map.js"></script>
-<script src="/resources/js/place/detail.js"></script>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <main class="layoutCenter">
 <!-- 이미지 슬라이드 -->
-<section class="img_wrap">
+<section class="img_slide">
 	<c:if test="${empty detail.photos}"><i class="fa-thin fa-image no-image"></i></c:if>
 	<c:if test="${!empty detail.photos}">
-		<div class="imgs">
+		<div class="img_wrap pop_img_wrap">
 			<c:forEach var="i" items="${detail.photos}" varStatus="status">
-				<img class="${status.index==0?'on':''}" src="/resources/upload/${i.PH_STORED_FILE_NAME}" alt="${i.PH_ORIGINAL_FILE_NAME}">
+				<img class="pop_img" src="/resources/upload/${i.PH_STORED_FILE_NAME}" alt="${i.PH_ORIGINAL_FILE_NAME}">
 			</c:forEach>
 		</div>
-		<c:if test="${fn:length(detail.photos) > 1}">
-			<button class="arrow prev" onclick="move_img('prev');" type="button"><i class="fa-solid fa-chevron-left"></i><span class="displaynone">다음 이미지</span></button>
-			<button class="arrow next" onclick="move_img('next');" type="button"><i class="fa-solid fa-chevron-right"></i><span class="displaynone">이전 이미지</span></button>
-		</c:if>
 	</c:if>
 </section>
 
@@ -111,7 +111,7 @@
 			<li class="addr flex flexWrap">
 				<strong>주소</strong>
 				<span>
-					<span class="loc">${detail.place.PL_LOC}</span>
+					<span class="loc">${detail.place.PL_LOC}</span> 
 					<button type="button" class="btn" onclick="copy_addr();"><span class="displaynone">복사하기</span><i class="fa-solid fa-copy"></i></button>
 				</span>
 			</li>
@@ -163,7 +163,7 @@
 			<c:forEach var="i" items="${review_list}">
 				<li class="flex">
 					<c:if test="${!empty i.photoList}">
-						<img alt="${i.RE_WRITER_NAME}님의 리뷰 이미지" src="/resources/upload/s_${i.photoList[0].PH_STORED_FILE_NAME}">
+						<img class="pop_img" alt="${i.RE_WRITER_NAME}님의 리뷰 이미지" src="/resources/upload/s_${i.photoList[0].PH_STORED_FILE_NAME}">
 					</c:if>
 					<div class="re_wrap">
 						<p class="summary flex">

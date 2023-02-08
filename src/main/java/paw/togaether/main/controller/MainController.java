@@ -14,15 +14,19 @@ import java.util.Map;
 
 @Controller
 public class MainController {
-	
 	@Resource(name = "mainService")
 	private MainService mainService;
 	
+	/* 23.02.08 나슬기: 메인 컨트롤러 */
+	@RequestMapping("/main")
+	public String main() { return "/main/main"; }
+	
+	//검색
 	@RequestMapping(value = "/search")
 	public ModelAndView search(CommandMap commandMap, HttpServletRequest request,
 			@RequestParam(value = "keyword", defaultValue = "") String keyword,
 			@RequestParam(value = "searchType", defaultValue = "") String searchType) throws Exception {
-		ModelAndView mv = new ModelAndView("main/search");
+		ModelAndView mv = new ModelAndView("/main/search");
 		
 		request.setAttribute("searchType", searchType);
 		request.setAttribute("keyword", keyword);
@@ -30,12 +34,11 @@ public class MainController {
 		return mv;
 	}
 	
-	
 	@RequestMapping(value = "/search/board")
 	public ModelAndView boardSearch(CommandMap commandMap, HttpServletRequest request,
 			@RequestParam(value = "keyword", defaultValue = "") String keyword,
 			@RequestParam(value = "searchType", defaultValue = "") String searchType) throws Exception {
-		ModelAndView mv = new ModelAndView("main/search_board");
+		ModelAndView mv = new ModelAndView("/main/search_board");
 		
 		request.setAttribute("searchType", searchType);
 		request.setAttribute("keyword", keyword);
@@ -62,12 +65,11 @@ public class MainController {
 		return mv;
 	}
 	
-	
 	@RequestMapping(value = "/search/together")
 	public ModelAndView togetherSearch(CommandMap commandMap, HttpServletRequest request,
 			@RequestParam(value = "keyword", defaultValue = "") String keyword,
 			@RequestParam(value = "searchType", defaultValue = "") String searchType) throws Exception {
-		ModelAndView mv = new ModelAndView("main/search_together");
+		ModelAndView mv = new ModelAndView("/main/search_together");
 		
 		request.setAttribute("searchType", searchType);
 		request.setAttribute("keyword", keyword);
@@ -93,13 +95,12 @@ public class MainController {
 			
 		return mv;
 	}
-
 	
 	@RequestMapping(value = "/search/place")
 	public ModelAndView plceSearch(CommandMap commandMap, HttpServletRequest request,
 			@RequestParam(value = "keyword", defaultValue = "") String keyword,
 			@RequestParam(value = "searchType", defaultValue = "") String searchType) throws Exception {
-		ModelAndView mv = new ModelAndView("main/search_place");
+		ModelAndView mv = new ModelAndView("/main/search_place");
 		
 		request.setAttribute("searchType", searchType);
 		request.setAttribute("keyword", keyword);

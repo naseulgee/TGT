@@ -2,19 +2,6 @@ $(document).ready(function() {
 	//지도 세팅 함수
 	set_map();
 });
-//이미지 넘기기 함수
-function move_img(param){
-	let target_img = document.querySelector(".img_wrap img.on");
-	console.log(param);
-	let before_img = target_img.previousElementSibling;
-	if(before_img == null) before_img = document.querySelector(".img_wrap img:last-child");
-	let next_img = target_img.nextElementSibling;
-	if(next_img == null) next_img = document.querySelector(".img_wrap img:first-child");
-	
-	if(param == "next") next_img.classList.add("on");
-	if(param == "priv") before_img.classList.add("on");
-	target_img.classList.remove("on");
-}
 
 //삭제요청/삭제취소 버튼 클릭 시 통신 함수
 function req_del(param){
@@ -144,4 +131,14 @@ function move_tab(param){
 	let target = document.querySelector("#"+param+"_wrap");
 	if(isNull(target)) return;
 	window.scrollTo(0, target.offsetTop-30);
+}
+
+//주소 복사 함수
+function copy_addr(){
+	let target = document.querySelector(".addr .loc");
+	if(isNull(target)) return alert("복사할 주소가 없습니다!");
+	window.navigator.clipboard.writeText(target.textContent).then(() => {
+	  // 복사가 완료되면 이 부분이 호출된다.
+	  alert("복사 완료!");
+	});
 }

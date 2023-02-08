@@ -42,3 +42,4 @@ section{ margin: 20px auto; }
 .list_wrap .pl_list .loc,
 .list_wrap .pl_list .menu{ color: var(--subGray_60); font-size: 0.9em; }
 .list_wrap .pl_list .loc{ margin: 5px 0; }
+.list_wrap .pl_list .del{ padding: 5px; background-color: var(--subColor); text-align: center; }

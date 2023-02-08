@@ -87,9 +87,12 @@ function fn_selectBoardListCallback(data) {
 			//삭제요청여부
 			let del = "";
 			if(value.PL_DEL_GB == 'Y'){
-				del = "삭제 요청이 들어온 시설입니다. 삭제하시겠습니까? "
-					+"<input class='btn slim' type='button' value='거절' onclick='del(\"N\","+value.PL_IDX+")'> "
-					+"<input class='btn slim warn' type='button' value='수락' onclick='del(\"Y\","+value.PL_IDX+")'>";
+				del = "<th class='t_menu'>삭제요청여부</th>"
+					+"<td class='del'>"
+						+"<span>삭제 요청이 들어온 시설입니다. 삭제하시겠습니까?</span>"
+						+" <input class='btn slim' type='button' value='거절' onclick='del(\"N\","+value.PL_IDX+")'>"
+						+" <input class='btn slim warn' type='button' value='수락' onclick='del(\"Y\","+value.PL_IDX+")'>"
+					+"</td>";
 			}
 			str += "<tr class='use_move' data-mapping='"+value.PL_IDX+"' data-href='/admin/place/detail/"+value.PL_IDX+".paw' onclick='move(this)'>";
 			str += "<th class='t_img'>이미지</th><td class='img'>" + image + "</td>"
@@ -98,7 +101,7 @@ function fn_selectBoardListCallback(data) {
 				+ "<th class='t_review'>평점</th><td class='review'> " + review + "</td>"
 				+ "<th class='t_loc'>주소</th><td class='loc'>" + value.PL_LOC + "</td>"
 				+ "<th class='t_menu'>메뉴</th><td class='menu'>" + menu + menu_count + "</td>"
-				+ "<th class='t_menu'>삭제요청여부</th><td class='del'>" + del + "</td>"
+				+ del
 			str += "</tr>";
 		});
 		pl_list_body.html(str);

@@ -1,15 +1,5 @@
 header{ background-color: #fff; }
 
-/* 이미지 슬라이드 */
-.img_wrap{}
-.img_wrap .no-image{ font-size: 300px; text-align: center; }
-.img_wrap{ width: 100%; height: 500px; position: relative; background-color: var(--subGray_5); }
-.img_wrap .imgs img{ width: 100%; height: 100%; object-fit: contain; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: opacity 0.5s; opacity: 0; }
-.img_wrap .imgs img.on{ opacity: 1; }
-.img_wrap .arrow{ position: absolute; top: 50%; transform: translateY(-50%); color: #fff; font-size: 40px; text-shadow: 0 0 10px black; }
-.img_wrap .arrow.prev{ left: 10px; }
-.img_wrap .arrow.next{ right: 10px; }
-
 /* 상단 시설 핵심 정보 */
 .detail_wrap{ margin: 20px auto; }
 .detail_wrap .title_wrap{ justify-content: space-between; align-items: flex-end; }
@@ -51,7 +41,4 @@ header{ background-color: #fff; }
 
 /* 관리자 */
 #admin_body .detail_wrap .tab_wrap{ top: 0; }
-#admin_body .del_pop{ width: calc(100% - 250px); height: 100vh; position: fixed; top: 0; left: 250px; z-index: 999; font-size: 1.5em; }
-#admin_body.on .del_pop{ width: calc(100% - 70px); left: 70px; }
-#admin_body .del_pop::after{ display: block; content: ""; width: 100%; height: 100%; background-color: #00000080; position: absolute; top: 0; left: 0; z-index: -1; }
-#admin_body .del_pop p{ color: #fff; }
+#admin_body .del{ width: 100%; margin-bottom: 20px; padding: 10px; box-sizing: border-box; background-color: var(--subColor); font-size: 1.5em; }
