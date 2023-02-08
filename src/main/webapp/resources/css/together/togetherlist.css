@@ -62,6 +62,12 @@ font-size : 15px;
 margin : 5px;
 }
 
+span.btn.warn{
+white-space : nowrap;
+font-size : 15px;
+margin : 5px;
+}
+
 li.tc{
 margin: 20px;
 }

@@ -66,7 +66,8 @@
 		<%-- </c:choose> --%>
 		
 		<!-- 23.02.02페이징처리 -->
-		<div id="PAGE_NAVI_T" class="flexCenter"></div>
+		<div id="PAGE_NAVI_T" class="flexCenter">
+		<input type="hidden" value="${now}" id="now" name="now"></div>
 		<input type="hidden" id="PAGE_INDEX_T" name="PAGE_INDEX_T" /> <br />
 	
 		<form id="commonForm" name="commonForm"></form>
@@ -98,6 +99,7 @@
 	$(document).ready(function(){
 		fn_selectBoardList2(1);//첫화면 보이기
 
+
 		});
 	
 
@@ -108,6 +110,7 @@
 			
 			comAjax.addParam("PAGE_INDEX", $("#PAGE_INDEX_T").val());
 			comAjax.addParam("PAGE_ROW", 6);
+			comAjax.addParam("now", $("#now").val());
 
 			//comAjax.addParam("keyword", $('#keyword').val());
 			//comAjax.addParam("searchType", $('#searchType').val());
@@ -119,12 +122,12 @@
 		function fn_selectBoardListCallback2(data) {
 			var total2 = data.TOTAL_T;
 			
-			//var body =$("#not_together")
 			var body = $(".together");
 			body.empty();
 			
 			var cate = $(".tcname");
 			cate.empty();
+			
 			
 			//카테고리 세팅 로직
 			if(data.catelist.length > 0){
@@ -153,18 +156,24 @@
 					eventName : "fn_selectBoardList2",
 				};
 				gfn_renderPaging_T(params2);
-
+				
+				var now = new Date()//날짜 형식의 변수 선언
+				var time = getFormatTime(now);
 				var str = "";
 				$.each(data.list,
 						function(key, value) {
 							str += "<tr class='use_move' name='togelist' data-href='/together/detail/"+value.TO_IDX +".paw' onclick='move(this,\"TO_IDX:"+value.TO_IDX+"\")'>";
 							str += "<input type='hidden' name='TO_IDX' id='TO_IDX' value=" + value.TO_IDX + ">";
 							str += "<td class='color'><span class='fa-solid fa-paw'></span>"+ "["+ value.TC_NAME + "]"  +value.TO_TITLE;
-							if(value.C == value.TO_PEOPLE){
-								str += "<span class='btn submit'>모집완료</span>";
-							}
-							if(value.C < value.TO_PEOPLE){
-								str += "<span class='btn submit'>모집중</span>";
+							if(now >= new Date(value.TO_DATE) && time > value.TO_TIME){//날짜 char 변수 날짜형식으로 변경
+								str += "<span class='btn warn'>마감</span>";
+							}else{
+								if(value.C == value.TO_PEOPLE){
+									str += "<span class='btn submit'>모집완료</span>";
+								}
+								if(value.C < value.TO_PEOPLE){
+									str += "<span class='btn submit'>모집중</span>";
+								}
 							}
 							str += "</td>";
 							str += "<td><span class='fa-solid fa-bone'></span>" + value.TO_TITLE + "</td>";		
@@ -186,17 +195,26 @@
 								str += "XL"
 							}
 							str += "</td>";
-							str += "<td><span class='fa-solid fa-bone'></span>언제개 : " +value.TO_DATE + "</td>";
+							str += "<td class='to_date'><span class='fa-solid fa-bone'></span>언제개 : " +value.TO_DATE + "</td>";
 							str += "<td><span class='fa-solid fa-bone'></span>몇시개 : "  + value.TO_TIME + "</td>";
 							str += "<td><span class='fa-solid fa-bone'></span>몇명이개 : "  + value.C + "/" + value.TO_PEOPLE + "</td>";
 							//str += "<input type='hidden' id='TW_TO_IDX' name='TW_TO_IDX' value=" + value.TO_IDX + "/>" + "</td>"			
-							str += "<td class='txt_right'>"  + value.TO_REG_DATE + "</td>";
+							str += "<td class='txt_right'>" + value.TO_REG_DATE + "</td>";
 							str +=	"</tr>";
 						});
-
+				
 				body.append(str);
 			}
+			   
 
+		}
+		//input time 과 비교위한 바꾸기
+		function getFormatTime(date){
+			var hours = date.getHours();//현재시간(한자리)
+			hours = hours >= 10? hours : '0' + hours;//hours 두자리로 지정
+			var minutes = date.getMinutes();//현재분
+			minutes = minutes >= 10? minutes : '0' + minutes; //minutes두자리로 지정
+			return hours + ":" + minutes;//형태변경
 		}
 		
 </script>

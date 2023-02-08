@@ -3,6 +3,7 @@
 	<!-- 어드민 제외한 모든 페이지의 헤더 -->
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
 <script src="/resources/js/together/togewrite.js"></script>
+
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <style>
 span.fa-solid.fa-paw {
@@ -50,8 +51,10 @@ height:100px;
 						</td>
 					</tr>
 					<tr>
-						<th scope="row">모집인원</th>
-						<td><select name="TO_PEOPLE" id="TO_PEOPLE">
+						<th scope="row">모집인원
+						<pre class="info_help"> 참고하개!:) 작성자 미포함 인원입니다:)</pre></th>
+						<td>
+						<select name="TO_PEOPLE" id="TO_PEOPLE">
 								<option value="1" selected>1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
@@ -71,7 +74,9 @@ height:100px;
 					</tr>
 					<tr>
 						<th scope="row">날짜</th>
-						<td><input type="date" id="TO_DATE" name="TO_DATE" /></td>
+						<td><input type="date" id="TO_DATE" name="TO_DATE" />
+							<input type="hidden" id="now" name="now" value="${now}">
+						</td>
 					</tr>
 					<tr>
 						<th scope="row">시간</th>

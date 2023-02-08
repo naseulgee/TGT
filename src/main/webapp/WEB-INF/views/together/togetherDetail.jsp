@@ -1,89 +1,14 @@
 <%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
+<link href="/resources/css/together/togetherdetail.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/e9bd4d3977.js" crossorigin="anonymous"></script>
-
-<style>
-span.fa-solid.fa-paw {
-color:#f0b1aa;
+<script>
+function logincheck(){
+	alert("로그인하세요:(");
+	location.href = '/member/login';//로그인 페이지로 이동
 }
-
-table{
-width:800px;
-font-size: 22px;
-margin-right:auto;
-margin-left:auto;
-position:relative;
-}
-
-tr{
-text-align:center;
-}
-.mypage{
-top:100px;
-}
-
-.with li{
-line-height:2em;
-font-size:20px;
-}
-
-.main_detail{
-float:right;
-padding-right:100px;
-}
-
-.btn.submit{
-margin-right:5px;
-}
-
-input[type="button"]{
-border:1px solid #9ea7ad;
-padding-top: 5px;
-padding-right: 10px;
-padding-bottom: 5px;
-padding-left: 10px
-}
-
-input#withmem.btn.slim{
-font-size : 15px;
-line-height:2em;
-}
-
-span#withmem{
-color:white; 
-}
-
-span#wtmem{
-color:#f0b1aa; 
-}
-
-button#wtmem{
-border:1px solid #9ea7ad;
-background-color : white;
-padding-top: 1px;
-padding-right: 2px;
-padding-bottom: 1px;
-padding-left: 5px;
-margin-right:5px;
-font-size : 17px;
-line-height:2em;
-}
-
-
-button#withmem{
-border:1px solid #9ea7ad;
-background-color : #f0b1aa;
-padding-top: 1px;
-padding-right: 2px;
-padding-bottom: 1px;
-padding-left: 5px;
-margin-right:5px;
-font-size : 17px;
-line-height:2em;
-}
-
-</style>
+</script>
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <main class="layoutCenter">
 	<%@ include file="/WEB-INF/include/nav_mypage.jspf"%>
@@ -99,44 +24,62 @@ line-height:2em;
 					<td class="bgColor" style="font-size:20px;"><span class="fa-solid fa-paw" style="color:white;"></span> ${map.TO_TC_NAME} <span class="fa-solid fa-paw" style="color:white;"></span></td>
 				</tr>
 				<tr>
-					<td><strong>${map.TO_TITLE}</strong></td>
+					<td>제목:)<strong>${map.TO_TITLE}</strong></td>
 				</tr>
 				<tr>
-					<td><strong>${map.BR_NAME}</strong>(이)랑!</td>
+					<td>누구랑? <strong>${map.BR_NAME}</strong>(이)랑!</td>
 				</tr>
 				<tr>
-					<td>${map.TO_DATE}|${map.TO_TIME}</td>
+					<td>날짜 :${map.TO_DATE} || 시간 :${map.TO_TIME}</td>
 				</tr>
 				<tr>
-					<td>${map.TO_LOC}</td>
+					<td>어디서 모이개?<strong>${map.TO_LOC}</strong></td>
 				</tr>
 				<tr>
-					<td class="toggle_ellip">${map.TO_CONTENTS}</td>
+					<td class="toggle_ellip">내용 : ${map.TO_CONTENTS}</td>
 				</tr>
 			</tbody>
 		</table>
 		<br/>
 		<div class="flexCenter">
-				<ul class="with">
-				<li><span class="fa-solid fa-paw"></span> 참여중이개!   ${map.C}/${map.TO_PEOPLE }</li>
-				<li><span class="fa-solid fa-paw"></span> 대장이개!    <button class="use_move" data-href = "/together/withdetail" onclick="move(this, 'TW_MEM_ID:${map.TO_WRITER_ID}', 'TO_IDX:${map.TO_IDX}')" id="wtmem">
-									<span class="fa-solid fa-paw" id="wtmem"></span> ${map.TO_WRITER_ID} </button></li>
+			<ul class="with">
+				<li class="txt_center"><span class="fa-solid fa-paw"></span> 참여중이개!   ${map.C}/${map.TO_PEOPLE }</li>
+				<li class="txt_center"><span class="fa-solid fa-paw"></span> 대장이개! 
+					<c:if test="${!empty mem_id}"> <!-- 로그인시 참여멤버 상세보기 가능 -->
+						<button class="use_move" data-href = "/together/withdetail" onclick="move(this, 'TW_MEM_ID:${map.TO_WRITER_ID}', 'TO_IDX:${map.TO_IDX}')" id="wtmem">
+						<span class="fa-solid fa-paw" id="wtmem"></span> ${map.TO_WRITER_ID} </button>
+					</c:if>
+					<c:if test="${empty mem_id}"><!-- 미로그인시 로그인함수 실행 -->
+						<button id="wtmem" onclick="logincheck();">
+						<span class="fa-solid fa-paw" id="wtmem"></span> ${map.TO_WRITER_ID} </button>
+					</c:if>
+				</li>
 				<c:choose>
-						<c:when test="${!empty withlist}">
-							<li><span class="fa-solid fa-paw"></span> 누구랑 가개?
+					<c:when test="${!empty withlist}">
+						<li>
+							<c:if test="${!empty mem_id}"><!-- 로그인시 상세보기에서 목록으로 돌아올 수 있도록 작성 -->
+								<span class="fa-solid fa-paw"></span> 누구랑 가개?
 								<c:forEach items="${withlist}" var="wili">
 									<button class="use_move" data-href = "/together/withdetail" onclick="move(this, 'TW_MEM_ID:${wili.TW_MEM_ID}', 'TO_IDX:${map.TO_IDX}')" id="withmem">
 									<span class="fa-solid fa-paw" id="withmem"></span> ${wili.TW_MEM_ID}</button>
 								</c:forEach>
-							</li>
-						</c:when>
-						<c:otherwise>
-							<li>
-							참여자가 없습니다:(
-							</li>
-						</c:otherwise>
-					</c:choose>
-				</ul>
+							</c:if>
+							<c:if test="${empty mem_id}"><!-- 멤버 상세보기 클릭시 로그인 페이지로 이동 -->
+								<span class="fa-solid fa-paw"></span> 누구랑 가개?
+								<c:forEach items="${withlist}" var="wili">
+									<button id="withmem" onclick="logincheck();">
+									<span class="fa-solid fa-paw" id="withmem"></span> ${wili.TW_MEM_ID}</button>
+								</c:forEach>
+							</c:if>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li>
+						참여자가 없습니다:(
+						</li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
 		</div>
 		<br/>
 		
@@ -153,24 +96,29 @@ line-height:2em;
 				<c:if test = "${mem_id ne map.TO_WRITER_ID}">
 					<!-- 참여인원이 모집인원보다 작을때, 모집중일때-->
 					<c:if test="${map.C < map.TO_PEOPLE}">
-						<!-- 아직 참여하지 않은 상태라면 -->
-						<c:if test="${empty checkwith}">
-							<form id="withreg" name="withreg">
-								<input type="hidden" id="TW_TO_IDX" name="TW_TO_IDX" value="${map.TO_IDX}">
-								<input type="hidden" id="TW_MEM_ID" name="TW_MEM_ID" value="${mem_id}">
-								<input type="button" class="btn" id="withmem" name="withmem" value="참여하개:)">
-							</form>
+					<!-- 23.02.08 박선영 모집날짜가 지나지 않았을때 -->
+					<c:if test="${now < todate}">
+						<fmt:parseDate value="${map.TO_DATE}" var="todate" type="hidden"/>
+							<!-- 아직 참여하지 않은 상태라면 -->
+							<c:if test="${empty checkwith}">
+								<form id="withreg" name="withreg">
+									<input type="hidden" id="TW_TO_IDX" name="TW_TO_IDX" value="${map.TO_IDX}">
+									<input type="hidden" id="TW_MEM_ID" name="TW_MEM_ID" value="${mem_id}">
+									<input type="button" class="btn" id="withmem" name="withmem" value="참여하개:)">
+								</form>
+							</c:if>
+						
+							<!-- 이미 참여한 상태라면 -->
+							<c:if test="${!empty checkwith}">	
+								<form id="withdel" name="withdel">
+									<input type="hidden" id="TW_TO_IDX" name="TW_TO_IDX" value="${map.TO_IDX}">
+									<input type="hidden" id="TW_MEM_ID" name="TW_MEM_ID" value="${mem_id}">
+									<input type="button" class="btn" id="delwith" name="delwith" value="취소하개:(">
+								</form>
+							</c:if>	
 						</c:if>
-					</c:if>	
-						<!-- 이미 참여한 상태라면 -->
-						<c:if test="${!empty checkwith}">	
-							<form id="withdel" name="withdel">
-								<input type="hidden" id="TW_TO_IDX" name="TW_TO_IDX" value="${map.TO_IDX}">
-								<input type="hidden" id="TW_MEM_ID" name="TW_MEM_ID" value="${mem_id}">
-								<input type="button" class="btn" id="delwith" name="delwith" value="취소하개:(">
-							</form>
-						</c:if>	
-					</c:if>	
+					</c:if>
+				</c:if>	
 			</c:if>		
 		</div>
 	</div>

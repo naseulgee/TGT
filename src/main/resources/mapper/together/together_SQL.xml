@@ -18,7 +18,7 @@
 				t.to_contents,
 				t.to_writer_id,
 				t.to_writer_name,
-				to_char(to_date, 'YYYY-MM-DD')as TO_DATE,
+				to_char(to_date, 'yyyy-MM-dd')as TO_DATE,
 				t.to_time,
 				t.to_people,
 				(select count(tw_idx) from together_with where tw_to_idx = to_idx) as C,
@@ -120,7 +120,7 @@
 					t.TO_CONTENTS,
 					t.TO_WRITER_ID,
 					t.TO_WRITER_NAME,
-					t.TO_DATE,
+					TO_CHAR(TO_DATE, 'YYYY-MM-DD')as TO_DATE,
 					t.TO_TIME,
 					t.TO_PEOPLE,
 					(select count(TW_IDX) from together_with where TW_TO_IDX = TO_IDX) as C,
@@ -295,9 +295,11 @@
 				   m.MEM_DOG_WEIGHT,
 				   m.MEM_DOG_ETC,
 				   m.MEM_BR_IDX,
+				   TO_CHAR(MEM_REG_DATE, 'YYYY-MM-DD')as MEM_REG_DATE,
 				   b.BR_IDX,
 				   b.BR_NAME,
-				   w.TW_TO_IDX
+				   w.TW_TO_IDX, 
+				   (SELECT COUNT (TW_IDX) FROM TOGETHER_WITH WHERE TW_MEM_ID = MEM_ID) AS WITH_COUNT
 			FROM MEMBERS m, BREED b, TOGETHER_WITH w
 			WHERE 
 				MEM_ID = #{TW_MEM_ID, jdbcType=VARCHAR}
@@ -312,8 +314,8 @@
 					   m.MEM_BR_IDX,
 					   b.BR_IDX,
 					   b.BR_NAME,
-					   w.TW_TO_IDX
-			
+					   w.TW_TO_IDX,
+					   MEM_REG_DATE		
 		]]>
 	</select>
 	

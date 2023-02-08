@@ -1,6 +1,8 @@
 package paw.togaether.together.controller;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +34,11 @@ public class TogetherController {
 	public ModelAndView openList(CommandMap commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView("/together/togetherList");//JSP를 불러오는 역할
 		
+		Date now = new Date();//현재날짜
+		
+		System.out.println("now :" + now);
+		
+		mv.addObject("now", now);
 		return mv;
 	}
 	
@@ -47,6 +54,8 @@ public class TogetherController {
 		//ModelAndView mv = new ModelAndView("/together/togetherList"); 
 		ModelAndView mv = new ModelAndView("jsonView");
 		
+		Date now = new Date();//현재날짜
+		
 		//서비스의 togetherList 메소드의 결과 map 형태의 resultMap 변수에 저장
 		List<Map<String, Object>> list = togetherService.togetherList(commandMap.getMap(), session);
 		/* 분류별 넘겨주는 데이터를 다르게 하기 위함 */
@@ -56,7 +65,7 @@ public class TogetherController {
 		//get()으로 받은 commandMap의 값들을 mv에 ""이름으로 저장
 		//mv.addObject("search_type", commandMap.get("search_type"));
 		//mv.addObject("search_keyword", commandMap.get("search_keyword"));
-		
+		mv.addObject("now",now);
 		mv.addObject("catelist", catelist);
 		mv.addObject("list", list);
 		
@@ -77,11 +86,14 @@ public class TogetherController {
 		
 		ModelAndView mv = new ModelAndView("/together/togetherWrite");
 		
+		Date now = new Date();//현재날짜
 		/* 견종분류 셀렉트 박스 만들용도 */
 		List<Map<String, Object>> brlist = togetherService.togetherbreed(commandMap.getMap());
 		/* 카테고리 분류 셀렉트박스 만들용도 */
 		List<Map<String, Object>> catelist = togetherService.togetherCate(commandMap.getMap());
 		
+		System.out.println("now:" + now);
+		mv.addObject("now", now);
 		mv.addObject("catelist", catelist);
 		mv.addObject("brlist", brlist);
 		return mv;
@@ -96,7 +108,6 @@ public class TogetherController {
 		ModelAndView mv = new ModelAndView("redirect:/together/openList.paw");
 		
 		togetherService.togetherWrite(commandMap.getMap(), session);
-		
 		return mv;
 	}
 	
@@ -110,6 +121,7 @@ public class TogetherController {
 		System.out.println(commandMap.getMap());
 		System.out.println(session.getAttribute("mem_id"));
 		
+		Date now = new Date();//날짜 마감에 따른 참여하기 비활성화 목적
 		
 		ModelAndView mv = new ModelAndView("/together/togetherDetail");
 		
@@ -117,6 +129,7 @@ public class TogetherController {
 		List<Map<String, Object>> withlist = togetherService.togetherWithList(commandMap.getMap());//참여자 리스트 메소드
 		Map<String, Object> checkwith = togetherService.checkWith(commandMap.getMap(),session);//참여여부 확인 메소드
 		
+		mv.addObject("now", now);
 		mv.addObject("checkwith", checkwith);	
 		mv.addObject("withlist", withlist);
 		mv.addObject("map", map);

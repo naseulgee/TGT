@@ -22,7 +22,7 @@ padding-right:100px;
 
 table#detail.card_table.row1{
 width:800px;
-font-size: 22px;
+font-size: 17px;
 margin-right:auto;
 margin-left:auto;
 position:relative;
@@ -49,12 +49,23 @@ color: #fff;
 		<table class="card_table row1" id="detail">
 			<tbody class="bgSubColor">
 				<tr class="memdetail">
-					<td class="txt_center" style="font-size:23px; color:#f0b1aa;"><span class="fa-solid fa-paw"></span>
-					<strong>보호자 이름이 뭐개? :)  [${withdetail.MEM_ID}]</strong>
-					<span class="fa-solid fa-paw"></span></td>
+					<td style="font-size:23px; color:#f0b1aa;"><span class="fa-solid fa-paw"></span>
+						<strong>보호자 프로필 :)</strong>
+						<span class="fa-solid fa-paw"></span>
+					</td>
+					<td style="font-size:20px; color:#f0b1aa;"><span class="fa-solid fa-bone"></span> 보호자 이름 :) 
+						<strong>[${withdetail.MEM_ID }]</strong><span class="fa-solid fa-bone"></span>
+					</td>
+					<td><span class="fa-solid fa-bone"></span> 가입날짜 :)  [${withdetail.MEM_REG_DATE }]</td>
+					<td><span class="fa-solid fa-bone"></span> 함께한 횟수 :)  [${withdetail.WITH_COUNT }]</td>
 				</tr>
 				<tr class="dogdetail">
-					<td><span class="fa-solid fa-bone"></span> 이름이 뭐개? :)  <strong>[${withdetail.MEM_DOG_NAME}]<span class="fa-solid fa-paw"></span></strong></td>
+					<td style="font-size:23px; color:#f0b1aa;"><span class="fa-solid fa-paw"></span>
+						<strong>멍멍 프로필 :)</strong>
+						<span class="fa-solid fa-paw"></span>
+					</td>
+					<td style="font-size:20px; color:#f0b1aa;"><span class="fa-solid fa-bone"></span> 강아지 이름이 뭐개? :) 
+						<strong> [${withdetail.MEM_DOG_NAME}]<span class="fa-solid fa-bone"></span></strong></td>
 					<td><span class="fa-solid fa-bone"></span> 견종이 뭐개? :)  [${withdetail.BR_NAME }]</td>
 					<td><span class="fa-solid fa-bone"></span> 몸무게가 얼마개? :)  ${withdetail.MEM_DOG_WEIGHT }Kg</td>
 					<td><span class="fa-solid fa-bone"></span> 나는 이런 강아지개! :)  [${withdetail.MEM_DOG_ETC}]</td>
