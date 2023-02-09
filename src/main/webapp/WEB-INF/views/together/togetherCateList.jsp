@@ -7,14 +7,15 @@
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 
 <main class="layoutCenter">
-<br/>
-	<h1 class="txt_center"><span class="fa-solid fa-paw" style="color:#f0b1aa;"></span>함께해요<span class="fa-solid fa-paw" style="color:#f0b1aa;"></span></h1>
-	<br/>
+
 <div class="cate_wrap">
 	
 	<!-- 카드 테이블로 전체게시글 리스트 출력 -->
 	<!-- 23.02.01 박선영 모집여부 버튼 출력 구현 -->
 	<div class="main_list">
+	<br/>
+	<h1 class="txt_center"><span class="fa-solid fa-paw" style="color:#f0b1aa;"></span>함께해요<span class="fa-solid fa-paw" style="color:#f0b1aa;"></span></h1>
+	<br/>
 		<%-- <c:choose>
 			<c:when test="${!empty list}"> --%>
 				<table class="card_table row1" id="together_list">
@@ -69,10 +70,12 @@
 			<div class="flexCenter">
 				<a class="btn submit" style="font-size:15px;" href="/together/openList.paw">전체목록으로</a>
 			</div>	
+			
 	</div>
 	
 <br/>
-	
+<br/>
+<br/>
 	<!-- 카테고리별 게시글 리스트 출력, 글쓰기 버튼 -->
 	<!-- 23.01.31 박선영 로그인여부에 따른 버튼 출력 -->
 	<div class="cate_button">
@@ -87,7 +90,7 @@
 				<li class="tcname"></li>	
 			<%-- </c:forEach> --%>	
 		</ul>
-	</div>
+	</div> 
 </div>
 <br/>
 			

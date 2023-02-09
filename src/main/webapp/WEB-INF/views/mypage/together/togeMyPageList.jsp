@@ -7,12 +7,13 @@
 <main class="layoutCenter">
 <%@ include file="/WEB-INF/include/nav_mypage.jspf"%>
 <br/>
-	<h1 class="txt_center"><span class="fa-solid fa-paw" style="color:#f0b1aa;"></span>함께해요<span class="fa-solid fa-paw" style="color:#f0b1aa;"></span></h1>
-	<br/>
+
 	<div class="cate_wrap">
 	
 	<!-- 23.02.08 박선영 카드 테이블로 참여게시글 리스트 출력 -->
 	<div class="main_list">
+	<h1 class="txt_center"><span class="fa-solid fa-paw" style="color:#f0b1aa;"></span>함께해요<span class="fa-solid fa-paw" style="color:#f0b1aa;"></span></h1>
+	<br/>
 		<c:choose>
 			<c:when test="${!empty list}">
 				<table class="card_table" id="together_list">

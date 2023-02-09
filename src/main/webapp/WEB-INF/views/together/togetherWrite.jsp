@@ -14,9 +14,6 @@ color:#f0b1aa;
 margin-right:5px;
 }
 
-.mypage{
-top:100px;
-}
 
 textarea{
 width:100%;
@@ -28,9 +25,10 @@ height:100px;
 	<%@ include file="/WEB-INF/include/nav_mypage.jspf"%>
 	
 	<!-- 23.01.16 박선영 : 글쓰기 폼, 구현완료 -->
-<h1 class="txt_center"><span class="fa-solid fa-paw"></span>함께해요<span class="fa-solid fa-paw"></span></h1>
 	
 	<div class="main_wrap">
+	<h1 class="txt_center"><span class="fa-solid fa-paw"></span>함께해요<span class="fa-solid fa-paw"></span></h1>
+	<br/>
 		<form method="post" action="/together/write.paw" name="writefrm">
 			<input type="hidden" id="TO_WRITER_ID" name="TO_WRITER_ID" value="${mem_id}">
 			<table class="board_view">

@@ -41,5 +41,24 @@ Logger log = Logger.getLogger(this.getClass());
 		
 		return mv;
 	}
+	
+	/* 23.02.09 박선영 나의 함께해요 작성한 게시글 리스트 */
+	@RequestMapping(value="/mypage/together/writelist")
+	public ModelAndView myTogeWriteList(CommandMap commandMap, HttpSession session) throws Exception {
+		
+		ModelAndView mv = new ModelAndView("/mypage/together/togeMyWriteList");
+		
+		System.out.println("mem_id: " + session.getAttribute("mem_id"));
+		System.out.println(commandMap.getMap());//값을 잘 받아오는지 확인
+		
+		String mem_id = (String)session.getAttribute("mem_id");
+		commandMap.put("mem_id", mem_id);//mem_id 넣기
+		
+		List<Map<String, Object>> wtlist = togetherMyPageService.myTogeWriteList(commandMap.getMap(),session);
+		
+		mv.addObject("wtlist", wtlist);
+		
+		return mv;
+	}
 
 }

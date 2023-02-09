@@ -26,5 +26,13 @@ public class TogetherMyPageServiceImpl implements TogetherMyPageService{
 		map.put("mem_id", mem_id);
 		return togetherMyPageDAO.myTogetherList(map);
 	}
+	
+	/* 23.02.09 박선영 작성한 리스트  */
+	@Override
+	public List<Map<String, Object>> myTogeWriteList(Map<String, Object> map, HttpSession session) throws Exception {
+		String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기
+		map.put("mem_id", mem_id);
+		return togetherMyPageDAO.myTogeWriteList(map);
+	}
 
 }

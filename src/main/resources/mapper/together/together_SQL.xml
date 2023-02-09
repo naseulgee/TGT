@@ -298,7 +298,7 @@
 				   TO_CHAR(MEM_REG_DATE, 'YYYY-MM-DD')as MEM_REG_DATE,
 				   b.BR_IDX,
 				   b.BR_NAME,
-				   w.TW_TO_IDX, 
+				   w.TW_TO_IDX,
 				   (SELECT COUNT (TW_IDX) FROM TOGETHER_WITH WHERE TW_MEM_ID = MEM_ID) AS WITH_COUNT
 			FROM MEMBERS m, BREED b, TOGETHER_WITH w
 			WHERE 
@@ -315,7 +315,40 @@
 					   b.BR_IDX,
 					   b.BR_NAME,
 					   w.TW_TO_IDX,
-					   MEM_REG_DATE		
+					   MEM_REG_DATE	
+		]]>
+	</select>
+	
+	<!-- 23.02.06 박선영 : 작성자 정보 확인 -->
+	<select id="checkWriter" resultType="hashmap">
+		<![CDATA[
+			SELECT m.MEM_ID,
+				   m.MEM_DOG_NAME,
+				   m.MEM_DOG_WEIGHT,
+				   m.MEM_DOG_ETC,
+				   m.MEM_BR_IDX,
+				   TO_CHAR(MEM_REG_DATE, 'YYYY-MM-DD')as MEM_REG_DATE,
+				   b.BR_IDX,
+				   b.BR_NAME,
+				   t.TO_IDX, 
+				   t.TO_WRITER_ID
+			FROM MEMBERS m, BREED b, TOGETHER t
+			WHERE 
+				MEM_ID = #{TO_WRITER_ID, jdbcType = VARCHAR}
+			AND 
+				m.MEM_BR_IDX = b.BR_IDX
+			AND 
+				t.TO_IDX = #{TO_IDX, jdbcType = VARCHAR}
+			 GROUP BY m.MEM_ID,
+					   m.MEM_DOG_NAME,
+					   m.MEM_DOG_WEIGHT,
+					   m.MEM_DOG_ETC,
+					   m.MEM_BR_IDX,
+					   b.BR_IDX,
+					   b.BR_NAME,
+					  t.TO_IDX, 
+					   t.TO_WRITER_ID,
+					   MEM_REG_DATE
 		]]>
 	</select>
 	

@@ -15,5 +15,11 @@ public class TogetherMyPageDAO extends AbstractDAO{
 	public List<Map<String, Object>> myTogetherList(Map<String, Object> map)throws Exception {
 		return (List<Map<String, Object>>) selectList("togetherMypage.myTogetherList", map);
 	}
+	
+	/* 23.02.09 마이페이지 내가작성한 리스트 */
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> myTogeWriteList(Map<String, Object> map)throws Exception {
+		return (List<Map<String, Object>>) selectList("togetherMypage.myTogeWriteList", map);
+	}
 
 }

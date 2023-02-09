@@ -8,16 +8,18 @@ function logincheck(){
 	alert("로그인하세요:(");
 	location.href = '/member/login';//로그인 페이지로 이동
 }
+
+
 </script>
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <main class="layoutCenter">
-	<%@ include file="/WEB-INF/include/nav_mypage.jspf"%>
+<%@ include file="/WEB-INF/include/nav_mypage.jspf"%>
 
-	<h1 class="txt_center"><span class="fa-solid fa-paw"></span>함께해요<span class="fa-solid fa-paw"></span></h1>
-	<br/>
 	<!-- 23.01.18 박선영 게시글 상세보기 구현 -->
 	<!-- 23.01.30 박선영 게시글 참여인원 반영 구현 -->
 	<div class="main_detail">
+	<h1 class="txt_center"><span class="fa-solid fa-paw"></span>함께해요<span class="fa-solid fa-paw"></span></h1>
+	<br/>
 		<table>
 			<tbody>
 				<tr>
@@ -46,7 +48,7 @@ function logincheck(){
 				<li class="txt_center"><span class="fa-solid fa-paw"></span> 참여중이개!   ${map.C}/${map.TO_PEOPLE }</li>
 				<li class="txt_center"><span class="fa-solid fa-paw"></span> 대장이개! 
 					<c:if test="${!empty mem_id}"> <!-- 로그인시 참여멤버 상세보기 가능 -->
-						<button class="use_move" data-href = "/together/withdetail" onclick="move(this, 'TW_MEM_ID:${map.TO_WRITER_ID}', 'TO_IDX:${map.TO_IDX}')" id="wtmem">
+						<button class="use_move" data-href = "/together/writerdetail" onclick="move(this, 'TO_WRITER_ID:${map.TO_WRITER_ID}', 'TO_IDX:${map.TO_IDX}')" id="wtmem">
 						<span class="fa-solid fa-paw" id="wtmem"></span> ${map.TO_WRITER_ID} </button>
 					</c:if>
 					<c:if test="${empty mem_id}"><!-- 미로그인시 로그인함수 실행 -->
@@ -91,14 +93,13 @@ function logincheck(){
 					<input type="button" class="use_move" data-href="/together/modifyForm.paw" onclick="move(this, 'TO_IDX:${map.TO_IDX}')" value="수정하기" style="margin-right:5px;">
 					<input type="button" class="use_move" data-href="/together/delete.paw" onclick="move(this, 'TO_IDX:${map.TO_IDX}')" value="삭제하기">
 				</c:if>
-			
+				
 				<!-- 로그인한 아이다가 작성자 아이디와 같지 않을때 -->
 				<c:if test = "${mem_id ne map.TO_WRITER_ID}">
 					<!-- 참여인원이 모집인원보다 작을때, 모집중일때-->
 					<c:if test="${map.C < map.TO_PEOPLE}">
 					<!-- 23.02.08 박선영 모집날짜가 지나지 않았을때 -->
-					<c:if test="${now < todate}">
-						<fmt:parseDate value="${map.TO_DATE}" var="todate" type="hidden"/>
+					<c:if test="${nowDate < map.TO_DATE}">
 							<!-- 아직 참여하지 않은 상태라면 -->
 							<c:if test="${empty checkwith}">
 								<form id="withreg" name="withreg">

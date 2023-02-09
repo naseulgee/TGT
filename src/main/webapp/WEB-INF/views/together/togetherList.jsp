@@ -7,9 +7,6 @@
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 
 <main class="layoutCenter">
-<br/>
-	<h1 class="txt_center"><span class="fa-solid fa-paw" style="color:#f0b1aa;"></span>함께해요<span class="fa-solid fa-paw" style="color:#f0b1aa;"></span></h1>
-	<br/>
 	
 <div class="cate_wrap">
 	
@@ -18,6 +15,9 @@
 	<!-- 23.02.01 박선영 모집여부 버튼 출력 구현 -->
 	<!-- 23.02.02 박선영 페이징 처리 완료 -->
 	<div class="main_list">
+	<br/>
+	<h1 class="txt_center"><span class="fa-solid fa-paw" style="color:#f0b1aa;"></span>함께해요<span class="fa-solid fa-paw" style="color:#f0b1aa;"></span></h1>
+	<br/>
 		<%-- <c:choose>
 			<c:when test="${!empty list}"> --%>
 				<table class="card_table row1" id="together_list">
@@ -158,21 +158,35 @@
 				gfn_renderPaging_T(params2);
 				
 				var now = new Date()//날짜 형식의 변수 선언
-				var time = getFormatTime(now);
+				var dnow = getFormatDate(now);//원하는 형태의 문자열로 변환(2023-02-09)
+				var time = getFormatTime(now);//원하는 형태의 문자열 시간으로 변환(22:10)
 				var str = "";
 				$.each(data.list,
 						function(key, value) {
 							str += "<tr class='use_move' name='togelist' data-href='/together/detail/"+value.TO_IDX +".paw' onclick='move(this,\"TO_IDX:"+value.TO_IDX+"\")'>";
 							str += "<input type='hidden' name='TO_IDX' id='TO_IDX' value=" + value.TO_IDX + ">";
 							str += "<td class='color'><span class='fa-solid fa-paw'></span>"+ "["+ value.TC_NAME + "]"  +value.TO_TITLE;
-							if(now >= new Date(value.TO_DATE) && time > value.TO_TIME){//날짜 char 변수 날짜형식으로 변경
-								str += "<span class='btn warn'>마감</span>";
-							}else{
+							if(dnow < value.TO_DATE){//문자열 형태로 비교
 								if(value.C == value.TO_PEOPLE){
 									str += "<span class='btn submit'>모집완료</span>";
 								}
 								if(value.C < value.TO_PEOPLE){
 									str += "<span class='btn submit'>모집중</span>";
+								}
+							}
+							else if(dnow > value.TO_DATE){
+								str += "<span class='btn warn'>마감</span>";
+							}
+							else{//현재 날짜와 모집날짜가 같을때
+								if(time > value.TO_TIME){//모집시간이 지났다면
+									str += "<span class='btn warn'>마감</span>";
+								}else{
+									if(value.C == value.TO_PEOPLE){
+										str += "<span class='btn submit'>모집완료</span>";
+									}
+									if(value.C < value.TO_PEOPLE){
+										str += "<span class='btn submit'>모집중</span>";
+									}
 								}
 							}
 							str += "</td>";
@@ -215,6 +229,16 @@
 			var minutes = date.getMinutes();//현재분
 			minutes = minutes >= 10? minutes : '0' + minutes; //minutes두자리로 지정
 			return hours + ":" + minutes;//형태변경
+		}
+		
+		//input date 형식과 비교를 위한 날짜 바꾸기
+		function getFormatDate(date){
+			var year = date.getFullYear();//yyyy
+			var month = (1 + date.getMonth());//M
+			month = month >= 10? month: '0' + month;//month 두자리로 지정
+			var day = date.getDate();//d
+			day = day >= 10? day: '0' + day;//day 두자리로 지정
+			return year + '-' + month + '-' + day;//-추가하여 yyyy-MM-dd 형태 지정가능
 		}
 		
 </script>

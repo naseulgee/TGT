@@ -30,7 +30,7 @@ public class TogetherController {
 	private TogetherService togetherService;
 	
 	/* 23.02.02 박선영 게시글리스트 페이징화면출력 */
-	@RequestMapping(value="/together/openList.paw")
+	@RequestMapping(value="/together/openList")
 	public ModelAndView openList(CommandMap commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView("/together/togetherList");//JSP를 불러오는 역할
 		
@@ -45,10 +45,9 @@ public class TogetherController {
 	/* 23.01.12 박선영 : 함께해요 전체 게시판 리스트와 검색 메소드 작성 */
 	/* 23.01.25 박선영 : 함께해요 카테고리 수정 반영
 	 * 23.02.02 박선영 함께해요 게시글 리스트 페이징 완료 */
-	@RequestMapping(value="/together/list.paw")
-	public ModelAndView togetherList(CommandMap commandMap, HttpSession session) throws Exception { 
+	@RequestMapping(value="/together/list")
+	public ModelAndView togetherList(CommandMap commandMap) throws Exception { 
 		
-		System.out.println("mem_id :" + session.getAttribute("mem_id"));
 		
 		//ModelAndView 객체 생성 후 데이터를 넘길 페이지의 값 지정
 		//ModelAndView mv = new ModelAndView("/together/togetherList"); 
@@ -57,7 +56,7 @@ public class TogetherController {
 		Date now = new Date();//현재날짜
 		
 		//서비스의 togetherList 메소드의 결과 map 형태의 resultMap 변수에 저장
-		List<Map<String, Object>> list = togetherService.togetherList(commandMap.getMap(), session);
+		List<Map<String, Object>> list = togetherService.togetherList(commandMap.getMap());
 		/* 분류별 넘겨주는 데이터를 다르게 하기 위함 */
 		List<Map<String, Object>> catelist = togetherService.togetherCate(commandMap.getMap());
 		
@@ -121,7 +120,11 @@ public class TogetherController {
 		System.out.println(commandMap.getMap());
 		System.out.println(session.getAttribute("mem_id"));
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//날짜 형태 정해주기
+		
 		Date now = new Date();//날짜 마감에 따른 참여하기 비활성화 목적
+		
+		String nowDate = sdf.format(now);
 		
 		ModelAndView mv = new ModelAndView("/together/togetherDetail");
 		
@@ -129,7 +132,7 @@ public class TogetherController {
 		List<Map<String, Object>> withlist = togetherService.togetherWithList(commandMap.getMap());//참여자 리스트 메소드
 		Map<String, Object> checkwith = togetherService.checkWith(commandMap.getMap(),session);//참여여부 확인 메소드
 		
-		mv.addObject("now", now);
+		mv.addObject("nowDate", nowDate);
 		mv.addObject("checkwith", checkwith);	
 		mv.addObject("withlist", withlist);
 		mv.addObject("map", map);
@@ -268,7 +271,8 @@ public class TogetherController {
 		return mv;
 	}
 	
-	/* 23.02.06 박선영 참여멤버 상세보기 */
+	/* 23.02.06 박선영 참여멤버 상세보기
+	 * 23.02.09 박선영 작성자 상세보기 */
 	@RequestMapping(value="/together/withdetail")
 	public ModelAndView checkMem(CommandMap commandMap, HttpSession session) throws Exception {
 		
@@ -277,8 +281,22 @@ public class TogetherController {
 		System.out.println("map : " + commandMap.getMap());
 		
 		Map<String, Object> withdetail = togetherService.checkMem(commandMap.getMap(), session);
-		
+	
 		mv.addObject("withdetail", withdetail);
+		return mv;
+	}
+	
+	/* 23.02.09 박선영 작성자 상세보기 */
+	@RequestMapping(value="/together/writerdetail")
+	public ModelAndView checkWriter(CommandMap commandMap, HttpSession session) throws Exception {
+		
+		ModelAndView mv = new ModelAndView("/together/togeWriterDetail");
+		
+		System.out.println("map : " + commandMap.getMap());
+		
+		Map<String, Object> wtdetail = togetherService.checkWriter(commandMap.getMap(), session);
+		
+		mv.addObject("wtdetail", wtdetail);
 		return mv;
 	}
 	
