@@ -1,0 +1,97 @@
+.layoutCenter{
+width:100%;
+}
+
+.mypage{
+top:100px;
+}
+
+span.fa-solid.fa-paw {
+color:#f0b1aa;
+}
+
+span.fa-solid.fa-bone {
+color:#f0b1aa;
+padding-right: 3px;
+}
+
+.color {
+font-size:20px;
+font-weight:bold;
+}
+
+table{
+width:100%;
+display:absolute;
+}
+
+.cate_wrap{
+width:100%;
+display:flex;
+}
+
+table tr{
+background-color: #f6ece1;	
+}
+
+.main_list{
+width:100%;
+padding-right:90px;
+padding-left:95px;
+position:absolute;
+}
+
+.cate_button{
+position:relative;
+height:auto;
+}
+
+.cate_button li{
+text-align:center;
+}
+
+.button_list{
+border:1px solid #f0b1aa;
+width:100%;
+}
+
+li.tcname{
+margin : 20px;
+}
+
+.btn.submit{
+white-space :nowrap;
+font-size:20px;
+}
+
+span.btn.submit{
+white-space : nowrap;
+font-size : 15px;
+margin : 5px;
+}
+
+span.btn.warn{
+white-space : nowrap;
+font-size : 15px;
+margin : 5px;
+}
+
+li.tc{
+margin: 20px;
+}
+
+input[type="button"]{
+border:1px solid #9ea7ad;
+padding-top: 5px;
+padding-right: 10px;
+padding-bottom: 5px;
+padding-left: 10px
+}
+
+.together{
+background-color : #f6ece1;
+}
+
+td.txt_right {
+font-size : 15px;
+}
