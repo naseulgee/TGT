@@ -1,0 +1,38 @@
+#keyword {
+	width: 300px;
+}
+
+.searchType {
+	background-color: white;
+	opacity: 1.0;
+}
+
+.container2 .search {
+	height: 45px;
+	background-color: #feeff3;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-bottom: 0em;
+}
+
+.tab_radio {
+	margin-top: 0em;
+}
+
+#board_list th {
+	/* background-color: #f8efe7; */
+}
+
+/*
+.tab_radio label {
+	display: block;
+    width: 100%;
+    padding: 10px 0;
+    border: 1px solid #f8d9d6;
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
+    box-sizing: border-box;
+    background-color: #f8d9d6;
+    text-align: center;
+}
+*/

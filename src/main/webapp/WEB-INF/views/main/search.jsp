@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
 <script src="/resources/js/paging/paging.js"></script>
-<link href="resources/css/main/main.css" rel="stylesheet">
+<link href="resources/css/main/search.css" rel="stylesheet">
 
 <main class="layoutCenter">
 	<div class="main-wrap">
