@@ -104,9 +104,9 @@
 			 	re_star ASC,
 			</if>
 		re_reg_date DESC ) RNUM,
-		re_idx,re_pl_idx,re_writer_id, re_writer_name, 
+		pl_name, pl_loc, re_idx,re_pl_idx,re_writer_id, re_writer_name, 
 		re_star, re_contents, re_reg_date, re_mod_date,re_del_gb
-		from review a
+		from review a inner join place b on a.re_pl_idx = b.pl_idx
 		where re_del_gb = 'N'
 		and re_pl_idx = #{pl_idx}
 		<include refid="common.pagingPost"/>
@@ -130,7 +130,7 @@
 	<!-- 23.02.06 신현지: 오늘 작성한 리뷰가 있는지 확인-->
 	<select id="checkTodayReview" parameterType="hashmap" resultType="hashmap">
 		select TO_CHAR(re_reg_date,'YYMMDD') REG_DATE from review
-		where re_pl_idx = #{re_pl_idx}
+		where re_pl_idx = #{re_pl_idx} and re_writer_id = #{mem_id}
 		and re_del_gb = 'N'
 		and TO_CHAR(re_reg_date,'YYMMDD') = TO_CHAR(SYSDATE,'YYMMDD')
 	</select>
