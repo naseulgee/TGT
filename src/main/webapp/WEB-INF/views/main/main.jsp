@@ -27,6 +27,9 @@
 						<strong class="title">${i.BC_TITLE}</strong> | <span class="writer">${i.BC_WRITER_NAME}</span> | <span class="when">${fn:substring(i.BC_MOD_DATE,2,10)}</span>
 					</li>
 				</c:forEach>
+				<li class="use_move" data-href="/board/detail/${free[0].BC_IDX}.paw" onclick="move(this, 'BC_IDX:${free[0].BC_IDX}')">
+					<strong class="title">${free[0].BC_TITLE}</strong> | <span class="writer">${free[0].BC_WRITER_NAME}</span> | <span class="when">${fn:substring(free[0].BC_MOD_DATE,2,10)}</span>
+				</li>
 			</ul>
 		</c:if>
 	</article>
@@ -103,15 +106,18 @@
 	</div>
 </section>
 
+</main><!-- //main 종료 -->
+
 <section id="info">
-	<h1>반려동물 지식</h1>
-	<h2>#우리 강아지에 대해 자세히 알아보자</h2>
+	<h1 class="layoutCenter">반려동물 지식</h1>
+	<h2 class="layoutCenter">#우리 강아지에 대해 자세히 알아보자</h2>
 	<article class="info_wrap">
-		<h3><strong>정보 게시글</strong><a class="use_move go" href="/board/list.paw" onclick="move(this, 'BC_BCC_NAME:정보게시판')">바로가기 <i class="fa-solid fa-arrow-right"></i></a></h3>
+		<h3 class="layoutCenter"><strong>정보 게시글</strong><a class="use_move go" href="/board/list.paw" onclick="move(this, 'BC_BCC_NAME:정보게시판')">바로가기 <i class="fa-solid fa-arrow-right"></i></a></h3>
 		<c:if test="${empty info}"><div class="empty">정보게시판 글이 없습니다</div></c:if>
 		<c:if test="${!empty info}">
 			<table class="card_table">
 				<tbody>
+					<c:forEach var="j" begin="0" end="1">
 					<c:forEach var="i" items="${info}">
 						<tr class="use_move" data-href="/board/detail/${i.BC_IDX}.paw" onclick="move(this, 'BC_IDX:${i.BC_IDX}')">
 							<td class="title"><strong>${i.BC_TITLE}</strong></td>
@@ -119,12 +125,11 @@
 							<td class="when">${fn:substring(i.BC_MOD_DATE,2,10)}</td>
 						</tr>
 					</c:forEach>
+					</c:forEach>
 				</tbody>
 			</table>
 		</c:if>
 	</article>
 </section>
-
-</main><!-- //main 종료 -->
 
 <%@ include file="/WEB-INF/include/common-footer.jspf" %>

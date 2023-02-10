@@ -1,8 +1,8 @@
-section{ margin: 20px auto; }
+main section{ margin: 20px auto; }
 
 /* 버튼 영역 */
-.btn_wrap{ gap: 10px; margin-top: 30px; }
-.btn_wrap .btn{ flex: 1; padding: 10px; font-size: 1.2em; text-align: center; }
+main .btn_wrap{ gap: 10px; margin-top: 30px; }
+main .btn_wrap .btn{ flex: 1; padding: 10px; font-size: 1.2em; text-align: center; }
 
 /* 검색 영역 */
 .search_wrap{ gap: 5px; width: 100%; position: relative; }
@@ -43,3 +43,7 @@ section{ margin: 20px auto; }
 .list_wrap .pl_list .menu{ color: var(--subGray_60); font-size: 0.9em; }
 .list_wrap .pl_list .loc{ margin: 5px 0; }
 .list_wrap .pl_list .del{ padding: 5px; background-color: var(--subColor); text-align: center; }
+
+@media (max-width: 1200px){
+	.list_wrap .pl_list tr{ width: 100%; }
+}
