@@ -8,16 +8,20 @@
 		select * from place_menu where pm_pl_idx = ${pl_idx} order by pm_name
 	</select>
 
-	<!-- 23.01.17 나슬기: 시설 메뉴 등록하는 쿼리문 / 받는값: 등록할 시설 번호, 메뉴명, 가격 -->
+	<!-- 23.01.17 나슬기: 시설 메뉴 등록하는 쿼리문 / 받는값: 등록할 시설 번호, 메뉴명, 가격
+		23.02.07 나슬기: selectKey 추가 -->
 	<insert id="in_pl_menu">
+		<selectKey keyProperty="PM_IDX_NEXT" order="BEFORE" resultType="int">
+			select seq_place_menu.nextval from dual
+		</selectKey>
 		insert into place_menu(pm_idx, pm_pl_idx, pm_name, pm_price)
-		values (seq_place_menu.nextval, ${pl_idx}, #{pm_name}, ${pm_price})
+		values (${PM_IDX_NEXT}, ${pl_idx}, #{pm_name}, ${pm_price})
 	</insert>
 
 	<!-- 23.01.17 나슬기: 시설 메뉴 수정하는 쿼리문 / 받는값: 시설 번호, 수정할 메뉴명, 수정할 가격 -->
 	<update id="up_pl_menu">
 		update place_menu
-		set (pm_name, pm_price) = (#{pm_name}, ${pm_price})
+		set pm_name = #{pm_name}, pm_price = ${pm_price}
 		where pm_idx = ${pm_idx}
 	</update>
 

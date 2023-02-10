@@ -9,7 +9,7 @@
 		<![CDATA[
 		--가져와야 하는 데이터 목록
 		select rownum rnum,--행번호
-			pl_idx, pl_name, pl_loc,--시설 번호, 시설명, 시설 주소
+			pl_idx, pl_name, pl_loc, pl_del_gb,--시설 번호, 시설명, 시설 주소, 삭제요청여부
 			pc_idx, pc_name,--시설 카테고리 번호, 카테고리 명
 			r_avg, r_count,--리뷰 평균, 리뷰 개수
 			pm_name, pm_count,--메뉴명, 시설별 총 메뉴 개수
@@ -56,8 +56,8 @@
 		order by
 			<choose>
 				<when test="order == 'name'.toString()">pl_name asc<![CDATA[--이름 내림차순 정렬 ㄱ~ㅎ]]></when>
-				<when test="order == 'reviewcnt'.toString()">r_count desc, r_avg desc<![CDATA[--리뷰가 많은 순으로 정렬 후 같은 값에 한해 평점 높은 순으로 재정렬]]></when>
-				<when test="order == 'reviewavg'.toString()">r_avg desc, r_count desc<![CDATA[--평점 높은 순으로 정렬 후 같은 값에 한해 리뷰가 많은 순으로 재정렬]]></when>
+				<when test="order == 'reviewcnt'.toString()">r_count asc, r_avg asc<![CDATA[--리뷰가 많은 순으로 정렬 후 같은 값에 한해 평점 높은 순으로 재정렬]]></when>
+				<when test="order == 'reviewavg'.toString()">r_avg asc, r_count asc<![CDATA[--평점 높은 순으로 정렬 후 같은 값에 한해 리뷰가 많은 순으로 재정렬]]></when>
 				<otherwise>pl_idx desc<![CDATA[--등록 순으로 오름차순 정렬. 최신글~오래된글]]></otherwise>
 			</choose>
 		<include refid="common.pagingPost"/>
@@ -66,14 +66,9 @@
 	<select id="se_pl" resultType="hashmap">
 		<![CDATA[
 		select pl_idx, pl_pc_idx, pl_name, pl_call, pl_loc, pl_offday, pl_open, pl_close, pl_mod_date, pl_del_gb,--시설관련 정보
-			r_avg, r_count,--리뷰 평균, 리뷰 개수
 			pc_name--카테고리 명
 		from place
 			inner join (select pc_idx, pc_name from place_cate) on pc_idx = pl_pc_idx
-			--리뷰 정보. 시설별 평균(소숫점 한자리수로 반올림), 총 개수
-		    left join (select re_pl_idx, round(avg(re_star), 1) r_avg, count(re_pl_idx) r_count
-		            from review where re_del_gb = 'N' group by re_pl_idx
-		        ) on pl_idx = re_pl_idx
 		where pl_idx = ${pl_idx}
 		]]>
 	</select>
@@ -112,9 +107,9 @@
 		where pl_idx = ${pl_idx}
 	</update>
 
-	<!-- 23.01.16 나슬기: 시설 삭제 요청하는 쿼리문 / 받는값: 시설 번호 -->
+	<!-- 23.01.16 나슬기: 시설 삭제 요청하는 쿼리문 / 받는값: 요청 상태, 시설 번호 -->
 	<update id="de_req_pl">
-		update place set pl_del_gb = "Y" where pl_idx = ${pl_idx}
+		update place set pl_del_gb = #{pl_del_gb} where pl_idx = ${pl_idx}
 	</update>
 	<!-- 23.01.16 나슬기: 시설 삭제하는 쿼리문 / 받는값: 시설 번호 -->
 	<delete id="de_pl">

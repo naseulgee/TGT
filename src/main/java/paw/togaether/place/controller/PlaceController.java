@@ -1,13 +1,11 @@
 package paw.togaether.place.controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -18,14 +16,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import paw.togaether.common.domain.CommandMap;
 import paw.togaether.place.service.PlaceService;
+import paw.togaether.review.service.ReviewService;
 
 @Controller
 @RequestMapping("/place")
@@ -35,6 +34,9 @@ public class PlaceController {
 	//시설, 시설 카테고리, 시설 메뉴 관련 서비스
 	@Resource(name="placeService")
 	private PlaceService placeService;
+	//리뷰 관련 서비스
+	@Resource(name="reviewService")
+	private ReviewService reviewService;
 	
 	/** 23.01.30 나슬기: 시설 리스트 메소드 */
 	@GetMapping("/list")
@@ -66,6 +68,9 @@ public class PlaceController {
 		map.put("pl_idx", cafe_idx);
 		map.put("ph_board_type", "place");
 		mv.addObject("detail", placeService.placeDetail(map));
+		mv.addObject("menu", placeService.menuList(map));
+		mv.addObject("review_avg", reviewService.openReviewInfo(map));
+		mv.addObject("review_list", reviewService.openFiveReviews(map));
 		return mv;
 	}
 	
@@ -80,12 +85,13 @@ public class PlaceController {
 		return mv;
 	}
 	/** 23.01.22 나슬기: 시설 등록/수정 처리 메소드
-	 * 23.01.26 나슬기: 사진 등록 관련 로직 추가 */
+	 * 23.01.26 나슬기: 사진 등록 관련 로직 추가
+	 * 23.02.03 나슬기: 휴무일 처리 로직을 형변환 오류때문에 String[]을 Object[]로 변환. */
 	@PostMapping(value={"/write", "/modify"})
 	public ResponseEntity<String> placeReg(CommandMap commandMap, HttpSession session, MultipartFile[] uploadFile) {
 		//서비스 호출 전 체크박스로 넘어오는 휴일 정보에 대한 가공 처리 필수!
 		if(commandMap.get("pl_offday") != null) {
-			String[] off_check = (String[]) commandMap.get("pl_offday");//해당 값을 문자열로 이루어진 배열에 저장
+			Object[] off_check = (Object[]) commandMap.get("pl_offday");//해당 값을 문자열로 이루어진 배열에 저장
 			commandMap.put("pl_offday",
 					Arrays.deepToString(off_check)
 					.toString()
@@ -116,32 +122,59 @@ public class PlaceController {
 		return null;
 	}
 	
-	/** 23.01.13 나슬기: 시설 삭제 처리 메소드 */
-	@PostMapping("/delete")
-	public void placeDeleteReq(CommandMap commandMap) {}
+	/** 23.01.13 나슬기: 시설 삭제요청 처리 메소드
+	 * 23.02.07 나슬기: Ajax를 이용한 처리를 위해 리턴타입 변경 */
+	@PostMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<HttpStatus> placeDeleteReq(@RequestBody Map<String, Object> commandMap) {
+		try {
+			placeService.placeDeleteReq(commandMap);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);//정상적으로 삽입이 되었다면
+	}
 	
 	//시설 메뉴 관련
-	/** 23.01.13 나슬기: 시설 메뉴 등록 처리 메소드 */
+	/** 23.02.07 나슬기: 시설 메뉴 등록 처리 메소드 */
 	@PostMapping(value = "/menu/write", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<Map<String, Object>>> menuReg(CommandMap commandMap) {
-		List<Map<String, Object>> list = new ArrayList<>();
-		return new ResponseEntity<>(list, HttpStatus.OK);//ResponseEntity객체에 응답할 데이터 list와 상태를 저장하여 전달
+	public ResponseEntity<Integer> menuReg(@RequestBody Map<String, Object> commandMap) {
+		int result;
+		try {
+			placeService.menuWrite(commandMap);
+			result = Integer.parseInt(commandMap.get("PM_IDX_NEXT").toString());
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+		}
+		return new ResponseEntity<>(result, HttpStatus.OK);//정상적으로 삽입이 되었다면
 	}
 	
-	/** 23.01.13 나슬기: 시설 메뉴 수정 처리 메소드 */
+	/** 23.02.07 나슬기: 시설 메뉴 수정 처리 메소드 */
 	@PostMapping(value = "/menu/modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<Map<String, Object>>> menuModi(CommandMap commandMap) {
-		List<Map<String, Object>> list = new ArrayList<>();
-		return new ResponseEntity<>(list, HttpStatus.OK);//ResponseEntity객체에 응답할 데이터 list와 상태를 저장하여 전달
+	public ResponseEntity<HttpStatus> menuModi(@RequestBody Map<String, Object> commandMap) {
+		try {
+			placeService.menuModify(commandMap);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);//정상적으로 삽입이 되었다면
 	}
 	
-	/** 23.01.13 나슬기: 시설 메뉴 삭제 처리 메소드 */
+	/** 23.02.07 나슬기: 시설 메뉴 삭제 처리 메소드 */
 	@PostMapping(value = "/menu/delete", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<Map<String, Object>>> menuDelete(CommandMap commandMap) {
-		List<Map<String, Object>> list = new ArrayList<>();
-		return new ResponseEntity<>(list, HttpStatus.OK);//ResponseEntity객체에 응답할 데이터 list와 상태를 저장하여 전달
+	public ResponseEntity<HttpStatus> menuDelete(@RequestBody Map<String, Object> commandMap) {
+		try {
+			placeService.menuDelete(commandMap);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);//정상적으로 삽입이 되었다면
 	}
 }

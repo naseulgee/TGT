@@ -8,7 +8,7 @@
 <header>
 	<div class="header_wrap slim_scroll layoutCenter flexBetween">
 		<div class="logo_wrap">
-			<a href="/">
+			<a href="/main.paw">
 				<img class="logo" alt="투개더 로고" src="/resources/image/logo.png">
 			</a>
 		</div>
@@ -22,7 +22,7 @@
 		<ul class="sub_pages flexCenter">
 			<li><a class="paw_hover" href="/together/openList.paw">함께해요</a></li>
 			<li><a class="paw_hover" href="/board/list.paw">멍멍왈왈</a></li>
-			<li><a class="paw_hover" href="/mbti.paw">개BTI</a></li>
+			<li><a class="paw_hover" href="/mbti.paw">멍BTI</a></li>
 			<li><a class="paw_hover" href="/place/list.paw">우리동네</a></li>
 		</ul>
 		<ul class="sub_icons flexCenter">

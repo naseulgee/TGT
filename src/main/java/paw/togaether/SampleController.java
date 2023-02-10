@@ -12,10 +12,6 @@ import paw.togaether.common.domain.CommandMap;
 public class SampleController {
 	Logger log = Logger.getLogger(this.getClass());
 	
-	//임시 메인
-	@RequestMapping("/main")
-	public String main() { return "redirect:/sample.paw"; }
-	
 	/* 작업날짜 작업자: 메소드 설명
 	 * 23.01.10 나슬기: 샘플 UI를 보기 위한 컨트롤러
 	 * 수정사항이 있다면 밑에 똑같이, 작업날짜 작업자: 메소드 설명 적기

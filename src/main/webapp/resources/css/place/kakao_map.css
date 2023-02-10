@@ -1,0 +1,4 @@
+img[alt^="marker"]{ padding: 1px; border-radius: 100%; background-color: #fff; box-shadow: 0 0 0 2px #fff; clip: inherit!important; }
+img[alt^="marker"]:hover,
+img[alt="marker click"]{ box-shadow: 0 0 0 2px var(--mainColorD); transform: scale(1.2); }
+.custom_maker{ color: var(--mainColorD); text-shadow: 0 0 #fff; }

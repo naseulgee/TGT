@@ -1,0 +1,16 @@
+/* 이미지 슬라이드 */
+.img_slide{}
+.img_slide .no-image{ font-size: 300px; text-align: center; }
+.img_slide{ width: 100%; height: 500px; position: relative; background-color: var(--subGray_5); }
+.img_slide .img_wrap img{ width: 100%; height: 100%; object-fit: contain; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: opacity 0.5s; opacity: 0; }
+.img_slide .img_wrap img.on{ opacity: 1; }
+.img_slide .arrow{ position: absolute; top: 50%; transform: translateY(-50%); color: #fff; font-size: 40px; text-shadow: 0 0 10px black; }
+.img_slide .arrow.prev{ left: 10px; }
+.img_slide .arrow.next{ right: 10px; }
+
+/* 이미지 팝업 */
+img.pop_img{ cursor: pointer; }
+#popup_img{ width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 999; }
+#popup_img .pop_bg{ width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: -1; background-color: #00000080; }
+#popup_img .img_box{ width: 90%; height: 90%; position: relative; z-index: 1; }
+#popup_img .img_box .close{ width: 1.5em; height: 1.5em; position: absolute; top: max(calc(((100vh - 100%) / 2) * -1), -0.75em); right: max(calc(((100vw - 100%) / 2) * -1), -0.75em); z-index: 1; background-color: var(--mainColor); color: #fff; font-size: 3em; }
