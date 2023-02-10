@@ -49,13 +49,11 @@ public class FileUtils {
 				
 				listMap = new HashMap<String,Object>();
 				listMap.put("ph_board_type", ph_board_type);
-				if (ph_board_type == "members") {	
+				if (ph_board_type.equals("members")) {	
 					listMap.put("MEM_ID", map.get("MEM_ID"));
-				} else if (ph_board_type == "place") {
-					listMap.put("idx", map.get("PL_IDX_NEXT"));
 				} else {
 					listMap.put("idx", map.get("idx"));
-				}
+				} 
 				
 				listMap.put("ph_original_file_name", uploadFileName); //ph_original_file_name(원본파일명)
 				String storedFileName = UUID.randomUUID().toString().replaceAll("-", "")+ originalFileExtension; //파일저장시 사용할 uuid생성

@@ -22,13 +22,20 @@
 	
 	<!-- 23.01.20 신현지: 마이페이지에서 내가 쓴 리뷰확인-->
 	<!-- 23.01.25 신현지: 리뷰테이블과 시설테이블을 조인하여 리뷰에 대한 정보 + 시설의 정보를 가져옴-->
+	<!-- 23.02.05 신현지: 최근작성 순으로 정렬 -->
 	<select id="openMyReviews" parameterType="hashmap" resultType="hashmap">
-	select  a.re_idx,a.re_pl_idx,a.re_star,a.re_contents ,b.pl_name,a.re_reg_date 
-	from ( 
-	    select * from review    
-	    where re_writer_id = #{mem_id}
-	    and re_del_gb='N'
-	) a left join place b on a.re_pl_idx = b.pl_idx  
+		<include refid="common.pagingPre"/>
+			<![CDATA[
+			select  
+			ROW_NUMBER() OVER (ORDER BY a.re_reg_date DESC) RNUM,
+			a.re_idx,a.re_pl_idx,a.re_star,a.re_contents ,b.pl_name,a.re_reg_date 
+			from ( 
+			    select * from review    
+			    where re_writer_id = #{mem_id}
+			    and re_del_gb='N'
+			) a left join place b on a.re_pl_idx = b.pl_idx  
+			order by a.re_reg_date desc]]>
+		<include refid="common.pagingPost"/>
 	</select>
 	
 	<!-- 23.01.25 신현지: 내가 작성한 하나의 리뷰 출력-->
@@ -40,11 +47,13 @@
 	
 	
 	<!-- 23.01.26 신현지: 리뷰에 불러올 시설썸네일 가져오기-->
+	<!-- 23.02.23 신현지: 대표 이미지 딱 하나만 가져오도록 수정 -->
 	<select id="openMyReviewPlacePhoto" parameterType="hashmap" resultType="hashmap">
 		select ph_stored_file_name from photo
 		where ph_board_type='place'
 		and ph_del_gb = 'N'
 		and ph_board_idx = #{pl_idx}
+		and rownum = 1
 	</select>
 	
 	<!-- 23.01.28 신현지 : 리뷰 삭제하기 -->
@@ -53,8 +62,6 @@
 		set re_del_gb = 'Y'
 		where re_idx = #{re_idx}
 	</update>
-	
-
 	
 	<!-- 23.01.31 신현지: 리뷰 수정 -->
 	<update id="updateReview" parameterType="hashmap">
@@ -66,13 +73,68 @@
 	</update>
 	
 	
-	<!-- 23.02.01 신현지: 관리자페이지에서 모든 리뷰 불러오기 -->
-	<select id="openReviews" parameterType="hashmap" resultType="hashmap">
-		select ph_stored_file_name from photo
-		where ph_board_type='place'
-		and ph_del_gb = 'N'
-		and ph_board_idx = #{pl_idx}
+	<!-- 23.02.01 신현지: 관리자페이지에서 모든 리뷰 최신순으로 불러오기 -->
+	<select id="openAllReviews" parameterType="hashmap" resultType="hashmap">
+		select * 
+		from review a left join place b on a.re_pl_idx = b.pl_idx  
+		order by re_reg_date desc
 	</select>
+	
+	<!-- 23.02.06 신현지: 시설상세보기 밑단에 표시할 최신리뷰 5개 -->
+	<select id="openFiveReviews" resultType="hashmap">
+		<![CDATA[
+		select * from 
+			(select * from review
+			where re_del_gb = 'N'
+			and re_pl_idx = #{pl_idx}
+			order by re_reg_date desc)
+		where rownum <=5 
+		]]>
+	</select>
+	
+	<!-- 23.02.06 신현지: 시설에 대한 모든 리뷰가져오기 -->
+	<!-- 23.02.09 신현지: option이 0이면 최신순 정렬, 1이면 별점높은순정렬, 2이면 별점낮은순정렬 -->
+	<select id="openAllPlaceReviews" resultType="hashmap">
+		<include refid="common.pagingPre"/>
+		select ROW_NUMBER() OVER ( ORDER BY
+			<if test='option eq "1".toString()'>
+			 	re_star DESC,
+			</if>
+			<if test='option eq "2".toString()'>
+			 	re_star ASC,
+			</if>
+		re_reg_date DESC ) RNUM,
+		re_idx,re_pl_idx,re_writer_id, re_writer_name, 
+		re_star, re_contents, re_reg_date, re_mod_date,re_del_gb
+		from review a
+		where re_del_gb = 'N'
+		and re_pl_idx = #{pl_idx}
+		<include refid="common.pagingPost"/>
+	</select>
+	
+	<!-- 23.02.06 신현지: 리뷰에 대한 사진가져오기 -->
+	<select id="openReviewPhoto" parameterType="hashmap" resultType="hashmap">
+		select ph_idx, ph_stored_file_name from photo
+		where ph_board_idx = #{re_idx} 
+		and ph_board_type = 'review'
+		and ph_del_gb = 'N'
+	</select>
+	
+	<!-- 23.02.06 신현지: 리뷰의 개수,평균 구하기 -->
+	<select id="openReviewInfo" parameterType="hashmap" resultType="hashmap">
+		select count(re_idx) RCOUNT, round(avg(re_star),1) RAVG
+		from review
+		where re_pl_idx = #{pl_idx} and re_del_gb = 'N'
+	</select>
+	
+	<!-- 23.02.06 신현지: 오늘 작성한 리뷰가 있는지 확인-->
+	<select id="checkTodayReview" parameterType="hashmap" resultType="hashmap">
+		select TO_CHAR(re_reg_date,'YYMMDD') REG_DATE from review
+		where re_pl_idx = #{re_pl_idx}
+		and re_del_gb = 'N'
+		and TO_CHAR(re_reg_date,'YYMMDD') = TO_CHAR(SYSDATE,'YYMMDD')
+	</select>
+
 
 
 </mapper>

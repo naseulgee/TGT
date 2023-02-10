@@ -116,6 +116,11 @@ function form_submit(insert_url) {
 					alert("글을 성공적으로 업로드했습니다!");
 				}
 				location.href=result;
+			},
+			error : function(a,b,c) {
+				if(a.responseText=='reviewForOneDay') {
+					alert('시설에 대한 리뷰는 하루에 한 번만 작성가능합니다.');
+				}
 			}
 		}); //$.ajax
 	});

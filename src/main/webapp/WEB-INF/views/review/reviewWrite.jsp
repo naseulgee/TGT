@@ -102,14 +102,11 @@
 		
 		<input type="hidden" value="review" name="ph_board_type"><!-- 테이블명/ 시설과 회원에 각각 추가 필수 -->
 		<input type="hidden" id="re_pl_idx" name="re_pl_idx" value="${re_pl_idx}"><!-- 시설번호 -->
-		<!-- 세션이 구현되면 삭제 -->
-		<input type="hidden" id="re_writer_id" name="re_writer_id" value="aaa123"><!-- 작성자 아이디 -->
-		<input type="hidden" id="re_writer_name" name="re_writer_name" value="브라더"><!-- 강아지 이름 -->
 		
-		<%-- 세션이 전부 구현되면 사용
+		<%-- 세션이 전부 구현되면 사용 --%>
 		<input type="hidden" id="re_writer_id" name="re_writer_id" value="${mem_id}"><!-- 작성자 아이디 -->
 		<input type="hidden" id="re_writer_name" name="re_writer_name" value="${mem_dog_name}"><!-- 강아지 이름 -->
-		--%>
+		
 		<button class="btn submit" type="button" id="uploadBtn" >리뷰등록</button> 
 		
 		<a href="/mypage/review/list.paw" class="btn">목록으로</a>
