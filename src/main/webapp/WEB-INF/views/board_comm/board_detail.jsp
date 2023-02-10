@@ -128,12 +128,17 @@
 						</c:choose>
 					</tbody>
 				</table>
-				<br> <input type="hidden" name="BNO" id="BNO"
-					value="${map.BC_IDX}" />
-				<textarea placeholder="댓글을 입력해주세요." name="CONTENT" id="CONTENT"
-					style="width: 1300px; height: 100px;"></textarea>
-				<br> <br>
+				
+				<!------------------------------------ 댓글 작성 -------------------------------------->
+				
+				<br> 
+				<input type="hidden" name="BNO" id="BNO" value="${map.BC_IDX}" />
+				<input type="hidden" name="WRITER" id="WRITER" value="${mem_id}">
+				<textarea placeholder="댓글을 입력해주세요." name="CONTENT" id="CONTENT" style="width: 1300px; height: 100px;"></textarea>
+				<br> 
+				<br>
 				<button class="btn submit" id="btn" name="btn" style="float: right">댓글 작성</button>
+				
 			</div>
 		</div>
 	</section>
@@ -145,9 +150,9 @@ $('#btn').click(function() {
 	
 	const BNO = ${map.BC_IDX};
 	const CONTENT = $('#CONTENT').val();
+	const WRITER = $('#WRITER').val();
 	
-	console.log(BNO);
-	console.log(CONTENT);
+		alert(WRITER);
 	
 			$.ajax({
 				type:'post',
@@ -155,12 +160,14 @@ $('#btn').click(function() {
 				data: 
 					{
 						"BNO":BNO,
-						"CONTENT":CONTENT
+						"CONTENT":CONTENT,
+						"WRITER":WRITER,
 					},		
 				dataType: "text",
 				success: function (data) {
 					$("CONTENT").html(data);
 					$("BNO").html(data);
+					$("WRITER").html(data);
 					location.reload();
 				},
 				error:function(data){

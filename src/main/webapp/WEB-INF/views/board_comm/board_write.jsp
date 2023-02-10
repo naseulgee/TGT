@@ -35,6 +35,7 @@
 									<input type="text" id="BC_TITLE" name="BC_TITLE"
 											placeholder="제목" style="width: 850px; height: 40px">
 										</input>
+											<input type="hidden" id="BC_WRITER_NAME" name="BC_WRITER_NAME" value="${mem_id}" />
 									</div>
 								</div>
 								<br> <br>

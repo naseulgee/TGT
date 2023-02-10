@@ -11,8 +11,10 @@
 23.01.27 최선아: 게시판 댓글 삭제
 23.01.30 최선아: 게시판 댓글 수정
 23.02.01 최선아: 게시판 전체 검색 및 페이징
+23.02.08 최선아: 마이페이지 내가 쓴 게시글 리스트
+23.02.09 최선아: 마이페이지 내가 쓴 댓글 리스트 출력
 -->
-	
+
 <!-- 게시판 리스트 -->
 <select id="boardList" parameterType="hashmap" resultType="hashmap">
 				<include refid="common.pagingPre"/>
@@ -21,17 +23,18 @@
 			 BC_IDX,
 			 BC_TITLE,
 			 BC_READHIT,
-			 BC_MOD_DATE,
-			 BC_WRITER_ID,
+			 TO_CHAR(SYSDATE, 'YYYYMMDD') AS BC_MOD_DATE,
+			 BC_WRITER_NAME,
 			 BC_BCC_NAME
 		FROM
 			 BOARD_COMM
 		WHERE
 			 BC_DEL_GB = 'N'
 	
-			<if test="BC_BCC_NAME != null">
+			<if test='BC_BCC_NAME!="전체게시판"'>
 			AND BC_BCC_NAME = #{BC_BCC_NAME}
 			</if>
+			
 			<if test="subKeyword != null">
               AND BC_TITLE LIKE '%'||#{subKeyword}||'%' 
                OR BC_CONTENTS LIKE '%' || #{subKeyword} || '%'
@@ -64,7 +67,7 @@
 		    0, 
 		    'N', 
 		    SYSDATE, 
-		    'Admin',
+		    #{BC_WRITER_NAME, jdbcType=VARCHAR},
 		    #{BC_BCC_NAME, jdbcType=VARCHAR}
         )
    ]]>
@@ -143,7 +146,7 @@
 		SEQ_BOARD_COMMENT.NEXTVAL, 
 		#{BNO, jdbcType=VARCHAR}, 
 		#{CONTENT, jdbcType=VARCHAR}, 
-		'ADMIN',
+		 #{WRITER, jdbcType=VARCHAR},
 		sysdate
 		)
 	]]>
@@ -193,7 +196,33 @@
 	]]>
 </update> 
 
+<!-- 마이페이지 내가 쓴 글 리스트 -->
+<select id="myPageList" parameterType="hashmap" resultType="hashmap">
+		SELECT
+			 BC_IDX,
+			 BC_TITLE,
+			 TO_CHAR(SYSDATE, 'YYYYMMDD') AS BC_MOD_DATE,
+			 BC_WRITER_NAME,
+			 BC_BCC_NAME
+		FROM
+			 BOARD_COMM
+		WHERE
+			 BC_WRITER_NAME = #{mem_id, jdbcType=VARCHAR}
+			
+</select>
 
-
+<!-- 마이페이지 내가 쓴 댓글 리스트 출력 -->
+<select id="myPageComment" parameterType="hashmap" resultType="hashmap">
+		SELECT
+			 RNO,
+			 BNO,
+			 TO_CHAR(SYSDATE, 'YYYYMMDD') AS REGDATE,
+			 WRITER,
+			 CONTENT
+		FROM
+			 BOARD_COMMENT
+		WHERE
+			 WRITER = #{mem_id, jdbcType=VARCHAR}
+</select>
 
 </mapper>

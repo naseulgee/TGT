@@ -7,8 +7,9 @@
 		<ul class="user_info">
 			<h3><a href="">나의 정보</a></h3>
 			<li><a href="">프로필 보기</a></li>
-			<li><a href="">작성한 함께 해요</a></li> 
-			<li><a href="">참여한 함께 하고 싶어요</a></li>
+			<li><a href="/mypage/together/writelist">작성한 함께해요</a></li> 
+			<li><a href="/mypage/together/list">참여한 함께해요</a></li>
+			<li><a href="/mypage/board/list">내가 쓴 멍멍왈왈</a></li>
 		</ul>
 	</div>
 </nav>
