@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
 <link type="text/css" rel="stylesheet" href="/resources/css/common/photo.css" ></link>
+
 <style>
 	#stars { 
 		display: inline-block; 

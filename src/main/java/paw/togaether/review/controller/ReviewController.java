@@ -44,9 +44,10 @@ public class ReviewController {
 		//오늘 이미 리뷰를 작성했는지 check
 		Map<String, Object> review = reviewService.checkTodayReview(commandMap.getMap());
 		
-		System.out.println(review);//null
+		System.out.println("작성가능 리뷰"+review);//null
+		System.out.println(review.get("REG_DATE") == null);//null
 		//비어있다면
-		if(review == null)  {
+		if(review.get("REG_DATE") == null)  {
 			//review등록과 photo등록에 대한 처리
 			reviewService.insertReview(commandMap.getMap(),session,uploadFile); //사용시 주석 풀어주기
 			return new ResponseEntity<String>("/mypage/review/list.paw",HttpStatus.OK);
@@ -141,22 +142,31 @@ public class ReviewController {
 	
 	
 	/** 23.02.08 신현지 : 시설에 대한 모든 리뷰 출력*/
+	/** 23.02.09 신현지 : 정렬에 대한 처리 추가*/
 	@RequestMapping(value="/place/detail/{pl_idx}/review/list")
-	public ModelAndView openPlaceAllReviews(@PathVariable("pl_idx") int pl_idx , HttpSession session) throws Exception{
+	public ModelAndView openPlaceAllReviews(CommandMap commandMap , @PathVariable("pl_idx") int pl_idx ) throws Exception{
+		
+		String option = (String)commandMap.get("option");
+		if (option == null) { option = "0"; } //option이 없으면 그냥 최신순으로 정렬
+		
 		ModelAndView m = new ModelAndView("/review/list");
 		m.addObject("pl_idx", pl_idx);
+		m.addObject("option", option);
 		return m;
 	}
 	
 	/** 23.02.08 신현지 : 시설에 대한 모든 리뷰를 페이징해서 출력*/
 	@RequestMapping(value="/place/detail/{pl_idx}/review/selectList")
-	public ModelAndView selectPlaceAllReviews(@PathVariable("pl_idx") int pl_idx , HttpSession session) throws Exception{
+	public ModelAndView selectPlaceAllReviews(@PathVariable("pl_idx") int pl_idx, CommandMap commandMap) throws Exception{
 		ModelAndView m = new ModelAndView("jsonView");
+
+		commandMap.put("pl_idx", pl_idx);
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("pl_idx", pl_idx);		
-		List<Map<String,Object>> reviewList = reviewService.openAllPlaceReviews(map);
+		List<Map<String,Object>> reviewList = reviewService.openAllPlaceReviews(commandMap.getMap());
 		m.addObject("reviewList", reviewList);
+		m.addObject("option",commandMap.get("option"));
+		Map<String,Object> info = reviewService.openReviewInfo(commandMap.getMap());
+		m.addObject("info", info);
 		
 		if(reviewList.size() > 0){
 			m.addObject("TOTAL", reviewList.get(0).get("TOTAL_COUNT"));

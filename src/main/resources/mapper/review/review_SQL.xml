@@ -63,8 +63,6 @@
 		where re_idx = #{re_idx}
 	</update>
 	
-
-	
 	<!-- 23.01.31 신현지: 리뷰 수정 -->
 	<update id="updateReview" parameterType="hashmap">
 		update review
@@ -85,26 +83,32 @@
 	<!-- 23.02.06 신현지: 시설상세보기 밑단에 표시할 최신리뷰 5개 -->
 	<select id="openFiveReviews" resultType="hashmap">
 		<![CDATA[
-		select * 
-		from review
-		where re_del_gb = 'N'
-		and rownum <=5
-		and re_pl_idx = #{pl_idx}
-		order by re_reg_date desc
+		select * from 
+			(select * from review
+			where re_del_gb = 'N'
+			and re_pl_idx = #{pl_idx}
+			order by re_reg_date desc)
+		where rownum <=5 
 		]]>
 	</select>
 	
 	<!-- 23.02.06 신현지: 시설에 대한 모든 리뷰가져오기 -->
+	<!-- 23.02.09 신현지: option이 0이면 최신순 정렬, 1이면 별점높은순정렬, 2이면 별점낮은순정렬 -->
 	<select id="openAllPlaceReviews" resultType="hashmap">
 		<include refid="common.pagingPre"/>
-			<![CDATA[
-		select ROW_NUMBER() OVER (ORDER BY re_reg_date DESC) RNUM,
+		select ROW_NUMBER() OVER ( ORDER BY
+			<if test='option eq "1".toString()'>
+			 	re_star DESC,
+			</if>
+			<if test='option eq "2".toString()'>
+			 	re_star ASC,
+			</if>
+		re_reg_date DESC ) RNUM,
 		re_idx,re_pl_idx,re_writer_id, re_writer_name, 
 		re_star, re_contents, re_reg_date, re_mod_date,re_del_gb
 		from review a
 		where re_del_gb = 'N'
 		and re_pl_idx = #{pl_idx}
-		]]>
 		<include refid="common.pagingPost"/>
 	</select>
 	
@@ -125,7 +129,7 @@
 	
 	<!-- 23.02.06 신현지: 오늘 작성한 리뷰가 있는지 확인-->
 	<select id="checkTodayReview" parameterType="hashmap" resultType="hashmap">
-		select TO_CHAR(re_reg_date,'YYMMDD') from review
+		select TO_CHAR(re_reg_date,'YYMMDD') REG_DATE from review
 		where re_pl_idx = #{re_pl_idx}
 		and re_del_gb = 'N'
 		and TO_CHAR(re_reg_date,'YYMMDD') = TO_CHAR(SYSDATE,'YYMMDD')

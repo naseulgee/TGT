@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="/WEB-INF/include/user-header.jspf" %>
+<%@ include file="/WEB-INF/include/admin-header.jspf" %>
 <script src="/resources/js/paging/searchPaging_B.js" defer></script>
 
 <style>
@@ -11,17 +11,20 @@ main img { width: 50px; height: 50px; object-fit: cover; border-radius: 10px; }
 #wrap { width:70%;}
 #place, #stars, #regDate { font-size: 1.2em; }
 table tbody tr td { white-space : inherit;}
+main button{
+	align : left;
+}
+
 </style>
 
 <main class="layoutCenter">
 	<div class="wrap txt_center">
 		
-		<h1>시설리뷰</h1><br><br>
+		<h1>시설리뷰</h1>
 		
+		<br><br>
 		<!-- 시설번호 -->
 		<input type="hidden" value="${pl_idx}" id="pl_idx" name="pl_idx">
-		<!-- 정렬옵션 -->
-		<input type="hidden" value="${option}" id="option" name="option">
 
 			<div class="info">
 				<!-- 평균과 개수가 들어오는 곳 -->
@@ -43,12 +46,6 @@ table tbody tr td { white-space : inherit;}
 </main><!-- //main 종료 -->
 
 <script>
-let option = 0;
-function checkOption(target) {
-	option = target.value;//option값 불러오기
-	fn_selectBoardList(1);
-}
-
 $(document).ready(function(){
 	fn_selectBoardList(1); //1페이지 받기
 });
@@ -56,10 +53,10 @@ $(document).ready(function(){
 function fn_selectBoardList(pageNo){
 	var comAjax = new ComAjax();
 	let pl_idx = $("#pl_idx").val();
-	console.log(option);
-	comAjax.setUrl("<c:url value='/place/detail/"+pl_idx+"/review/selectList.paw' />"); //페이징실행 컨트롤러url
+	console.log(pl_idx);
+	comAjax.setUrl("<c:url value='/admin/place/detail/"+pl_idx+"/review/selectList.paw' />"); //페이징실행 컨트롤러url
 	comAjax.setCallback("fn_selectBoardListCallback"); //setCallback은 Ajax 요청이 완료된 후 호출될 함수의 이름을 지정
-	comAjax.addParam("option",option);
+	
 	//페이징 세팅
 	if(!isNull(pageNo)){//함수 호출 시 매개변수를 주었다면
 		comAjax.addParam("PAGE_INDEX", pageNo);
@@ -87,26 +84,12 @@ function fn_selectBoardListCallback(data){
 			totalCount : total,
 			eventName : "fn_selectBoardList"
 		};
-		
 		gfn_renderPaging_B(params); //페이징 실행
 		let str = ""; //리스트를 담는 변수
 		let str2 = ""; //리뷰개수, 평균의 정보를 담는 변수
 		str2 += "<div class='txt_center txt_big'><span id='star1' class='bold'>"+data.info.RAVG+"</span>";
 		str2 += "<span id='star2'>/5점</span></div><br><br><h3 class='txt_left'>리뷰 <span style='color : #db776c;'>"+data.info.RCOUNT+"</span></h3>";
-		
-		str2 += "<button type='button' class='option' name='option' value='1' onClick='checkOption(this)'>평점높은순</button> | ";
-		if (data.option == 1) {
-			
-		} 
-		if (data.option == 2) {
-			
-		} else {
-			
-		}
-		
-		str2 += "<button type='button' class='option' name='option' value='2' onClick='checkOption(this)'>평점낮은순</button> | ";
-		str2 += "<button type='button' class='option' name='option' value='0' onClick='checkOption(this)'>최신순</button>";
-	
+		str2 += "<button type='button' id='rate1'>평점높은순</button> | <button type='button' id='rate2'>평점낮은순</button> | <button type='button' id='rate3'>최신순</button>";
 		info.html(str2);
 		
 		$.each(data.reviewList, function(key, i){
@@ -118,7 +101,8 @@ function fn_selectBoardListCallback(data){
 					if(i.photoList.length>0) {
 						for (let j =0 ; j<i.photoList.length ; j++) {		
 							str+= "<img class='pop_img' alt='"+i.RE_WRITER_NAME+"님의 리뷰 이미지' src='/resources/upload/s_"+i.photoList[j].PH_STORED_FILE_NAME+"'>&nbsp;";
-						}	
+						}
+						
 					}
 					str+="</div><span id='place'> " + i.RE_WRITER_NAME+" ("+(i.RE_WRITER_ID)+ ") &nbsp;|&nbsp;</span>";
 					
@@ -133,6 +117,7 @@ function fn_selectBoardListCallback(data){
 			str+="&nbsp;</p>";
 			str+="<p id='contents'>"+i.RE_CONTENTS+"</p></td></tr>";
 
+			
 		});
 		body.append(str);
 

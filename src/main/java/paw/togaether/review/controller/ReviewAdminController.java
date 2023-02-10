@@ -1,5 +1,6 @@
 package paw.togaether.review.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -70,5 +72,31 @@ public class ReviewAdminController {
 		return m;
 	}
 	
+	/** 23.02.09 신현지 : 시설에 대한 모든 리뷰 출력*/
+	@RequestMapping(value="admin/place/detail/{pl_idx}/review/list")
+	public ModelAndView openPlaceAllReviews(@PathVariable("pl_idx") int pl_idx , HttpSession session) throws Exception{
+		ModelAndView m = new ModelAndView("admin/review/list2");
+		m.addObject("pl_idx", pl_idx);
+		return m;
+	}
+	
+	/** 23.02.09 신현지 : 시설에 대한 모든 리뷰를 페이징해서 출력*/
+	@RequestMapping(value="/admin/place/detail/{pl_idx}/review/selectList")
+	public ModelAndView selectPlaceAllReviews(@PathVariable("pl_idx") int pl_idx , HttpSession session) throws Exception{
+		ModelAndView m = new ModelAndView("jsonView");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pl_idx", pl_idx);		
+		List<Map<String,Object>> reviewList = reviewService.openAllPlaceReviews(map);
+		m.addObject("reviewList", reviewList);
+		
+		Map<String,Object> info = reviewService.openReviewInfo(map);
+		m.addObject("info", info);
+		
+		if(reviewList.size() > 0){
+			m.addObject("TOTAL", reviewList.get(0).get("TOTAL_COUNT"));
+		} else{ m.addObject("TOTAL", 0); }
+		return m;
+	}
 	
 }
