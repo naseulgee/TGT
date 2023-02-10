@@ -4,9 +4,9 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
 	<!-- 컨텍스트 경로 접속 시 자동 출력 파일 -->
-	<welcome-file-list>
-		<welcome-file>main.paw</welcome-file>
-	</welcome-file-list>
+	<!-- <welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list> -->
 	
 	<!-- 인코딩 필터 설정 -->
 	<filter>

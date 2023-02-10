@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="togetherMypage">
+	<!-- 23.02.08 박선영 마이페이지 함께해요 참여게시글 출력 -->
+	<select id="myTogetherList" resultType="hashmap">
+		<![CDATA[
+	SELECT 
+				t.TO_IDX,
+				t.TO_TITLE,
+				t.TO_TC_NAME,
+				t.TO_CONTENTS,
+				t.TO_WRITER_ID,
+				t.TO_WRITER_NAME,
+				TO_CHAR(TO_DATE, 'YYYY-MM-DD')as TO_DATE,
+				t.TO_TIME,
+				t.TO_PEOPLE,
+				(select count(tw_idx) from together_with where tw_to_idx = to_idx) as C,
+				t.TO_LOC,
+				t.TO_BR_IDX,
+				t.TO_WT_IDX,
+				TO_CHAR(TO_REG_DATE, 'YYYY-MM-DD')as TO_REG_DATE,
+				TO_CHAR(TO_MOD_DATE, 'YYYY-MM-DD')as TO_MOD_DATE,
+				t.TO_DEL_GB,
+				c.TC_NAME,
+				b.BR_IDX,
+				b.BR_NAME,
+                w.TW_IDX,
+                w.TW_TO_IDX,
+                w.TW_MEM_ID
+				from TOGETHER t, TOGETHER_CATE c, BREED b, TOGETHER_WITH w
+				WHERE w.TW_MEM_ID = #{mem_id, jdbcType = VARCHAR}
+                AND  t.TO_BR_IDX = b.BR_IDX
+				AND t.TO_DEL_GB = 'N'
+                AND t.TO_IDX = w.TW_TO_IDX
+                AND t.TO_TC_NAME = c.TC_NAME
+		]]>
+	</select>
+	
+	<!-- 23.02.09 박선영 마이페이지 내가 작성한 글 보기 -->
+	<select id="myTogeWriteList" resultType="hashmap">
+		<![CDATA[
+	SELECT 
+				t.TO_IDX,
+				t.TO_TITLE,
+				t.TO_TC_NAME,
+				t.TO_CONTENTS,
+				t.TO_WRITER_ID,
+				t.TO_WRITER_NAME,
+				TO_CHAR(TO_DATE, 'YYYY-MM-DD')as TO_DATE,
+				t.TO_TIME,
+				t.TO_PEOPLE,
+				(select count(tw_idx) from together_with where tw_to_idx = to_idx) as C,
+				t.TO_LOC,
+				t.TO_BR_IDX,
+				t.TO_WT_IDX,
+				TO_CHAR(TO_REG_DATE, 'YYYY-MM-DD')as TO_REG_DATE,
+				TO_CHAR(TO_MOD_DATE, 'YYYY-MM-DD')as TO_MOD_DATE,
+				t.TO_DEL_GB,
+				c.TC_NAME,
+				b.BR_IDX,
+				b.BR_NAME
+				from TOGETHER t, TOGETHER_CATE c, BREED b
+				WHERE t.TO_WRITER_ID = #{mem_id, jdbcType=VARCHAR}
+                AND  t.TO_BR_IDX = b.BR_IDX
+				AND t.TO_DEL_GB = 'N'
+                AND t.TO_TC_NAME = c.TC_NAME
+		]]>
+	</select>
+	
+
+</mapper>

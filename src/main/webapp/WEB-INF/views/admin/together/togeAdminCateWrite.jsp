@@ -17,11 +17,11 @@ function catewriteform_check(){
 }
 </script>
 <style>
-.fa-solid {
+span.fa-solid {
 color:#f0b1aa;
 }
 
-.btn.submit{
+#ctreg.btn.submit{
 margin-right:5px;
 }
 </style>
@@ -48,8 +48,8 @@ margin-right:5px;
 	</table>
 	<br/>
 	<div class="flexCenter">
-		<input type="button" class="btn submit" value="등록하기" onclick="catewriteform_check();"/>
-		<a class="btn" href="/admin/together/catelist.paw">목록으로</a>
+		<input type="button" id="ctreg" class="btn submit" value="등록하기" onclick="catewriteform_check();"/>
+		<a class="btn" href="/admin/together/catelist.paw">카테고리 목록으로</a>
 	</div>
 	</form>
 </div>

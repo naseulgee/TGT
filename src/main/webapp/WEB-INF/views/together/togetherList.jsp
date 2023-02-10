@@ -7,9 +7,6 @@
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 
 <main class="layoutCenter">
-<br/>
-	<h1 class="txt_center"><span class="fa-solid fa-paw" style="color:#f0b1aa;"></span>함께해요<span class="fa-solid fa-paw" style="color:#f0b1aa;"></span></h1>
-	<br/>
 	
 <div class="cate_wrap">
 	
@@ -18,6 +15,13 @@
 	<!-- 23.02.01 박선영 모집여부 버튼 출력 구현 -->
 	<!-- 23.02.02 박선영 페이징 처리 완료 -->
 	<div class="main_list">
+	<br/>
+	<h1 class="txt_center"><span class="fa-solid fa-paw" style="color:#f0b1aa;"></span>함께해요<span class="fa-solid fa-paw" style="color:#f0b1aa;"></span></h1>
+	<br/>
+		<div>
+			<input type="text" class="txt" placeholder="검색하개:)" name="subKeyword" id="subKeyword" value="${subKeyword}" width="150"/>
+			<input type="button" class="btn submit" value="검색" onclick="fn_selectBoardList2(1);">
+		</div>
 		<%-- <c:choose>
 			<c:when test="${!empty list}"> --%>
 				<table class="card_table row1" id="together_list">
@@ -49,30 +53,29 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				<!-- <ul id="paging">
-				</ul>
-				<div id="PAGE_NAVI_T"></div>
+				
+				<!-- <div id="PAGE_NAVI_T"></div>
 				<input type="hidden" id="PAGE_INDEX_T" name="PAGE_INDEX_T" />
 				<form id="commonForm" name="commonForm"></form> -->
 			<%-- </c:when> --%>
 			
 			<%-- <c:otherwise> --%>
-				<table id="not_together">
+			<!-- 	<table id="not_together">
 					<tbody>
-						<!-- <tr>
-							<td class="empty paw_hover">게시글이 없습니다:(</td> -->
+						<tr>
+							<td class="empty paw_hover">게시글이 없습니다:(</td>
 					</tbody>
-				</table>
+				</table> -->
 			<%-- </c:otherwise> --%>
 		<%-- </c:choose> --%>
-		<ul id="paging">
-		</ul>
+		
 		<!-- 23.02.02페이징처리 -->
-		<div id="PAGE_NAVI_T" class="flexCenter"></div>
+		<div id="PAGE_NAVI_T" class="flexCenter">
+		<input type="hidden" value="${now}" id="now" name="now"></div>
 		<input type="hidden" id="PAGE_INDEX_T" name="PAGE_INDEX_T" /> <br />
 	
 		<form id="commonForm" name="commonForm"></form>
-	</div>
+		</div>
 	
 	<br/>
 	
@@ -80,10 +83,10 @@
 	<!-- 23.01.31 박선영 로그인여부에 따른 버튼 출력 -->
 	<div class="cate_button">
 		<ul class="button_list">
-			<li><c:if test="${!empty mem_id }">
+			<li class="tc"><c:if test="${!empty mem_id }">
 				<a class="btn submit" id="writebtn" href="/together/writeForm.paw">글쓰개:)</a>
 				</c:if></li>
-			<li><c:if test="${empty mem_id}">
+			<li class="tc"><c:if test="${empty mem_id}">
 				<a class="btn submit" id="nowritebtn" href="/member/login.paw">로그인하개:)</a>
 				</c:if></li>
 			<%-- <c:forEach items="${catelist}" var="ct"> --%>	
@@ -108,11 +111,17 @@
 			comAjax.setUrl("<c:url value='/together/list.paw' />");
 			comAjax.setCallback("fn_selectBoardListCallback2");
 			
-			comAjax.addParam("PAGE_INDEX", $("#PAGE_INDEX_T").val());
+			let p = pageNo;
+			if(isNull(pageNo)) p = $("#PAGE_INDEX_T").val();
+			if(isNull(p)) p = 1;
+			comAjax.addParam("PAGE_INDEX", p);
+			
 			comAjax.addParam("PAGE_ROW", 6);
-
-			//comAjax.addParam("keyword", $('#keyword').val());
-			//comAjax.addParam("searchType", $('#searchType').val());
+			//comAjax.addParam("now", $("#now").val());
+			
+			let key = $("#subKeyword").val();
+	        if(isNull(key)) key = "";
+	        comAjax.addParam("subKeyword", key);
 
 			comAjax.ajax();
 		}
@@ -121,12 +130,12 @@
 		function fn_selectBoardListCallback2(data) {
 			var total2 = data.TOTAL_T;
 			
-			var body =$("#not_together")
-			var tbody = $(".together");
+			var body = $(".together");
 			body.empty();
 			
 			var cate = $(".tcname");
 			cate.empty();
+			
 			
 			//카테고리 세팅 로직
 			if(data.catelist.length > 0){
@@ -143,7 +152,7 @@
 			
 			//함께해요 리스트 세팅 로직
 			if (total2 == 0) {
-				var str = "<tr align='center'>" + "<td class='empty paw_hover'>게시글이 없습니다:(</td>"
+				var str = "<tr>" + "<td class='empty'>게시글이 없습니다:(</td>"
 						+ "</tr>";
 				body.append(str);
 
@@ -155,18 +164,38 @@
 					eventName : "fn_selectBoardList2",
 				};
 				gfn_renderPaging_T(params2);
-
+				
+				var now = new Date()//날짜 형식의 변수 선언
+				var dnow = getFormatDate(now);//원하는 형태의 문자열로 변환(2023-02-09)
+				var time = getFormatTime(now);//원하는 형태의 문자열 시간으로 변환(22:10)
 				var str = "";
 				$.each(data.list,
 						function(key, value) {
 							str += "<tr class='use_move' name='togelist' data-href='/together/detail/"+value.TO_IDX +".paw' onclick='move(this,\"TO_IDX:"+value.TO_IDX+"\")'>";
 							str += "<input type='hidden' name='TO_IDX' id='TO_IDX' value=" + value.TO_IDX + ">";
 							str += "<td class='color'><span class='fa-solid fa-paw'></span>"+ "["+ value.TC_NAME + "]"  +value.TO_TITLE;
-							if(value.C == value.TO_PEOPLE){
-								str += "<span class='btn submit'>모집완료</span>";
+							if(dnow < value.TO_DATE){//문자열 형태로 비교
+								if(value.C == value.TO_PEOPLE){
+									str += "<span class='btn submit'>모집완료</span>";
+								}
+								if(value.C < value.TO_PEOPLE){
+									str += "<span class='btn submit'>모집중</span>";
+								}
 							}
-							if(value.C < value.TO_PEOPLE){
-								str += "<span class='btn submit'>모집중</span>";
+							else if(dnow > value.TO_DATE){
+								str += "<span class='btn warn'>마감</span>";
+							}
+							else{//현재 날짜와 모집날짜가 같을때
+								if(time > value.TO_TIME){//모집시간이 지났다면
+									str += "<span class='btn warn'>마감</span>";
+								}else{
+									if(value.C == value.TO_PEOPLE){
+										str += "<span class='btn submit'>모집완료</span>";
+									}
+									if(value.C < value.TO_PEOPLE){
+										str += "<span class='btn submit'>모집중</span>";
+									}
+								}
 							}
 							str += "</td>";
 							str += "<td><span class='fa-solid fa-bone'></span>" + value.TO_TITLE + "</td>";		
@@ -188,17 +217,36 @@
 								str += "XL"
 							}
 							str += "</td>";
-							str += "<td><span class='fa-solid fa-bone'></span>언제개 : " +value.TO_DATE + "</td>";
+							str += "<td class='to_date'><span class='fa-solid fa-bone'></span>언제개 : " +value.TO_DATE + "</td>";
 							str += "<td><span class='fa-solid fa-bone'></span>몇시개 : "  + value.TO_TIME + "</td>";
 							str += "<td><span class='fa-solid fa-bone'></span>몇명이개 : "  + value.C + "/" + value.TO_PEOPLE + "</td>";
 							//str += "<input type='hidden' id='TW_TO_IDX' name='TW_TO_IDX' value=" + value.TO_IDX + "/>" + "</td>"			
-							str += "<td class='txt_right'>"  + value.TO_REG_DATE + "</td>";
+							str += "<td class='txt_right'>" + value.TO_REG_DATE + "</td>";
 							str +=	"</tr>";
 						});
-
-				tbody.append(str);
+				
+				body.append(str);
 			}
+			   
 
+		}
+		//input time 과 비교위한 바꾸기
+		function getFormatTime(date){
+			var hours = date.getHours();//현재시간(한자리)
+			hours = hours >= 10? hours : '0' + hours;//hours 두자리로 지정
+			var minutes = date.getMinutes();//현재분
+			minutes = minutes >= 10? minutes : '0' + minutes; //minutes두자리로 지정
+			return hours + ":" + minutes;//형태변경
+		}
+		
+		//input date 형식과 비교를 위한 날짜 바꾸기
+		function getFormatDate(date){
+			var year = date.getFullYear();//yyyy
+			var month = (1 + date.getMonth());//M
+			month = month >= 10? month: '0' + month;//month 두자리로 지정
+			var day = date.getDate();//d
+			day = day >= 10? day: '0' + day;//day 두자리로 지정
+			return year + '-' + month + '-' + day;//-추가하여 yyyy-MM-dd 형태 지정가능
 		}
 		
 </script>

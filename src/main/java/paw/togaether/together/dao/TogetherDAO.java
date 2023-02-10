@@ -79,5 +79,17 @@ public class TogetherDAO extends AbstractDAO {
 	public Map<String, Object> checkWith(Map<String, Object> map) throws Exception {
 		return (Map<String, Object>) selectOne("together.checkWith", map);
 	}
+	
+	/* 23.02.06 박선영 참여멤버 정보 체크 */
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> checkMem(Map<String, Object> map) throws Exception {
+		return (Map<String, Object>) selectOne("together.checkMem", map);
+	}
+	
+	/* 23.02.09 박선영 작성자 상세 정보 체크 */
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> checkWriter(Map<String, Object> map) throws Exception {
+		return (Map<String, Object>) selectOne("together.checkWriter", map);
+	}
 
 }

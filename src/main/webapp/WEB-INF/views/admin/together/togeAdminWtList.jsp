@@ -8,13 +8,11 @@ span.fa-solid {
 color:#f0b1aa;
 }
 
-#ctreg.btn.submit{
+#wtreg.btn.submit{
 margin-right:5px;
 }
 </style>
-
 <main class="layoutCenter">
-
 <h1 class="txt_center"><span class="fa-solid fa-paw"></span>함께해요<span class="fa-solid fa-paw"></span></h1>
 	<br/>
 <div class="main_wrap">
@@ -24,19 +22,19 @@ margin-right:5px;
 		</colgroup>
 		<thead>
 			<tr>
-				<th>함께해요 분류 번호</th>
-				<th>함께해요 분류 이름</th>
-				<th>함께해요 분류 게시글 수</th>
+				<th>몸무게 번호</th>
+				<th>몸무게 시작 범위</th>
+				<th>몸무게 종료 범위</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:choose>
-				<c:when test="${!empty catelist}">
-					<c:forEach items="${catelist}" var="adct">
+				<c:when test="${!empty wtlist}">
+					<c:forEach items="${wtlist}" var="wt">
 						<tr>
-							<td>${adct.TC_IDX}</td>
-							<td>${adct.TC_NAME }</td>
-							<td>${adct.TC_COUNT }</td>
+							<td>${wt.WT_IDX}</td>
+							<td>${wt.WT_START} Kg</td>
+							<td>${wt.WT_END} Kg</td>
 						</tr>
 					</c:forEach>
 				</c:when>
@@ -51,8 +49,8 @@ margin-right:5px;
 </div>
 <br/>
 <div class="flexCenter">
-	<a class="btn submit" id="ctreg" href="/admin/together/catewriteForm.paw">함께해요 분류등록하기</a>
-	<a class="btn" href="/admin/together/list.paw">목록으로</a>
+	<a class="btn submit" id="wtreg" href="/admin/together/weightwriteForm">몸무게 등록하기</a>
+	<a class="btn" href="/admin/together/list">게시글 목록으로</a>
 </div>
 </main>
 <%@ include file="/WEB-INF/include/common-footer.jspf" %>

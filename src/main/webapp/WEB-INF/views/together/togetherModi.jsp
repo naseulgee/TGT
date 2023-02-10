@@ -4,12 +4,8 @@
 <script src="https://kit.fontawesome.com/e9bd4d3977.js" crossorigin="anonymous"></script>
 <script src="/resources/js/together/togewrite.js"></script>
 <style>
-.fa-solid {
+span.fa-solid.fa-paw {
 color:#f0b1aa;
-}
-
-.mypage{
-top:100px;
 }
 
 .btn.submit{
@@ -27,9 +23,9 @@ white-space:pre;
 <main class="layoutCenter">
 <%@ include file="/WEB-INF/include/nav_mypage.jspf"%>
 
-<h1 class="txt_center"><span class="fa-solid fa-paw"></span>함께해요<span class="fa-solid fa-paw"></span></h1>
 
 	<div class="main_wrap">
+	<h1 class="txt_center"><span class="fa-solid fa-paw"></span>함께해요<span class="fa-solid fa-paw"></span></h1>
 		<form method="post" action="/together/modify.paw" name="writefrm">
 		<input type="hidden" id="TO_IDX" name="TO_IDX" value="${map.TO_IDX }">
 		<input type="hidden" id="TO_WRITER_ID" name="TO_WRITER_ID" value="${mem_id}">

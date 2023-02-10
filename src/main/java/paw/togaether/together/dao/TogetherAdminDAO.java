@@ -47,4 +47,15 @@ public class TogetherAdminDAO extends AbstractDAO {
 		return (List<Map<String, Object>>) selectList("togetherAdmin.togetherAdminCate", map);
 	}
 	
+	/* 23.02.06 박선영 관리자 몸무게 리스트 */
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> adminWeightList(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList("togetherAdmin.adminWeightList", map);
+	}
+	
+	/* 23.02.03 박선영 견종 몸무게 범위 등록 */ 
+	public void adminTogeWeight(Map<String, Object> map) throws Exception {
+		insert("togetherAdmin.adminTogeWeight", map);
+	}
+	
 }

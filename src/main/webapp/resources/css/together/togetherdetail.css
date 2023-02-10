@@ -1,0 +1,76 @@
+span.fa-solid.fa-paw {
+color:#f0b1aa;
+}
+
+table{
+width:800px;
+font-size: 22px;
+margin-right:auto;
+margin-left:auto;
+position:relative;
+}
+
+tr{
+text-align:center;
+}
+
+
+.with li{
+line-height:2em;
+font-size:20px;
+}
+
+.main_detail{
+float:right;
+padding-right:100px;
+}
+
+.btn.submit{
+margin-right:5px;
+}
+
+input[type="button"]{
+border:1px solid #9ea7ad;
+padding-top: 5px;
+padding-right: 10px;
+padding-bottom: 5px;
+padding-left: 10px
+}
+
+input#withmem.btn.slim{
+font-size : 15px;
+line-height:2em;
+}
+
+span#withmem{
+color:white; 
+}
+
+span#wtmem{
+color:#f0b1aa; 
+}
+
+button#wtmem{
+border:1px solid #9ea7ad;
+background-color : white;
+padding-top: 1px;
+padding-right: 2px;
+padding-bottom: 1px;
+padding-left: 5px;
+margin-right:5px;
+font-size : 17px;
+line-height:1.7em;
+}
+
+
+button#withmem{
+border:1px solid #9ea7ad;
+background-color : #f0b1aa;
+padding-top: 1px;
+padding-right: 2px;
+padding-bottom: 1px;
+padding-left: 5px;
+margin-right:5px;
+font-size : 17px;
+line-height:1.5em;
+}

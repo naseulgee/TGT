@@ -2,11 +2,12 @@
 width:100%;
 }
 
+
 span.fa-solid.fa-paw {
 color:#f0b1aa;
 }
 
-.fa-bone {
+span.fa-solid.fa-bone {
 color:#f0b1aa;
 padding-right: 3px;
 }
@@ -24,30 +25,31 @@ display:absolute;
 .cate_wrap{
 width:100%;
 display:flex;
-} 
+}
+
+table tr{
+background-color: #f6ece1;	
+}
 
 .main_list{
 width:100%;
-padding-right:90px;
-padding-left:95px;
-position:relative;
+padding-right:100px;
+padding-left:250px;
+position:absolute;
 }
 
 .cate_button{
 position:relative;
 height:auto;
-padding-top : 110px;
-} 
+}
 
 .cate_button li{
 text-align:center;
 }
 
-ul.button_list{
+.button_list{
 border:1px solid #f0b1aa;
 width:100%;
-position:relative;
-height:auto;
 }
 
 li.tcname{

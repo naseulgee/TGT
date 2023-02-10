@@ -73,5 +73,42 @@ public class AdminTogeController {
 		
 		return mv;
 	}
+	
+	/* 23.02.06 박선영 관리자 견종몸무게 리스트 */
+	@RequestMapping(value="/admin/together/wtlist")
+	public ModelAndView adminWeightList(CommandMap commandMap) throws Exception {
+	
+		ModelAndView mv = new ModelAndView("/admin/together/togeAdminWtList");
+		
+		System.out.println(commandMap.getMap());
+		
+		List<Map<String, Object>> wtlist = togetherAdminService.adminWeightList(commandMap.getMap());
+		
+		mv.addObject("wtlist", wtlist);
+		
+		return mv;
+	}
+	
+	/* 23.02.03 박선영 관리자 견종몸무게 등록폼 */
+	@RequestMapping(value="/admin/together/weightwriteForm")
+	public ModelAndView openadminTogeWeight(CommandMap commandMap) throws Exception {
+		
+		ModelAndView mv = new ModelAndView("/admin/together/togeAdminWeightWrite");
+		
+		return mv;
+	}
+	
+	/* 23.02.03 박선영 관리자 견종몸무게 등록 */
+	@RequestMapping(value="/admin/together/weightwrite")
+	public ModelAndView adminTogeWeight(CommandMap commandMap) throws Exception {
+		
+		System.out.println(commandMap.getMap());
+		
+		ModelAndView mv = new ModelAndView("redirect:/admin/together/wtlist");
+		
+		togetherAdminService.adminTogeWeight(commandMap.getMap());
+		
+		return mv;
+	}
 
 }

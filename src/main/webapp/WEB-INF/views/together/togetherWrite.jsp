@@ -3,9 +3,10 @@
 	<!-- 어드민 제외한 모든 페이지의 헤더 -->
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
 <script src="/resources/js/together/togewrite.js"></script>
+
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <style>
-.fa-solid {
+span.fa-solid.fa-paw {
 color:#f0b1aa;
 }
 
@@ -13,9 +14,6 @@ color:#f0b1aa;
 margin-right:5px;
 }
 
-.mypage{
-top:100px;
-}
 
 textarea{
 width:100%;
@@ -27,9 +25,10 @@ height:100px;
 	<%@ include file="/WEB-INF/include/nav_mypage.jspf"%>
 	
 	<!-- 23.01.16 박선영 : 글쓰기 폼, 구현완료 -->
-<h1 class="txt_center"><span class="fa-solid fa-paw"></span>함께해요<span class="fa-solid fa-paw"></span></h1>
 	
 	<div class="main_wrap">
+	<h1 class="txt_center"><span class="fa-solid fa-paw"></span>함께해요<span class="fa-solid fa-paw"></span></h1>
+	<br/>
 		<form method="post" action="/together/write.paw" name="writefrm">
 			<input type="hidden" id="TO_WRITER_ID" name="TO_WRITER_ID" value="${mem_id}">
 			<table class="board_view">
@@ -50,8 +49,10 @@ height:100px;
 						</td>
 					</tr>
 					<tr>
-						<th scope="row">모집인원</th>
-						<td><select name="TO_PEOPLE" id="TO_PEOPLE">
+						<th scope="row">모집인원
+						<pre class="info_help"> 참고하개!:) 작성자 미포함 인원입니다:)</pre></th>
+						<td>
+						<select name="TO_PEOPLE" id="TO_PEOPLE">
 								<option value="1" selected>1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
@@ -71,7 +72,9 @@ height:100px;
 					</tr>
 					<tr>
 						<th scope="row">날짜</th>
-						<td><input type="date" id="TO_DATE" name="TO_DATE" /></td>
+						<td><input type="date" id="TO_DATE" name="TO_DATE" />
+							<input type="hidden" id="now" name="now" value="${now}">
+						</td>
 					</tr>
 					<tr>
 						<th scope="row">시간</th>

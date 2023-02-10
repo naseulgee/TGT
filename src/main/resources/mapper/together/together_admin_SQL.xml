@@ -132,5 +132,29 @@
 		]]>
 	</insert>
 	
+	<!-- 23.02.06 박선영 : 견종몸무게 리스트 출력 -->
+	<select id="adminWeightList" resultType="hashmap">
+		<![CDATA[
+			SELECT  WT_IDX,
+					WT_START,
+					WT_END
+			FROM WEIGHT
+		]]>
+	</select>
+	
+	<!-- 23.02.03 박선영 : 견종 몸무게 등록 -->
+	<insert id="adminTogeWeight" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO WEIGHT(
+				WT_IDX,
+				WT_START,
+				WT_END)
+				VALUES(
+				SEQ_WEIGHT.NEXTVAL,
+				#{WT_START},
+				#{WT_END}
+				)
+		]]>
+	</insert>
 	
 </mapper>
