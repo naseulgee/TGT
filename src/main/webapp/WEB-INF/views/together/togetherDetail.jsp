@@ -108,17 +108,24 @@ function logincheck(){
 									<input type="button" class="btn" id="withmem" name="withmem" value="참여하개:)">
 								</form>
 							</c:if>
-						
-							<!-- 이미 참여한 상태라면 -->
-							<c:if test="${!empty checkwith}">	
-								<form id="withdel" name="withdel">
-									<input type="hidden" id="TW_TO_IDX" name="TW_TO_IDX" value="${map.TO_IDX}">
-									<input type="hidden" id="TW_MEM_ID" name="TW_MEM_ID" value="${mem_id}">
-									<input type="button" class="btn" id="delwith" name="delwith" value="취소하개:(">
-								</form>
-							</c:if>	
-						</c:if>
 					</c:if>
+					</c:if>
+					<!-- 이미 모집완료된 상태에서도 취소버튼 활성화 -->
+					<c:if test="${map.C <= map.TO_PEOPLE}">
+					<!-- 23.02.08 박선영 모집날짜가 지나지 않았을때 -->
+					<c:if test="${nowDate < map.TO_DATE}">
+						<!-- 이미 참여한 상태라면 -->
+						<c:if test="${!empty checkwith}">	
+							<form id="withdel" name="withdel">
+								<input type="hidden" id="TW_TO_IDX" name="TW_TO_IDX" value="${map.TO_IDX}">
+								<input type="hidden" id="TW_MEM_ID" name="TW_MEM_ID" value="${mem_id}">
+								<input type="button" class="btn" id="delwith" name="delwith" value="취소하개:(">
+							</form>
+						</c:if>	
+					</c:if>
+					</c:if>
+					
+					
 				</c:if>	
 			</c:if>		
 		</div>

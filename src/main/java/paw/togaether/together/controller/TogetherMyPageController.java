@@ -1,5 +1,7 @@
 package paw.togaether.together.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -32,11 +34,18 @@ Logger log = Logger.getLogger(this.getClass());
 		System.out.println("mem_id: " + session.getAttribute("mem_id"));
 		System.out.println(commandMap.getMap());//값을 잘 받아오는지 확인
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//날짜 형태 정해주기
+		
+		Date now = new Date();//날짜 마감에 따른 참여하기 비활성화 목적
+		
+		String nowDate = sdf.format(now);
+		
 		String mem_id = (String)session.getAttribute("mem_id");
 		commandMap.put("mem_id", mem_id);
 		
 		List<Map<String, Object>> list = togetherMyPageService.myTogetherList(commandMap.getMap(),session);
 		
+		mv.addObject("nowDate", nowDate);
 		mv.addObject("list", list);
 		
 		return mv;
@@ -51,11 +60,18 @@ Logger log = Logger.getLogger(this.getClass());
 		System.out.println("mem_id: " + session.getAttribute("mem_id"));
 		System.out.println(commandMap.getMap());//값을 잘 받아오는지 확인
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//날짜 형태 정해주기
+		
+		Date now = new Date();//날짜 마감에 따른 참여하기 비활성화 목적
+		
+		String nowDate = sdf.format(now);
+		
 		String mem_id = (String)session.getAttribute("mem_id");
 		commandMap.put("mem_id", mem_id);//mem_id 넣기
 		
 		List<Map<String, Object>> wtlist = togetherMyPageService.myTogeWriteList(commandMap.getMap(),session);
 		
+		mv.addObject("nowDate", nowDate);
 		mv.addObject("wtlist", wtlist);
 		
 		return mv;

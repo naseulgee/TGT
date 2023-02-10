@@ -22,12 +22,18 @@
 							<!-- tr클래스 클릭시 상세보기 페이지로 이동-->
 							<tr class="use_move" data-href="/together/detail/${to.TO_IDX}.paw" onclick="move(this,'TO_IDX:${to.TO_IDX}')" id="togetherDetail">
 								<td class="color"><span class="fa-solid fa-paw"></span>[${to.TO_TC_NAME}] ${to.TO_TITLE } 
+								<!-- 현재날짜에 따른 모집여부변경 -->
+								<c:if test="${nowDate > to.TO_DATE }">
+									<span class="btn warn">마감</span>
+								</c:if>
+								<c:if test="${nowDate < to.TO_DATE }">
 									<c:if test="${to.C eq to.TO_PEOPLE}">
 										<span class="btn submit">모집완료</span>
 									</c:if>
 									<c:if test="${to.C < to.TO_PEOPLE}">
 										<span class="btn submit">모집중</span>
 									</c:if>
+								</c:if>
 								</td><!-- 글분류, 제목 -->
 								<td><span class="fa-solid fa-bone"></span> 참여가능하개(견종): ${to.BR_NAME }</td><!-- 참여가능견종 -->
 								<td><span class="fa-solid fa-bone"></span> 참여가능하개(크기) : <c:if test="${to.TO_WT_IDX eq '1'}">XS</c:if>
@@ -58,3 +64,5 @@
 	</div>
 </div>
 </main>
+
+<%@ include file="/WEB-INF/include/common-footer.jspf" %>

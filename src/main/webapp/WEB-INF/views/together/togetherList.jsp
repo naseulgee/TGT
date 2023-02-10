@@ -18,6 +18,10 @@
 	<br/>
 	<h1 class="txt_center"><span class="fa-solid fa-paw" style="color:#f0b1aa;"></span>함께해요<span class="fa-solid fa-paw" style="color:#f0b1aa;"></span></h1>
 	<br/>
+		<div>
+			<input type="text" class="txt" placeholder="검색하개:)" name="subKeyword" id="subKeyword" value="${subKeyword}" width="150"/>
+			<input type="button" class="btn submit" value="검색" onclick="fn_selectBoardList2(1);">
+		</div>
 		<%-- <c:choose>
 			<c:when test="${!empty list}"> --%>
 				<table class="card_table row1" id="together_list">
@@ -99,7 +103,6 @@
 	$(document).ready(function(){
 		fn_selectBoardList2(1);//첫화면 보이기
 
-
 		});
 	
 
@@ -108,12 +111,17 @@
 			comAjax.setUrl("<c:url value='/together/list.paw' />");
 			comAjax.setCallback("fn_selectBoardListCallback2");
 			
-			comAjax.addParam("PAGE_INDEX", $("#PAGE_INDEX_T").val());
+			let p = pageNo;
+			if(isNull(pageNo)) p = $("#PAGE_INDEX_T").val();
+			if(isNull(p)) p = 1;
+			comAjax.addParam("PAGE_INDEX", p);
+			
 			comAjax.addParam("PAGE_ROW", 6);
-			comAjax.addParam("now", $("#now").val());
-
-			//comAjax.addParam("keyword", $('#keyword').val());
-			//comAjax.addParam("searchType", $('#searchType').val());
+			//comAjax.addParam("now", $("#now").val());
+			
+			let key = $("#subKeyword").val();
+	        if(isNull(key)) key = "";
+	        comAjax.addParam("subKeyword", key);
 
 			comAjax.ajax();
 		}

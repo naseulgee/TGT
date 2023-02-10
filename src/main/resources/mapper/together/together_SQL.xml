@@ -37,32 +37,33 @@
 				where t.to_tc_name = c.tc_name
 				and t.to_br_idx = b.br_idx
 				and t.to_del_gb ='N'
-                group by t.to_idx,
-						t.to_title,
-						t.to_tc_name,
-						t.to_contents,
-						t.to_writer_id,
-						t.to_writer_name,
-						t.to_date,
-						t.to_time,
-						t.to_people,
-						t.to_loc,
-						t.to_br_idx,
-						t.to_wt_idx,
-						t.to_reg_date,
-						t.to_mod_date,
-						t.to_del_gb,
-						c.tc_idx,
-						c.tc_name,
-						c.tc_count,
-						b.br_idx,
-						b.br_name
 		]]>
 		<if test="subKeyword != null">
 			AND (to_title like '%' || #{subKeyword} || '%')
 			OR (to_tc_name like '%' || #{subKeyword} || '%')
-			OR (to_br_name like '%' || #{subKeyword} || '%')
 		</if>
+		group by t.to_idx,
+				t.to_title,
+				t.to_tc_name,
+				t.to_contents,
+				t.to_writer_id,
+				t.to_writer_name,
+				 TO_DATE,
+				t.to_time,
+				t.to_people,
+				t.to_loc,
+				t.to_br_idx,
+				t.to_wt_idx,
+				TO_REG_DATE,
+				TO_MOD_DATE,
+				t.to_del_gb,
+				c.tc_idx,
+				c.tc_name,
+				c.tc_count,
+				b.br_idx,
+				b.br_name
+
+		
 		<include refid="common.pagingPost"/>
 	</select>
 	
