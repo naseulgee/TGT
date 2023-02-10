@@ -45,9 +45,8 @@ public class ReviewController {
 		Map<String, Object> review = reviewService.checkTodayReview(commandMap.getMap());
 		
 		System.out.println("작성가능 리뷰"+review);//null
-		System.out.println(review.get("REG_DATE") == null);//null
 		//비어있다면
-		if(review.get("REG_DATE") == null)  {
+		if(review == null)  {
 			//review등록과 photo등록에 대한 처리
 			reviewService.insertReview(commandMap.getMap(),session,uploadFile); //사용시 주석 풀어주기
 			return new ResponseEntity<String>("/mypage/review/list.paw",HttpStatus.OK);

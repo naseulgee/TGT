@@ -61,7 +61,7 @@ margin-right:5px;
 	<br/>
 	<div class="flexCenter">
 		<input type="button" id="wtreg" class="btn submit" value="등록하기" onclick="wtwriteform_check();"/>
-		<a class="btn" href="/admin/together/wtlist">몸무게 목록으로</a>
+		<a class="btn" href="/admin/together/wtlist.paw">몸무게 목록으로</a>
 	</div>
 	</form>
 </div>

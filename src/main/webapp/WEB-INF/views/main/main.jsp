@@ -24,7 +24,7 @@
 			<ul>
 				<c:forEach var="i" items="${free}">
 					<li class="use_move" data-href="/board/detail/${i.BC_IDX}.paw" onclick="move(this, 'BC_IDX:${i.BC_IDX}')">
-						<strong class="title">${i.BC_TITLE}</strong> | <span class="writer">${i.BC_WRITER_ID}</span> | <span class="when">${fn:substring(i.BC_MOD_DATE,2,10)}</span>
+						<strong class="title">${i.BC_TITLE}</strong> | <span class="writer">${i.BC_WRITER_NAME}</span> | <span class="when">${fn:substring(i.BC_MOD_DATE,2,10)}</span>
 					</li>
 				</c:forEach>
 			</ul>
@@ -79,7 +79,7 @@
 						<c:forEach var="i" items="${missing}">
 							<tr class="use_move" data-href="/board/detail/${i.BC_IDX}.paw" onclick="move(this, 'BC_IDX:${i.BC_IDX}')">
 								<td class="title"><strong>${i.BC_TITLE}</strong></td>
-								<td class="writer">${i.BC_WRITER_ID}</td>
+								<td class="writer">${i.BC_WRITER_NAME}</td>
 								<td class="when">${fn:substring(i.BC_MOD_DATE,2,10)}</td>
 							</tr>
 						</c:forEach>
@@ -94,7 +94,7 @@
 				<ul>
 					<c:forEach var="i" items="${volunteer}">
 						<li class="use_move" data-href="/board/detail/${i.BC_IDX}.paw" onclick="move(this, 'BC_IDX:${i.BC_IDX}')">
-							<strong class="title">${i.BC_TITLE}</strong> | <span class="writer">${i.BC_WRITER_ID}</span> | <span class="when">${fn:substring(i.BC_MOD_DATE,2,10)}</span>
+							<strong class="title">${i.BC_TITLE}</strong> | <span class="writer">${i.BC_WRITER_NAME}</span> | <span class="when">${fn:substring(i.BC_MOD_DATE,2,10)}</span>
 						</li>
 					</c:forEach>
 				</ul>
@@ -115,7 +115,7 @@
 					<c:forEach var="i" items="${info}">
 						<tr class="use_move" data-href="/board/detail/${i.BC_IDX}.paw" onclick="move(this, 'BC_IDX:${i.BC_IDX}')">
 							<td class="title"><strong>${i.BC_TITLE}</strong></td>
-							<td class="writer">${i.BC_WRITER_ID}</td>
+							<td class="writer">${i.BC_WRITER_NAME}</td>
 							<td class="when">${fn:substring(i.BC_MOD_DATE,2,10)}</td>
 						</tr>
 					</c:forEach>

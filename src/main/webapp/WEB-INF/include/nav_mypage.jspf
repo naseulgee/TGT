@@ -7,9 +7,10 @@
 		<ul class="user_info">
 			<h3><a href="/mypage/myInfo.paw">나의 정보</a></h3>
 			<li><a href="/mypage/myInfo.paw">프로필 보기</a></li>
-			<li><a href="/mypage/together/writelist">작성한 함께해요</a></li> 
-			<li><a href="/mypage/together/list">참여한 함께해요</a></li>
-			<li><a href="/mypage/board/list">내가 쓴 멍멍왈왈</a></li>
+			<li><a href="/mypage/together/writelist.paw">작성한 함께해요</a></li> 
+			<li><a href="/mypage/together/list.paw">참여한 함께해요</a></li>
+			<li><a href="/mypage/board/list.paw">내가 쓴 멍멍왈왈</a></li>
+			<li><a href="/mypage/review/list.paw">내가 쓴 리뷰</a></li>
 		</ul>
 	</div>
 </nav>

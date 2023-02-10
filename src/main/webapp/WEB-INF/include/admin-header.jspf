@@ -7,16 +7,19 @@
 
 <header class="bgColor">
 	<div class="logo_wrap">
-		<a href="/admin.paw">
+		<a href="/main.paw">
 			<img class="logo" alt="투개더 로고" src="/resources/image/logo.png">
 		</a>
 	</div>
 	<ul class="sub_pages">
 		<li><a href=""><i class="fa-solid fa-user-group"></i> 고객정보 관리</a></li>
-		<li><a href=""><i class="fa-solid fa-flag"></i> 함께해요 관리</a></li>
+		<li><a href="/admin/together/list.paw"><i class="fa-solid fa-flag"></i> 함께해요 관리</a></li>
+		<li><a href="/admin/together/catelist.paw"><i class="fa-solid fa-flag"></i> 카테고리 관리</a></li>
+		<li><a href="/admin/together/wtlist.paw"><i class="fa-solid fa-flag"></i> 몸무게 관리</a></li>
 		<li><a href=""><i class="fa-solid fa-comments"></i> 멍멍왈왈 관리</a></li>
 		<li><a href="/admin/place/list.paw"><i class="fa-solid fa-building-wheat"></i> 우리동네 관리</a></li>
-		<li><a href=""><i class="fa-solid fa-bell"></i>알람 관리</a>
+		<li><a href="/admin/place/cate/list.paw"><i class="fa-solid fa-building-wheat"></i> 카테고리 관리</a></li>
+		<li><a href=""><i class="fa-solid fa-bell"></i> 알람 관리</a>
 	</ul>
 	<div class="btn_wrap flex flexWrap flexBetween">
 		<a href="/member/logout.paw"><i class="fa-solid fa-arrow-right-from-bracket"></i>로그아웃</a>
@@ -25,5 +28,4 @@
 			<button type="button" onclick="go_top()"><i class="fa-regular fa-circle-up"></i>맨 위로가기</button>
 		</div>
 	</div>
-	<form id="common" method="post"></form>
 </header> 

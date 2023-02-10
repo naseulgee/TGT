@@ -23,7 +23,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         String requestURI = request.getRequestURI();
         //:TODO 추후 에러페이지로 리다이렉트 예정
         if(mem_type != 0 && requestURI.contains("admin")) {
-            response.sendRedirect("/sample");
+            response.sendRedirect("/main.paw");
         }
 
         if((requestURI.contains("detail") || requestURI.contains("write") || requestURI.contains("mypage")) && mem_id == null) {
