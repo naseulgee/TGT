@@ -13,6 +13,7 @@ _ing/
 .settings/
 **/web.xml
 **/upload/*
+*.properties
 
 ###컴파일된 클래스 파일
 *.class

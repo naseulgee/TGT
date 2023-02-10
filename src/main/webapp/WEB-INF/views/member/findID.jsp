@@ -9,6 +9,7 @@
 </script>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
+<!--이메일 입력 후 존재하는 이메일이주소이면 아이디를 보여주고, 존재하지 않는 이메일주소이면 에러메세지를 담은 페이지가 호출된다.-->
 <main class="layoutCenter">
   <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="w-full max-w-md space-y-8">

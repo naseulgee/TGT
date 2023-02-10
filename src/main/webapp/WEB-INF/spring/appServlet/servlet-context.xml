@@ -21,7 +21,14 @@
 			<mvc:mapping path="/**"/>
 			<bean id="loggerInterceptor" class="paw.togaether.common.interceptor.LoggerInterceptor"/>
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/member/login"/>
+			<bean id="AuthInterceptor" class="paw.togaether.common.interceptor.AuthInterceptor"/>
+		</mvc:interceptor>
 	</mvc:interceptors>
+
+
 
 	<!-- 리소스 파일 맵핑 -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
@@ -34,7 +41,34 @@
 	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="1"
 		p:viewClass="org.springframework.web.servlet.view.JstlView"
 		p:prefix="/WEB-INF/views/" p:suffix=".jsp"/>
-	
+
+	<!-- mail bean -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="${email.ID}" />
+		<property name="password" value="${email.password}" />
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtps.ssl.checkserveridentity">true</prop>
+				<prop key="mail.smtps.ssl.trust">*</prop> <!-- mail 서버 연결시 timeout 시간 설정 -->
+				<prop key="mail.debug">true</prop> <!-- log를 보고 싶다면 사용 -->
+				<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="/WEB-INF/config/config.properties"/>
+		<property name="fileEncoding" value="UTF-8" />
+	</bean>
+
 	<!-- 빈 스캔 패키지 -->
 	<context:component-scan base-package="paw.togaether" />
+
+
 </beans>

@@ -9,13 +9,13 @@
 </script>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
+<!--비밀번호찾기로 새로운 비밀번호로 변경되었을 때 출력되는 페이지-->
 <main class="layoutCenter">
     <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="w-full max-w-md space-y-8">
             <div>
                 <img class="mx-auto h-12 w-auto" src="/resources/image/logo.png" alt="투개더">
-                <p class="mt-6 text-2xl text-center font-bold tracking-tight text-[#f0b1aa]">회원가입시 입력했던 이메일주소가 아닙니다. </p>
-
+                <h2 class="mt-6 text-center text-2xl font-bold tracking-tight text-[#f0b1aa]">비밀번호가 변경되었습니다.</h2>
             </div>
             <div>
                 <button type="submit" onclick="location.href='/member/login'" class="group relative flex w-full justify-center rounded-md border border-transparent bg-[#f0b1aa] py-2 px-4 text-sm font-medium text-white hover:bg-[#f08080] focus:outline-none focus:ring-2 focus:ring-[#f08080] focus:ring-offset-2">

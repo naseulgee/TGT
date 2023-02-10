@@ -3,12 +3,14 @@
 
 <mapper namespace="login">
 
+    <!-- 로그인한 멤버의 정보 -->
     <select id="MemberLogin" parameterType="hashmap" resultType="hashmap">
      <![CDATA[
         SELECT * FROM MEMBERS WHERE MEM_ID =  #{MEM_ID}
         ]]>
      </select>
 
+    <!-- id 찾기 -->
     <select id="findID" parameterType="hashmap" resultType="hashmap">
      <![CDATA[
         SELECT MEM_EMAIL,
@@ -17,6 +19,7 @@
         ]]>
      </select>
 
+    <!-- 비밀번호 찾기 -->
     <select id="selectMemberInfo" parameterType="hashmap" resultType="hashmap">
      <![CDATA[
         SELECT MEM_EMAIL,
@@ -24,6 +27,22 @@
         FROM MEMBERS WHERE MEM_EMAIL =  #{MEM_EMAIL}
         ]]>
      </select>
+
+    <!-- 비밀번호찾기 인증 후 새 비밀번호 설정 -->
+    <update id = "setNewPassword" parameterType="hashmap">
+        UPDATE MEMBERS
+            SET MEM_PW = #{MEM_PW}
+        WHERE
+            MEM_EMAIL = #{MEM_EMAIL}
+    </update>
+
+    <select id="findEmail" parameterType="hashmap" resultType="hashmap">
+     <![CDATA[
+        SELECT * FROM MEMBERS WHERE MEM_EMAIL =  #{MEM_EMAIL}
+        ]]>
+     </select>
+
+
 
 
 
