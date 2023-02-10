@@ -3,7 +3,7 @@
 
 <mapper namespace="join">
 
-
+<!-- 회원가입 -->
  <insert id="insertMembers" parameterType="HashMap" >
    <![CDATA[
        INSERT INTO
@@ -44,18 +44,21 @@
    ]]>
  </insert>
 
+    <!-- id중복체크 -->
  <select id="findId" parameterType="String" resultType="Integer">
      <![CDATA[
         SELECT COUNT(*) FROM MEMBERS WHERE MEM_ID = #{MEM_ID}
         ]]>
  </select>
 
+    <!-- 셀렉트박스에 견종명 불러오기 -->
 <select id="selectListOfDog" parameterType="hashmap" resultType="hashmap">
      <![CDATA[
         SELECT * FROM BREED WHERE ROWNUM <= 10
     ]]>
  </select>
 
+    <!-- email중복체크 -->
 <select id="findEmail" parameterType="hashmap" resultType="Integer">
      <![CDATA[
         SELECT COUNT(*) FROM MEMBERS WHERE MEM_EMAIL = #{MEM_EMAIL}

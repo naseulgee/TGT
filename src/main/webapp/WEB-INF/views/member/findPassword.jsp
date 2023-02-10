@@ -9,6 +9,7 @@
 </script>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
+<!-- 비밀번호 찾기. 일치하는 id와 email주소를 입력하면 해당 메일주소로 임의의 번호 전송, id와 email주소 양쪽 다 불일치하거나 하나만 일치하는 경우에 에러메세지를 담은 페이지 호출 -->
 <main class="layoutCenter">
   <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="w-full max-w-md space-y-8">

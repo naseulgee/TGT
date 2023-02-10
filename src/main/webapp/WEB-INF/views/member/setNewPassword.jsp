@@ -9,6 +9,7 @@
 </script>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
+<!-- 비밀번호 찾기에서 입력한 인증번호가 일치할 때 새로운 비밀번호로 변경하는 페이지 -->
 <main class="layoutCenter">
   <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="w-full max-w-md space-y-8">
@@ -41,6 +42,7 @@
 
   <script type="text/javascript">
 
+  /** 폼체크 함수 */
   function checkForm() {
     const pass = document.querySelector('#MEM_PW');
     const passErrMsg = document.querySelector('#pw-error');

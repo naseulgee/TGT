@@ -19,7 +19,7 @@
 		<li><a href=""><i class="fa-solid fa-bell"></i>알람 관리</a>
 	</ul>
 	<div class="btn_wrap flex flexWrap flexBetween">
-		<a href=""><i class="fa-solid fa-arrow-right-from-bracket"></i>로그아웃</a>
+		<a href="/member/logout.paw"><i class="fa-solid fa-arrow-right-from-bracket"></i>로그아웃</a>
 		<div class="arrow_wrap">
 			<button type="button" class="toggle_header" onclick="click_toggle_on('body')"><i class="fa-regular fa-circle-left"></i>메뉴 닫기</button>
 			<button type="button" onclick="go_top()"><i class="fa-regular fa-circle-up"></i>맨 위로가기</button>

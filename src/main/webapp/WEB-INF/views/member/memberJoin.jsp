@@ -12,8 +12,10 @@
 </script>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
+<!-- 회원가입 -->
 <main class="layoutCenter">
     <div class="container mx-auto mt-24 sm:px-6 lg:px-8">
+        <div class="space-y-8 divide-y divide-gray-200 max-w-screen-lg">
 <%--        <form class="space-y-8 divide-y divide-gray-200 max-w-screen-lg" action="/member/joinMember.paw" method="POST"--%>
 <%--              onsubmit="return checkForm()">--%>
             <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
@@ -197,6 +199,7 @@
 
                 </div>
             </div>
+        </div>
 <%--        </form>--%>
     </div>
     </body>

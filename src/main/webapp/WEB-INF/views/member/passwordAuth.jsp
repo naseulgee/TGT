@@ -9,6 +9,7 @@
 </script>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
+<!-- 메일로 발송된 임의의 6자리 인증번호를 입력하는 페이지-->
 <main class="layoutCenter">
     <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="w-full max-w-md space-y-8">
