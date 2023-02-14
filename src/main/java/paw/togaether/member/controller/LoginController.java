@@ -53,7 +53,7 @@ public class LoginController {
 
             String prev_url = (String)session.getAttribute("prev_url");   //인터셉터에 걸렸을 때 로그인처리 후 이전에 보던 페이지로 이동
             if(prev_url == null) {
-                mv.setViewName("redirect:/sample");
+                mv.setViewName("redirect:/main.paw");
             } else {
                 mv.setViewName("redirect:"+prev_url);
             }

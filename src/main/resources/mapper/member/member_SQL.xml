@@ -7,9 +7,12 @@
      <![CDATA[
         SELECT *
         FROM MEMBERS a
-        INNER JOIN BREED b
+        LEFT JOIN BREED b
         ON a.MEM_BR_IDX = b.BR_IDX
+        LEFT JOIN PHOTO c
+        ON a.MEM_ID = c.PH_MEM_ID and c.PH_DEL_GB = 'N'
         WHERE a.MEM_ID = #{MEM_ID}
+
         ]]>
  </select>
 
