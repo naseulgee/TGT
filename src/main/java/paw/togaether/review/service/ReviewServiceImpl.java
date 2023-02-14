@@ -74,7 +74,7 @@ public class ReviewServiceImpl implements ReviewService {
 		for (String key : map.keySet()) {
 			Map<String,Object> photoMap = new HashMap<String,Object>();
 			if ((key.length()>=5) && key.substring(0, 4).equals("idx_")) {
-				photoMap.put("ph_idx",map.get(key)); //photo번호를 통해 re_del_gb='Y'로 변경
+				photoMap.put("ph_idx",map.get(key)); //photo번호를 통해 re_del_gb='N'로 변경
 				photoDAO.updatePhoto(photoMap);
 			}
 		}

@@ -165,6 +165,7 @@
 							<input type="file" accept="image/*" id="photo_${var.index+1}" name="photo_${var.index+1}" >
 							<input type="hidden" name="idx_${var.index+1}" value="${i.PH_IDX}">
 							<img width="200px" src="/resources/upload/${i.PH_STORED_FILE_NAME}" >
+							<span id="deleteBtn" onclick="reset(event,this)">❌</span>
 						</label>   
 					</c:forEach>
 					<!-- 이미지 등록안한 <input type="file">태그 -->
