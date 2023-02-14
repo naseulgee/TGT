@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
-<%@ include file="/WEB-INF/include/user-header.jspf" %>
+<%@ include file="/WEB-INF/include/admin-header.jspf" %>
 <link type="text/css" rel="stylesheet" href="/resources/css/common/photo.css" ></link>
 <style>
-
 	#highlight {
 	color : #db776c;
 	background-color: var(--subColor);
@@ -59,9 +58,7 @@
 	table tbody tr:last-of-type{ border: none; }
 	
 	
-	table tr th, table tr td {
-		padding : 0px 10px;
-	}
+	table tr th, table tr td { padding : 0px 10px; }
 	
 	#writeDate{
 		color : #d1d5d9;
@@ -157,16 +154,6 @@
 				<span id="star1" class="bold">${review.RE_STAR}</span>
 				<span id="star2">/5점</span><br>
 				</div>
-				<%-- 
-				<span class="color">
-				    <c:forEach var="j" begin="1" end="${review.RE_STAR}">
-		    			<i class="fa-solid fa-paw color" id="stars"></i>
-					</c:forEach>
-					<c:forEach var="j" begin="1" end="${5-review.RE_STAR}">
-		    			<i class="fa-solid fa-paw subColor" id="stars"></i>
-					</c:forEach>&nbsp;
-				</span> 
-				--%>
 			</div>
 			<br>
 			
@@ -210,8 +197,6 @@
 				</form>
 			</table>
 		</div>
-		
-		
 		
 
 	</div>	

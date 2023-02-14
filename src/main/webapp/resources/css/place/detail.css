@@ -32,8 +32,9 @@ header{ background-color: #fff; }
 /* 리뷰 리스트 */
 #review_wrap .btn_wrap{ justify-content: space-between; align-items: center; gap: 10px; }
 #review_wrap .btn_wrap .btn{ flex: 1; height: 50px; font-size: 1.2em; text-align: center; line-height: 2; }
-#review_wrap li{ gap: 20px; }
-#review_wrap li img{ width: 50px; height: 50px; object-fit: cover; border-radius: 10px; }
+#review_wrap li{ justify-content: space-between; }
+#review_wrap li .content_wrap{ gap: 20px; }
+#review_wrap li .content_wrap img{ width: 50px; height: 50px; object-fit: cover; border-radius: 10px; }
 #review_wrap .re_wrap .summary{ align-items: center; gap: 10px; font-size: 1.2em; }
 #review_wrap .re_wrap .summary span:not(:last-child)::after{ content: "|"; margin-left: 10px; }
 #review_wrap .re_wrap .summary .star i{ padding-bottom: 0.3em; color: #ffb100; }

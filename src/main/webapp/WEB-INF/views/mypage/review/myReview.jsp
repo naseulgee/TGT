@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
 <link type="text/css" rel="stylesheet" href="/resources/css/common/photo.css" ></link>
+<script src="/resources/js/common/img_pop_slide.js"></script>
 
 <style>
 	#stars { 
@@ -169,11 +170,11 @@
 			<c:if test="${!empty photos}">
 				<!-- 사진 -->
 				<hr><br>
-				<div id="img_upload" class="flex">	
+				<div id="img_upload" class="flex pop_img_wrap">	
 					<c:forEach items="${photos}" var="i" varStatus="status">	
-						<label>
-							<img src="/resources/upload/${i.PH_STORED_FILE_NAME}" id="photo">			
-							&nbsp;&nbsp;
+						<label >
+							<img class="pop_img" src="/resources/upload/${i.PH_STORED_FILE_NAME}" id="photo">			
+							&nbsp;
 						</label>
 					</c:forEach>
 				</div>
@@ -207,5 +208,7 @@
 	</div>	
 	</div> 
 </main><!-- //main 종료 -->
+<link rel="stylesheet" type="text/css" href="/resources/css/common/img_pop_slide.css"/>
+<script src="/resources/js/common/img_pop_slide.js"></script>
 
 <%@ include file="/WEB-INF/include/common-footer.jspf" %>

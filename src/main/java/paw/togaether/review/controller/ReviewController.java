@@ -117,16 +117,28 @@ public class ReviewController {
 		//후기사진 가져오기
 		List<Map<String,Object>> photos =  reviewService.openMyReviewPhoto(commandMap.getMap());
 		m.addObject("photos", photos); 
+		
+		m.addObject("page",(String)commandMap.get("page"));
 		return m;
 	}
 	
 	/** 23.01.31 신현지 : 리뷰수정*/
+	/** 23.02.14 신현지 : 리뷰 수정을 어디서 했냐(관리자페이지or일반페이지)에 따라 수정완료 후 표시할 페이지 설정 추가*/
 	@RequestMapping(value="/review/update")
 	public ResponseEntity<String> updateReview(CommandMap commandMap,HttpSession session, MultipartFile[] uploadFile) throws Exception{
 
 		//review등록과 photo등록에 대한 처리
 		reviewService.updateReview(commandMap.getMap(),session,uploadFile); //사용시 주석 풀어주기
-		return new ResponseEntity<String>("/mypage/review/list.paw",HttpStatus.OK);
+		String pl_idx = (String)commandMap.get("pl_idx");
+		
+		if(commandMap.get("page").equals("admin")) {
+			//admin페이지에서 수정했다면 admin페이지의 리뷰리스트로 이동
+			return new ResponseEntity<String>("/admin/place/detail/"+pl_idx+"/review/list.paw",HttpStatus.OK);
+		} else {
+			//일반페이지에서 수정했다면 mypage로 이동
+			return new ResponseEntity<String>("/mypage/review/list.paw",HttpStatus.OK);
+		}
+		
 	}
 	
 	

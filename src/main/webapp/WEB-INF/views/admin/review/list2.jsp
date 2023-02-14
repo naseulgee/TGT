@@ -71,7 +71,7 @@ $(document).ready(function(){
 function fn_selectBoardList(pageNo){
 	var comAjax = new ComAjax();
 	let pl_idx = $("#pl_idx").val();
-	console.log(option);
+	
 	comAjax.setUrl("<c:url value='/place/detail/"+pl_idx+"/review/selectList.paw' />"); //페이징실행 컨트롤러url
 	comAjax.setCallback("fn_selectBoardListCallback"); //setCallback은 Ajax 요청이 완료된 후 호출될 함수의 이름을 지정
 	comAjax.addParam("option",option);
@@ -168,6 +168,7 @@ function fn_selectBoardListCallback(data){
 			if ($("#mem_id").val() == i.RE_WRITER_ID ) {
 					str+="<div><form action='/review/updateForm.paw' method='POST'>";
 					str+="<input type='submit' class='btn' value='수정'>"; 
+					str+="<input type='hidden' name='page' value='admin'>"; 
 					str+="<input type='hidden' name='re_idx' value='"+i.RE_IDX+"'>";
 					str+="<input type='hidden' name='ph_board_type' value='review'>";
 					str+="</form></div>&nbsp;";

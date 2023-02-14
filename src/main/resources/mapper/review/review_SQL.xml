@@ -74,10 +74,15 @@
 	
 	
 	<!-- 23.02.01 신현지: 관리자페이지에서 모든 리뷰 최신순으로 불러오기 -->
+	<!-- 23.02.14 신현지: 페이징 추가 -->
 	<select id="openAllReviews" parameterType="hashmap" resultType="hashmap">
-		select * 
+		<include refid="common.pagingPre"/>
+		select ROW_NUMBER() OVER ( ORDER BY	re_reg_date DESC ) RNUM, a.*, b.*
 		from review a left join place b on a.re_pl_idx = b.pl_idx  
-		order by re_reg_date desc
+		<if test='!keyword.equals("")'>
+			 	
+		</if>
+		<include refid="common.pagingPost"/>
 	</select>
 	
 	<!-- 23.02.06 신현지: 시설상세보기 밑단에 표시할 최신리뷰 5개 -->

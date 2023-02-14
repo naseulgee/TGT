@@ -40,7 +40,7 @@ public class ReviewDAO extends AbstractDAO{
 	
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> openAllReviews(Map<String, Object> map) throws Exception {
-		 return (List<Map<String, Object>>)selectList("review.openAllReviews", map);
+		 return (List<Map<String, Object>>)selectPagingList("review.openAllReviews", map);
 	}
 	
 	//시설상세보기에서 추가해주는 것들

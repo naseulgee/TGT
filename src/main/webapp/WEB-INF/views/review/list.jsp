@@ -165,11 +165,11 @@ function fn_selectBoardListCallback(data){
 			//수정 삭제버튼
 			 if ($("#mem_id").val() == i.RE_WRITER_ID ) {
 				str+="<div class='txt_right flex'><div><form action='/review/updateForm.paw' method='POST'>";
-				str+="<input type='submit' class='btn submit' value='수정'>"; 
+				str+="<input type='submit' class='btn' value='수정'>"; 
 				str+="<input type='hidden' name='re_idx' value='"+i.RE_IDX+"'>";
 				str+="<input type='hidden' name='ph_board_type' value='review'>";
 				str+="</form></div>&nbsp;<div><form action='/review/delete.paw' method='POST'>";
-				str+="<input type='submit' class='btn' value='삭제' onClick='return recheck();'>"; 
+				str+="<input type='submit' class='btn warn' value='삭제' onClick='return recheck();'>"; 
 				str+="<input type='hidden' name='re_idx' value='"+i.RE_IDX+"'>";
 				str+="<input type='hidden' name='ph_board_type' value='review'>";
 				str+="</form></div></div>";
