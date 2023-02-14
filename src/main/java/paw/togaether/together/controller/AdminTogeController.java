@@ -1,12 +1,16 @@
 package paw.togaether.together.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -107,6 +111,47 @@ public class AdminTogeController {
 		ModelAndView mv = new ModelAndView("redirect:/admin/together/wtlist");
 		
 		togetherAdminService.adminTogeWeight(commandMap.getMap());
+		
+		return mv;
+	}
+	
+	/* 23.02.14 박선영 관리자 게시글 상세보기 */
+	@RequestMapping(value="/admin/together/detail/{TO_IDX}")
+	public ModelAndView adminTogeDetail (@PathVariable("TO_IDX") int TO_IDX, CommandMap commandMap)throws Exception {
+		
+		System.out.println(TO_IDX);
+		System.out.println(commandMap.getMap());
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//날짜 형태 정해주기
+		SimpleDateFormat tsdf = new SimpleDateFormat("HH:mm");//시간 형태 정해주기
+		
+		Date now = new Date();//날짜 마감에 따른 참여하기 비활성화 목적
+		
+		String nowDate = sdf.format(now);
+		String nowTime = tsdf.format(now);
+		
+		ModelAndView mv = new ModelAndView("/admin/together/togeAdminDetail");
+		
+		Map<String, Object> map = togetherAdminService.adminTogeDetail(commandMap.getMap());//상세보기 정보
+		List<Map<String, Object>> wlist = togetherAdminService.togetherAdminWithList(commandMap.getMap());//참여자리스트
+		
+		mv.addObject("nowTime", nowTime);
+		mv.addObject("wlist", wlist);
+		mv.addObject("nowDate", nowDate);
+		mv.addObject("map", map);
+		
+		return mv;
+	}
+	
+	/* 23.02.14 박선영 관리자 게시글 삭제 */
+	@RequestMapping(value="/admin/together/delete")
+	public ModelAndView adminTogeDel(CommandMap commandMap) throws Exception {
+		
+		System.out.println(commandMap.getMap());
+		
+		ModelAndView mv = new ModelAndView("redirect:/admin/together/list");
+		
+		togetherAdminService.adminTogeDel(commandMap.getMap());
 		
 		return mv;
 	}

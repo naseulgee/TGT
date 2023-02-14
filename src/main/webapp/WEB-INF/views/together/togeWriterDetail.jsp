@@ -12,17 +12,11 @@ color:#f0b1aa;
 }
 
 
-.main_memdetail{
-float:right;
-padding-right:100px;
-}
-
 table#detail.card_table.row1{
 width:800px;
 font-size: 17px;
 margin-right:auto;
 margin-left:auto;
-position:relative;
 }
 
 input[type="button"]{
@@ -39,7 +33,7 @@ color: #fff;
 <main class="layoutCenter">
 <%@ include file="/WEB-INF/include/nav_mypage.jspf"%>
 	
-	<div class="main_memdetail">
+	<div class="main_wrap">
 	<h1 class="txt_center"><span class="fa-solid fa-paw"></span>함께해요<span class="fa-solid fa-paw"></span></h1>
 	<br/>
 		<table class="card_table row1" id="detail">

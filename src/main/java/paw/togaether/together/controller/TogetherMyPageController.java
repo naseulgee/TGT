@@ -25,11 +25,25 @@ Logger log = Logger.getLogger(this.getClass());
 	@Resource(name="togetherMyPageService")
 	private TogetherMyPageService togetherMyPageService;
 	
-	/* 23.02.08 박선영 마이페이지 게시글 리스트 출력 */
+	/* 23.02.14 박선영 마이페이지 참여글리스트 페이징화면출력 */
 	@RequestMapping(value="/mypage/together/list")
+	public ModelAndView openWithList(CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView("/mypage/together/togeMyPageList");//JSP를 불러오는 역할
+		
+		Date now = new Date();//현재날짜
+		
+		System.out.println("now :" + now);
+		
+		mv.addObject("now", now);
+		return mv;
+	}
+	
+	/* 23.02.08 박선영 마이페이지 참여글 리스트 출력
+	 * 23.02.14 박선영 마이페이지 참여글 리스트 페이징 */
+	@RequestMapping(value="/mypage/together/openlist")
 	public ModelAndView myTogetherList(CommandMap commandMap, HttpSession session) throws Exception {
 		
-		ModelAndView mv = new ModelAndView("/mypage/together/togeMyPageList");
+		ModelAndView mv = new ModelAndView("jsonView");
 		
 		System.out.println("mem_id: " + session.getAttribute("mem_id"));
 		System.out.println(commandMap.getMap());//값을 잘 받아오는지 확인
@@ -48,14 +62,34 @@ Logger log = Logger.getLogger(this.getClass());
 		mv.addObject("nowDate", nowDate);
 		mv.addObject("list", list);
 		
+		if (list.size() > 0) {
+			mv.addObject("TOTAL_T", list.get(0).get("TOTAL_COUNT"));
+		} else {
+			mv.addObject("TOTAL_T", 0);
+		}//페이징
+		
 		return mv;
 	}
 	
-	/* 23.02.09 박선영 나의 함께해요 작성한 게시글 리스트 */
+	/* 23.02.14 박선영 마이페이지 작성한 게시글리스트 페이징화면출력 */
 	@RequestMapping(value="/mypage/together/writelist")
+	public ModelAndView openWriteList(CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView("/mypage/together/togeMyWriteList");//JSP를 불러오는 역할
+		
+		Date now = new Date();//현재날짜
+		
+		System.out.println("now :" + now);
+		
+		mv.addObject("now", now);
+		return mv;
+	}
+	
+	/* 23.02.09 박선영 나의 함께해요 작성한 게시글 리스트 
+	 * 23.02.14 박선영 함께해요 작성게시글 리스트 페이징*/
+	@RequestMapping(value="/mypage/together/openwritelist")
 	public ModelAndView myTogeWriteList(CommandMap commandMap, HttpSession session) throws Exception {
 		
-		ModelAndView mv = new ModelAndView("/mypage/together/togeMyWriteList");
+		ModelAndView mv = new ModelAndView("jsonView");
 		
 		System.out.println("mem_id: " + session.getAttribute("mem_id"));
 		System.out.println(commandMap.getMap());//값을 잘 받아오는지 확인
@@ -73,6 +107,12 @@ Logger log = Logger.getLogger(this.getClass());
 		
 		mv.addObject("nowDate", nowDate);
 		mv.addObject("wtlist", wtlist);
+		
+		if (wtlist.size() > 0) {
+			mv.addObject("TOTAL_T", wtlist.get(0).get("TOTAL_COUNT"));
+		} else {
+			mv.addObject("TOTAL_T", 0);
+		}//페이징
 		
 		return mv;
 	}

@@ -54,7 +54,8 @@ margin-right:5px;
 			<c:choose>
 				<c:when test="${!empty list }">
 					<c:forEach items="${list }" var="adli">
-						<tr>
+						<tr class="use_move" data-href="/admin/together/detail/${adli.TO_IDX}" onclick="move(this,'TO_IDX:${adli.TO_IDX}')"
+						id="admindetail">
 							<td class="txt_center">${adli.TO_IDX}</td>
 							<td class="txt_center">${adli.TO_TC_NAME }</td>
 							<td class="txt_center">${adli.TO_TITLE}</td>
@@ -90,4 +91,5 @@ margin-right:5px;
 	</div>
 </div>	
 </main>
+
 <%@ include file="/WEB-INF/include/common-footer.jspf" %>

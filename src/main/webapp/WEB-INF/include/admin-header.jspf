@@ -28,4 +28,5 @@
 			<button type="button" onclick="go_top()"><i class="fa-regular fa-circle-up"></i>맨 위로가기</button>
 		</div>
 	</div>
+	<form id="common" method="post"></form>
 </header> 
