@@ -75,12 +75,21 @@
 	
 	<!-- 23.02.01 신현지: 관리자페이지에서 모든 리뷰 최신순으로 불러오기 -->
 	<!-- 23.02.14 신현지: 페이징 추가 -->
+	<!-- 23.02.14 신현지: 검색에 대한 처리 추가 -->
 	<select id="openAllReviews" parameterType="hashmap" resultType="hashmap">
 		<include refid="common.pagingPre"/>
 		select ROW_NUMBER() OVER ( ORDER BY	re_reg_date DESC ) RNUM, a.*, b.*
 		from review a left join place b on a.re_pl_idx = b.pl_idx  
-		<if test='!keyword.equals("")'>
-			 	
+		<if test='!keyword.equals("") and !keyword.equals("undefined") and keyword!=null '>
+		where (
+		    <trim prefixOverrides="OR">
+				<if test='searchType.contains("0")'>
+					pl_name like '%' || #{keyword} || '%' OR pl_loc like '%' || #{keyword} || '%'
+				</if>
+				<if test='searchType.contains("1")'>OR re_writer_id like '%' || #{keyword} || '%' </if>
+				<if test='searchType.contains("2")'>OR re_contents like '%' || #{keyword} || '%' </if>
+		    </trim>
+		)
 		</if>
 		<include refid="common.pagingPost"/>
 	</select>

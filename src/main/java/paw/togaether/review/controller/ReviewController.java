@@ -73,9 +73,7 @@ public class ReviewController {
 		String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기
 		commandMap.put("mem_id", mem_id);
 		List<Map<String,Object>> reviewList = reviewService.selectMyReviews(commandMap.getMap());
-		for(Map<String,Object> review : reviewList) {
-			System.out.println(review);
-		}
+
 		m.addObject("reviewList",reviewList);
 
 		if(reviewList.size() > 0){

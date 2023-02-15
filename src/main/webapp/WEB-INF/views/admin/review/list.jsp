@@ -59,9 +59,9 @@ main img {
 	
 	<!-- 검색창 -->
 	<div id="searchReview" class="search_wrap txt_center">
-		시설명 <input type="radio" name="searchType" value="0" ${empty search.m_type || search.m_type == 0?"checked":""}>
-		회원ID <input type="radio" name="searchType" value="1" ${search.m_type == 1?"checked":""}>
-		내용 <input type="radio" name="searchType" value="2" ${search.m_type == 2?"checked":""}>
+		시설명/주소 <input type="checkBox" name="searchType" value="0" ${empty search.m_type || search.m_type == 0?"checked":""}>
+		회원ID <input type="checkBox" name="searchType" value="1" ${search.m_type == 1?"checked":""}>
+		내용 <input type="checkBox" name="searchType" value="2" ${search.m_type == 2?"checked":""}>
 		&nbsp;&nbsp;
 		<input type="text" placeholder="검색어를 입력하개 :)" autocomplete="off" value="">
 		<button type="button">
@@ -87,18 +87,25 @@ main img {
 </main><!-- //main 종료 -->
 
 <script>
-let searchType ="";
-let keyword = "";
+let searchType;
+let checkBox;
+let keyword;
 function onSearch() {
+	//초기화
+	searchType = "";  checkBox = "";  keyword = "";
 	
 	//check된 searchType항목의 값을 담는다
-	searchType = $("#searchReview input[type='radio']:checked")[0].value;
+	checkBox = $("#searchReview input[type='checkBox']:checked");
+	if (checkBox.length == 0) { alert('항목을 선택하세요'); return; }
+	for (let i=0 ; i<checkBox.length ; i++) {
+		searchType+= (checkBox[i].value+" ");
+	}
 	
 	//검색 keyword를 담는다
 	keyword =  $("#searchReview input[type='text']")[0].value;
-	keyword = (keyword.length == 0? "":keyword); 
+	if (keyword.length == 0) { alert('검색어를 입력하세요'); return; }
+	
 	fn_selectBoardList(1);	
-
 }
 
 $(document).ready(function(){
@@ -128,7 +135,7 @@ function fn_selectBoardListCallback(data){
 	let body = $(".r_list"); 	body.empty();
 	
 	if(total == 0){
-		let str = "<div class='center'><br><br>🤔<br>시설에 대한 리뷰가 없어요</div>";
+		let str = "<div class='txt_center'><br><br>🤔<br>시설에 대한 리뷰가 없어요</div><br><br>";
 		body.html(str);
 	}
 	else{
@@ -185,7 +192,7 @@ function fn_selectBoardListCallback(data){
 					str+="</form></div>&nbsp;&nbsp;";
 					
 					//삭제버튼 
-					str+="<div><form action='/review/delete.paw' method='post'>";
+					str+="<div><form action='/admin/review/delete.paw' method='post'>";
 					str+="<input type='submit' class='btn submit' value='삭제' onClick='return recheck();'>";
 					str+="<input type='hidden' id='re_idx' name='re_idx' value='"+ i.RE_IDX+"'>";
 					str+="<input type='hidden' id='ph_board_type' name='ph_board_type' value='review'>";
@@ -195,7 +202,7 @@ function fn_selectBoardListCallback(data){
 				str+="<div>"; //flexCenter끝
 				
 			} else {
-				str+="<span id='contents' class='bold'>사용자의 요청으로 삭제된 리뷰입니다.</span>";
+				str+="<span id='contents' class='txt_big'>※사용자의 요청으로 삭제된 리뷰입니다.※</span>";
 			}
 			
 			str+="</div></div></td></tr>";

@@ -33,7 +33,7 @@
 	</update>
 	
 	
-	<!-- 23.01.25 신현지: 회원이미지, 시설이미지, 리뷰이미지 가져오기-->
+	<!-- 23.01.25 신현지: 회원사진, 시설사진, 리뷰사진 가져오기-->
 	<select id="selectMyPhoto" parameterType="hashmap" resultType="hashmap">
 	select * from photo
 	where ph_del_gb = 'N'
@@ -49,7 +49,7 @@
 	</if>
 	</select>
 	
-	<!-- 23.01.29 신현지: 리뷰관련 사진 삭제 -->
+	<!-- 23.01.29 신현지: 사진 삭제 -->
 	<update id="deletePhoto" parameterType="hashmap">
 		update photo
 		set ph_del_gb = 'Y'

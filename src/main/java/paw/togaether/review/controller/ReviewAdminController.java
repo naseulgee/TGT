@@ -72,16 +72,7 @@ public class ReviewAdminController {
 		System.out.println("검색타입은 "+ commandMap.get("searchType"));
 		System.out.println("검색키워드는 : "+ commandMap.get("keyword"));
 		
-		
-		/*
-		  if (commandMap.get("keyword").equals("")) { //담겨있는 키워드가 없다면 전체리스트를 표시
-		  List<Map<String,Object>> reviewList =
-		  reviewService.openAllReviews(commandMap.getMap()); } else { //담겨있는 키워드가 있다면
-		  검색에 따른 표시
-		  
-		  }*/
-		List<Map<String,Object>> reviewList =
-				  reviewService.openAllReviews(commandMap.getMap());
+		List<Map<String,Object>> reviewList = reviewService.openAllReviews(commandMap.getMap());
 		m.addObject("reviewList",reviewList);
 		
 		if(reviewList.size() > 0){
