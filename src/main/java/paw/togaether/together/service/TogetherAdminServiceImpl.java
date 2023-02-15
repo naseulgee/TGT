@@ -79,4 +79,10 @@ public class TogetherAdminServiceImpl implements TogetherAdminService {
 		togetherAdminDAO.adminTogeDel(map);
 	}
 	
+	/* 23.02.15 박선영 관리자 참여멤버 상세보기 */
+	@Override
+	public Map<String, Object> adminWithMem (Map<String, Object> map) throws Exception {
+		return togetherAdminDAO.adminWithMem(map);
+	}
+	
 }

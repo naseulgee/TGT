@@ -78,7 +78,7 @@ padding-left : 10px;
 				<ul>
 					<c:forEach items="${wlist}" var="wl">
 						<li>
-							<button class="use_move" data-href="/admin/together/list" onclick="move(this, 'TO_IDX:${wl.TW_TO_IDX}')">
+							<button class="use_move" data-href="/admin/together/withdetail" onclick="move(this, 'TO_IDX:${wl.TW_TO_IDX}', 'TW_MEM_ID:${wl.TW_MEM_ID}')">
 							${wl.TW_MEM_ID}</button>
 						</li>
 					</c:forEach>

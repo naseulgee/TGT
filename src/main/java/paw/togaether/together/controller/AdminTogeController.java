@@ -25,18 +25,37 @@ public class AdminTogeController {
 	@Resource(name="togetherAdminService")
 	private TogetherAdminService togetherAdminService;
 	
+	/* 23.02.15 박선영 게시글리스트 페이징화면출력 */
+	@RequestMapping(value="/admin/together/list")
+	public ModelAndView openList(CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView("/admin/together/togeAdminList");//JSP를 불러오는 역할
+		
+		Date now = new Date();//현재날짜
+		
+		System.out.println("now :" + now);
+		
+		mv.addObject("now", now);
+		return mv;
+	}
+	
 	/* 23.01.25 박선영 관리자 게시글 리스트 출력
 	 * 23.02.01 박선영 관리자 서비스 분리 */
-	@RequestMapping(value="/admin/together/list")
+	@RequestMapping(value="/admin/together/openlist")
 	public ModelAndView togetherAdminList(CommandMap commandMap) throws Exception {
 		
-		ModelAndView mv = new ModelAndView("/admin/together/togeAdminList");
+		ModelAndView mv = new ModelAndView("jsonView");
 		
 		System.out.println(commandMap.getMap());//값을 잘 받아오는지 확인
 		
 		List<Map<String, Object>> list = togetherAdminService.togetherAdminList(commandMap.getMap());
 		
 		mv.addObject("list", list);
+		
+		if (list.size() > 0) {
+			mv.addObject("TOTAL", list.get(0).get("TOTAL_COUNT"));
+		} else {
+			mv.addObject("TOTAL", 0);
+		}//페이징
 		
 		return mv;
 	}
@@ -154,6 +173,32 @@ public class AdminTogeController {
 		togetherAdminService.adminTogeDel(commandMap.getMap());
 		
 		return mv;
+	}
+	
+	/* 23.02.15 박선영 참여자 상세보기 페이지 */
+	@RequestMapping(value="/admin/together/withdetail")
+	public ModelAndView adminWithMem(CommandMap commandMap) throws Exception {
+		
+		System.out.println(commandMap.getMap());
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//날짜 형태 정해주기
+		SimpleDateFormat tsdf = new SimpleDateFormat("HH:mm");//시간 형태 정해주기
+		
+		Date now = new Date();//날짜 마감에 따른 참여하기 비활성화 목적
+		
+		String nowDate = sdf.format(now);
+		String nowTime = tsdf.format(now);
+		
+		ModelAndView mv = new ModelAndView("/admin/together/togeAdminWithDetail");
+		
+		Map<String, Object> map = togetherAdminService.adminWithMem(commandMap.getMap());//상세보기 정보
+		
+		mv.addObject("map", map);
+		mv.addObject("nowTime", nowTime);
+		mv.addObject("nowDate", nowDate);
+		
+		return mv;
+		
 	}
 
 }
