@@ -17,7 +17,7 @@ function logincheck(){
 
 	<!-- 23.01.18 박선영 게시글 상세보기 구현 -->
 	<!-- 23.01.30 박선영 게시글 참여인원 반영 구현 -->
-	<div class="main_detail">
+	<div class="main_wrap">
 	<h1 class="txt_center"><span class="fa-solid fa-paw"></span>함께해요<span class="fa-solid fa-paw"></span></h1>
 	<br/>
 		<table>

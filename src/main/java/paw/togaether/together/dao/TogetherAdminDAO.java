@@ -10,10 +10,11 @@ import paw.togaether.common.dao.AbstractDAO;
 @Repository("togetherAdminDAO")
 public class TogetherAdminDAO extends AbstractDAO {
 	
-	/* 23.02.01 박선영 관리자 게시글리스트 */
+	/* 23.02.01 박선영 관리자 게시글리스트 
+	 * 23.02.15 박선영 관리자 게시글 페이징*/
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> togetherAdminList(Map<String, Object> map)throws Exception {
-		return (List<Map<String, Object>>) selectList("togetherAdmin.togetherAdminList", map);
+		return (List<Map<String, Object>>) selectPagingList("togetherAdmin.togetherAdminList", map);
 	}
 	
 	/* 23.01.25 박선영 관리자 카테고리 등록
@@ -58,4 +59,20 @@ public class TogetherAdminDAO extends AbstractDAO {
 		insert("togetherAdmin.adminTogeWeight", map);
 	}
 	
+	/* 23.02.14 박선영 관리자 게시글 상세보기 */
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> adminTogeDetail(Map<String, Object> map) throws Exception {
+		return (Map<String, Object>) selectOne ("togetherAdmin.adminTogeDetail", map);
+	}
+	
+	/* 23.02.14 박선영 관리자 게시글 삭제 */
+	public void adminTogeDel(Map<String, Object> map) throws Exception {
+		update("togetherAdmin.adminTogeDel", map);
+	}
+	
+	/* 23.02.15 박선영 관리자 참여멤버 상세보기 */
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> adminWithMem(Map<String, Object> map) throws Exception {
+		return (Map<String, Object>) selectOne ("togetherAdmin.adminWithMem", map);
+	}
 }

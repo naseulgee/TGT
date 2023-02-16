@@ -62,8 +62,6 @@ public class TogetherController {
 		
 		
 		//get()으로 받은 commandMap의 값들을 mv에 ""이름으로 저장
-		//mv.addObject("search_type", commandMap.get("search_type"));
-		//mv.addObject("search_keyword", commandMap.get("search_keyword"));
 		mv.addObject("now",now);
 		mv.addObject("catelist", catelist);
 		mv.addObject("list", list);
