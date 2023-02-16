@@ -6,6 +6,9 @@
 		location.href = history.go(-1);
 	</script>
 </c:if>
+<script type="text/javascript">
+	function recheck() { return confirm("정말 삭제하시겠어요?");};		
+</script>
 <link rel="stylesheet" type="text/css" href="/resources/css/place/detail.css"/>
 <script src="/resources/js/place/detail.js"></script>
 <script src="/resources/js/place/admin_del_place.js"></script>
@@ -166,23 +169,42 @@
 			</c:if>
 			<c:forEach var="i" items="${review_list}">
 				<li class="flex">
-					<c:if test="${!empty i.photoList}">
-						<img class="pop_img" alt="${i.RE_WRITER_NAME}님의 리뷰 이미지" src="/resources/upload/s_${i.photoList[0].PH_STORED_FILE_NAME}">
-					</c:if>
-					<div class="re_wrap">
-						<p class="summary flex">
-							<span class="writer">${i.RE_WRITER_NAME}</span>
-							<span class="star flexCenter">
-								<c:forEach var="star" begin="1" end="5">
-									<c:choose>
-										<c:when test="${i.RE_STAR >= star}"><i class="fa-solid fa-star"></i></c:when>
-										<c:otherwise><i class="fa-regular fa-star"></i></c:otherwise>
-									</c:choose>
-								</c:forEach>
-							</span>
-							<span class="reg">${fn:split(i.RE_REG_DATE, " ")[0]}</span>
-						</p>
-						<p>${i.RE_CONTENTS}</p>
+					<div class="content_wrap flex">
+						<c:if test="${!empty i.photoList}">
+							<img class="pop_img" alt="${i.RE_WRITER_NAME}님의 리뷰 이미지" src="/resources/upload/s_${i.photoList[0].PH_STORED_FILE_NAME}">
+						</c:if>
+						<div class="re_wrap">
+							<p class="summary flex">
+								<span class="writer">${i.RE_WRITER_NAME}</span>
+								<span class="star flexCenter">
+									<c:forEach var="star" begin="1" end="5">
+										<c:choose>
+											<c:when test="${i.RE_STAR >= star}"><i class="fa-solid fa-star"></i></c:when>
+											<c:otherwise><i class="fa-regular fa-star"></i></c:otherwise>
+										</c:choose>
+									</c:forEach>
+								</span>
+								<span class="reg">${fn:split(i.RE_REG_DATE, " ")[0]}</span>
+							</p>
+							<p>${i.RE_CONTENTS}</p>
+						</div>
+					</div>
+					<div class="flex txt_right">
+						<c:if test="${mem_id eq i.RE_WRITER_ID}" >
+							<div><form action='/review/updateForm.paw' method='POST'>
+							<input type='submit' class='btn' value='수정'> 
+							<input type='hidden' name='re_idx' value="${i.RE_IDX}">
+							<input type='hidden' name='ph_board_type' value='review'>
+							<input type='hidden' name='page' value='admin'><!--관리자페이지에서 수정했음을 표기 -->
+							</form></div>&nbsp;
+						</c:if>
+						
+						<form action="/admin/review/delete.paw" method="post">
+							<input type="submit" class="btn warn" value="삭제" onClick="return recheck();">
+							<input type="hidden" id="re_idx" name="re_idx" value="${i.RE_IDX}">
+							<input type="hidden" id="ph_board_type" name="ph_board_type" value="review">
+							<input type="hidden" id="pl_idx" name="pl_idx" value="${i.RE_PL_IDX}">
+						</form>
 					</div>
 				</li>
 			</c:forEach>

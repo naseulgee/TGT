@@ -74,10 +74,24 @@
 	
 	
 	<!-- 23.02.01 신현지: 관리자페이지에서 모든 리뷰 최신순으로 불러오기 -->
+	<!-- 23.02.14 신현지: 페이징 추가 -->
+	<!-- 23.02.14 신현지: 검색에 대한 처리 추가 -->
 	<select id="openAllReviews" parameterType="hashmap" resultType="hashmap">
-		select * 
+		<include refid="common.pagingPre"/>
+		select ROW_NUMBER() OVER ( ORDER BY	re_reg_date DESC ) RNUM, a.*, b.*
 		from review a left join place b on a.re_pl_idx = b.pl_idx  
-		order by re_reg_date desc
+		<if test='!keyword.equals("") and !keyword.equals("undefined") and keyword!=null '>
+		where (
+		    <trim prefixOverrides="OR">
+				<if test='searchType.contains("0")'>
+					pl_name like '%' || #{keyword} || '%' OR pl_loc like '%' || #{keyword} || '%'
+				</if>
+				<if test='searchType.contains("1")'>OR re_writer_id like '%' || #{keyword} || '%' </if>
+				<if test='searchType.contains("2")'>OR re_contents like '%' || #{keyword} || '%' </if>
+		    </trim>
+		)
+		</if>
+		<include refid="common.pagingPost"/>
 	</select>
 	
 	<!-- 23.02.06 신현지: 시설상세보기 밑단에 표시할 최신리뷰 5개 -->
@@ -104,9 +118,9 @@
 			 	re_star ASC,
 			</if>
 		re_reg_date DESC ) RNUM,
-		re_idx,re_pl_idx,re_writer_id, re_writer_name, 
+		pl_name, pl_loc, re_idx,re_pl_idx,re_writer_id, re_writer_name, 
 		re_star, re_contents, re_reg_date, re_mod_date,re_del_gb
-		from review a
+		from review a inner join place b on a.re_pl_idx = b.pl_idx
 		where re_del_gb = 'N'
 		and re_pl_idx = #{pl_idx}
 		<include refid="common.pagingPost"/>
@@ -130,7 +144,7 @@
 	<!-- 23.02.06 신현지: 오늘 작성한 리뷰가 있는지 확인-->
 	<select id="checkTodayReview" parameterType="hashmap" resultType="hashmap">
 		select TO_CHAR(re_reg_date,'YYMMDD') REG_DATE from review
-		where re_pl_idx = #{re_pl_idx}
+		where re_pl_idx = #{re_pl_idx} and re_writer_id = #{mem_id}
 		and re_del_gb = 'N'
 		and TO_CHAR(re_reg_date,'YYMMDD') = TO_CHAR(SYSDATE,'YYMMDD')
 	</select>

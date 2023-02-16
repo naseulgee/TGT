@@ -11,32 +11,47 @@ main img { width: 50px; height: 50px; object-fit: cover; border-radius: 10px; }
 #wrap { width:70%;}
 #place, #stars, #regDate { font-size: 1.2em; }
 table tbody tr td { white-space : inherit;}
+#contents { width: 80%; }
+.pp { justify-content: space-between;}
+main .pop_img_wrap {gap: 20px; }
 </style>
+
+<script type="text/javascript">
+	function recheck() { return confirm("정말 삭제하시겠어요?");};		
+</script>
 
 <main class="layoutCenter">
 	<div class="wrap txt_center">
 		
-		<h1>시설리뷰</h1><br><br>
+		<div class="place_info"></div><br>
 		
 		<!-- 시설번호 -->
 		<input type="hidden" value="${pl_idx}" id="pl_idx" name="pl_idx">
 		<!-- 정렬옵션 -->
 		<input type="hidden" value="${option}" id="option" name="option">
+		<!-- 현재 로그인한 회원의 아이디 -->
+		<input type='hidden' id="mem_id" value="${mem_id}">
 
-			<div class="info">
-				<!-- 평균과 개수가 들어오는 곳 -->
-			</div>
-
-			<table >
-				<tbody class="r_list">
-					<!-- 나의 리뷰리스트가 담기는 위치 -->
-				</tbody>
-			</table>
+		<div class="info">
+			<!-- 평균과 개수가 들어오는 곳 -->
+		</div>
+		
+		<div class="order txt_right">
+			<!-- 정렬버튼이 들어오는 곳 -->
+		</div>	
+		
+		<hr>
+		
+		<table>
+			<tbody class="r_list">
+				<!-- 나의 리뷰리스트가 담기는 위치 -->
+			</tbody>
+		</table>
 	
-			<!-- 페이징 -->
-			<ul id="paging"></ul>
-			<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" />
-			<form id="commonForm" name="commonForm"></form>
+		<!-- 페이징 -->
+		<ul id="paging"></ul>
+		<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" />
+		<form id="commonForm" name="commonForm"></form>
 	
 	
 	</div>
@@ -76,6 +91,8 @@ function fn_selectBoardListCallback(data){
 	let total = data.TOTAL;
 	let body = $(".r_list"); 	body.empty();
 	let info = $(".info"); 	info.empty();
+	let order = $(".order"); 	order.empty();
+	let place = $(".place_info"); place.empty();
 	if(total == 0){
 		let str = "<div class='center'><br><br>🤔<br>시설에 대한 리뷰가 없어요</div>";
 		body.html(str);
@@ -91,36 +108,47 @@ function fn_selectBoardListCallback(data){
 		gfn_renderPaging_B(params); //페이징 실행
 		let str = ""; //리스트를 담는 변수
 		let str2 = ""; //리뷰개수, 평균의 정보를 담는 변수
+		let str3 = "";
+		let str4 = "";
+		str4 += "<h1>"+ data.reviewList[0].PL_NAME + "</h1>"+"(" +data.reviewList[0].PL_LOC+")" ;
+		place.html(str4);
+		
 		str2 += "<div class='txt_center txt_big'><span id='star1' class='bold'>"+data.info.RAVG+"</span>";
 		str2 += "<span id='star2'>/5점</span></div><br><br><h3 class='txt_left'>리뷰 <span style='color : #db776c;'>"+data.info.RCOUNT+"</span></h3>";
 		
-		str2 += "<button type='button' class='option' name='option' value='1' onClick='checkOption(this)'>평점높은순</button> | ";
-		if (data.option == 1) {
-			
-		} 
-		if (data.option == 2) {
-			
-		} else {
-			
-		}
+		str3 += "<button type='button' class='option "; 
+		if (data.option == 1) { str3 += " bold color "; } 
+		str3 += "' name='option' value='1' onClick='checkOption(this)'>평점높은순</button> | ";
 		
-		str2 += "<button type='button' class='option' name='option' value='2' onClick='checkOption(this)'>평점낮은순</button> | ";
-		str2 += "<button type='button' class='option' name='option' value='0' onClick='checkOption(this)'>최신순</button>";
-	
+		str3 += "<button type='button' class='option "; 
+		if (data.option == 2) {str3 += " bold color "; } 
+		str3 += "' name='option' value='2' onClick='checkOption(this)'>평점낮은순</button> | ";
+		
+		str3 += "<button type='button' class='option "; 
+		if (data.option == 0) {str3 += " bold color "; } 
+		str3 += "' name='option' value='0' onClick='checkOption(this)'>최신순</button>";
+
 		info.html(str2);
+		order.html(str3);
 		
 		$.each(data.reviewList, function(key, i){
 			var rDate = new Date(i.RE_REG_DATE);
 			rDate = rDate.getFullYear()+"-"+rDate.getMonth()+"-"+rDate.getDate();
 			
-			str+= "<tr><td><div class='pp flexBetween'><div class='txt_left'><p id='ppp'>";
-					str+= "<div class='pop_img_wrap'>";
-					if(i.photoList.length>0) {
-						for (let j =0 ; j<i.photoList.length ; j++) {		
-							str+= "<img class='pop_img' alt='"+i.RE_WRITER_NAME+"님의 리뷰 이미지' src='/resources/upload/s_"+i.photoList[j].PH_STORED_FILE_NAME+"'>&nbsp;";
-						}	
-					}
-					str+="</div><span id='place'> " + i.RE_WRITER_NAME+" ("+(i.RE_WRITER_ID)+ ") &nbsp;|&nbsp;</span>";
+			str+= "<tr><td><div class='pp flex'>";
+			
+			//이미지 썸네일
+			str+= "<div class='flex'><div class='pop_img_wrap'>";
+			if(i.photoList.length>0) {
+				for (let j =0 ; j<i.photoList.length ; j++) {		
+					str+= "<img class='pop_img' alt='"+i.RE_WRITER_NAME+"님의 리뷰 이미지' src='/resources/upload/s_"+i.photoList[j].PH_STORED_FILE_NAME+"'>&nbsp;";
+				}	
+			}
+			str +='</div>';
+			
+			//리뷰내용
+			str+= "<div class='txt_left'>";
+					str+="<span id='place'> " + i.RE_WRITER_NAME+" ("+(i.RE_WRITER_ID)+ ") &nbsp;|&nbsp;</span>";
 					
 					for(let j =1 ; j<=i.RE_STAR;j++) {
 						str+= "<i class='fa-solid fa-star' id='stars'></i>";
@@ -130,8 +158,25 @@ function fn_selectBoardListCallback(data){
 					}
 					str+="<span id='regDate'> |&nbsp;"+ rDate+"</span>";
 					
-			str+="&nbsp;</p>";
-			str+="<p id='contents'>"+i.RE_CONTENTS+"</p></td></tr>";
+			str+="&nbsp;";
+			str+="<p id='contents'>"+i.RE_CONTENTS+"</p></div></div>";
+
+			
+			//수정 삭제버튼
+			 if ($("#mem_id").val() == i.RE_WRITER_ID ) {
+				str+="<div class='txt_right flex'><div><form action='/review/updateForm.paw' method='POST'>";
+				str+="<input type='submit' class='btn' value='수정'>"; 
+				str+="<input type='hidden' name='re_idx' value='"+i.RE_IDX+"'>";
+				str+="<input type='hidden' name='ph_board_type' value='review'>";
+				str+="</form></div>&nbsp;<div><form action='/review/delete.paw' method='POST'>";
+				str+="<input type='submit' class='btn warn' value='삭제' onClick='return recheck();'>"; 
+				str+="<input type='hidden' name='re_idx' value='"+i.RE_IDX+"'>";
+				str+="<input type='hidden' name='ph_board_type' value='review'>";
+				str+="</form></div></div>";
+			} 
+			
+			
+			str+="</td></tr>";
 
 		});
 		body.append(str);

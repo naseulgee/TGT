@@ -41,12 +41,11 @@ public class ReviewController {
 	@RequestMapping(value="/review/insert")
 	public ResponseEntity<String> insertReview(CommandMap commandMap,HttpSession session, MultipartFile[] uploadFile) throws Exception{
 		
-		//오늘 이미 리뷰를 작성했는지 check
+		//session의 아이디를 가져와서 오늘 이미 해당시설에 대한 리뷰를 작성했는지 check
+		commandMap.put("mem_id", (String)session.getAttribute("mem_id")); 
 		Map<String, Object> review = reviewService.checkTodayReview(commandMap.getMap());
 		
-		System.out.println("작성가능 리뷰"+review);//null
-		//비어있다면
-		if(review == null)  {
+		if(review == null)  { //비어있다면
 			//review등록과 photo등록에 대한 처리
 			reviewService.insertReview(commandMap.getMap(),session,uploadFile); //사용시 주석 풀어주기
 			return new ResponseEntity<String>("/mypage/review/list.paw",HttpStatus.OK);
@@ -74,9 +73,7 @@ public class ReviewController {
 		String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기
 		commandMap.put("mem_id", mem_id);
 		List<Map<String,Object>> reviewList = reviewService.selectMyReviews(commandMap.getMap());
-		for(Map<String,Object> review : reviewList) {
-			System.out.println(review);
-		}
+
 		m.addObject("reviewList",reviewList);
 
 		if(reviewList.size() > 0){
@@ -118,16 +115,28 @@ public class ReviewController {
 		//후기사진 가져오기
 		List<Map<String,Object>> photos =  reviewService.openMyReviewPhoto(commandMap.getMap());
 		m.addObject("photos", photos); 
+		
+		m.addObject("page",(String)commandMap.get("page"));
 		return m;
 	}
 	
 	/** 23.01.31 신현지 : 리뷰수정*/
+	/** 23.02.14 신현지 : 리뷰 수정을 어디서 했냐(관리자페이지or일반페이지)에 따라 수정완료 후 표시할 페이지 설정 추가*/
 	@RequestMapping(value="/review/update")
 	public ResponseEntity<String> updateReview(CommandMap commandMap,HttpSession session, MultipartFile[] uploadFile) throws Exception{
 
 		//review등록과 photo등록에 대한 처리
 		reviewService.updateReview(commandMap.getMap(),session,uploadFile); //사용시 주석 풀어주기
-		return new ResponseEntity<String>("/mypage/review/list.paw",HttpStatus.OK);
+		String pl_idx = (String)commandMap.get("pl_idx");
+		
+		if(commandMap.get("page").equals("admin")) {
+			//admin페이지에서 수정했다면 admin페이지의 리뷰리스트로 이동
+			return new ResponseEntity<String>("/admin/place/detail/"+pl_idx+"/review/list.paw",HttpStatus.OK);
+		} else {
+			//일반페이지에서 수정했다면 mypage로 이동
+			return new ResponseEntity<String>("/mypage/review/list.paw",HttpStatus.OK);
+		}
+		
 	}
 	
 	
@@ -140,10 +149,10 @@ public class ReviewController {
 	}
 	
 	
-	/** 23.02.08 신현지 : 시설에 대한 모든 리뷰 출력*/
+	/** 23.02.08 신현지 : 시설에 대한 리뷰 리스트로 이동*/
 	/** 23.02.09 신현지 : 정렬에 대한 처리 추가*/
 	@RequestMapping(value="/place/detail/{pl_idx}/review/list")
-	public ModelAndView openPlaceAllReviews(CommandMap commandMap , @PathVariable("pl_idx") int pl_idx ) throws Exception{
+	public ModelAndView openPlaceAllReviews(CommandMap commandMap , @PathVariable("pl_idx") int pl_idx) throws Exception{
 		
 		String option = (String)commandMap.get("option");
 		if (option == null) { option = "0"; } //option이 없으면 그냥 최신순으로 정렬

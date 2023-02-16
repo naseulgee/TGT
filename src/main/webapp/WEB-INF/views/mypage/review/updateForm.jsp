@@ -118,7 +118,8 @@
 		<input type="hidden" id="re_idx" name="re_idx" value="${review.RE_IDX}" >
 		<input type="hidden" id="idx" name="idx" value="${review.RE_IDX}" >
 		<input type="hidden" value="review" name="ph_board_type">
-		
+		<input type="hidden" value="${page}" name="page">
+		<input type="hidden" value="${review.RE_PL_IDX}" name="pl_idx">
 		<button type="button" class="btn submit" id="uploadBtn" >리뷰등록</button> 
 		<a href="/mypage/review/list.paw" class="btn">목록으로</a>
 	</div> 
