@@ -22,13 +22,14 @@
 			<input type="text" class="txt" placeholder="검색하개:)" name="subKeyword" id="subKeyword" value="${subKeyword}" width="150"/>
 			<input type="button" class="btn submit" value="검색" onclick="fn_selectBoardList2(1);">
 		</div>
+		<br/>
 		<%-- <c:choose>
 			<c:when test="${!empty list}"> --%>
 				<table class="card_table row1" id="together_list">
 					<tbody class="together">
 						<c:forEach items="${list}" var="to">
 							<!-- tr클래스 클릭시 상세보기 페이지로 이동-->
-							<tr class="use_move" data-href="/together/detail/${to.TO_IDX}.paw" onclick="move(this,'TO_IDX:${to.TO_IDX}')" id="togetherDetail">
+							<tr class="use_move" data-href="/admin/together/detail/${to.TO_IDX}.paw" onclick="move(this,'TO_IDX:${to.TO_IDX}')" id="togetherDetail">
 								<td class="color"><span class="fa-solid fa-paw"></span>[${to.TO_TC_NAME}] ${to.TO_TITLE } 
 									<c:if test="${to.C eq to.TO_PEOPLE}">
 										<span class="btn submit">모집완료</span>

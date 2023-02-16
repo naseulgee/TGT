@@ -17,7 +17,8 @@
                     <td width="54%">${row.BC_TITLE }</td>
                     <td width="10%">${row.BC_READHIT }</td>
                     <td width="10%">${row.BC_WRITER_NAME }</td>
-                    <td width="10%"><fmt:formatDate value="${row.BC_MOD_DATE}" pattern="yyyy-MM-dd"/></td>
+                    <td width="10%">${row.BC_MOD_DATE}
+                    <%-- <fmt:formatDate value="${row.BC_MOD_DATE}" pattern="yyyy-MM-dd"/> --%></td>
                 </tr>
             </c:forEach>
         </c:when>

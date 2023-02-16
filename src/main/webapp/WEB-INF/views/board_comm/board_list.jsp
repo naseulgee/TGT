@@ -1,42 +1,32 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
-<link href="/resources/css/board_comm/board_comm_list.css"
-      rel="stylesheet">
-<link rel="stylesheet" href="/resources/css/board_comm/toastr.css"
-      integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
-      crossorigin="anonymous" referrerpolicy="no-referrer"/>
-<script src="/resources/js/board_comm/toastr.min.js"
-        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
+<link href="/resources/css/board_comm/board_comm_list.css" rel="stylesheet">
+<link rel="stylesheet" href="/resources/css/board_comm/toastr.css"/>
+<script src="/resources/js/board_comm/toastr.min.js"></script>
 <script src="/resources/js/paging/searchPaging_B.js"></script>
-
-
 <main class="layoutCenter">
+
     <body>
     <section class="notice">
         <div class="page-title">
             <div class="container">
-                <center>
-                    <a href="/board/list.paw"> 
-                    <img src="/resources/image/board_comm_mongmong.PNG">
-                    </a>
-                </center>
+            <div class="title_image">
+					<a href="/board/list.paw"> <img
+						src="/resources/image/board_comm_mongmong.PNG"></a>
+				</div>
             </div>
         </div>
         <!-- board seach area -->
         <div id="board-search">
             <div class="container">
-                <br>
+                
               <div class="search-window">
                         <div class="search-wrap">
                             <input type="text" class="txt" placeholder="제목이나 내용을 검색하세요"
                                    name="subKeyword" id="subKeyword" value="${subKeyword}"
                                    style="width: 530px; height: 38px;"/>&nbsp; 
                                    <input type="button" value="검색" class="btn submit" onclick="fn_selectBoardList(1)"/>
-                                 <br>
+                                
                         </div>
                         
                     <div></div>
@@ -67,11 +57,11 @@
                 <tbody class="board">
                 </tbody>
             </table>
-            </div>
+            
             <br> 
             
             <a href="/board/writeForm.paw" class="btn submit" style="float: right">글쓰기</a>
-            
+            </div>
            	 	<div id="PAGE_NAVI_B"></div>
             		<input type="hidden" id="PAGE_INDEX_B" name="PAGE_INDEX_B"/>
             			<form id="commonForm" name="commonForm"></form>
@@ -84,10 +74,10 @@
 <script>
 	/* 페이징 처리 */
     $(document).ready(function () {
-        fn_selectBoardList(1);
+        fn_selectBoardList(1, '전체게시판');
     });
 
-    function fn_selectBoardList(pageNo, BC_BCC_NAME = '전체게시판') {
+    function fn_selectBoardList(pageNo, BC_BCC_NAME='전체게시판') {
         var comAjax = new ComAjax();
 
         comAjax.setUrl("<c:url value='/pagingBoard/list.paw' />");
@@ -98,13 +88,7 @@
         
         comAjax.addParam("BC_BCC_NAME", BC_BCC_NAME);
         
-        /* let key = $("#subKeyword").val();
-        if(isNull(key)) key = "";
-        comAjax.addParam("subKeyword", key); */
-        
-       /*  let key1 = $("#BC_BCC_NAME").val();
-        if(isNull(key1)) key1 = "";
-        comAjax.addParam("BC_BCC_NAME", key1); */
+        comAjax.addParam("subKeyword", $("#subKeyword").val()); 
         
         
         comAjax.ajax();
@@ -153,7 +137,6 @@
     $("input:radio[name='BC_BCC_NAME']").on('click', function () {
     	
         var BC_BCC_NAME = $(this).val();
-        
         fn_selectBoardList(1, BC_BCC_NAME)
 
     });

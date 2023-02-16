@@ -2,6 +2,7 @@
 <%@ include file="/WEB-INF/include/common-head.jspf" %>
 
 <body id="admin_body">
+<script src="/resources/js/common/admin_nav.js"></script>
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="/resources/css/common/layout_admin.css"/>
 
@@ -12,13 +13,23 @@
 		</a>
 	</div>
 	<ul class="sub_pages">
+		<li><a href=""><i class="fa-solid fa-shield-dog"></i> 견종 관리</a></li>
 		<li><a href=""><i class="fa-solid fa-user-group"></i> 고객정보 관리</a></li>
-		<li><a href="/admin/together/list.paw"><i class="fa-solid fa-flag"></i> 함께해요 관리</a></li>
-		<li><a href="/admin/together/catelist.paw"><i class="fa-solid fa-flag"></i> 카테고리 관리</a></li>
-		<li><a href="/admin/together/wtlist.paw"><i class="fa-solid fa-flag"></i> 몸무게 관리</a></li>
+		<li><button class="toggle_li" type="button" onclick="toggle_down(this)"><i class="fa-solid fa-flag"></i> 함께해요 관리<i class="fa-solid fa-chevron-down"></i></button>
+			<ul>
+				<li><a href="/admin/together/list.paw"><i class="fa-solid fa-file-invoice"></i> 함께해요 게시글 관리</a></li>
+				<li><a href="/admin/together/catelist.paw"><i class="fa-solid fa-tags"></i> 함께해요 분류 관리</a></li>
+				<li><a href="/admin/together/wtlist.paw"><i class="fa-solid fa-weight-scale"></i> 선호 몸무게 범위 관리</a></li>
+			</ul>
+		</li>
 		<li><a href=""><i class="fa-solid fa-comments"></i> 멍멍왈왈 관리</a></li>
-		<li><a href="/admin/place/list.paw"><i class="fa-solid fa-building-wheat"></i> 우리동네 관리</a></li>
-		<li><a href="/admin/place/cate/list.paw"><i class="fa-solid fa-building-wheat"></i> 카테고리 관리</a></li>
+		<li><button class="toggle_li" type="button" onclick="toggle_down(this)"><i class="fa-solid fa-tree-city"></i> 우리동네 관리<i class="fa-solid fa-chevron-down"></i></button>
+			<ul>
+				<li><a href="/admin/place/list.paw"><i class="fa-solid fa-file-invoice"></i> 우리동네 게시글 관리</a></li>
+				<li><a href="/admin/place/cate/list.paw"><i class="fa-solid fa-tags"></i> 우리동네 분류 관리</a></li>
+			</ul>
+		</li>
+		<li><a href="/admin/review/list.paw"><i class="fa-solid fa-star"></i> 리뷰 관리</a></li>
 		<li><a href=""><i class="fa-solid fa-bell"></i> 알람 관리</a>
 	</ul>
 	<div class="btn_wrap flex flexWrap flexBetween">
@@ -28,4 +39,5 @@
 			<button type="button" onclick="go_top()"><i class="fa-regular fa-circle-up"></i>맨 위로가기</button>
 		</div>
 	</div>
-</header> 
+	<form id="common" method="post"></form>
+</header>

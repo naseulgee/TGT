@@ -22,10 +22,6 @@ width:100%;
 display:absolute;
 }
 
-.cate_wrap{
-width:100%;
-display:flex;
-}
 
 table tr{
 background-color: #f6ece1;	
@@ -35,11 +31,9 @@ background-color: #f6ece1;
 width:100%;
 padding-right:100px;
 padding-left:250px;
-position:absolute;
 }
 
 .cate_button{
-position:relative;
 height:auto;
 }
 
@@ -85,9 +79,6 @@ padding-bottom: 5px;
 padding-left: 10px
 }
 
-.together{
-background-color : #f6ece1;
-}
 
 td.txt_right {
 font-size : 15px;

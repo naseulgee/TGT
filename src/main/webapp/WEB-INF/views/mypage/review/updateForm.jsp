@@ -98,7 +98,8 @@
 					<input type="hidden" name="idx_${var.index+1}" value="${i.PH_IDX}">
 					<input type="file" accept="image/*" id="photo_${var.index+1}" name="photo_${var.index+1}" >
 					<img width="200px" src="/resources/upload/${i.PH_STORED_FILE_NAME}" >
-				</label>	
+					<span id="deleteBtn" onclick="reset(event,this)">❌</span>
+				</label>
 			</c:forEach>
 			
 			<!-- 이미지 등록안한 <input type="file">태그 -->
@@ -117,7 +118,8 @@
 		<input type="hidden" id="re_idx" name="re_idx" value="${review.RE_IDX}" >
 		<input type="hidden" id="idx" name="idx" value="${review.RE_IDX}" >
 		<input type="hidden" value="review" name="ph_board_type">
-		
+		<input type="hidden" value="${page}" name="page">
+		<input type="hidden" value="${review.RE_PL_IDX}" name="pl_idx">
 		<button type="button" class="btn submit" id="uploadBtn" >리뷰등록</button> 
 		<a href="/mypage/review/list.paw" class="btn">목록으로</a>
 	</div> 

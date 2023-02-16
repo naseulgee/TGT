@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 23.02.16 나슬기: 알람 관련 쿼리문 파일 생성 -->
+<mapper namespace="alarm">
+	<!-- 23.02.16 나슬기: 시설 메뉴 조회하는 쿼리문 / 받는값: 시설 번호 -->
+	<!-- <select id="se_pl_menu_list" resultType="hashmap">
+		select * from place_menu where pm_pl_idx = ${pl_idx} order by pm_name
+	</select> -->
+
+	<!-- 23.02.16 나슬기: 알람 등록하는 쿼리문 / 받는값: 등록할 시설 번호, 메뉴명, 가격 -->
+	<!-- <insert id="in_pl_menu">
+		<selectKey keyProperty="PM_IDX_NEXT" order="BEFORE" resultType="int">
+			select seq_place_menu.nextval from dual
+		</selectKey>
+		insert into place_menu(pm_idx, pm_pl_idx, pm_name, pm_price)
+		values (${PM_IDX_NEXT}, ${pl_idx}, #{pm_name}, ${pm_price})
+	</insert> -->
+
+	<!-- 23.02.16 나슬기: 알람 수정하는 쿼리문 / 받는값: 알람 번호를 제외한 모든 값 -->
+	<update id="up_al">
+		update alarm
+		set
+		<trim prefixOverrides=",">
+			<foreach item="val" index="key" collection="map">
+				<trim prefix=",">
+					<if test="val != null and !val.equals('') and !key.equals('pl_idx')">${key} = #{val}</if>
+				</trim>
+			</foreach>
+		</trim>
+		where al_idx = ${al_idx}
+	</update>
+
+	<!-- 23.02.16 나슬기: 알람 삭제하는 쿼리문 / 받는값: 알람 번호 -->
+	<delete id="de_al">
+		delete alarm where al_idx = ${al_idx}
+	</delete>
+</mapper>

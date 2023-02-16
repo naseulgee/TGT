@@ -2,25 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="togetherAdmin">
+
 	<!-- 23.02.01 박선영 관리자 쿼리 따로 분리, 게시글 리스트 출력 -->
+	<!-- 23.02.14 박선영 관리자 게시글리스트 페이징 -->
 	<select id="togetherAdminList" resultType="hashmap">
+		<include refid="common.pagingPre"/>
 		<![CDATA[
 			select 
+				ROW_NUMBER() OVER (ORDER BY TO_IDX DESC) RNUM,
 				t.to_idx,
 				t.to_title,
 				t.to_tc_name,
 				t.to_contents,
 				t.to_writer_id,
 				t.to_writer_name,
-				t.to_date,
+				TO_CHAR(TO_DATE, 'YYYY-MM-DD')as TO_DATE,
 				t.to_time,
 				t.to_people,
 				(select count(tw_idx) from together_with where tw_to_idx = to_idx) as C,
 				t.to_loc,
 				t.to_br_idx,
 				t.to_wt_idx,
-				t.to_reg_date,
-				t.to_mod_date,
+				TO_CHAR(TO_REG_DATE, 'yyyy-MM-dd')as TO_REG_DATE,
+				TO_CHAR(TO_MOD_DATE, 'yyyy-MM-dd')as TO_MOD_DATE,
 				t.to_del_gb,
 				c.tc_idx,
 				c.tc_name,
@@ -52,6 +56,7 @@
 						b.br_idx,
 						b.br_name
 		]]>
+		<include refid="common.pagingPost"/>
 	</select>
 	
 	<!-- 23.02.01 박선영 관리자 카테고리별 리스트 -->
@@ -156,5 +161,77 @@
 				)
 		]]>
 	</insert>
+	
+	<!-- 23.02.14 박선영 관리자 게시글 상세보기 -->
+	<select id="adminTogeDetail" resultType="hashmap">
+		<![CDATA[
+			SELECT t.TO_IDX,
+					t.TO_TITLE,
+					t.TO_TC_NAME,
+					t.TO_CONTENTS,
+					t.TO_WRITER_ID,
+					t.TO_WRITER_NAME,
+					TO_CHAR(TO_DATE, 'YYYY-MM-DD')as TO_DATE,
+					t.TO_TIME,
+					t.TO_PEOPLE,
+					(select count(TW_IDX) from together_with where TW_TO_IDX = TO_IDX) as C,
+					t.TO_LOC,
+					t.TO_BR_IDX,
+					t.TO_WT_IDX,
+					TO_CHAR(TO_REG_DATE, 'yyyy-MM-dd')as TO_REG_DATE,
+					TO_CHAR(TO_MOD_DATE, 'yyyy-MM-dd')as TO_MOD_DATE,
+					t.TO_DEL_GB,
+					c.TC_IDX,
+					c.TC_NAME,
+					c.TC_COUNT,
+					b.BR_IDX,
+					b.BR_NAME
+					FROM TOGETHER t, TOGETHER_CATE c,BREED b
+					WHERE t.TO_TC_NAME = c.TC_NAME
+					AND t.TO_BR_IDX = b.BR_IDX
+					AND t.TO_IDX=#{TO_IDX, jdbcType=VARCHAR}
+		]]>
+	</select>
+	
+	<!-- 23.02.14 박선영 : 게시글 삭제기능 구현 -->
+	<update id="adminTogeDel" parameterType="hashmap">
+		<![CDATA[
+			UPDATE TOGETHER
+			SET TO_DEL_GB = 'Y'
+			WHERE TO_IDX=#{TO_IDX, jdbcType=VARCHAR}
+		]]>
+	</update>
+	
+	<!-- 23.02.15 관리자 참여회원 상세정보 -->
+	<select id="adminWithMem" resultType="hashmap">
+		<![CDATA[
+			SELECT m.MEM_ID,
+				   m.MEM_DOG_NAME,
+				   m.MEM_DOG_WEIGHT,
+				   m.MEM_DOG_ETC,
+				   m.MEM_BR_IDX,
+				   TO_CHAR(MEM_REG_DATE, 'YYYY-MM-DD')as MEM_REG_DATE,
+				   b.BR_IDX,
+				   b.BR_NAME,
+				   w.TW_TO_IDX,
+				   (SELECT COUNT (TW_IDX) FROM TOGETHER_WITH WHERE TW_MEM_ID = MEM_ID) AS WITH_COUNT
+			FROM MEMBERS m, BREED b, TOGETHER_WITH w
+			WHERE 
+				MEM_ID = #{TW_MEM_ID, jdbcType=VARCHAR}
+			AND 
+				m.MEM_BR_IDX = b.BR_IDX
+			AND 
+				w.TW_TO_IDX = #{TO_IDX,jdbcType=VARCHAR}
+			 GROUP BY m.MEM_ID,
+					   m.MEM_DOG_NAME,
+					   m.MEM_DOG_WEIGHT,
+					   m.MEM_DOG_ETC,
+					   m.MEM_BR_IDX,
+					   b.BR_IDX,
+					   b.BR_NAME,
+					   w.TW_TO_IDX,
+					   MEM_REG_DATE	
+		]]>
+	</select>
 	
 </mapper>

@@ -2,12 +2,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
 <script src="/resources/js/paging/searchPaging_B.js" defer></script>
+
+
 <style>
-#phIcon,#stars { display: inline-block;}
-#stars {font-size : 30px;}
-#place, #contents, #phIcon,#regDate {color : #b8bfc4;}
-#ppp { line-height : 1.2;}
-img { border-radius : 15px; height : 100%;}
+#stars { display: inline-block; color: #ffb100; }
+#photo { display: inline-block; color:#b8bfc4; }
+#star1{ color : #db776c; font-size : 60px; }	
+#star2{ color : #d1d5d9; }
+main img { width: 50px; height: 50px; object-fit: cover; border-radius: 10px; }
+#wrap { width:70%;}
+#photo,#place, #stars, #regDate { font-size: 1.2em; }
+table tbody tr td { white-space : inherit;}
+#contents { width: 80%; }
+.pp { justify-content: space-between;}
+main .pop_img_wrap {gap: 20px; }
 </style>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
@@ -16,7 +24,7 @@ img { border-radius : 15px; height : 100%;}
 		<div class="main_wrap txt_center">
 		
 		<h1>나의 리뷰</h1>
-		<div class="color">${mem_dog_name}(${mem_id})님의 리뷰페이지입니다 :)</div><br><br>
+		<div class="color">${mem_dog_name}(${mem_id})님의 리뷰페이지입니다 :)</div><br><br><br>
 
 			<table >
 				<tbody class="r_list">
@@ -62,7 +70,7 @@ function fn_selectBoardListCallback(data){
 	body.empty();
 	
 	if(total == 0){
-		let str = "<div class='center'><br><br>🤔<br>작성하신 리뷰가 없어요</div>";
+		let str = "<div class='txt_center'><br><br>🤔<br>작성하신 리뷰가 없어요</div>";
 		body.html(str);
 	}
 	else{
@@ -78,7 +86,7 @@ function fn_selectBoardListCallback(data){
 		$.each(data.reviewList, function(key, i){
 			var rDate = new Intl.DateTimeFormat('kr').format(new Date(i.RE_REG_DATE));
 			console.log(rDate);
-			str+= "<tr><td><div id='regDate' class='txt_right'>"+ rDate+"</div>" 
+			str+= "<tr><td>" 
 					+"<div class='pp flexBetween'>"
 					+"<div class='txt_left'><p id='ppp'>"
 					+"<span id='place' class='txt_big'>" + i.PL_NAME + "&nbsp;|&nbsp;</span>";
@@ -90,10 +98,8 @@ function fn_selectBoardListCallback(data){
 						str+= "<i class='fa-regular fa-star color' id='stars'></i>";
 					}
 					console.log(i.photoList.length);
-					if(i.photoList.length>0) {
-						str+= "<span id='place' class='txt_big'>&nbsp;|&nbsp;</span><i class='fa-solid fa-image color' id='stars'></i>";
-					}
-			str+="&nbsp;</p><br>";
+					
+			str+="<span id='regDate'>&nbsp;|&nbsp;"+ rDate+"</span></p><br>";
 			str+="<div class='flex'><div><span id='contents'>";
 			
 			if(i.RE_CONTENTS.length > 51){
@@ -103,7 +109,10 @@ function fn_selectBoardListCallback(data){
 			}
 			
 			
-			str+="</span> &nbsp;&nbsp;</div>";
+			str+="</span> &nbsp;</div>";
+			if(i.photoList.length>0) {
+				str+= "<i class='fa-solid fa-image color' id='photo'></i>&nbsp;&nbsp;";
+			}
 			str+="<div><form action='/mypage/review/detail.paw' method='POST'>";
 			str+="<input type='submit' class='btn slim' value='상세보기'>"; 
 			str+="<input type='hidden' name='re_idx' value='"+i.RE_IDX+"'>"

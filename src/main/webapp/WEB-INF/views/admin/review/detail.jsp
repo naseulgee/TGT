@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
-<%@ include file="/WEB-INF/include/user-header.jspf" %>
+<%@ include file="/WEB-INF/include/admin-header.jspf" %>
 <link type="text/css" rel="stylesheet" href="/resources/css/common/photo.css" ></link>
 <style>
-
 	#highlight {
 	color : #db776c;
 	background-color: var(--subColor);
@@ -59,9 +58,7 @@
 	table tbody tr:last-of-type{ border: none; }
 	
 	
-	table tr th, table tr td {
-		padding : 0px 10px;
-	}
+	table tr th, table tr td { padding : 0px 10px; }
 	
 	#writeDate{
 		color : #d1d5d9;
@@ -90,12 +87,11 @@
 	};		
 </script>
 
-<!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <main class="layoutCenter">
 	<div id="wrap" >	
 	<div >
 	
-	<h1 class="txt_center">리뷰상세</h1>
+	<h1 class="txt_center">회원 리뷰상세</h1>
 	<br><br>
 	
 		<div id="place">
@@ -146,10 +142,12 @@
 		
 		<div id="place">
 			<!-- 누가, 언제, 어떤 시설에 대해 작성한 리뷰인지에 대한 설명 -->
+			<div class="txt_center">
 			<span id="highlight">${review.RE_WRITER_NAME}(${review.RE_WRITER_ID})</span>님이
 			<span id="highlight"><fmt:formatDate value="${review.RE_REG_DATE}" pattern="yy-MM-dd" /></span>에 작성하신 
 			<span id="highlight">${review.PL_NAME}</span>에 대한 리뷰입니다.
-
+			</div>
+			
 			<!-- 평점 -->
 			<div class="txt_center">
 				<div  width="50%">
@@ -157,16 +155,6 @@
 				<span id="star1" class="bold">${review.RE_STAR}</span>
 				<span id="star2">/5점</span><br>
 				</div>
-				<%-- 
-				<span class="color">
-				    <c:forEach var="j" begin="1" end="${review.RE_STAR}">
-		    			<i class="fa-solid fa-paw color" id="stars"></i>
-					</c:forEach>
-					<c:forEach var="j" begin="1" end="${5-review.RE_STAR}">
-		    			<i class="fa-solid fa-paw subColor" id="stars"></i>
-					</c:forEach>&nbsp;
-				</span> 
-				--%>
 			</div>
 			<br>
 			
@@ -179,11 +167,11 @@
 			<c:if test="${!empty photos}">
 				<!-- 사진 -->
 				<hr><br>
-				<div id="img_upload" class="flex">	
+				<div id="img_upload" class="flex pop_img_wrap">	
 					<c:forEach items="${photos}" var="i" varStatus="status">	
-						<label>
-							<img src="/resources/upload/${i.PH_STORED_FILE_NAME}" id="photo">			
-							&nbsp;&nbsp;
+						<label >
+							<img class="pop_img" src="/resources/upload/${i.PH_STORED_FILE_NAME}" id="photo">			
+							&nbsp;
 						</label>
 					</c:forEach>
 				</div>
@@ -200,22 +188,17 @@
 		<br><br>
 		
 		<div class="txt_center">
-			<a href="/review/updateForm.paw" class="use_move btn submit" 
-			onclick="move(this, 're_idx:${review.RE_IDX}','ph_board_type:review')">수정</a>
-			<table>
-				<form action="/review/delete.paw" method="post">
-					<input type="submit" class="btn" value="삭제" onClick="return recheck();">
-					<input type="hidden" id="re_idx" name="re_idx" value="${review.RE_IDX}">
-					<input type="hidden" id="ph_board_type" name="ph_board_type" value="review">
-				</form>
-			</table>
+			<form action="/admin/review/delete.paw" method="post">
+				<input type="submit" class="btn warn" value="삭제" onClick="return recheck();">
+				<input type="hidden" id="re_idx" name="re_idx" value="${review.RE_IDX}">
+				<input type="hidden" id="ph_board_type" name="ph_board_type" value="review">
+			</form>
 		</div>
-		
-		
 		
 
 	</div>	
 	</div> 
 </main><!-- //main 종료 -->
-
+<link rel="stylesheet" type="text/css" href="/resources/css/common/img_pop_slide.css"/>
+<script src="/resources/js/common/img_pop_slide.js"></script>
 <%@ include file="/WEB-INF/include/common-footer.jspf" %>

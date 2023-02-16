@@ -1,5 +1,6 @@
 /* 공통 */
-section{ margin: 0 auto 70px; }
+main{ margin-top: 7vw; padding-top: 0; }
+section{ margin: 0 auto 7vw; }
 section h1{ color: var(--mainColorD); }
 section h2{ margin-bottom: 20px; color: var(--subGray_60); font-size: 1.5em; }
 section h3{ display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; margin: 20px 0 10px; font-size: 1em; }
@@ -7,6 +8,8 @@ section h3 .go{ position: relative; }
 section h3 .go::after{ display: block; content: ""; width: 0; height: 1px; background-color: #000; position: absolute; bottom: 0; left: 0; }
 section h3 .go:hover::after{ animation: go 0.7s 1; }
 section h3 .go i{ display: inline; }
+section .when{ color: var(--subGray_50); font-size: 0.8em; }
+section ul li{ padding: 20px; border: 1px dashed var(--subGray_20); border-left: 0; border-right: 0; box-sizing: border-box; font-size: 1.2em; }
 @keyframes go {
     0%{ width: 0; left: 0; }
     20%{ width: 20px; }
@@ -14,7 +17,7 @@ section h3 .go i{ display: inline; }
 }
 
 /* 메인 배너 */
-#main_banner{ margin-top: 60px; }
+#main_banner{ height: 50vw; max-height: 745px; margin-top: 60px; }
 #main_banner .img_wrap img{ object-fit: cover; }
 
 /* 미니 배너 */
@@ -28,20 +31,35 @@ section h3 .go i{ display: inline; }
 /* 오늘 올라온 NEW 컨텐츠 */
 #talk{}
 #talk .free_wrap ul,
-#talk .free_wrap ul li{ display: block; width: 100%; height: 50px; overflow: hidden; }
-#talk .free_wrap ul li{ animation: list_up 3s infinite; padding: 0 20px; border-bottom: 1px dashed var(--subGray_20); box-sizing: border-box; line-height: 50px; }
-#talk .free_wrap ul li:first-child{ border-top: 1px dashed var(--subGray_20); }
+#talk .free_wrap ul li{ display: block; width: 100%; height: 70px; overflow: hidden; }
+#talk .free_wrap ul li{ padding: 0 20px; animation: list_up 3s infinite; line-height: 70px; }
 @keyframes list_up {
     0%{ transform: translateY(0); }
-    100%{ transform: translateY(-200%); }
+    15%{ transform: translateY(0); }
+    30%{ transform: translateY(-100%); }
+    45%{ transform: translateY(-100%); }
+    60%{ transform: translateY(-200%); }
+    75%{ transform: translateY(-200%); }
+    90%{ transform: translateY(-300%); }
+    100%{ transform: translateY(-300%); }
 }
+#talk .together_wrap .people{ vertical-align: 0; }
+#talk .together_wrap .people .now{ color: var(--mainColorD); font-size: 2em; }
 
 /* 도움이 필요해요! */
 #help{}
-#help .help_wrap{ gap: 20px; }
+#help .help_wrap{ gap: 70px; }
 #help .help_wrap article{ min-width: 360px; }
 #help .help_wrap .missing_wrap{ flex: 2; }
 #help .help_wrap .volunteer_wrap{ flex: 1; }
 
 /* 반려동물 지식 */
 #info{}
+#info .card_table{ width: 100%; height: 250px; overflow: hidden; position: relative; }
+#info .card_table tbody{ flex-wrap: nowrap; width: max-content; position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%); animation: list_flow 25s linear infinite; }
+#info .card_table tbody tr{ width: 300px; max-height: 250px; }
+#info .card_table tbody tr .title{ display: -webkit-box; -webkit-box-orient: vertical; max-height: 150px; box-sizing: border-box; overflow: hidden; -webkit-line-clamp: 6; }
+@keyframes list_flow {
+    0%{ transform: translate(0, -50%); }
+    100%{ transform: translate(-50%, -50%); }
+}

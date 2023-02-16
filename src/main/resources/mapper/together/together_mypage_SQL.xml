@@ -3,9 +3,12 @@
 
 <mapper namespace="togetherMypage">
 	<!-- 23.02.08 박선영 마이페이지 함께해요 참여게시글 출력 -->
+	<!-- 23.02.14 박선영 페이징 -->
 	<select id="myTogetherList" resultType="hashmap">
+		<include refid="common.pagingPre"/>
 		<![CDATA[
 	SELECT 
+				ROW_NUMBER() OVER (ORDER BY TO_IDX DESC) RNUM,
 				t.TO_IDX,
 				t.TO_TITLE,
 				t.TO_TC_NAME,
@@ -35,12 +38,16 @@
                 AND t.TO_IDX = w.TW_TO_IDX
                 AND t.TO_TC_NAME = c.TC_NAME
 		]]>
+		<include refid="common.pagingPost"/>
 	</select>
 	
 	<!-- 23.02.09 박선영 마이페이지 내가 작성한 글 보기 -->
+	<!-- 23.02.14 박선영 마이페이지 내가 작성한 글 페이징 -->
 	<select id="myTogeWriteList" resultType="hashmap">
+		<include refid="common.pagingPre"/>
 		<![CDATA[
 	SELECT 
+				ROW_NUMBER() OVER (ORDER BY TO_IDX DESC) RNUM, 
 				t.TO_IDX,
 				t.TO_TITLE,
 				t.TO_TC_NAME,
@@ -66,6 +73,7 @@
 				AND t.TO_DEL_GB = 'N'
                 AND t.TO_TC_NAME = c.TC_NAME
 		]]>
+		<include refid="common.pagingPost"/>
 	</select>
 	
 

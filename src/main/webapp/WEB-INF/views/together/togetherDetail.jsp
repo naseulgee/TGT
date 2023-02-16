@@ -17,7 +17,7 @@ function logincheck(){
 
 	<!-- 23.01.18 박선영 게시글 상세보기 구현 -->
 	<!-- 23.01.30 박선영 게시글 참여인원 반영 구현 -->
-	<div class="main_detail">
+	<div class="main_wrap">
 	<h1 class="txt_center"><span class="fa-solid fa-paw"></span>함께해요<span class="fa-solid fa-paw"></span></h1>
 	<br/>
 		<table>
@@ -90,6 +90,7 @@ function logincheck(){
 			<c:if test="${!empty mem_id}">
 				<!--로그인 되어있고 로그인한 아이디가 작성자 아이디와 같을때  -->
 				<c:if test="${mem_id eq map.TO_WRITER_ID}">
+					<input type="button" class="btn submit" id="creatChat" name="creatChat" value="채팅참여">
 					<input type="button" class="use_move" data-href="/together/modifyForm.paw" onclick="move(this, 'TO_IDX:${map.TO_IDX}')" value="수정하기" style="margin-right:5px;">
 					<input type="button" class="use_move" data-href="/together/delete.paw" onclick="move(this, 'TO_IDX:${map.TO_IDX}')" value="삭제하기">
 				</c:if>
@@ -117,6 +118,7 @@ function logincheck(){
 						<!-- 이미 참여한 상태라면 -->
 						<c:if test="${!empty checkwith}">	
 							<form id="withdel" name="withdel">
+								<input type="button" class="btn submit" id="creatChat" name="creatChat" value="채팅참여">
 								<input type="hidden" id="TW_TO_IDX" name="TW_TO_IDX" value="${map.TO_IDX}">
 								<input type="hidden" id="TW_MEM_ID" name="TW_MEM_ID" value="${mem_id}">
 								<input type="button" class="btn" id="delwith" name="delwith" value="취소하개:(">
@@ -165,6 +167,58 @@ $(document).ready(function(){
 	});//클릭함수 끝
 	
 });
+
+
+//작성자 - 채팅방 들어가기
+$("#creatChat").click(function() {
+	const roomNumber = ${TO_IDX};
+	const data = {
+		"roomNumber" : ${TO_IDX},
+		"roomName" : '${map.TO_TITLE}',
+		"nickname" : '${mem_id}'
+	}
+	$.ajax({
+			url : "/chattingRoom",
+			type : "POST",
+			data : data,
+		}).then(function(){
+			location.href = "/chat.paw";
+			enterChatingRoom(roomNumber)
+		}).fail(function() {
+			alert("에러가 발생했습니다");
+		})
+});
+
+const initRoom = function(room, nickname) {
+	// 방 목록 업데이트
+	stomp.send("/socket/roomList");
+
+}
+
+const enterChatingRoom = function(roomNumber) {
+	const data = {
+			"roomNumber" : ${TO_IDX},
+			"nickname" : ${mem_id}
+		}
+	$.ajax({
+			url: "/chattingRoom-enter",
+			type: "GET",
+			data: data,
+		})
+		.then(function(room){
+			initRoom(room, nickname);
+			
+			// 채팅방 참가 메세지
+			room.message = nickname + "님이 참가하셨습니다";
+			stomp.send(
+				"/socket/notification/" + roomNumber, {}, 
+				JSON.stringify(room));
+			
+		})
+		.fail(function(result){
+			errorMSG(result);
+		})
+	}
 
 </script>
 

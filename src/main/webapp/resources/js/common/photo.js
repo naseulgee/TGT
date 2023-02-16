@@ -18,21 +18,24 @@ photo_inputs.each(function(index, item){
 	$(item).on("input", function(){
 		//첨부된 파일의 URL 변수에 담기
 		const imageSrc = URL.createObjectURL(item.files[0]);
+		
 		if(isNull(imageSrc)) return;//만약 첨부된게 없다면 함수 종료
+		
 		//photo_inputs의 부모 변수에 담기
 		let photo_wrap = $(item).parent();
 		//img태그, no-image 태그 변수에 담기
 		let img = photo_wrap.children("img");
 		let no_img = photo_wrap.children(".no-image");
+		
 		//만약 자식태그로 img 태그가 이미 있다면 src 변경 => 수정 고려
 		if(img.length > 0){
 			img.attr("src",imageSrc);
 		}else{//없다면 img 태그 추가
-			photo_wrap.prepend("<img src='"+imageSrc+"'>");
-			
-			//reset시 e파라미터로 추가해주면 전파방지 사용가능
-			photo_wrap.append("<span id='deleteBtn' onclick='reset(event,this)'>❌</span>");	
+			photo_wrap.prepend("<img src='"+imageSrc+"'>");	
 		}
+		
+		//이미지 제거 버튼 추가
+		photo_wrap.append("<span id='deleteBtn' onclick='reset(event,this)'>❌</span>");//reset시 e파라미터로 추가해주면 전파방지 사용가능
 		//no-imge 태그가 있다면 제거
 		if(no_img.length > 0) no_img.remove();
 	});
@@ -44,6 +47,12 @@ function reset(e,target) {
 	let parents = target.closest('label');//버튼을 감싸고 있는 label을 선택
 	parents.querySelector('img').remove(); //label내 이미지지우기
 	parents.querySelector("input[type='file']").value = "";//파일도 초기화 해주기
+	
+	//(수정 고려)DB에 저장된 기존 이미지가 있었다면 삭제 해주기
+	let db_img = parents.querySelector("input[type='hidden']");
+	console.log(db_img);
+	if(!isNull(db_img)) db_img.remove();
+	
 	$(parents).prepend("<i class='fa-thin fa-image no-image'></i>");//아이콘 다시 만들어주고
 	target.remove(); //버튼 없애버리기
 };

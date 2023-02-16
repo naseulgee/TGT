@@ -7,7 +7,6 @@ width:800px;
 font-size: 22px;
 margin-right:auto;
 margin-left:auto;
-position:relative;
 }
 
 tr{
@@ -20,10 +19,6 @@ line-height:2em;
 font-size:20px;
 }
 
-.main_detail{
-float:right;
-padding-right:100px;
-}
 
 .btn.submit{
 margin-right:5px;

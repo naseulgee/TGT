@@ -152,7 +152,6 @@ $('#btn').click(function() {
 	const CONTENT = $('#CONTENT').val();
 	const WRITER = $('#WRITER').val();
 	
-		alert(WRITER);
 	
 			$.ajax({
 				type:'post',
