@@ -18,7 +18,7 @@
 	<h1>오늘 올라온 NEW 컨텐츠</h1>
 	<h2>#견주님들과 소통하러 가자</h2>
 	<article class="free_wrap">
-		<h3><strong>자유게시판 게시글</strong><a class="use_move go" href="/board/list.paw" onclick="move(this, 'BC_BCC_NAME:자유게시판')">바로가기 <i class="fa-solid fa-arrow-right"></i></a></h3>
+		<h3><strong>자유게시판 게시글</strong></h3>
 		<c:if test="${empty free}"><div class="empty">자유게시판 글이 없습니다</div></c:if>
 		<c:if test="${!empty free}">
 			<ul>
@@ -27,6 +27,9 @@
 						<strong class="title">${i.BC_TITLE}</strong> | <span class="writer">${i.BC_WRITER_NAME}</span> | <span class="when">${fn:substring(i.BC_MOD_DATE,2,10)}</span>
 					</li>
 				</c:forEach>
+				<li class="use_move" data-href="/board/detail/${free[0].BC_IDX}.paw" onclick="move(this, 'BC_IDX:${free[0].BC_IDX}')">
+					<strong class="title">${free[0].BC_TITLE}</strong> | <span class="writer">${free[0].BC_WRITER_NAME}</span> | <span class="when">${fn:substring(free[0].BC_MOD_DATE,2,10)}</span>
+				</li>
 			</ul>
 		</c:if>
 	</article>
@@ -71,7 +74,7 @@
 	<h2>#따뜻한 관심과 도움이 필요해요!</h2>
 	<div class="help_wrap flex flexWrap">
 		<article class="missing_wrap">
-			<h3><strong>긴급 실종 게시글</strong><a class="use_move go" href="/board/list.paw" onclick="move(this, 'BC_BCC_NAME:긴급실종유기견')">바로가기 <i class="fa-solid fa-arrow-right"></i></a></h3>
+			<h3><strong>긴급 실종 게시글</strong></h3>
 			<c:if test="${empty missing}"><div class="empty">실종신고 글이 없습니다</div></c:if>
 			<c:if test="${!empty missing}">
 				<table class="card_table">
@@ -88,7 +91,7 @@
 			</c:if>
 		</article>
 		<article class="volunteer_wrap">
-			<h3><strong>자원봉사 모집글</strong><a class="use_move go" href="/board/list.paw" onclick="move(this, 'BC_BCC_NAME:자원봉사구해요')">바로가기 <i class="fa-solid fa-arrow-right"></i></a></h3>
+			<h3><strong>자원봉사 모집글</strong></h3>
 			<c:if test="${empty volunteer}"><div class="empty">자원봉사 모집글이 없습니다</div></c:if>
 			<c:if test="${!empty volunteer}">
 				<ul>
@@ -103,15 +106,18 @@
 	</div>
 </section>
 
+</main><!-- //main 종료 -->
+
 <section id="info">
-	<h1>반려동물 지식</h1>
-	<h2>#우리 강아지에 대해 자세히 알아보자</h2>
+	<h1 class="layoutCenter">반려동물 지식</h1>
+	<h2 class="layoutCenter">#우리 강아지에 대해 자세히 알아보자</h2>
 	<article class="info_wrap">
-		<h3><strong>정보 게시글</strong><a class="use_move go" href="/board/list.paw" onclick="move(this, 'BC_BCC_NAME:정보게시판')">바로가기 <i class="fa-solid fa-arrow-right"></i></a></h3>
+		<h3 class="layoutCenter"><strong>정보 게시글</strong></h3>
 		<c:if test="${empty info}"><div class="empty">정보게시판 글이 없습니다</div></c:if>
 		<c:if test="${!empty info}">
 			<table class="card_table">
 				<tbody>
+					<c:forEach var="j" begin="0" end="1">
 					<c:forEach var="i" items="${info}">
 						<tr class="use_move" data-href="/board/detail/${i.BC_IDX}.paw" onclick="move(this, 'BC_IDX:${i.BC_IDX}')">
 							<td class="title"><strong>${i.BC_TITLE}</strong></td>
@@ -119,12 +125,11 @@
 							<td class="when">${fn:substring(i.BC_MOD_DATE,2,10)}</td>
 						</tr>
 					</c:forEach>
+					</c:forEach>
 				</tbody>
 			</table>
 		</c:if>
 	</article>
 </section>
-
-</main><!-- //main 종료 -->
 
 <%@ include file="/WEB-INF/include/common-footer.jspf" %>
