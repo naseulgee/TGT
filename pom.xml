@@ -316,6 +316,26 @@
 			<artifactId>ojdbc8</artifactId>
 			<version>21.1.0.0</version>
 		</dependency>
+		
+		<!-- 23.01.28 이소영 웹소켓 -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		<!-- 23.02.02 이소영 메세징 -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-messaging</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		<!-- 23.02.03 이소영 STOMP -->
+		<dependency>
+	    	<groupId>org.springframework.integration</groupId>
+		    <artifactId>spring-integration-stomp</artifactId>
+		    <version>6.0.2</version>
+		</dependency>
+		
 	</dependencies>
 	
 	<!-- 프로젝트의 빌드방법을 지정 -->
