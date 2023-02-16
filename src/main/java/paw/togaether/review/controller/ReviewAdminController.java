@@ -57,7 +57,7 @@ public class ReviewAdminController {
 	
 	
 	/** 23.02.06 신현지 : 모든 리뷰를 리스트로 출력 */
-	@RequestMapping(value="/admin/review/search")
+	@RequestMapping(value="/admin/review/list")
 	public ModelAndView searchReviews(CommandMap commandMap) throws Exception{
 		
 		ModelAndView m = new ModelAndView("/admin/review/list"); 		

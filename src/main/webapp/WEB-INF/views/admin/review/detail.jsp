@@ -130,7 +130,7 @@
 					</tr>
 					<tr>
 						<td>
-							<a class="use_move btn slim" href="/place/detail/${review.RE_PL_IDX}" 
+							<a class="use_move btn slim" href="/admin/place/detail/${review.RE_PL_IDX}" 
 							onclick="move(this, 'test:value_a')">상세보기</a>
 						</td>
 					</tr>
