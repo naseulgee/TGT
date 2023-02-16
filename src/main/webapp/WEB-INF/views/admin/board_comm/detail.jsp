@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<%@ include file="/WEB-INF/include/user-header.jspf"%>
+<%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!-- 어드민 페이지의 헤더 -->
+<%@ include file="/WEB-INF/include/admin-header.jspf" %>
+<script src="https://kit.fontawesome.com/e9bd4d3977.js" crossorigin="anonymous"></script>
 <link href="/resources/css/board_comm/board_comm_detail.css"
 	rel="stylesheet">
 <script src="/resources/js/board_comm/board_comm.js"></script>
@@ -29,11 +28,10 @@
 	<section class="notice">
 		<div class="page-title">
 			<div class="container">
-				<center>
-					<a href="/board/list.paw"> <img
-						src="/resources/image/board_comm_mongmong.PNG"></a>
-				</center>
-				<br> <br>
+            <center><h4><a href="/admin/board_comm/list.paw">멍멍왈왈 게시판 관리</a></h4></center>
+            <br>
+            <br>
+            <br>
 				<div>
 				<!-- -----------------------------게시글 디테일----------------------------------------- -->
 					<div class="mainContainer">
@@ -69,8 +67,8 @@
 				<div class="lastFont">
 					<a href="/board/list.paw" class="btn" onclick="returntoList();">목록으로</a>
 					<a href="/board/modifyForm.paw?BC_IDX=${map.BC_IDX}"
-						class="btn submit" onclick="alert('글을 수정하시겠습니까?');">수정하기</a> <a
-						class="use_move btn warn" href="/board/delete.paw"
+						class="btn submit" onclick="alert('글을 수정하시겠습니까?');">수정하기</a> 
+						<a class="use_move btn warn" href="/admin/board/delete.paw"
 						onclick="move(this,'BC_IDX:${map.BC_IDX}'), alert('글을 삭제하시겠습니까?');">삭제하기</a>
 					<input type="hidden" name="BC_IDX" value="${map.BC_IDX}">
 				</div>
@@ -196,12 +194,11 @@ function modifyView(idI) {
 
 function cmDeleteFun(rno){
 
-	
 	const BNO = ${map.BC_IDX};
 
 	$.ajax({
 		type:'post',
-		url: "/comment/delete.paw",
+		url: "/admin/board/delete.paw",
 		data:
 				{
 					"RNO":rno,
@@ -209,7 +206,7 @@ function cmDeleteFun(rno){
 				},
 		dataType: "text",
 		success: function (data) {
-
+			alert('댓글 삭제 완료');
 			location.reload();
 		},
 		error:function(data){
@@ -220,5 +217,3 @@ function cmDeleteFun(rno){
 }
 
 </script>
-</html>
-

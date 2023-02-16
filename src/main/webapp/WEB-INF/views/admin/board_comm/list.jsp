@@ -1,19 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ include file="/WEB-INF/include/user-header.jspf" %>
-<link href="/resources/css/board_comm/board_comm_list.css" rel="stylesheet">
-<link rel="stylesheet" href="/resources/css/board_comm/toastr.css"/>
-<script src="/resources/js/board_comm/toastr.min.js"></script>
+<%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!-- 어드민 페이지의 헤더 -->
+<%@ include file="/WEB-INF/include/admin-header.jspf" %>
 <script src="/resources/js/paging/searchPaging_B.js"></script>
+<link href="/resources/css/board_comm/board_comm_list.css" rel="stylesheet">
+      
 <main class="layoutCenter">
-
     <body>
     <section class="notice">
         <div class="page-title">
             <div class="container">
-            <div class="title_image">
-					<a href="/board/list.paw"> <img
-						src="/resources/image/board_comm_mongmong.PNG"></a>
-				</div>
+            <br>
+            <center><h4><a href="/admin/board_comm/list.paw">멍멍왈왈 게시판 관리</a></h4></center>
+            <br>
             </div>
         </div>
         <!-- board seach area -->
@@ -26,9 +25,7 @@
                                    name="subKeyword" id="subKeyword" value="${subKeyword}"
                                    style="width: 530px; height: 38px;"/>&nbsp; 
                                    <input type="button" value="검색" class="btn submit" onclick="fn_selectBoardList(1)"/>
-                                
                         </div>
-                        
                     <div></div>
                 </div>
             </div>
@@ -80,7 +77,7 @@
     function fn_selectBoardList(pageNo, BC_BCC_NAME='전체게시판') {
         var comAjax = new ComAjax();
 
-        comAjax.setUrl("<c:url value='/pagingBoard/list.paw' />");
+        comAjax.setUrl("<c:url value='/admin/pagingBoard/list.paw' />");
         comAjax.setCallback("fn_selectBoardListCallback");
 
         comAjax.addParam("PAGE_INDEX", $("#PAGE_INDEX_B").val());
@@ -118,7 +115,7 @@
            
             var str = "";
             $.each(data.list, function (key, value) {
-                str += "<tr class='use_move' data-href='/board/detail/"+value.BC_IDX +".paw' onclick=\"move(this,\'BC_IDX:"+value.BC_IDX+"\')\"> "
+            	str += "<tr class='use_move' data-href='/admin/board/detail/"+value.BC_IDX+".paw' onclick=\"move(this,\'BC_IDX:"+value.BC_IDX+"\')\"> "
                 + "<td>" + value.BC_IDX + "</td>"
                 + "<td>" + value.BC_BCC_NAME + "</td>"
                     + "<td>" + value.BC_TITLE + "</td>"
@@ -159,4 +156,3 @@
 
     });
 </script>
-<%@ include file="/WEB-INF/include/common-footer.jspf" %>

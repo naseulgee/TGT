@@ -84,4 +84,24 @@ public class BoardDAO extends AbstractDAO {
 		return (List<Map<String, Object>>) selectList("Board.myPageComment", map);
 
 	}
+	
+	
+	//관리자페이지 리스트 띄우기
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> adminList(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectPagingList("Board.adminList", map);
+		
+	}
+	
+	//관리자페이지 상세보기
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> adminBoardDetail(Map<String, Object> map) throws Exception {
+		return (Map<String, Object>) selectOne("Board.adminBoardDetail", map);
+	}
+		
+	// 멍멍왈왈 글 삭제하기
+	public void adminBoardDelete(Map<String, Object> map) throws Exception {
+		update("Board.adminBoardDelete", map);
+	}
+	
 }

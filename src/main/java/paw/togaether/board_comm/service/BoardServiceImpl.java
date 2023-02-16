@@ -89,6 +89,24 @@ public class BoardServiceImpl implements BoardService {
 	public List<Map<String, Object>> myPageComment(Map<String, Object> map) throws Exception {
 		return boardDAO.myPageComment(map);
 	}
-		
+	
+	//관리자페이지 리스트 띄우기
+	@Override
+	public List<Map<String, Object>> adminList(Map<String, Object> map) throws Exception {
+		return boardDAO.adminList(map);
+	}
+	
+	//관리자페이지 상세보기
+	@Override
+	public Map<String, Object> adminBoardDetail(Map<String, Object> map) throws Exception {
+		boardDAO.boardHit(map);
+		Map<String, Object> resultMap = boardDAO.adminBoardDetail(map);
+		return resultMap;
+	}
+	
+	@Override
+	public void adminBoardDelete(Map<String ,Object> map) throws Exception {
+		boardDAO.adminBoardDelete(map);
+	}
 	
 }

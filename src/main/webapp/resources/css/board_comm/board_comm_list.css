@@ -2,13 +2,19 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-
+.title_image{
+	margin-top: 60px;
+	margin-bottom: 60px;
+	padding: 20px 0;
+	margin-left:390px;
+	
+}
 section.notice {
-	padding: 80px 0;
+	padding: 10px 0;
 }
 
 .page-title {
-	margin-bottom: 60px;
+	margin-bottom: 10px;
 }
 
 .page-title h3 {
@@ -19,7 +25,7 @@ section.notice {
 }
 
 #board-search .search-window {
-	background-color: #f9f7f9;
+	background-color: #f0b1aa12;
 	max-width: 100%;
 	width: 100%;
 	text-align: center;
@@ -48,6 +54,8 @@ section.notice {
 .board-table th {
 	text-align: center;
 	background-color: #fff;
+	font-weight: bold;
+	
 }
 
 .board-table .th-num {
@@ -106,3 +114,6 @@ section.notice {
 	width: 1px;
 	height: 1px;
 }
+
+.tab_radio label { background-color: #fff;; }
+.tab_radio input[type="radio"]:checked + label {  background-color: #fff; color: var(--mainColor); border: 1px solid var(--mainColor); }

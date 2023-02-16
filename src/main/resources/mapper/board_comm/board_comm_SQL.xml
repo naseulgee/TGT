@@ -23,7 +23,7 @@
 			 BC_IDX,
 			 BC_TITLE,
 			 BC_READHIT,
-			 TO_CHAR(SYSDATE, 'YYYYMMDD') AS BC_MOD_DATE,
+			 TO_CHAR(BC_MOD_DATE, 'YYYYMMDD') AS BC_MOD_DATE,
 			 BC_WRITER_NAME,
 			 BC_BCC_NAME
 		FROM
@@ -35,9 +35,9 @@
 			AND BC_BCC_NAME = #{BC_BCC_NAME}
 			</if>
 			
-			<if test="subKeyword != null">
-              AND BC_TITLE LIKE '%'||#{subKeyword}||'%' 
-               OR BC_CONTENTS LIKE '%' || #{subKeyword} || '%'
+			<if test="subKeyword != ''">
+              AND (BC_TITLE LIKE '%'||#{subKeyword}||'%' 
+               OR BC_CONTENTS LIKE '%' || #{subKeyword} || '%')
             </if>
             
 			ORDER BY BC_IDX DESC
@@ -224,5 +224,68 @@
 		WHERE
 			 WRITER = #{mem_id, jdbcType=VARCHAR}
 </select>
+
+<!-- 관리자 페이지 리스트 띄우기 -->
+<select id="adminList" parameterType="hashmap" resultType="hashmap">
+				<include refid="common.pagingPre"/>
+		SELECT
+		   	 ROW_NUMBER() OVER (ORDER BY BC_IDX DESC) RNUM, 
+			 BC_IDX,
+			 BC_TITLE,
+			 BC_READHIT,
+			 TO_CHAR(BC_MOD_DATE, 'YYYYMMDD') AS BC_MOD_DATE,
+			 BC_WRITER_NAME,
+			 BC_BCC_NAME
+		FROM
+			 BOARD_COMM
+		WHERE
+			 BC_DEL_GB = 'N'
+	
+			<if test='BC_BCC_NAME!="전체게시판"'>
+			AND BC_BCC_NAME = #{BC_BCC_NAME}
+			</if>
+			
+			<if test="subKeyword != ''">
+              AND (BC_TITLE LIKE '%'||#{subKeyword}||'%' 
+               OR BC_CONTENTS LIKE '%' || #{subKeyword} || '%')
+            </if>
+            
+			ORDER BY BC_IDX DESC
+			
+			<include refid="common.pagingPost"/>
+</select>
+
+<!-- 관리자 게시글 상세보기 -->
+<select id="adminBoardDetail" parameterType="hashmap" resultType="hashmap" >
+	<![CDATA[
+		SELECT
+			BC_IDX,
+			BC_READHIT,
+			BC_WRITER_NAME,
+			BC_REG_DATE,
+			BC_TITLE,
+			BC_CONTENTS,
+			BC_BCC_NAME
+		FROM
+			BOARD_COMM
+		WHERE
+			BC_IDX = #{BC_IDX, jdbcType=VARCHAR}
+	]]>
+</select>
+
+<!-- 관리자 게시글 삭제하기 -->
+<update id="adminBoardDelete" parameterType="hashmap">
+	<![CDATA[
+	UPDATE 
+		BOARD_COMM
+	SET
+		 BC_DEL_GB='Y'
+	WHERE 
+		BC_IDX = #{BC_IDX}
+
+	]]>
+</update> 
+
+
 
 </mapper>

@@ -43,6 +43,7 @@ public class BoardController {
 	 * 23.01.27 최선아: 게시판 댓글 삭제
 	 * 23.01.30 최선아: 게시판 댓글 수정
 	 * 23.02.01 최선아: 게시판 전체 검색 및 페이징
+	 * 23.02.14 최선아: 관리자 페이지 리스트 작성 
 	 * */
 	
 	
@@ -50,7 +51,6 @@ public class BoardController {
 	@RequestMapping(value = "/board/list", method = RequestMethod.GET)
 	public ModelAndView boardList(CommandMap commandMap, HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView("board_comm/board_list");
-		
 		return mv;
 	}
 
@@ -103,17 +103,13 @@ public class BoardController {
 		
 		System.out.println(BC_IDX);
 		commandMap.put("BC_IDX", BC_IDX); //댓글 수정쪽 바로 게시글 번호를 받아와야해서 넣어줌
-		
-		log.fatal("Controller>detail>getmap():"+commandMap.getMap());
-		
+				
 		Map<String,Object> map = boardService.boardDetail(commandMap.getMap());
 		mv.addObject("map", map);
 		
 		List<Map<String, Object>> comment = boardService.commentList(commandMap.getMap());
 		mv.addObject("comment", comment);
-		
-		log.fatal("Controller>detail>returned map:"+map);
-		
+				
 		return mv;
 	}
 	
@@ -204,12 +200,60 @@ public class BoardController {
 		
 		redirect.addAttribute("BC_IDX", commandMap.get("BC_IDX")); 
 		mv.addObject("myPageComment", myPageComment);
-		
-		
-		log.info("mem_id" + commandMap.getMap());	
-		
+				
 		return mv;
 	}
 	
-	
+	// 관리자 멍멍왈왈 게시판 띄워주기만 하는 리스트
+	@RequestMapping(value = "/admin/board_comm/list", method = RequestMethod.GET)
+	public ModelAndView adminList(CommandMap commandMap, HttpSession session) throws Exception {
+		ModelAndView mv = new ModelAndView("/admin/board_comm/list");
+		return mv;
+	}
+
+		
+	// 관리자 페이징 리스트2 페이징 처리
+	@RequestMapping(value = "/admin/pagingBoard/list")
+	public ModelAndView selectAdminBoardList(CommandMap commandMap) throws Exception {
+
+		ModelAndView mv = new ModelAndView("jsonView");
+
+		List<Map<String, Object>> list = boardService.adminList(commandMap.getMap());
+		mv.addObject("list", list);
+
+		// 페이징 처리
+		if (list.size() > 0) {
+			mv.addObject("TOTAL_B", list.get(0).get("TOTAL_COUNT"));
+		} else {
+			mv.addObject("TOTAL_B", 0);
+		}
+			return mv;
+		}
+			
+		// 관리자 게시글 상세보기
+		@RequestMapping(value = "/admin/board/detail/{BC_IDX}")
+		public ModelAndView adminBoardDetail(@PathVariable("BC_IDX") int BC_IDX, CommandMap commandMap)
+				throws Exception {
+			ModelAndView mv = new ModelAndView("/admin/board_comm/detail");
+
+			commandMap.put("BC_IDX", BC_IDX); // 댓글 수정쪽 바로 게시글 번호를 받아와야해서 넣어줌
+
+			Map<String, Object> map = boardService.adminBoardDetail(commandMap.getMap());
+			mv.addObject("map", map);
+
+			List<Map<String, Object>> comment = boardService.commentList(commandMap.getMap());
+			mv.addObject("comment", comment);
+
+			return mv;
+		}
+
+		// 관리자 게시글 삭제하기
+		@RequestMapping(value = "/admin/board/delete", method = RequestMethod.POST) // RedirectAttributes 클래스를 이용해 삭제 후
+		public ModelAndView adminBoardDelete(CommandMap commandMap, RedirectAttributes redirect) throws Exception {
+			ModelAndView mv = new ModelAndView("redirect:/admin/board_comm/list.paw");
+
+			boardService.adminBoardDelete(commandMap.getMap());
+			return mv;
+		}
+		
 }
