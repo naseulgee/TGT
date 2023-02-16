@@ -35,7 +35,7 @@
 			AND BC_BCC_NAME = #{BC_BCC_NAME}
 			</if>
 			
-			<if test="subKeyword != ''">
+			<if test="subKeyword != null and !subKeyword.equals('')">
               AND (BC_TITLE LIKE '%'||#{subKeyword}||'%' 
                OR BC_CONTENTS LIKE '%' || #{subKeyword} || '%')
             </if>
