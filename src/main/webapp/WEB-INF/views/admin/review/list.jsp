@@ -195,6 +195,7 @@ function fn_selectBoardListCallback(data){
 					str+="<div><form action='/admin/review/delete.paw' method='post'>";
 					str+="<input type='submit' class='btn submit' value='삭제' onClick='return recheck();'>";
 					str+="<input type='hidden' id='re_idx' name='re_idx' value='"+ i.RE_IDX+"'>";
+					str+="<input type='hidden' name='pl_idx' value='"+i.RE_PL_IDX+"'>";
 					str+="<input type='hidden' id='ph_board_type' name='ph_board_type' value='review'>";
 					str+="</form></div>";
 					str+="</div>";  
