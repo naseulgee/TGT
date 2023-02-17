@@ -22,7 +22,7 @@
 				<li><a href="/admin/together/wtlist.paw"><i class="fa-solid fa-weight-scale"></i> 선호 몸무게 범위 관리</a></li>
 			</ul>
 		</li>
-		<li><a href=""><i class="fa-solid fa-comments"></i> 멍멍왈왈 관리</a></li>
+		<li><a href="/admin/board_comm/list"><i class="fa-solid fa-comments"></i> 멍멍왈왈 관리</a></li>
 		<li><button class="toggle_li" type="button" onclick="toggle_down(this)"><i class="fa-solid fa-tree-city"></i> 우리동네 관리<i class="fa-solid fa-chevron-down"></i></button>
 			<ul>
 				<li><a href="/admin/place/list.paw"><i class="fa-solid fa-file-invoice"></i> 우리동네 게시글 관리</a></li>
