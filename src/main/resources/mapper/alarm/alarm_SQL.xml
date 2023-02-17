@@ -8,12 +8,9 @@
 		select * from place_menu where pm_pl_idx = ${pl_idx} order by pm_name
 	</select> -->
 
-	<!-- 23.02.16 나슬기: 알람 등록하는 쿼리문. 타겟 ID만큼 반복한다. / 받는값: 타겟 ID, 알람 내용, 연결 링크 -->
-	<insert id="in_al">
-		<foreach item="target" index="index" collection="al_mem_id">
-			insert into alarm(al_idx, al_mem_id, al_contents, al_link)
-			values (seq_alarm.nextval, #{target}, #{al_contents}, #{al_link})
-		</foreach>
+	<!-- 23.02.16 나슬기: 프로시저를 호출하여 알람 등록하는 쿼리문 / 받는값: 타겟 ID, 알람 내용, 연결 링크 -->
+	<insert id="in_al" statementType="CALLABLE">
+		{call proc_al_by_admin(#{target, mode=IN, jdbcType=VARCHAR}, #{al_contents, mode=IN, jdbcType=VARCHAR}, #{al_link, mode=IN, jdbcType=VARCHAR})}
 	</insert>
 
 	<!-- 23.02.16 나슬기: 알람 수정하는 쿼리문 -->
