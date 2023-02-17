@@ -38,7 +38,7 @@ public class ReviewAdminController {
 	 */
 	
 	
-	/** 23.01.25 신현지: 마이페이지에서 내 리뷰(특정 하나) 조회 메서드 */
+	/** 23.02.06 신현지: 특정회원의 리뷰 상세보기 */
 	@RequestMapping(value="/admin/review/detail")
 	public ModelAndView openMyReview(CommandMap commandMap) throws Exception{
 		ModelAndView m = new ModelAndView("/admin/review/detail");
