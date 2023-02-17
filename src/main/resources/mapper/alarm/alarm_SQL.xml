@@ -3,32 +3,76 @@
 
 <!-- 23.02.16 나슬기: 알람 관련 쿼리문 파일 생성 -->
 <mapper namespace="alarm">
-	<!-- 23.02.16 나슬기: 시설 메뉴 조회하는 쿼리문 / 받는값: 시설 번호 -->
-	<!-- <select id="se_pl_menu_list" resultType="hashmap">
-		select * from place_menu where pm_pl_idx = ${pl_idx} order by pm_name
-	</select> -->
+	<!-- 23.02.17 나슬기: 알람 조회하는 쿼리문 / 받는값: 회원ID -->
+	<select id="se_al" resultType="hashmap">
+		<![CDATA[
+		select /*+ INDEX_DESC (alarm(al_idx)) */ *
+		from alarm
+		where
+			al_mem_id = #{mem_id}
+			and al_del_gb = 'N'
+			and al_reg_date > sysdate-7
+		]]>
+	</select>
+	
+	<!-- 23.02.17 나슬기: 알람 조회하는 쿼리문 / 받는값: 회원ID, 알람 내용, 발송 날짜, 알람 확인 여부 -->
+	<select id="se_al_by_admin" resultType="hashmap">
+		<![CDATA[
+		select /*+ INDEX_DESC (alarm(al_idx)) */ *
+		from alarm
+		]]>
+		<where>
+			<trim prefixOverrides="and">
+				<foreach item="val" index="key" collection="map">
+					<trim prefix="and">
+						<if test="val != null and !val.equals('')">${key} like '%'||${val}||'%'</if>
+					</trim>
+				</foreach>
+			</trim>
+		</where>
+	</select>
 
-	<!-- 23.02.16 나슬기: 프로시저를 호출하여 알람 등록하는 쿼리문 / 받는값: 타겟 ID, 알람 내용, 연결 링크 -->
+	<!-- 23.02.17 나슬기: 프로시저를 호출하여 알람 등록하는 쿼리문 / 받는값: 타겟 ID, 알람 내용, 연결 링크 -->
 	<insert id="in_al" statementType="CALLABLE">
 		{call proc_al_by_admin(#{target, mode=IN, jdbcType=VARCHAR}, #{al_contents, mode=IN, jdbcType=VARCHAR}, #{al_link, mode=IN, jdbcType=VARCHAR})}
 	</insert>
 
-	<!-- 23.02.16 나슬기: 알람 수정하는 쿼리문 -->
+	<!-- 23.02.16 나슬기: 알람 수정하는 쿼리문
+		23.02.17 나슬기: 여러개 수정을 고려하여 where 조건 ..in()으로 수정 -->
 	<update id="up_al">
 		update alarm
 		set
 		<trim prefixOverrides=",">
 			<foreach item="val" index="key" collection="map">
 				<trim prefix=",">
-					<if test="val != null and !val.equals('') and !key.equals('pl_idx')">${key} = #{val}</if>
+					<if test="val != null and !val.equals('') and !key.equals('al_idx')">${key} = #{val}</if>
 				</trim>
 			</foreach>
 		</trim>
-		where al_idx = ${al_idx}
+		where al_idx in (
+			<trim prefixOverrides=",">
+				<foreach item="val" index="key" collection="map">
+					<trim prefix=",">
+						<if test="val != null and !val.equals('') and key.equals('al_idx')">${val}</if>
+					</trim>
+				</foreach>
+			</trim>
+		)
 	</update>
 
-	<!-- 23.02.16 나슬기: 알람 삭제하는 쿼리문 / 받는값: 알람 번호 -->
+	<!-- 23.02.16 나슬기: 알람 삭제하는 쿼리문 / 받는값: 알람 번호
+		23.02.17 나슬기: 여러개 삭제를 고려하여 where 조건 ..in()으로 수정 -->
 	<delete id="de_al">
-		delete alarm where al_idx = ${al_idx}
+		update alarm
+		set al_del_gb = 'Y'
+		where al_idx in (
+			<trim prefixOverrides=",">
+				<foreach item="val" index="key" collection="map">
+					<trim prefix=",">
+						<if test="val != null and !val.equals('')">${val}</if>
+					</trim>
+				</foreach>
+			</trim>
+		)
 	</delete>
 </mapper>
