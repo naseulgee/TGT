@@ -79,8 +79,17 @@
                             <label for="MEM_EMAIL"
                                    class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">이메일</label>
                             <div class="mt-1 sm:mt-0">
-                                <input type="email" name="MEM_EMAIL" id="MEM_EMAIL" maxlength="100" autocomplete="email" placeholder="example@naver.com"
-                                       class="block w-full max-w-lg rounded-md shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:max-w-xs sm:text-sm">
+                                <c:choose>
+                                    <c:when test="${empty socialEmail}">
+                                        <input type="email" name="MEM_EMAIL" id="MEM_EMAIL" maxlength="100" autocomplete="email" placeholder="example@naver.com"
+                                               class="block w-full max-w-lg rounded-md shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:max-w-xs sm:text-sm">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="email" name="MEM_EMAIL" id="MEM_EMAIL" maxlength="100" autocomplete="email" placeholder="example@naver.com"
+                                               class="block w-full max-w-lg rounded-md shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:max-w-xs sm:text-sm" value="${socialEmail}" readonly>
+                                    </c:otherwise>
+                                </c:choose>
+
                                 <p class="mt-2 text-sm text-red-600" id="email-error"></p>
                             </div>
                             <input type="button" id="checkEmail" onclick="emailValidate()" value="중복확인"

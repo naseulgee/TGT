@@ -2,6 +2,7 @@ package paw.togaether.member.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,9 +28,7 @@ public class memberController {
     @Resource(name = "memberService")
     private MemberService memberService;
 
-    /**
-     * 마이페이지-나의정보
-     */
+    /** 마이페이지-나의정보 */
     @GetMapping(value = "/mypage/myInfo")
     public ModelAndView myInfo(CommandMap commandMap, HttpSession session) throws Exception {
         ModelAndView mv = new ModelAndView("/mypage/member/myInfo");
@@ -43,9 +42,7 @@ public class memberController {
         return mv;
     }
 
-    /**
-     * 회원정보 수정페이지
-     */
+    /** 회원정보 수정페이지 */
     @GetMapping(value = "/mypage/modifyMyInfo")
     public ModelAndView modifyMyInfo(Map<String, Object> commandMap, HttpSession session) throws Exception {
         ModelAndView mv = new ModelAndView("/mypage/member/modifyMyInfo");
@@ -63,6 +60,17 @@ public class memberController {
 
     }
 
+    /** 회원정보 수정 */
+    @PostMapping(value = "/mypage/modifyMyInfo")
+    public ModelAndView postModifyMyInfo(CommandMap commandMap, HttpSession session) throws Exception {
+        ModelAndView mv = new ModelAndView("/mypage/member/newInfo");
+
+        memberService.modifyMyInfo(commandMap.getMap(), session);
+
+        return mv;
+    }
+
+    /** 사진변경 */
     @PostMapping(value = "/mypage/changePhoto")
     public ModelAndView changePhoto(CommandMap commandMap, HttpSession session, MultipartFile[] uploadFile) throws Exception {
         ModelAndView mv = new ModelAndView("jsonView");
@@ -72,6 +80,7 @@ public class memberController {
         return mv;
     }
 
+    /** 사진삭제 */
     @DeleteMapping(value = "/mypage/deletePhoto")
     public ModelAndView deletePhoto(CommandMap commandMap) throws Exception {
         ModelAndView mv = new ModelAndView("jsonView");
@@ -79,6 +88,17 @@ public class memberController {
         mv.setStatus(HttpStatus.OK);
 
         return mv;
+    }
+
+    /** 회원탈퇴 */
+    @DeleteMapping(value = "/mypage/deleteMyInfo")
+    public ResponseEntity<String> deleteMyInfo(CommandMap commandMap, HttpSession session) throws Exception {
+
+        memberService.deleteMyInfo(commandMap.getMap(), session);
+
+        session.invalidate();
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 

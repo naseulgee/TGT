@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminMember">
+
+    <select id="getTotalCountMember" resultType="int">
+        SELECT count(*) FROM MEMBERS
+    </select>
+
+    <select id="getTotalCountDogs" resultType="int">
+        SELECT count(*) FROM BREED
+    </select>
+
+    <select id="getInfoOfMembers" parameterType="hashmap" resultType="hashmap">
+        SELECT *
+        FROM MEMBERS a
+        LEFT JOIN BREED b ON a.MEM_BR_IDX = b.BR_IDX
+        <where>
+            <if test="id != null and !id.equals('')">
+                AND MEM_ID LIKE '%'||#{id}||'%'
+            </if>
+            <if test="dogname != null and !dogname.equals('')">
+                AND MEM_DOG_NAME LIKE '%'||#{dogname}||'%'
+            </if>
+        </where>
+    OFFSET #{startIndex} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+</select>
+
+    <select id="infoForModify" parameterType="hashmap" resultType="hashmap">
+    <![CDATA[
+        SELECT *
+        FROM MEMBERS a
+                 LEFT JOIN BREED b
+                           ON a.MEM_BR_IDX = b.BR_IDX
+                 LEFT JOIN PHOTO c
+                           ON a.MEM_ID = c.PH_MEM_ID and c.PH_DEL_GB = 'N'
+        WHERE a.MEM_ID = #{MEM_ID}
+
+        ]]>
+ </select>
+    <select id="infoForModifyDog" parameterType="hashmap" resultType="hashmap">
+    <![CDATA[
+        SELECT *
+        FROM BREED a
+        WHERE a.BR_IDX = #{BR_IDX}
+
+        ]]>
+ </select>
+
+    <update id="modifyMemberInfo" parameterType="hashmap">
+      <![CDATA[
+        UPDATE MEMBERS
+        SET
+            MEM_CALL = #{MEM_CALL},
+            MEM_ADDR = #{MEM_ADDR},
+            MEM_POSTCODE = #{postcode},
+            MEM_MIDDLEADDR = #{address},
+            MEM_DETAILADDR = #{detailAddress},
+            MEM_BR_IDX = #{KINDOFDOG},
+            MEM_DOG_NAME = #{MEM_DOG_NAME},
+            MEM_BR_NAME = #{MEM_BR_NAME},
+            MEM_DOG_NUM = #{MEM_DOG_NUM},
+            MEM_DOG_WEIGHT = #{MEM_DOG_WEIGHT},
+            MEM_DOG_ETC = #{MEM_DOG_ETC},
+            MEM_MOD_DATE = sysdate
+        WHERE MEM_ID = #{MEM_ID}
+        ]]>
+
+ </update>
+    <update id="modifyDogname" parameterType="hashmap">
+      <![CDATA[
+        UPDATE BREED
+        SET
+            BR_NAME = #{BR_NAME}
+        WHERE BR_IDX = #{BR_IDX}
+        ]]>
+
+ </update>
+    <insert id="addDogname" parameterType="HashMap" >
+   <![CDATA[
+        INSERT INTO
+            BREED(
+                  BR_IDX,
+                  BR_NAME
+        )
+        VALUES(
+                seq_breed.nextval,
+                  #{BR_NAME}
+                 )
+        ]]>
+ </insert>
+
+    <select id="selectListOfDogPaging" parameterType="hashmap" resultType="hashmap">
+     <![CDATA[
+        SELECT *
+        FROM BREED b
+        ORDER BY BR_IDX ASC
+        OFFSET #{startIndex} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+        ]]>
+ </select>
+
+</mapper>

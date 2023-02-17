@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import paw.togaether.common.domain.CommandMap;
@@ -24,8 +24,8 @@ public class JoinController {
 	private JoinService joinService;
 
 
-	/** 회원가입 */
-	@RequestMapping(value="/member/openMemberJoin")
+	/** 회원가입 페이지*/
+	@GetMapping(value="/member/openMemberJoin")
 	public ModelAndView openMemberJoin(Map<String,Object> commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView("/member/memberJoin");
 
@@ -37,7 +37,8 @@ public class JoinController {
 
 	}
 
-	@RequestMapping(value="/member/joinMember")
+	/** 회원가입 */
+	@PostMapping(value="/member/joinMember")
 	public ResponseEntity<String> joinMember(CommandMap commandMap, HttpSession session, MultipartFile[] uploadFile) throws Exception{
 
 		joinService.joinMember(commandMap.getMap(), session, uploadFile);

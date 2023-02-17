@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ include file="/WEB-INF/include/user-header.jspf" %>
 <script src="/resources/js/common/daum_address.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
@@ -10,12 +12,12 @@
 </script>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
-<!-- 회원가입 -->
+<!-- 회원정보 수정페이지 -->
 <main class="layoutCenter">
     <div class="container mx-auto mt-24 sm:px-6 lg:px-8">
         <div class="space-y-8 divide-y divide-gray-200 max-w-screen-lg">
-<%--                    <form class="space-y-8 divide-y divide-gray-200 max-w-screen-lg" action="" method="POST"--%>
-<%--                          onsubmit="return checkForm()">--%>
+                    <form class="space-y-8 divide-y divide-gray-200 max-w-screen-lg" action="/mypage/modifyMyInfo.paw" method="POST"
+                          onsubmit="return checkForm()">
             <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                 <div class="space-y-6 sm:space-y-5">
                     <div>
@@ -80,14 +82,14 @@
 
                         <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5 max-w-screen-lg">
                             <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">주소</label>
-                            <input type="text" id="postcode" placeholder="우편번호"
-                                   class="block w-full max-w-lg rounded-md shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:max-w-xs sm:text-sm">
+                            <input type="text" id="postcode" name="postcode" placeholder="우편번호"
+                                   class="block w-full max-w-lg rounded-md shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:max-w-xs sm:text-sm" value="${MEM_POSTCODE}">
                             <input type="button" onclick="findPostcode()" value="우편번호 찾기"
                                    class="inline-flex justify-center rounded-md border border-transparent bg-[#f0b1aa] py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-[#f08080] focus:outline-none focus:ring-2 focus:ring-[#f08080] focus:ring-offset-2 mr-auto"><br>
                             <input type="text" id="address" name="address" placeholder="주소"
-                                   class="block w-full max-w-lg rounded-md shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:max-w-xs sm:text-sm col-span-2"><br>
+                                   class="block w-full max-w-lg rounded-md shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:max-w-xs sm:text-sm col-span-2" value="${MEM_MIDDLEADDR}"><br>
                             <input type="text" id="detailAddress" name="detailAddress" placeholder="상세주소"
-                                   class="block w-full max-w-lg rounded-md shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:max-w-xs sm:text-sm">
+                                   class="block w-full max-w-lg rounded-md shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:max-w-xs sm:text-sm" value="${MEM_DETAILADDR}">
                             <input type="hidden" id="extra" placeholder="참고항목">
 
                         </div>
@@ -101,7 +103,7 @@
                                 <p class="mt-2 text-sm text-red-600" id="dogname-error"></p>
                             </div>
                         </div>
-
+                        <input type="hidden" id="MEM_BR_IDX" name="MEM_BR_IDX" value="${MEM_BR_IDX}">
                         <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
                             <label for="KINDOFDOG"
                                    class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">견종명</label>
@@ -111,7 +113,7 @@
                                             onchange="showOrNot(this)"
                                             class="block w-full max-w-lg rounded-md shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:max-w-xs sm:text-sm">
                                         <c:forEach var="row" items="${dogList}" varStatus="i">
-                                            <option value="${row.BR_IDX}">${row.BR_NAME}</option>
+                                            <option value="${row.BR_IDX}" <c:if test ="${MEM_BR_IDX eq row.BR_IDX}">selected="selected"</c:if>>${row.BR_NAME}</option>
                                         </c:forEach>
                                     </select>
                                 </c:if>
@@ -124,7 +126,7 @@
                             <div class="mt-1 sm:col-span-2 sm:mt-0">
                                 <input type="text" name="MEM_BR_NAME" id="MEM_BR_NAME" maxlength="15"
                                        placeholder="견종명을 입력하세요."
-                                       class="block w-full max-w-lg rounded-md shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:max-w-xs sm:text-sm">
+                                       class="block w-full max-w-lg rounded-md shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:max-w-xs sm:text-sm" value="${MEM_BR_NAME}">
                             </div>
                         </div>
 
@@ -154,7 +156,7 @@
                                 특이사항</label>
                             <div class="mt-1 sm:col-span-2 sm:mt-0">
                                 <textarea id="MEM_DOG_ETC" name="MEM_DOG_ETC" maxlength="85" rows="3"
-                                          class="block w-full max-w-lg rounded-md shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:text-sm"></textarea>
+                                          class="block w-full max-w-lg rounded-md shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:text-sm">${MEM_DOG_ETC}</textarea>
                             </div>
                         </div>
                     </div>
@@ -165,7 +167,7 @@
                                     class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#f08080] focus:ring-offset-2"
                                     onclick="location.href='/mypage/myInfo.paw'">취소
                             </button>
-                            <button type="button" id="uploadBtn" name="uploadBtn"
+                            <button type="submit" id="uploadBtn" name="uploadBtn"
                                     class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-[#f0b1aa] py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-[#f08080] focus:outline-none focus:ring-2 focus:ring-[#f08080] focus:ring-offset-2">
                                 회원정보수정
                             </button>
@@ -189,7 +191,6 @@
                 document.getElementById("MEM_BR_NAME").value = "";
             }
         }
-
 
         /** 폼 검증하는 함수 */
         function checkForm() {
@@ -252,6 +253,8 @@
 
 
         }
+
+
 
     </script>
 </main>

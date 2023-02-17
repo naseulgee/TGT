@@ -3,6 +3,7 @@
 
 <mapper namespace="member">
 
+    <!-- 회원정보 수정페이지 - 회원정보 불러오기 -->
 <select id="selectMyInfo" parameterType="hashmap" resultType="hashmap">
      <![CDATA[
         SELECT *
@@ -15,6 +16,38 @@
 
         ]]>
  </select>
+
+ <update id="modifyMyInfo" parameterType="hashmap">
+      <![CDATA[
+        UPDATE MEMBERS
+        SET
+        MEM_CALL = #{MEM_CALL},
+        MEM_ADDR = #{MEM_ADDR},
+        MEM_POSTCODE = #{postcode},
+        MEM_MIDDLEADDR = #{address},
+        MEM_DETAILADDR = #{detailAddress},
+        MEM_BR_IDX = #{KINDOFDOG},
+        MEM_DOG_NAME = #{MEM_DOG_NAME},
+        MEM_BR_NAME = #{MEM_BR_NAME},
+        MEM_DOG_NUM = #{MEM_DOG_NUM},
+        MEM_DOG_WEIGHT = #{MEM_DOG_WEIGHT},
+        MEM_DOG_ETC = #{MEM_DOG_ETC},
+        MEM_MOD_DATE = sysdate
+        WHERE MEM_ID = #{MEM_ID}
+        ]]>
+
+ </update>
+
+<update id="deleteMyInfo" parameterType="hashmap">
+      <![CDATA[
+        UPDATE MEMBERS
+        SET
+        MEM_DEL_GB = 'Y'
+        WHERE MEM_ID = #{MEM_ID}
+        ]]>
+
+ </update>
+
 
 
 </mapper>

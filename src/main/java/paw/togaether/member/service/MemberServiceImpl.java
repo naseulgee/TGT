@@ -1,6 +1,7 @@
 package paw.togaether.member.service;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import paw.togaether.common.photo.dao.PhotoDAO;
@@ -57,6 +58,7 @@ public class MemberServiceImpl implements MemberService {
         return infoOfUser;
     }
 
+    /** 사진 변경 */
     @Override
     public void changePhoto(Map<String, Object> map, HttpSession session, MultipartFile[] uploadFile) throws Exception {
 
@@ -68,9 +70,41 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
+    /** 사진 삭제 */
     @Override
     public void deletePhoto(Map<String, Object> map) throws Exception {
 
         photoDAO.deletePhoto(map);
+    }
+
+    /** 회원정보 수정 */
+    @Override
+    public void modifyMyInfo(Map<String,Object> map, HttpSession session) throws Exception {
+
+        //비밀번호 암호화
+        String originPassword = (String)map.get("MEM_PW");
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String securePassword = encoder.encode(originPassword);
+        map.put("MEM_PW", securePassword);
+        //주소와 상세주소 합쳐서 db에 저장
+        String address = (String)map.get("address");
+        String detailAddress = (String)map.get("detailAddress");
+        String MEM_ADDR = String.format("%5s%5s", address, detailAddress);
+        map.put("MEM_ADDR", MEM_ADDR);
+
+        String MEM_ID = (String)session.getAttribute("mem_id");
+        map.put("MEM_ID", MEM_ID);
+
+        memberDAO.modifyMyInfo(map, session);
+    }
+
+    /** 회원탈퇴 */
+    @Override
+    public void deleteMyInfo(Map<String, Object> map, HttpSession session) throws Exception {
+        String MEM_ID = (String)session.getAttribute("mem_id");
+        map.put("MEM_ID", MEM_ID);
+
+        memberDAO.deleteMyInfo(map,session);
+
     }
 }

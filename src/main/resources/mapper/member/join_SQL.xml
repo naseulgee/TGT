@@ -23,7 +23,10 @@
               MEM_DOG_ETC,
               MEM_REG_DATE,
               MEM_MOD_DATE,
-              MEM_DEL_GB)
+              MEM_DEL_GB,
+              MEM_POSTCODE,
+              MEM_MIDDLEADDR,
+              MEM_DETAILADDR )
           VALUES(
               #{MEM_ID},
               #{MEM_PW},
@@ -40,7 +43,10 @@
               #{MEM_DOG_ETC},
               sysdate,
               sysdate,
-              'N')
+              'N',
+              #{postcode},
+              #{address},
+              #{detailAddress} )
    ]]>
  </insert>
 
@@ -54,7 +60,7 @@
     <!-- 셀렉트박스에 견종명 불러오기 -->
 <select id="selectListOfDog" parameterType="hashmap" resultType="hashmap">
      <![CDATA[
-        SELECT * FROM BREED WHERE ROWNUM <= 10
+        SELECT * FROM BREED WHERE ROWNUM <= 100
     ]]>
  </select>
 

@@ -15,6 +15,7 @@
 </style>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
+<!-- 회원 - 반려견사진변경, 회원정보 출력 페이지 -->
 <main class="layoutCenter">
 	<%@ include file="/WEB-INF/include/nav_mypage.jspf"%>
 	<div class="main_wrap">
@@ -69,19 +70,17 @@
 			</tr>
 			<tr>
 				<th>강아지 특이사항</th>
-				<td>${MEM_ETC}</td>
+				<td>${MEM_DOG_ETC}</td>
 			</tr>
 			<tr style="border: none">
 				<th></th>
 				<td>
 					<a class="btn submit" href="/mypage/modifyMyInfo.paw" style="float: right; margin-left: 8px">회원정보수정</a>
-					<a class="btn submit" href="#" style="float: right;">회원탈퇴</a>
+					<a class="btn submit" href="javascript:void(0)" onclick="goDelete()" style="float: right;">회원탈퇴</a>
 				</td>
 			</tr>
 		</table>
 	</div>
-	<%--	<a class="btn submit" href="/mypage/modifyMyInfo.paw" style="float: right;">회원정보수정</a>--%>
-	<%--	<a class="btn submit" href="#" style="float: right;">회원탈퇴</a>--%>
 </main><!-- //main 종료 -->
 
 <script>
@@ -111,6 +110,35 @@
 			window.location.reload()
 		})
 	}
+
+	function goDelete() {
+		if(confirm("회원탈퇴시 탈퇴한 아이디로는 재가입이 불가합니다. 정말 탈퇴하시겠습니까?") == true) {
+			const MEM_ID = '<%=(String)session.getAttribute("mem_id")%>'
+			const formData = new FormData();
+			formData.append("MEM_ID", MEM_ID)
+			fetch("/mypage/deleteMyInfo", {
+				method : "DELETE",
+				body : formData
+			}).then((response) => {
+				if(response.ok){
+					window.location.assign("/member/login");
+				}
+
+			})
+		}
+	}
+
+
+
+	// function goPost() {
+	// 	if(confirm("회원탈퇴시 탈퇴한 아이디로는 재가입이 불가합니다. 정말 탈퇴하시겠습니까?") == true) {
+	// 		const goPost = document.createElement('form'); //html form element를 생성 후 전송
+	// 		goPost.setAttribute('method', 'post');
+	// 		goPost.setAttribute('action', '/mypage/deleteMyInfo');
+	// 		document.body.appendChild(goPost);
+	// 		goPost.submit();
+	// 	}
+	// }
 
 </script>
 

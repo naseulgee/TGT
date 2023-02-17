@@ -36,6 +36,7 @@
             MEM_EMAIL = #{MEM_EMAIL}
     </update>
 
+    <!-- 이메일 찾기 -->
     <select id="findEmail" parameterType="hashmap" resultType="hashmap">
      <![CDATA[
         SELECT * FROM MEMBERS WHERE MEM_EMAIL =  #{MEM_EMAIL}
