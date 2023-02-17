@@ -35,6 +35,11 @@ import paw.togaether.chat.dto.Message;
 import paw.togaether.chat.service.ChatService;
 import paw.togaether.common.domain.CommandMap;
 
+
+/**
+ * 23.02.10 이소영 체팅화면 구현 메소드 작성
+ * 23.02.15 이소영 체팅화면 참가 인원 출력 메소드 구현
+ * */
 @Log4j
 @Controller
 public class ChatController {
@@ -123,40 +128,21 @@ public class ChatController {
 		return null;
 	}
 
-	// 닉네임 생성
-//	public void createNickname(String nickname) throws Exception {
-//		addCookie("nickname", nickname);
-//	
-//	}
-	@SuppressWarnings({ "null", "unused" })
-	public static void createNickname(String nickname, HttpSession session) throws Exception {
-		
-		nickname = (String) session.getAttribute("mem_id");
-		System.out.println("###################### 닉만들기 ##############" + nickname);
-		
-		addCookie("nickname", nickname);
-		session.setAttribute("nickname", nickname);
-	}
 
 	// 방 입장하기
 	public boolean enterChattingRoom(ChattingRoom chattingRoom, String nickname, HttpSession session) throws Exception {
-//		createNickname(nickname, session);
 		nickname = (String) session.getAttribute("mem_id");
 		addCookie("nickname", nickname);
-
-//		List<String> users = chattingRoom.getUsers();
 		
 		commandMap.put("CR_IDX", chattingRoom.getRoomNumber());
 		commandMap.put("mem_id", nickname);
 		
 
 		int result = chatService.chatWithCheck(commandMap.getMap());
-		System.out.println("#######################" + result + "######################");
-		System.out.println("####################### 닉네임 : " + nickname + " ######################");
+		System.out.println("************** enterChattingRoom 메소드 실행 **************");
 
 		if (result == 0) {
 			chatService.pulsPeople(commandMap.getMap());
-//			users.add(users.size(), nickname);
 		}
 		
 		addCookie("roomNumber", chattingRoom.getRoomNumber());
@@ -169,10 +155,6 @@ public class ChatController {
 
 	// ----------------------------------------------------
 
-	// 컨트롤러
-
-	// TODO Auto-generated method stub
-
 	// 메인화면
 	@GetMapping("/chat")
 	public ModelAndView main(HttpSession session) throws Exception {
@@ -180,7 +162,6 @@ public class ChatController {
 		
 		commandMap.put("mem_id", session.getAttribute("mem_id"));
 		
-//		List<Map<String, Object>> userList = chatting
 		List<Map<String, Object>> chatWihtList = chatService.chatWihtList(commandMap.getMap());
 		List<Map<String, Object>> chatMessageList = chatService.chatMessageList(commandMap.getMap());
 		
@@ -201,6 +182,8 @@ public class ChatController {
 	public ResponseEntity<?> chattingRoom(String roomName, String nickname, String roomNumber, HttpSession session) throws Exception {
 		nickname = (String) session.getAttribute("mem_id");
 		addCookie("nickname", nickname);
+		addCookie("roomNumber", roomNumber);
+
 		
 		// 방을 만들고 채팅방목록에 추가
 		ChattingRoom chattingRoom = ChattingRoom.builder()
@@ -214,21 +197,14 @@ public class ChatController {
 		commandMap.put("CR_JOIN_PEOPLE", 0);
 		commandMap.put("mem_id", session.getAttribute("mem_id"));
 
-		System.out.println("***************************" + commandMap.get("CR_IDX") + "***************************");
-		System.out.println("***************************" + chattingRoom.getUsers() + "***************************");
-		System.out.println("***************************" + session.getAttribute("mem_id") + "***************************");
+		System.out.println("************** chattingRoom 메소드 실행 **************");
 
 		int result = chatService.chatRoomCheck(commandMap.getMap());
 
 		if (result == 0) {
 			chattingRoomList.add(chattingRoom);
 			chatService.chattingRoom(commandMap.getMap());
-		} else {
-			System.out.println("*************************** 방 있음 ***************************");
-		}
-
-		System.out.println("***************************" + commandMap.get("CR_IDX") + "***************************");
-		System.out.println("***************************" + session.getAttribute("mem_id") + "***************************");
+		} 
 
 		enterChattingRoom(chattingRoom, nickname, session);
 		
@@ -236,7 +212,7 @@ public class ChatController {
 	}
 
 	// 방 들어가기
-/*	@GetMapping("/chattingRoom-enter")
+	@GetMapping("/chattingRoom-enter")
 	public ResponseEntity<?> EnterChattingRoom(String roomNumber, String nickname, HttpSession session) throws Exception {
 		nickname = (String) session.getAttribute("mem_id");
 		addCookie("nickname", nickname);
@@ -253,10 +229,43 @@ public class ChatController {
 			return new ResponseEntity<>(chattingRoom, HttpStatus.OK);
 		}
 	}
-*/
+
+	
+	// 참가 중이었던 대화방
+	@GetMapping("/chattingRoom")
+	public ResponseEntity<?> chattingRoom() throws Exception {
+		// 쿠키에 닉네임과 방번호가 있다면 대화중이던 방이 있던것
+		Map<String, String> map = findCookie();
+
+		if (map == null) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+
+		String roomNumber = map.get("roomNumber");
+		String nickname = map.get("nickname");
+
+		ChattingRoom chattingRoom = findRoom(roomNumber);
+
+		if (chattingRoom == null) {
+			deleteCookie();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} else {
+			Map<String, Object> map2 = new HashMap<>();
+			List<String> users = chattingRoom.getUsers();
+			
+			if(!users.contains(nickname))
+			users.add(users.size(), nickname);
+			
+			map2.put("chattingRoom", chattingRoom);
+			map2.put("myNickname", nickname);
+
+			return new ResponseEntity<>(map2, HttpStatus.OK);
+		}
+	}
+	
 	// 채팅방 퇴장
 	@PatchMapping("/chattingRoom-exit")
-	public ResponseEntity<?> ExitChattingRoom() throws Exception {
+	public ResponseEntity<?> exitChattingRoom() throws Exception {
 
 		Map<String, String> map = findCookie();
 
@@ -293,70 +302,32 @@ public class ChatController {
 		return new ResponseEntity<>(chattingRoom, HttpStatus.OK);
 	}
 
-	// 참가 중이었던 대화방
-	@GetMapping("/chattingRoom")
-	public ResponseEntity<?> chattingRoom() throws Exception {
-		// 쿠키에 닉네임과 방번호가 있다면 대화중이던 방이 있던것
+
+	// 채팅방 퇴장
+	@PatchMapping("/chattingRoom-back")
+	public ResponseEntity<?> backChattingRoom() throws Exception {
+
 		Map<String, String> map = findCookie();
 
 		if (map == null) {
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
 		String roomNumber = map.get("roomNumber");
 		String nickname = map.get("nickname");
 
+		// 방목록에서 방번호에 맞는 유저목록 가져오기
 		ChattingRoom chattingRoom = findRoom(roomNumber);
+		List<String> users = chattingRoom.getUsers();
 
-		if (chattingRoom == null) {
-			deleteCookie();
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		} else {
-			Map<String, Object> map2 = new HashMap<>();
-			List<String> users = chattingRoom.getUsers();
-			
-			if(!users.contains(nickname))
-			users.add(users.size(), nickname);
-			
-			map2.put("chattingRoom", chattingRoom);
-			map2.put("myNickname", nickname);
-
-			return new ResponseEntity<>(map2, HttpStatus.OK);
+		// 닉네임 삭제
+		users.remove(nickname);
+		
+		// 채팅방 남은 인원 조회 후 0명일 경우 체팅방 삭제
+		int result = chatService.chatWithCountCheck(commandMap.getMap());
+		
+		if (result <= 0) {
 		}
+		return new ResponseEntity<>(chattingRoom, HttpStatus.OK);
 	}
-
-	
-	/** ***************** 메세지 컨트롤러 ******************/
-
-	// 여기서 메세지가 오면 방목록 업데이트
-	@MessageMapping("/socket/roomList")
-	@SendTo("/topic/roomList")
-	public String roomList() throws Exception {
-		return "/chat";
-	}
-
-	// 채팅방에서 메세지 보내기
-	@MessageMapping("/socket/sendMessage/{roomNumber}")
-	@SendTo("/topic/message/{roomNumber}")
-	public Message sendMessage(@DestinationVariable String roomNumber, Message message) throws Exception {
-
-		log.info(message);
-		
-		commandMap.put("CH_CR_IDX", roomNumber);
-		commandMap.put("CH_MESSAGE_TYPE", "CHAT");
-		commandMap.put("CH_SENDER", message.getNickname());
-		commandMap.put("CH_MESSAGE", message.getMessage());
-		
-		chatService.insertMessage(commandMap.getMap());
-		
-		return message;
-	}
-
-	// 채팅방에 입장 퇴장 메세지 보내기
-	@MessageMapping("/socket/notification/{roomNumber}")
-	@SendTo("/topic/notification/{roomNumber}")
-	public Map<String, Object> notification(@DestinationVariable String roomNumber, Map<String, Object> chattingRoom) {
-		return chattingRoom;
-	}
-
 }

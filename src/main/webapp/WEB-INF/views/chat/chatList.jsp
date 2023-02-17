@@ -3,13 +3,13 @@
  
 <link href="resources/css/chat/chat.css" rel="stylesheet">
 
-<!-- <main class="layoutCenter"> -->
+<main class="layoutCenter">
 	<!-- 채팅방 입장 -->
     <div class="chat">
-   		<div>
+   		<div class = "chat_zone">
    			<div class="chat_body">
 		        <h2 class="chat_title">1번방</h2>		
-		        <button class="chat_back">◀</button>
+		        <!-- <button class="chat_back">◀</button> -->
 		
 		        <ul class="chat_list">
 		            <li>
@@ -25,29 +25,31 @@
 		            </div>
 		            
 		            <div class="chat_button_area">
-		                <button>전송</button>
+		                <button class="btn submit">전송</button>
 		            </div>
 		        </div>
 	        </div>
         
 	        <div class="chat_users">
-	        	<h3>
+	        	<h2>
 	        		참가인원
 	        		<span class="user"></span>
-	        	</h3>
+	        	</h2>
 	        	<div class="chat_nickname">
 	        		<ul>
 	        			<li>
 	       				</li>
 	        		</ul>
 	        	</div>
-	        	<br><input type="button" class="chat_exit btn" value="퇴장하기"/>
+	        	<br><input type="button" class="chat_exit btn submit" value="퇴장하기"/>
+	        	<img alt="chat" src="resources/image/chat/popo.jpg" width="100%">
 	        </div>	
    		</div>
    		<input type="hidden" id="mem_id" name="mem_id" value="{mem_id}">
     </div>
     <!-- 채팅방 입장 -->
-    
+</main>
+
     <!-- sock js -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.2/sockjs.min.js"></script>
 	<!-- STOMP -->

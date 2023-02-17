@@ -28,6 +28,14 @@
 		]]>
 	</delete>
 	
+	<delete id="cleanChatWith" parameterType="hashmap">
+		<![CDATA[
+			DELETE 
+			FROM CHAT_WITH 
+			WHERE CW_CR_IDX = #{CR_IDX}
+		]]>
+	</delete>
+	
 	<!-- 채팅방 입장 : 인원수 +1 -->
 	<update id="puls_CR_PEOPLE" parameterType="hashmap">
 		<![CDATA[
@@ -79,6 +87,7 @@
 		<![CDATA[
 			INSERT INTO CHAT
 			(
+				CH_IDX,
 				CH_CR_IDX,
 				CH_MESSAGE_TYPE,
 				CH_SENDER,
@@ -86,6 +95,7 @@
 			)
 			VALUES
 			(
+				SEQ_CHAT.NEXTVAL,
 				#{CH_CR_IDX},
 				#{CH_MESSAGE_TYPE},
 				#{CH_SENDER}, 
