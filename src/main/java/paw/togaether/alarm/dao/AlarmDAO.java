@@ -39,6 +39,6 @@ public class AlarmDAO extends AbstractDAO {
 	
 	/** 23.02.17 나슬기: 알람 삭제 메소드 */
 	public int alarmDelete(Map<String, Object> map) throws Exception{
-		return Integer.parseInt(delete("alarm.de_al", map).toString());
+		return Integer.parseInt(update("alarm.de_al", map).toString());
 	}
 }
