@@ -18,8 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import paw.togaether.chat.service.ChatService;
 import paw.togaether.common.domain.CommandMap;
 import paw.togaether.together.service.TogetherService;
+	/**
+	 *	23.02.17 투게더 게스글 마감/ 삭제시 체팅 방 삭제 기능 추가
+	 */
 
 @Controller
 public class TogetherController {
@@ -28,6 +32,10 @@ public class TogetherController {
 	//togetherService의 빈 객체에 의존
 	@Resource(name="togetherService")
 	private TogetherService togetherService;
+	
+	// 23.02.17 이소영 chatService 연결
+	@Resource(name = "chatService")
+	private ChatService chatService;
 	
 	/* 23.02.02 박선영 게시글리스트 페이징화면출력 */
 	@RequestMapping(value="/together/openList")
@@ -229,6 +237,7 @@ public class TogetherController {
 		System.out.println(commandMap.get("TO_IDX"));
 		
 		togetherService.togetherDel(commandMap.getMap(),session);
+		chatService.deleteChatRoom(commandMap.getMap());
 		
 		return mv;
 	}

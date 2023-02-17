@@ -17,6 +17,10 @@ public class ChatDAO extends AbstractDAO {
 	public void deleteChatRoom(Map<String, Object> map) throws Exception {
 		delete("chat.deleteChatRoom", map);
 	}
+	
+	public void cleanChatWith(Map<String, Object> map) throws Exception {
+		delete("chat.cleanChatWith", map);
+	}
 
 	public void puls_CR_PEOPLE(Map<String, Object> map) throws Exception {
 		update("chat.puls_CR_PEOPLE", map);
@@ -63,7 +67,5 @@ public class ChatDAO extends AbstractDAO {
 		int result = selectOneInt("chat.chatWithCountCheck", map);
 		return result;
 	}
-
-	
 
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import paw.togaether.chat.service.ChatService;
 import paw.togaether.common.domain.CommandMap;
 import paw.togaether.together.service.TogetherAdminService;
 
@@ -24,6 +25,10 @@ public class AdminTogeController {
 	
 	@Resource(name="togetherAdminService")
 	private TogetherAdminService togetherAdminService;
+	
+	// 23.02.17 이소영 chatService 연결
+	@Resource(name = "chatService")
+	private ChatService chatService;
 	
 	/* 23.02.15 박선영 게시글리스트 페이징화면출력 */
 	@RequestMapping(value="/admin/together/list")
@@ -171,6 +176,7 @@ public class AdminTogeController {
 		ModelAndView mv = new ModelAndView("redirect:/admin/together/list");
 		
 		togetherAdminService.adminTogeDel(commandMap.getMap());
+		chatService.deleteChatRoom(commandMap.getMap());
 		
 		return mv;
 	}

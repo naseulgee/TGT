@@ -184,8 +184,6 @@ $("#creatChat").click(function() {
 		}).then(function(){
 			location.href = "/chat.paw";
 			enterChatingRoom(roomNumber)
-		}).fail(function() {
-			alert("에러가 발생했습니다");
 		})
 });
 
@@ -194,32 +192,6 @@ const initRoom = function(room, nickname) {
 	stomp.send("/socket/roomList");
 
 }
-
-const enterChatingRoom = function(roomNumber) {
-	const data = {
-			"roomNumber" : ${TO_IDX},
-			"nickname" : ${mem_id}
-		}
-	$.ajax({
-			url: "/chattingRoom-enter",
-			type: "GET",
-			data: data,
-		})
-		.then(function(room){
-			initRoom(room, nickname);
-			
-			// 채팅방 참가 메세지
-			room.message = nickname + "님이 참가하셨습니다";
-			stomp.send(
-				"/socket/notification/" + roomNumber, {}, 
-				JSON.stringify(room));
-			
-		})
-		.fail(function(result){
-			errorMSG(result);
-		})
-	}
-
 </script>
 
 <%@ include file="/WEB-INF/include/common-footer.jspf" %>

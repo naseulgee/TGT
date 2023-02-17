@@ -26,7 +26,7 @@ const chattingRoomList = function(){
 		listHtml(result)
 	})
 	.fail(function(){
-		alert("에러가 발생했습니다");
+		alert("채팅방 목록을 불러오는 중 에러가 발생했습니다");
 	})
 }
  
@@ -285,33 +285,30 @@ $(".chat_input_area textarea").keypress(function(event) {
 	
 // 닉네임 만들고 채팅방 들어가기
 const enterChattingRoom = function(roomNumber) {
-	if(nickname) {												
-		const data = {
-			roomNumber : roomNumber,
-			nickname : nickname
-		}
-		
-		$.ajax({
-			url: "/chattingRoom-enter",
-			type: "GET",
-			data: data,
-		})
-		.then(function(room){
-			initRoom(room, nickname);
-			alert("initRoom")
-			
-			// 채팅방 참가 메세지
-			room.message = nickname + "님이 참가하셨습니다";
-			stomp.send(
-				"/socket/notification/" + roomNumber, {}, 
-				JSON.stringify(room));
-			
-		})
-		.fail(function(result){
-			alert("채팅방 들어가기 중 오류 발생")
-			location.href = "/together/openList.paw";
-		})
+	const data = {
+		roomNumber : roomNumber,
+		nickname : info.getNickname
 	}
+	$.ajax({
+		url: "/chattingRoom-enter",
+		type: "GET",
+		data: data,
+	})
+	.then(function(room){
+		initRoom(room, nickname);
+		alert("initRoom")
+		
+		// 채팅방 참가 메세지
+		room.message = nickname + "님이 참가하셨습니다";
+		stomp.send(
+			"/socket/notification/" + roomNumber, {}, 
+			JSON.stringify(room));
+		
+	})
+	.fail(function(result){
+		alert("채팅방 들어가기 중 오류 발생")
+		location.href = "/together/openList.paw";
+	})
 }
 
 	
@@ -343,7 +340,7 @@ const createRoom = function a (roomName) {
  
  
  
- 
+/*
 $(".new_chat").click(function(){
 	swal({
 		text: "방 이름을 입력해주세요",
@@ -358,7 +355,7 @@ $(".new_chat").click(function(){
 	})
 })
  
- 
+*/ 
  
  
 		
@@ -418,6 +415,10 @@ $(".chat_back").click(function() {
 	})
 	.then(function(result){
 		if(result) {
+			$.ajax({
+				url: "/chattingRoom-back",
+				type: "PATCH",
+			})
 			location.href = "/together/openList.paw";
  
 			if(room.users.length != 0) {
@@ -426,13 +427,13 @@ $(".chat_back").click(function() {
 				stomp.send(
 					"/socket/notification/" + roomNumber, {}, 
 					JSON.stringify(room));
-				} 
-			}
-		})
-		.fail(function(){
-			alert("채팅방 나가기 중 오류 발생")
-				location.href = "/together/openList.paw";
-		})
+			} 
+		}
+	})
+	.fail(function(){
+		alert("채팅방 나가기 중 오류 발생")
+			location.href = "/together/openList.paw";
+	})
 })
  
  
@@ -454,8 +455,8 @@ const chattingRoom = function (){
 		}
 	})
 	.fail(function(result){
+		const roomNumber = info.getRoomNumber();
 		alert("GET 채팅방 들어가기 중 오류 발생")
-		location.href = "/together/openList.paw";
 	})
 	
 	return returnRoom;
