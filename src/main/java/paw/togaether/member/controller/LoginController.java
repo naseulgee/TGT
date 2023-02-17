@@ -23,7 +23,7 @@ public class LoginController {
 
     /** 로그인 페이지 */
     @GetMapping(value="/member/login")
-    public ModelAndView getLogin(CommandMap commandMap) throws Exception {
+    public ModelAndView getLogin() throws Exception {
         ModelAndView mv = new ModelAndView("/member/Login");
 
         return mv;
@@ -53,7 +53,7 @@ public class LoginController {
 
             String prev_url = (String)session.getAttribute("prev_url");   //인터셉터에 걸렸을 때 로그인처리 후 이전에 보던 페이지로 이동
             if(prev_url == null) {
-                mv.setViewName("redirect:/sample");
+                mv.setViewName("redirect:/main.paw");
             } else {
                 mv.setViewName("redirect:"+prev_url);
             }
@@ -220,8 +220,8 @@ public class LoginController {
         Map<String,Object> userdata = loginService.findEmail(userInfo);
 
         if(userdata == null) {
-            mv.addObject("errorMessage", "회원정보가 존재하지 않습니다.");
-            mv.setViewName("/member/errorPage");
+            mv.addObject("socialEmail", userInfo.get("MEM_EMAIL"));
+            mv.setViewName("/member/memberJoin");
         } else {
             HttpSession session = request.getSession();
             String mem_id = userdata.get("MEM_ID").toString();

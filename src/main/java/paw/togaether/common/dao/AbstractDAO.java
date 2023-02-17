@@ -42,11 +42,17 @@ public class AbstractDAO {
 		pringQueryId(queryId);
 		return sqlSession.selectOne(queryId, params);
 	}
+	public int selectOneInt(String queryId){
+		pringQueryId(queryId);
+		return sqlSession.selectOne(queryId);
+	}
+
 	@SuppressWarnings("rawtypes")
 	public List selectList(String queryId) {//여러줄
 		pringQueryId(queryId);
 		return sqlSession.selectList(queryId);
 	}
+
 	@SuppressWarnings("rawtypes")
 	public List selectList(String queryId, Object params) {
 		pringQueryId(queryId);

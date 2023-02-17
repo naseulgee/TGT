@@ -79,8 +79,17 @@
                             <label for="MEM_EMAIL"
                                    class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">이메일</label>
                             <div class="mt-1 sm:mt-0">
-                                <input type="email" name="MEM_EMAIL" id="MEM_EMAIL" maxlength="100" autocomplete="email" placeholder="example@naver.com"
-                                       class="block w-full max-w-lg rounded-md shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:max-w-xs sm:text-sm">
+                                <c:choose>
+                                    <c:when test="${empty socialEmail}">
+                                        <input type="email" name="MEM_EMAIL" id="MEM_EMAIL" maxlength="100" autocomplete="email" placeholder="example@naver.com"
+                                               class="block w-full max-w-lg rounded-md shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:max-w-xs sm:text-sm">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="email" name="MEM_EMAIL" id="MEM_EMAIL" maxlength="100" autocomplete="email" placeholder="example@naver.com"
+                                               class="block w-full max-w-lg rounded-md shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:max-w-xs sm:text-sm" value="${socialEmail}" readonly>
+                                    </c:otherwise>
+                                </c:choose>
+
                                 <p class="mt-2 text-sm text-red-600" id="email-error"></p>
                             </div>
                             <input type="button" id="checkEmail" onclick="emailValidate()" value="중복확인"
@@ -90,7 +99,7 @@
 
                         <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5 max-w-screen-lg">
                             <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">주소</label>
-                            <input type="text" id="postcode" placeholder="우편번호"
+                            <input type="text" id="postcode" name="postcode" placeholder="우편번호"
                                    class="block w-full max-w-lg rounded-md shadow-sm focus:border-[#f08080] focus:ring-[#f08080] sm:max-w-xs sm:text-sm">
                             <input type="button" onclick="findPostcode()" value="우편번호 찾기"
                                    class="inline-flex justify-center rounded-md border border-transparent bg-[#f0b1aa] py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-[#f08080] focus:outline-none focus:ring-2 focus:ring-[#f08080] focus:ring-offset-2 mr-auto"><br>
@@ -188,7 +197,7 @@
                         <div class="flex justify-end">
                             <button type="button"
                                     class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#f08080] focus:ring-offset-2"
-                                    onclick="location.href='/sample'">취소
+                                    onclick="location.href='/main.paw'">취소
                             </button>
                             <button type="button" id="uploadBtn" name="uploadBtn"
                                     class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-[#f0b1aa] py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-[#f08080] focus:outline-none focus:ring-2 focus:ring-[#f08080] focus:ring-offset-2">

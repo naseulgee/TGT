@@ -6,7 +6,7 @@
     <!-- 로그인한 멤버의 정보 -->
     <select id="MemberLogin" parameterType="hashmap" resultType="hashmap">
      <![CDATA[
-        SELECT * FROM MEMBERS WHERE MEM_ID =  #{MEM_ID}
+        SELECT * FROM MEMBERS WHERE MEM_ID =  #{MEM_ID} AND MEM_DEL_GB = 'N'
         ]]>
      </select>
 
@@ -36,6 +36,7 @@
             MEM_EMAIL = #{MEM_EMAIL}
     </update>
 
+    <!-- 이메일 찾기 -->
     <select id="findEmail" parameterType="hashmap" resultType="hashmap">
      <![CDATA[
         SELECT * FROM MEMBERS WHERE MEM_EMAIL =  #{MEM_EMAIL}

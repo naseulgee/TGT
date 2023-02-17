@@ -13,8 +13,8 @@
 		</a>
 	</div>
 	<ul class="sub_pages">
-		<li><a href=""><i class="fa-solid fa-shield-dog"></i> 견종 관리</a></li>
-		<li><a href=""><i class="fa-solid fa-user-group"></i> 고객정보 관리</a></li>
+		<li><a href="/admin/adminDogname.paw"><i class="fa-solid fa-shield-dog"></i> 견종 관리</a></li>
+		<li><a href="/admin/adminMember.paw"><i class="fa-solid fa-user-group"></i> 고객정보 관리</a></li>
 		<li><button class="toggle_li" type="button" onclick="toggle_down(this)"><i class="fa-solid fa-flag"></i> 함께해요 관리<i class="fa-solid fa-chevron-down"></i></button>
 			<ul>
 				<li><a href="/admin/together/list.paw"><i class="fa-solid fa-file-invoice"></i> 함께해요 게시글 관리</a></li>

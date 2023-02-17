@@ -18,7 +18,7 @@
                 <h2 class="mt-6 text-center text-2xl font-bold tracking-tight text-[#f0b1aa]">비밀번호가 변경되었습니다.</h2>
             </div>
             <div>
-                <button type="submit" onclick="location.href='/member/login'" class="group relative flex w-full justify-center rounded-md border border-transparent bg-[#f0b1aa] py-2 px-4 text-sm font-medium text-white hover:bg-[#f08080] focus:outline-none focus:ring-2 focus:ring-[#f08080] focus:ring-offset-2">
+                <button type="submit" onclick="location.href='/member/login.paw'" class="group relative flex w-full justify-center rounded-md border border-transparent bg-[#f0b1aa] py-2 px-4 text-sm font-medium text-white hover:bg-[#f08080] focus:outline-none focus:ring-2 focus:ring-[#f08080] focus:ring-offset-2">
                     로그인 화면으로 돌아가기
                 </button>
             </div>

@@ -39,7 +39,7 @@
 				<li class="logout"><a href="/member/logout.paw"><i class="fa-solid fa-arrow-right-from-bracket"></i><span class="displaynone">로그아웃</span></a></li>
 			</c:if>
 			<c:if test="${mem_type == 0}">
-				<li class="adminPage"><a href="/admin/together/list.paw"><i class="fa-solid fa-screwdriver-wrench"></i><span class="displaynone">관리자페이지</span></a></li>
+				<li class="adminPage"><a href="/admin/adminMember.paw"><i class="fa-solid fa-screwdriver-wrench"></i><span class="displaynone">관리자페이지</span></a></li>
 			</c:if>
 		</ul>
 	</div>

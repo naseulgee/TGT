@@ -169,6 +169,7 @@ public class LoginServiceImpl implements LoginService {
         loginDAO.setNewPassword(map);
     }
 
+    /** 카카오로그인 토큰 받아오기 */
     @Override
     public String getAccessToken(String code) throws Exception {
         URL url = new URL("https://kauth.kakao.com/oauth/token");
@@ -207,6 +208,7 @@ public class LoginServiceImpl implements LoginService {
         return access_token;
     }
 
+    /** 카카오로그인 - DB에 가입한 회원정보가 있는지 확인 */
     @Override
     public Map<String, Object> getUserInfo(String access_token) throws Exception {
         URL url = new URL("https://kapi.kakao.com/v2/user/me");
@@ -241,6 +243,7 @@ public class LoginServiceImpl implements LoginService {
         return map;
     }
 
+    /** 이메일주소가 존재하는지 확인 */
     @Override
     public Map<String, Object> findEmail(Map<String, Object> map) throws Exception {
 
@@ -250,6 +253,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
 
+    /** 카카오 로그아웃 */
     @Override
     public void socialLogout(String accessToken) throws Exception {
         URL url = new URL("https://kapi.kakao.com/v1/user/logout");
