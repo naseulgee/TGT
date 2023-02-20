@@ -1,0 +1,5 @@
+.alarm_list{ margin-top: 20px; }
+.alarm_list .check{ background-color: var(--subGray_5); }
+.alarm_list tr td{ justify-content: space-between; align-items: flex-start; padding: 0; }
+.alarm_list tr td a{ width: calc(100% - 20px); padding: 10px 5px; }
+.alarm_list tr td .al_del{ width: 30px; margin-top: 0.25em; box-sizing: border-box; }

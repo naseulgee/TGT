@@ -30,7 +30,7 @@
 			</ul>
 		</li>
 		<li><a href="/admin/review/list.paw"><i class="fa-solid fa-star"></i> 리뷰 관리</a></li>
-		<li><a href=""><i class="fa-solid fa-bell"></i> 알람 관리</a>
+		<li><a href="/admin/alarm/list.paw"><i class="fa-solid fa-bell"></i> 알람 관리</a>
 	</ul>
 	<div class="btn_wrap flex flexWrap flexBetween">
 		<a href="/member/logout.paw"><i class="fa-solid fa-arrow-right-from-bracket"></i>로그아웃</a>

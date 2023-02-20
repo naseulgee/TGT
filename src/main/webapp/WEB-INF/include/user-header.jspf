@@ -34,8 +34,9 @@
 				<button type="submit"><i class="fa-solid fa-magnifying-glass" onClick="onSearch()"></i><span class="displaynone">검색</span></button>
 			</li>
 			<li class="mypage"><a href="/mypage/myInfo.paw"><i class="fa-solid fa-paw"></i><span class="displaynone">마이페이지</span></a></li>
-			<li class="alram"><a href=""><span class="al_cnt bgColor">1</span><i class="fa-regular fa-bell"></i><span class="displaynone">알람</span></a></li>
 			<c:if test="${!empty mem_type}">
+				<script src="/resources/js/alarm/alarm.js"></script>
+				<li class="alram"><a href="/mypage/alarm/list.paw"><span id="al_cnt" class="bgColor">0</span><i class="fa-regular fa-bell"></i><span class="displaynone">알람</span></a></li>
 				<li class="logout"><a href="/member/logout.paw"><i class="fa-solid fa-arrow-right-from-bracket"></i><span class="displaynone">로그아웃</span></a></li>
 			</c:if>
 			<c:if test="${mem_type == 0}">

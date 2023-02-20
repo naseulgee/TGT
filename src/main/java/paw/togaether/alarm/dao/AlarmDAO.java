@@ -10,7 +10,7 @@ import paw.togaether.common.dao.AbstractDAO;
 /** 23.02.17 나슬기: alarm_SQL.xml과 맵핑되는 DAO 클래스 */
 @Repository("alarmDAO")
 public class AlarmDAO extends AbstractDAO {
-	/** 23.02.17 나슬기: 알람 개수 조회 메소드 */
+	/** 23.02.17 나슬기: 확인하지 않은 알람 개수 조회 메소드 */
 	public int alarmSelectCount(Map<String, Object> map) throws Exception{
 		return Integer.parseInt(selectOne("alarm.se_al_count", map).toString());
 	}
