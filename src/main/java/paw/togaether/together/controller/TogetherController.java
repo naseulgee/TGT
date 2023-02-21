@@ -33,9 +33,6 @@ public class TogetherController {
 	@Resource(name="togetherService")
 	private TogetherService togetherService;
 	
-	// 23.02.17 이소영 chatService 연결
-	@Resource(name = "chatService")
-	private ChatService chatService;
 	
 	/* 23.02.02 박선영 게시글리스트 페이징화면출력 */
 	@RequestMapping(value="/together/openList")
@@ -240,7 +237,6 @@ public class TogetherController {
 		System.out.println(commandMap.get("TO_IDX"));
 		
 		togetherService.togetherDel(commandMap.getMap(),session);
-		chatService.deleteChatRoom(commandMap.getMap());
 		
 		return mv;
 	}

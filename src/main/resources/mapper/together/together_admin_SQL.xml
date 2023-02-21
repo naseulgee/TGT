@@ -116,7 +116,7 @@
 		<![CDATA[
 			SELECT  TC_IDX,
 					TC_NAME,
-					(select count (to_idx) from together where to_tc_name=tc_name) as TC_COUNT
+					(select count (to_idx) from together where to_tc_name=tc_name and TO_DEL_GB = 'N') as TC_COUNT
 			FROM TOGETHER_CATE
 		]]>
 	</select>
@@ -238,12 +238,13 @@
 	<select id="admiCateDetail" resultType="hashmap">
 		<![CDATA[
 			select
-				TC_IDX,
-				TC_NAME,
-				(select count (to_idx) from together where to_tc_name=tc_name) as TC_COUNT
+				c.TC_IDX,
+				c.TC_NAME,
+				(select count (to_idx) from together where to_tc_name=tc_name and TO_DEL_GB = 'N') as TC_COUNT
 			FROM TOGETHER_CATE
 			where 
 				TC_IDX = #{TC_IDX}
+				
 		]]>	
 	</select>
 	
