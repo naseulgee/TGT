@@ -9,9 +9,6 @@ span.fa-solid {
 color:#f0b1aa;
 }
 
-.main_wrap thead{
-font-weight:bold;
-}
 
 #catewrite.btn.submit{
 margin-right:5px;
@@ -20,13 +17,13 @@ margin-right:5px;
 </style>
 <main class="layoutCenter">
 
+	<!-- 23.01.25 박선영 : 함께해요 관리자 페이지 게시글 리스트 출력 -->
+<div class="main_wrap">
 <h1 class="txt_center"><span class="fa-solid fa-paw"></span>함께해요<span class="fa-solid fa-paw"></span></h1>
 
 	<br/>
-	<!-- 23.01.25 박선영 : 함께해요 관리자 페이지 게시글 리스트 출력 -->
-<div class="main_wrap">
 	<table class="txt_center" id="together_list">
-		<%-- <colgroup>
+		<colgroup>
 			<col width="10%"/>
 			<col width="7%"/>
 			<col width="10%"/>
@@ -51,7 +48,7 @@ margin-right:5px;
 				<th>작성날짜</th>
 				<th>수정날짜</th>
 			</tr>
-		</thead> --%>
+		</thead>
 		<tbody class="together">
 			<%-- <c:choose>
 				<c:when test="${!empty list }"> --%>
@@ -139,7 +136,7 @@ margin-right:5px;
 			
 			//함께해요 리스트 세팅 로직
 			if (total2 == 0) {
-				var str = "<tr>" + "<td colspan='9' align='center'>조회된 게시글이 없습니다:(</td>"
+				var str = "<tr>" + "<td colspan='10' align='center'>조회된 게시글이 없습니다:(</td>"
 						+ "</tr>";
 				body.append(str);
 
@@ -156,17 +153,17 @@ margin-right:5px;
 				var dnow = getFormatDate(now);//원하는 형태의 문자열로 변환(2023-02-09)
 				var time = getFormatTime(now);//원하는 형태의 문자열 시간으로 변환(22:10)
 				var str = "";
-					str += "<colgroup>";
+					/* str += "<colgroup>";
 					str += "<col width='10%'/>";
-					str += "<col width='7%'/>";
 					str += "<col width='10%'/>";
-					str += "<col width='12%'/>";
 					str += "<col width='10%'/>";
-					str += "<col width='7%'/>";
-					str += "<col width='7%'/>";
-					str += "<col width='13%'/>";
-					str += "<col width='13%'/>";
-					str += "<col width='13%'/>";
+					str += "<col width='10%'/>";
+					str += "<col width='10%'/>";
+					str += "<col width='10%'/>";
+					str += "<col width='10%'/>";
+					str += "<col width='10%'/>";
+					str += "<col width='10%'/>";
+					str += "<col width='10%'/>";
 					str += "</colgroup>";
 					str += "<thead>";
 					str += "<tr>";
@@ -181,7 +178,7 @@ margin-right:5px;
 					str += "<th>작성날짜</th>";
 					str += "<th>수정날짜</th>";
 					str += "</tr>";
-					str += "</thead>"; 
+					str += "</thead>";  */
 				$.each(data.list,
 						function(key, value) {
 							str += "<tr class='use_move' name='togelist' data-href='/admin/together/detail/"+value.TO_IDX +"' onclick='move(this,\"TO_IDX:"+value.TO_IDX+"\")'>";

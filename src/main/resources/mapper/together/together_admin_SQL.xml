@@ -81,7 +81,7 @@
 				t.TO_DEL_GB,
 				c.TC_IDX,
 				c.TC_NAME,
-				c.TC_COUNT,
+				(select count(tc_idx) from together_cate where tc_name  = #{TC_NAME})as TC_COUNT,
 				b.BR_IDX,
 				b.BR_NAME 
 				from TOGETHER t, TOGETHER_CATE c, BREED b
@@ -116,7 +116,7 @@
 		<![CDATA[
 			SELECT  TC_IDX,
 					TC_NAME,
-					TC_COUNT
+					(select count (to_idx) from together where to_tc_name=tc_name) as TC_COUNT
 			FROM TOGETHER_CATE
 		]]>
 	</select>
@@ -233,5 +233,41 @@
 					   MEM_REG_DATE	
 		]]>
 	</select>
+	
+	<!-- 23.02.21 관리자 카테고리 상세보기 -->
+	<select id="admiCateDetail" resultType="hashmap">
+		<![CDATA[
+			select
+				TC_IDX,
+				TC_NAME,
+				(select count (to_idx) from together where to_tc_name=tc_name) as TC_COUNT
+			FROM TOGETHER_CATE
+			where 
+				TC_IDX = #{TC_IDX}
+		]]>	
+	</select>
+	
+	<!-- 2023.02.21 관리자 카테고리 수정 -->
+	<update id="adminTogeCateModi" parameterType="hashmap">
+		<![CDATA[
+			update 
+				TOGETHER_CATE
+			set 
+				TC_NAME = #{TC_NAME},
+				TC_COUNT = '0'
+			where 
+				TC_IDX = #{TC_IDX}
+		]]>	
+	</update>
+	
+	<!-- 23.02.21 관리자 카테고리 삭제 -->
+	<delete id="adminTogeCateDel">
+		<![CDATA[
+			delete from
+				TOGETHER_CATE
+			where 
+				TC_IDX = #{TC_IDX}
+		]]>
+	</delete>
 	
 </mapper>

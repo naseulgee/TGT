@@ -3,6 +3,7 @@
 <!-- 어드민 페이지의 헤더 -->
 <%@ include file="/WEB-INF/include/admin-header.jspf" %>
 <script src="https://kit.fontawesome.com/e9bd4d3977.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/resources/js/together/togetherwith.js"></script>
 <style>
 span.fa-solid {
 color:#f0b1aa;
@@ -55,4 +56,39 @@ margin-left : 5px;
 	</div>
 </div>
 </main>
+<script>
+$(document).ready(function(){
+	
+	var togewith = {
+            "TW_TO_IDX": $("input[name='TW_TO_IDX']").val(),
+            "TW_MEM_ID": $("input[name='TW_MEM_ID']").val(),
+          };
+	
+	var to_idx = $("input[name='TW_TO_IDX']").val();
+
+	/* $("input[name='withmem']").on("click",function(e){
+	      
+	      
+	      withService.add(togewith, function(result){
+	        
+	        alert(result);
+	         
+	      });//withService 함수 끝
+	      location.reload();
+	});//클릭함수 끝
+	 */
+	
+	$("input[name='delwith']").on("click",function(e){
+		
+		withService.remove(togewith, function(deleteResult){
+			
+			alert(deleteResult);
+			
+		});//withService 함수 끝
+		location.href = "/admin/together/list";//리스트로 되돌아가기
+	});//클릭함수 끝
+	
+});
+</script>
+
 <%@ include file="/WEB-INF/include/common-footer.jspf" %>

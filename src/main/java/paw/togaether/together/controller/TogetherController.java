@@ -127,10 +127,12 @@ public class TogetherController {
 		System.out.println(session.getAttribute("mem_id"));
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//날짜 형태 정해주기
+		SimpleDateFormat tsdf = new SimpleDateFormat("HH:mm");//시간형태 정해주기
 		
 		Date now = new Date();//날짜 마감에 따른 참여하기 비활성화 목적
 		
 		String nowDate = sdf.format(now);
+		String nowTime = tsdf.format(now);
 		
 		ModelAndView mv = new ModelAndView("/together/togetherDetail");
 		
@@ -138,6 +140,7 @@ public class TogetherController {
 		List<Map<String, Object>> withlist = togetherService.togetherWithList(commandMap.getMap());//참여자 리스트 메소드
 		Map<String, Object> checkwith = togetherService.checkWith(commandMap.getMap(),session);//참여여부 확인 메소드
 		
+		mv.addObject("nowTime", nowTime);
 		mv.addObject("nowDate", nowDate);
 		mv.addObject("checkwith", checkwith);	
 		mv.addObject("withlist", withlist);
