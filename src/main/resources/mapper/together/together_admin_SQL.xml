@@ -238,8 +238,8 @@
 	<select id="admiCateDetail" resultType="hashmap">
 		<![CDATA[
 			select
-				c.TC_IDX,
-				c.TC_NAME,
+				TC_IDX,
+				TC_NAME,
 				(select count (to_idx) from together where to_tc_name=tc_name and TO_DEL_GB = 'N') as TC_COUNT
 			FROM TOGETHER_CATE
 			where 
@@ -270,5 +270,32 @@
 				TC_IDX = #{TC_IDX}
 		]]>
 	</delete>
+	
+	<!-- 23.02.22 관리자 몸무게 상세보기 -->
+	<select id="adminWeightDetail" resultType="hashmap">
+		<![CDATA[
+			select
+				WT_IDX,
+				WT_START,
+				WT_END
+			FROM WEIGHT
+			where 
+				WT_IDX = #{WT_IDX}
+				
+		]]>	
+	</select>
+	
+	<!-- 2023.02.22 관리자 몸무게 수정 -->
+	<update id="adminTogeWtModi" parameterType="hashmap">
+		<![CDATA[
+			update 
+				WEIGHT
+			set 
+				WT_START = #{WT_START},
+				WT_END = #{WT_END}
+			where 
+				WT_IDX = #{WT_IDX, jdbcType=VARCHAR}
+		]]>	
+	</update>
 	
 </mapper>

@@ -91,4 +91,15 @@ public class TogetherAdminDAO extends AbstractDAO {
 	public void adminTogeCateDel(Map<String, Object> map) throws Exception {
 		delete("togetherAdmin.adminTogeCateDel", map);
 	}
+	
+	/* 23.02.22 박선영 관리자 몸무게 상세보기 */
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> adminWeightDetail(Map<String, Object> map) throws Exception {
+		return (Map<String, Object>) selectOne ("togetherAdmin.adminWeightDetail", map);
+	}
+	
+	/* 23.02. 22 박선영 함께해요 몸무게 수정하기 */
+	public void adminTogeWtModi(Map<String, Object> map) throws Exception {
+		update("togetherAdmin.adminTogeWtModi", map);
+	}
 }

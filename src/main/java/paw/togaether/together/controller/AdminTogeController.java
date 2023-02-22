@@ -258,5 +258,43 @@ public class AdminTogeController {
 		
 		return mv;
 	}
+	
+	/* 23.02.22 박선영 관리자 몸무게 상세보기 */
+	@RequestMapping(value="/admin/together/wtdetail/{WT_IDX}")
+	public ModelAndView adminWeightDetail(@PathVariable("WT_IDX")int WT_IDX, CommandMap commandMap) throws Exception {
+		
+		ModelAndView mv = new ModelAndView("/admin/together/togeAdminWtDetail");
+		
+		Map<String, Object> map = togetherAdminService.adminWeightDetail(commandMap.getMap());
+		
+		mv.addObject("map", map);
+		return mv;
+	}
+	
+	/* 23.02.22 박선영 관리자 몸무게 수정폼  */
+	@RequestMapping(value="/admin/together/wtmodiForm")
+	public ModelAndView openadminTogeWtModi(CommandMap commandMap) throws Exception {
+		
+		ModelAndView mv = new ModelAndView("/admin/together/togeAdminWtModi");
+		
+		//이미 있던 분류 상세정보를 불러옴
+		Map<String, Object> map = togetherAdminService.adminWeightDetail(commandMap.getMap());
+		
+		mv.addObject("map", map);
+		return mv;
+	}
+	
+	/* 23.02.22 박선영 관리자 몸무게 수정  */
+	@RequestMapping(value="/admin/together/wtmodi", method = RequestMethod.POST)
+	public ModelAndView adminTogeWtModi(CommandMap commandMap) throws Exception {
+		
+		System.out.println(commandMap.getMap());
+		
+		ModelAndView mv = new ModelAndView("redirect:/admin/together/wtlist");
+		
+		togetherAdminService.adminTogeWtModi(commandMap.getMap());
+		
+		return mv;
+	}
 
 }

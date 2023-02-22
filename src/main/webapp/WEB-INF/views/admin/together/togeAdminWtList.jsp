@@ -31,7 +31,7 @@ margin-right:5px;
 			<c:choose>
 				<c:when test="${!empty wtlist}">
 					<c:forEach items="${wtlist}" var="wt">
-						<tr>
+						<tr class="use_move" data-href="/admin/together/wtdetail/${wt.WT_IDX}" onclick="move(this, 'WT_IDX:${wt.WT_IDX}')">
 							<td>${wt.WT_IDX}</td>
 							<td>${wt.WT_START} Kg</td>
 							<td>${wt.WT_END} Kg</td>
