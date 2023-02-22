@@ -38,4 +38,6 @@ public interface ChatService {
 	// 채팅방 참가 인원 조회
 	int chatWithCountCheck(Map<String, Object> map) throws Exception;
 
+	List<Map<String, Object>> memInfo(Map<String, Object> map) throws Exception;
+
 }

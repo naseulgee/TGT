@@ -13,7 +13,7 @@
 				http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 
 	<!-- 전송된 데이터를 자바빈이 아닌 맵으로 받기 위한 설정 -->
-	<mvc:annotation-driven>
+	<mvc:annotation-driven> 
 		<mvc:argument-resolvers>
 			<bean class="paw.togaether.common.resolver.CustomMapArgumentResolver"/>
 		</mvc:argument-resolvers>
