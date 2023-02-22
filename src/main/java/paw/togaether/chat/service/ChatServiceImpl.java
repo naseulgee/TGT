@@ -21,12 +21,12 @@ public class ChatServiceImpl implements ChatService {
 		chatDAO.chattingRoom(map);
 		
 	}
-
-	// 채팅방 삭제
+	
+	// 채팅방 중복 체크
 	@Override
-	public void deleteChatRoom(Map<String, Object> map) throws Exception {
-		chatDAO.cleanChatWith(map);
-		chatDAO.deleteChatRoom(map);
+	public int chatRoomCheck(Map<String, Object> map) throws Exception {
+		int result = chatDAO.chatRoomCheck(map);
+		return result;
 	}
 
 	// 채팅방 입장시 참가 인원수 증가, 참가 멤버 id 추가
@@ -36,11 +36,10 @@ public class ChatServiceImpl implements ChatService {
 		chatDAO.puls_CHAT_WITH(map);
 	}
 
-	// 채팅방 중복 체크
+	// 채팅방 입장 시 CHAT_WITH 추가
 	@Override
-	public int chatRoomCheck(Map<String, Object> map) throws Exception {
-		int result = chatDAO.chatRoomCheck(map);
-		return result;
+	public void puls_CHAT_WITH(Map<String, Object> map) throws Exception {
+		chatDAO.puls_CHAT_WITH(map);
 	}
 
 	// 채팅방 참가회원 중복 체크
@@ -48,12 +47,6 @@ public class ChatServiceImpl implements ChatService {
 	public int chatWithCheck(Map<String, Object> map) throws Exception {
 		int result = chatDAO.chatWithCheck(map);
 		return result;
-	}
-
-	// 채팅방 입장 시 CHAT_WITH 추가
-	@Override
-	public void puls_CHAT_WITH(Map<String, Object> map) throws Exception {
-		chatDAO.puls_CHAT_WITH(map);
 	}
 
 	// 채팅 메세지 저장
@@ -86,6 +79,18 @@ public class ChatServiceImpl implements ChatService {
 	public int chatWithCountCheck(Map<String, Object> map) throws Exception {
 		int result = chatDAO.chatWithCountCheck(map);
 		return result;
+	}
+	
+	// 채팅방 삭제
+	@Override
+	public void deleteChatRoom(Map<String, Object> map) throws Exception {
+		chatDAO.cleanChatWith(map);
+		chatDAO.deleteChatRoom(map);
+	}
+
+	@Override
+	public List<Map<String, Object>> memInfo(Map<String, Object> map) throws Exception {
+		return chatDAO.memInfo(map);
 	}
 
 }

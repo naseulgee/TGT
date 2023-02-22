@@ -17,6 +17,7 @@ const listHtml = function(roomList) {
 	
 	
 // 채팅방 목록 불러오기
+
 const chattingRoomList = function(){
 	$.ajax({
 		url: "/chattingRoomList",
@@ -29,7 +30,6 @@ const chattingRoomList = function(){
 		alert("채팅방 목록을 불러오는 중 에러가 발생했습니다");
 	})
 }
- 
 	
 	
 const socket = new SockJS('/websocket');
@@ -121,7 +121,7 @@ const errorMSG = function(result){
 }
  
  
-// 참가자 그리기
+// 참가자 출력
 const userList = function(users){
 	$(".chat .chat_users .user").text(users.length + "명");
 	
@@ -135,7 +135,7 @@ const userList = function(users){
 }
  
  
-// 메세지 그리기
+// 메세지 출력
 const chatting = function(messageInfo){
 	let nickname = messageInfo.nickname;
 	let message = messageInfo.message;
@@ -281,36 +281,6 @@ $(".chat_input_area textarea").keypress(function(event) {
 		}
 	}
 })	
- 
-	
-// 닉네임 만들고 채팅방 들어가기
-const enterChattingRoom = function(roomNumber) {
-	const data = {
-		roomNumber : roomNumber,
-		nickname : info.getNickname
-	}
-	$.ajax({
-		url: "/chattingRoom-enter",
-		type: "GET",
-		data: data,
-	})
-	.then(function(room){
-		initRoom(room, nickname);
-		alert("initRoom")
-		
-		// 채팅방 참가 메세지
-		room.message = nickname + "님이 참가하셨습니다";
-		stomp.send(
-			"/socket/notification/" + roomNumber, {}, 
-			JSON.stringify(room));
-		
-	})
-	.fail(function(result){
-		alert("채팅방 들어가기 중 오류 발생")
-		location.href = "/together/openList.paw";
-	})
-}
-
 	
  
 // 새 채팅방 만들기
@@ -337,27 +307,6 @@ const createRoom = function a (roomName) {
 		}
 	}
 }
- 
- 
- 
-/*
-$(".new_chat").click(function(){
-	swal({
-		text: "방 이름을 입력해주세요",
-		content: "input",
-		buttons: ["취소", "확인"],
-		closeOnClickOutside : false 
-	})
-	.then(function(roomName){
-		if(roomName) {
-			createRoom(roomName);
-		}
-	})
-})
- 
-*/ 
- 
- 
 		
  
 $(document).on("dblclick", ".chat_main li", function(){
@@ -407,35 +356,6 @@ $(".chat_exit").click(function() {
 	})
 })
 
-// 채팅방 나가기
-$(".chat_back").click(function() {
-	swal({
-		text: "이전 화면으로 돌아갈까요?",
-		buttons: ["취소", "확인"]
-	})
-	.then(function(result){
-		if(result) {
-			$.ajax({
-				url: "/chattingRoom-back",
-				type: "PATCH",
-			})
-			location.href = "/together/openList.paw";
- 
-			if(room.users.length != 0) {
-				// 채팅방 나가기 메세지
-				room.message = info.getNickname() + "님이 나감";
-				stomp.send(
-					"/socket/notification/" + roomNumber, {}, 
-					JSON.stringify(room));
-			} 
-		}
-	})
-	.fail(function(){
-		alert("채팅방 나가기 중 오류 발생")
-			location.href = "/together/openList.paw";
-	})
-})
- 
  
 // 대화 중이던 방
 const chattingRoom = function (){

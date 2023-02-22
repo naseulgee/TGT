@@ -68,4 +68,9 @@ public class ChatDAO extends AbstractDAO {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> memInfo(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList("chat.memInfo", map);
+	}
+
 }

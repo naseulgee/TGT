@@ -21,20 +21,14 @@
 		]]>
 	</insert>
 	
-	<!-- 채팅방 삭제 -->
-	<delete id="deleteChatRoom" parameterType="hashmap">
+	<!-- 채팅방 생성 : 채팅방 중복 체크 -->
+	<select id="chatRoomCheck" parameterType="hashmap" resultType="Integer">
 		<![CDATA[
-			DELETE FROM CHATROOM WHERE CR_IDX = #{CR_IDX}
+			SELECT COUNT(*) 
+			FROM CHATROOM 
+			WHERE CR_IDX = #{CR_IDX}
 		]]>
-	</delete>
-	
-	<delete id="cleanChatWith" parameterType="hashmap">
-		<![CDATA[
-			DELETE 
-			FROM CHAT_WITH 
-			WHERE CW_CR_IDX = #{CR_IDX}
-		]]>
-	</delete>
+	</select>
 	
 	<!-- 채팅방 입장 : 인원수 +1 -->
 	<update id="puls_CR_PEOPLE" parameterType="hashmap">
@@ -63,16 +57,7 @@
 		]]>
 	</insert>
 	
-	<!-- 채팅방 중복 체크 -->
-	<select id="chatRoomCheck" parameterType="hashmap" resultType="Integer">
-		<![CDATA[
-			SELECT COUNT(*) 
-			FROM CHATROOM 
-			WHERE CR_IDX = #{CR_IDX}
-		]]>
-	</select>
-	
-	<!-- 체팅방 참여 인원 중복 체크 -->
+	<!-- 체팅방 입장 : 인원 중복 체크 -->
 	<select id="chatWithCheck" parameterType="hashmap" resultType="Integer">
 		<![CDATA[
 			SELECT COUNT(*) 
@@ -123,15 +108,6 @@
 		]]>
 	</select>
 	
-	<!-- 체팅방 참여 인원 수 체크 -->
-	<select id="chatWithCountCheck" parameterType="hashmap" resultType="Integer">
-		<![CDATA[
-			SELECT CR_JOIN_PEOPLE 
-			FROM CHATROOM 
-			WHERE CR_IDX = #{CR_IDX}
-		]]>
-	</select>
-	
 	<!-- 채팅방 퇴장 : 채팅방 참여 id 삭제 -->
 	<delete id="deleteChatWith" parameterType="hashmap">
 		<![CDATA[
@@ -150,4 +126,41 @@
 			WHERE CR_IDX = #{CR_IDX}
 		]]>
 	</update>
+	
+	<!-- 채팅방 퇴장 : 체팅방 참여 인원 수 체크 -->
+	<select id="chatWithCountCheck" parameterType="hashmap" resultType="Integer">
+		<![CDATA[
+			SELECT CR_JOIN_PEOPLE 
+			FROM CHATROOM 
+			WHERE CR_IDX = #{CR_IDX}
+		]]>
+	</select>
+	
+	<!-- 채팅방 삭제 -->
+	<delete id="deleteChatRoom" parameterType="hashmap">
+		<![CDATA[
+			DELETE FROM CHATROOM WHERE CR_IDX = #{CR_IDX}
+		]]>
+	</delete>
+	
+	<!-- 채팅방 삭제 : 채팅 참여인원 전부 지우기 -->
+	<delete id="cleanChatWith" parameterType="hashmap">
+		<![CDATA[
+			DELETE 
+			FROM CHAT_WITH 
+			WHERE CW_CR_IDX = #{CR_IDX}
+		]]>
+	</delete>
+	
+	<select id="memInfo" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+	        SELECT *
+	        FROM MEMBERS a
+	        LEFT JOIN BREED b
+	        ON a.MEM_BR_IDX = b.BR_IDX
+	        LEFT JOIN PHOTO c
+	        ON a.MEM_ID = c.PH_MEM_ID and c.PH_DEL_GB = 'N'
+	        WHERE a.MEM_ID = #{mem_id}
+        ]]>
+	</select>
 </mapper>

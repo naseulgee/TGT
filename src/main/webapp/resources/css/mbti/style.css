@@ -20,33 +20,58 @@ img {
 	width: 500px;
 	margin: 0 auto;
 }
-button {
-	font-family: 'Pretendard Variable', 'Noto Sans KR', '돋움', Dotum, Tahoma, Geneva, sans-serif; 
-	-webkit-font-feature-settings: 'case', 'ccmp', 'tnum', 'ss01', 'ss02', 'ss03', 'ss07', 'ss08'; 
-}
+
 #mbtiButton {
 	width: 430px;
 	margin: 0 auto;
 	padding: 10px 50px;
 	margin-top: 10px;
-	font-weight: 600;
+	font-weight: 500;
+    font-size: 18px;
 }
 
 #A {
 	width: 500px;
 	margin: 0 auto;
 	padding: 10px 50px;
+	border-radius: 25px;
 }
 
 #B {
 	width: 500px;
 	margin: 0 auto;
 	padding: 10px 50px;
+	border-radius: 25px;
+}
+
+#A:hover {
+	background-color: var(--mainColor);
+	color: #fff;
+}
+
+#B:hover {
+	background-color: var(--mainColor);
+	color: #fff;
 }
 
 .progress {
 	width: 500px;
 	margin: 0 auto;
+}
+
+.progress-bar {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: center;
+    justify-content: center;
+    overflow: hidden;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    background-color: var(--mainColor);
+    transition: width .6s ease;
 }
 
 .start {

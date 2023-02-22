@@ -29,11 +29,11 @@ main {
     width: 35vw;
     min-width: 300px;
     height: 90vh;
-	font-size: 20px;
+	font-size: 18px;
 }
  
 .chat_main h1 {
-	font-size: 20px;
+	font-size: 18px;
     padding: 10px;
     height: 50px;
     box-sizing: border-box;
@@ -54,7 +54,7 @@ main {
 }
  
 .chat_main nav {
-	font-size: 20px;
+	font-size: 18px;
 	 display: flex;
 	 text-align: center;
 	 margin-bottom: 5px;
@@ -75,7 +75,7 @@ main {
 }
  
 .chat_main li {
-	font-size: 20px;
+	font-size: 18px;
     width: 100%;
     height: 70px;
     padding: 7px;
@@ -134,17 +134,19 @@ main {
 } /* #faf2eb */
  
 .chat h2 {
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: bold;
     padding: 10px;
     height: 50px;
     box-sizing: border-box;
     text-align: center;
     background: #f0b1aa;
+    border-start-start-radius: 15px;
+    border-start-end-radius: 15px;
 }
  
 .chat .chat_back {
-	font-size: 20px;
+	font-size: 18px;
     width: 50px;
     height: 50px;
     position: absolute;
@@ -160,10 +162,12 @@ main {
     box-sizing: border-box;
     padding: 5px 0;
     background-color: #faf2eb;
+    border-end-start-radius: 15px;
+    border-end-end-radius: 15px;
 }
  
 .chat li {
-	font-size: 20px;
+	font-size: 18px;
 }
  
 .chat li > div {
@@ -178,7 +182,7 @@ main {
 .chat li .notification span {
 	margin: 0 auto;
 	border-radius: 15px;
-	padding: 5px 10px;
+	padding: 5px 20px;
 	background: #e66f84;
 	color: #fff;
 }
@@ -204,7 +208,7 @@ main {
 }
  
 .chat .chat_in_time {
-	font-size: 20px;
+	font-size: 18px;
     margin: 0 5px;
     display: flex;
     align-items: flex-end;
@@ -212,14 +216,14 @@ main {
  
 .chat .chat_content {
     padding: 5px;
-    border-radius: 3px;
+    border-radius: 13px;
     box-shadow: 0px 2px 3px 0px rgb(0 0 0 / 25%);
     display: inline-block;
     max-width: 250px;
     max-height: 400px;
     overflow-y: auto;
     word-break: break-all;
-	font-size: 20px;
+	font-size: 18px;
 }
  
 .chat .chat_me .chat_content {
@@ -271,19 +275,20 @@ main {
  
 .chat .chat_users {
 	width: 30%;
-	height: 300px;
     margin-right: 3px;
-    font-size: 20px;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 /* 참가인원 */
 .chat .chat_users h2 {
-	font-size: 20px;
+	font-size: 18px;
 }
  
 .chat .chat_users .chat_nickname {
 	font-size: 20px;
-	height: calc(100% - 50px);
 	overflow: auto;
 	background-color: #fff;
 	margin-bottom: 120px;
@@ -291,22 +296,68 @@ main {
 	
 .chat .chat_users .chat_nickname li {
 	padding: 5px;
-    font-size: 20px;
+    font-size: 18px;
+    padding-left: 25px;
 }
 
 .btn {
-    font-size: 20px;
+    font-size: 18px;
+}
+
+.chat_exit_closed {
+    border: 1px solid #ce0000;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: row;
+    align-items: center;
+    padding-block: 5px;
+    border-radius: 20px;
+    color: #ce0000;
+}
+
+.chat_exit_closed:hover {
+    display: none;
 } 
 
-.chat_exit {
-	font-size: 16px;
-	margin-left: 10px;
-	padding: 1px;
+.chat_exit_closed:hover + .chat_exit_open {
+	display: flex;
+}
+
+.chat_exit_open {
+ 	border: 1px solid #ce0000;
+	background-color : #ce0000;
+    display: none;
+    justify-content: center;
+    align-content: center;
+    flex-direction: row;
+    align-items: center;
+    padding-block: 5px;
+    border-radius: 20px;
+    color: #fff;
+}
+
+.chat_exit i {
+ 	margin-right: 10px;
+}
+
+.chat_exit_div {
+	display: flex;
+	font-size: 18px;
+	
+}
+
+.chat_exit .fa-door-closed {
+	display: show;
+}
+
+.chat_img {
+	margin-bottom: 40%;
 }
 
 @media(max-width: 1024px)  {
 	.chat_main {
-	    font-size: 20px;
+	    font-size: 18px;
 	}
 	.chat_main {
 		width: 99vw;
