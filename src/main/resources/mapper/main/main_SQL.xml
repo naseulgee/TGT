@@ -21,22 +21,36 @@
 	<sql id="searchType_together">
 		<if test="searchType != null">
 			<if test="searchType == 'all'.toString()">
-			    AND T.TO_TITLE LIKE '%' || #{keyword} || '%' 
+			    AND TO_TITLE LIKE '%' || #{keyword} || '%' 
+			    OR TO_LOC LIKE '%' || #{keyword} || '%'
+			    OR TO_CONTENTS LIKE '%' || #{keyword} || '%'
+			    OR TO_WRITER_ID LIKE '%' || #{keyword} || '%'
 			</if>
 			<if test="searchType == 't'.toString()">
-			    AND T.TO_TITLE LIKE '%' || #{keyword} || '%'
+			    AND TO_TITLE LIKE '%' || #{keyword} || '%'
+			    OR TO_LOC LIKE '%' || #{keyword} || '%'
+			    OR TO_CONTENTS LIKE '%' || #{keyword} || '%'
 			</if>
 			<if test="searchType == 'w'.toString()">
-			    AND T.TO_WRITER_ID LIKE '%' || #{keyword} || '%'
+			    AND TO_WRITER_ID LIKE '%' || #{keyword} || '%'
 			</if>
 		</if>
 	</sql>
 	
 	<sql id="searchType_place">
 		<if test="searchType != null">
-		    AND PL.PL_NAME LIKE '%' || #{keyword} || '%'
-		    OR PL.PL_LOC LIKE '%' || #{keyword} || '%'
-		    OR PC.PC_NAME LIKE '%' || #{keyword} || '%'
+			<if test="searchType == 'all'.toString()">
+			    AND PL_NAME LIKE '%' || #{keyword} || '%'
+			    OR PL_LOC LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 't'.toString()">
+			    AND PL_NAME LIKE '%' || #{keyword} || '%'
+			    OR PL_LOC LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'w'.toString()">
+			    AND PL_NAME LIKE '%' || #{keyword} || '%'
+			    OR PL_LOC LIKE '%' || #{keyword} || '%'
+			</if>
 		</if>
 	</sql>
 	
@@ -47,10 +61,8 @@
 				ROW_NUMBER() OVER (ORDER BY BC_IDX DESC) RNUM, 
 				BC_IDX, 
 				BC_TITLE, 
-				BC_READHIT,
-				TO_CHAR(BC_MOD_DATE, 'YYYYMMDD') AS BC_MOD_DATE, 
-				BC_WRITER_NAME,
-				BC_BCC_NAME
+				TO_CHAR(BC_MOD_DATE, 'YYYY-MM-DD HH24:MI:SS') AS BC_MOD_DATE, 
+				BC_WRITER_ID
 			FROM 
 				BOARD_COMM
 			WHERE 
@@ -65,99 +77,48 @@
 	
 	<select id="togetherSearchList" parameterType="hashmap" resultType="hashmap">
 		<include refid="common.pagingPre"/>
-			<![CDATA[
-				SELECT 
-					ROW_NUMBER() OVER (ORDER BY TO_IDX DESC) RNUM, 
-					T.TO_IDX, 
-					T.TO_TITLE,
-					T.TO_TC_NAME,
-					T.TO_CONTENTS,
-					T.TO_WRITER_ID,
-					T.TO_WRITER_NAME,
-					TO_CHAR(TO_DATE, 'YYYY-MM-DD')AS TO_DATE,
-					T.TO_TIME,
-					T.TO_PEOPLE,
-					(SELECT COUNT(TW_IDX) FROM TOGETHER_WITH WHERE TW_TO_IDX = TO_IDX) AS C,
-					T.TO_LOC,
-					T.TO_BR_IDX,
-					T.TO_WT_IDX,
-					TO_CHAR(TO_REG_DATE, 'YYYY-MM-DD')AS TO_REG_DATE,
-					TO_CHAR(TO_MOD_DATE, 'YYYY-MM-DD')AS TO_MOD_DATE,
-					T.TO_DEL_GB,
-					C.TC_IDX,
-					C.TC_NAME,
-					C.TC_COUNT,
-					B.BR_IDX,
-					B.BR_NAME
-				FROM 
-					TOGETHER T, TOGETHER_CATE C, BREED B
-				WHERE 
-					T.TO_TC_NAME = C.TC_NAME
-					AND T.TO_BR_IDX = B.BR_IDX
-					AND T.TO_DEL_GB ='N'
+		<![CDATA[
+			SELECT 
+				ROW_NUMBER() OVER (ORDER BY TO_IDX DESC) RNUM, 
+				TO_IDX, TO_TITLE, 
+				TO_CONTENTS, 
+				TO_LOC, 
+				TO_CHAR(TO_DATE, 'YYYY-MM-DD HH24:MI:SS') AS TO_DATE, 
+				TO_WRITER_ID
+			FROM 
+				TOGETHER
+			WHERE 
+				TO_DEL_GB = 'N'
 			]]>
-				<include refid="searchType_together"></include>
+			 <include refid="searchType_together"></include>
 			<![CDATA[
-				GROUP BY 
-						T.TO_IDX, 
-						T.TO_TITLE,
-						T.TO_TC_NAME,
-						T.TO_CONTENTS,
-						T.TO_WRITER_ID,
-						T.TO_WRITER_NAME,
-						T.TO_DATE,
-						T.TO_TIME,
-						T.TO_PEOPLE,
-						T.TO_LOC,
-						T.TO_BR_IDX,
-						T.TO_WT_IDX,
-						T.TO_REG_DATE,
-						T.TO_MOD_DATE,
-						T.TO_DEL_GB,
-						C.TC_IDX,
-						C.TC_NAME,
-						C.TC_COUNT,
-						B.BR_IDX,
-						B.BR_NAME
-			]]>
+			ORDER BY TO_IDX DESC
+		]]>
 		<include refid="common.pagingPost"/>
 	</select>
-
+	
 	<select id="placeSearchList" parameterType="hashmap" resultType="hashmap">
-		<include refid="common.pagingPre" />
-	        <![CDATA[
-                SELECT 
-				    ROW_NUMBER() OVER (ORDER BY PL.PL_IDX DESC) RNUM, 
-				    PL.PL_IDX,
-				    PL.PL_NAME,
-				    PL.PL_CALL, 
-				    PL.PL_LOC, 
-				    PL.PL_OPEN,
-				    PL.PL_CLOSE,
-				    TO_CHAR(PL.PL_MOD_DATE, 'YYYY-MM-DD') AS PL_MOD_DATE,
-				    (SELECT PC.PC_NAME FROM PLACE_CATE PC, PLACE P WHERE PC.PC_IDX = P.PL_PC_IDX) AS PC_NAME,
-				    (SELECT ROUND(AVG(RE_STAR),1) FROM REVIEW WHERE RE_DEL_GB = 'N') AS R_AVG,
-				    (SELECT COUNT(RE_STAR) FROM REVIEW WHERE RE_DEL_GB = 'N') AS R_COUNT,
-				    (SELECT MIN(PH_STORED_FILE_NAME) FROM PHOTO WHERE PH_DEL_GB = 'N') AS PH_NAME
-				FROM 
-				    PLACE PL, REVIEW R, PHOTO PH, PLACE_CATE PC
-				WHERE 
-				    PL.PL_IDX = PH.PH_BOARD_IDX
-				    AND PL.PL_IDX = R.RE_PL_IDX
-				    AND PL.PL_PC_IDX = PC.PC_IDX
-				    AND PL.PL_DEL_GB = 'N'
-			]]>
-			<include refid="searchType_place"></include>
-			<![CDATA[
-				GROUP BY 
-						PL.PL_IDX,
-					    PL.PL_NAME,
-					    PL.PL_CALL, 
-					    PL.PL_LOC, 
-					    PL.PL_OPEN,
-					    PL.PL_CLOSE,
-					    PL_MOD_DATE
-			]]>
-		<include refid="common.pagingPost" />
+		<include refid="common.pagingPre"/>
+		<![CDATA[
+			SELECT 
+				ROW_NUMBER() OVER (ORDER BY PL_IDX DESC) RNUM, 
+				PL_NAME,
+				PL_CALL, 
+				PL_LOC, 
+				PL_OPEN,
+				PL_CLOSE,
+				TO_CHAR(PL_MOD_DATE, 'YYYY-MM-DD HH24:MI:SS') AS PL_MOD_DATE
+			FROM 
+				PLACE
+			WHERE 
+				PL_DEL_GB = 'N'
+		]]>
+		 <include refid="searchType_place"></include>
+		<![CDATA[
+			ORDER BY PL_IDX DESC
+		]]>
+		<include refid="common.pagingPost"/>
 	</select>
+	
+
 </mapper>
