@@ -27,6 +27,12 @@ public class AlarmDAO extends AbstractDAO {
 		return (List<Map<String, Object>>)selectPagingList("alarm.se_al_with_condition", map);
 	}
 	
+	/** 23.02.22 나슬기: 알람 발송할 회원 조회 메소드 */
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> alarmMemberSelectList(Map<String, Object> map) throws Exception{
+		return (List<Map<String, Object>>)selectPagingList("alarm.se_members", map);
+	}
+	
 	/** 23.02.17 나슬기: 알람 추가 메소드 */
 	public void alarmInsert(Map<String, Object> map) throws Exception{
 		insert("alarm.in_al", map);

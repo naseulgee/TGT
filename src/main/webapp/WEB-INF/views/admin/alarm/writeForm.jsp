@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/include/admin-header.jspf" %>
-<script src="/resources/js/alarm/alarm.js"></script>
+<script src="/resources/js/paging/searchPaging_B.js"></script>
+<script src="/resources/js/alarm/admin_alarm_selectMem.js"></script>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <main class="layoutCenter">
@@ -9,7 +10,14 @@
 	<table>
 		<tr>
 			<th class="req">타겟</th>
-			<td><input type="checkbox" name="target" value="admin"></td>
+			<td id="select_members"></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<div id="members_list"></div>
+				<ul id="paging"></ul>
+				<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" />
+			</td>
 		</tr>
 		<tr>
 			<th class="req">발송 내용</th>

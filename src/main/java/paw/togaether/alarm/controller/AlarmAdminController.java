@@ -60,7 +60,27 @@ public class AlarmAdminController {
 	
 	/** 23.02.17 나슬기: 알람 작성폼 메소드 */
 	@GetMapping("/write")
-	public String alarmRegForm(){ return "/admin/alarm/writeForm"; }
+	public String alarmRegForm(){
+		return "/admin/alarm/writeForm";
+	}
+	
+	/** 23.02.22 나슬기: 알람 발송할 회원 조회 */
+	@PostMapping(value = "/selectMember", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> selectMember(@RequestBody Map<String, Object> commandMap) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		//시설 리스트 불러오기
+		List<Map<String, Object>> list = alarmService.alarmMemberSelectList(commandMap);
+		map.put("list", list);
+		//총 개수
+		if (list.size() > 0) {
+			map.put("TOTAL", list.get(0).get("TOTAL_COUNT"));
+		} else {
+			map.put("TOTAL", 0);
+		}
+		
+		return new ResponseEntity<>(map, HttpStatus.OK);
+	}
 	
 	/** 23.02.17 나슬기: 알람 작성 메소드
 	 * 23.02.20 나슬기: target이 단일 값이 넘어올 때 처리 */
@@ -91,6 +111,7 @@ public class AlarmAdminController {
 		//Mybatis에서 동적쿼리문으로 반복 처리하기 위해 신규 맵을 생성하여 다시 담아준다.
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("map", commandMap);
+		map.put("target", commandMap.get("target"));
 		
 		return new ResponseEntity<>(alarmService.alarmModify(map), HttpStatus.OK);
 	}
@@ -99,10 +120,6 @@ public class AlarmAdminController {
 	@PostMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<Integer> alarmDelete(@RequestBody Map<String, Object> commandMap) throws Exception {
-		//Mybatis에서 동적쿼리문으로 반복 처리하기 위해 신규 맵을 생성하여 다시 담아준다.
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("map", commandMap);
-		
-		return new ResponseEntity<>(alarmService.alarmDelete(map), HttpStatus.OK);
+		return new ResponseEntity<>(alarmService.alarmDelete(commandMap), HttpStatus.OK);
 	}
 }

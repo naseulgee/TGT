@@ -3,10 +3,14 @@
 <!-- 마이페이지 네비게이션 --> 
 <nav class="mypage">
 	<div class="nav_wrap slim_scroll">
-		<h2><a href="">마이페이지</a></h2>
+		<h2>마이페이지</h2>
 		<ul class="user_info">
-			<h3><a href="/mypage/myInfo.paw">나의 정보</a></h3>
+			<h3>나의 정보</h3>
 			<li><a href="/mypage/myInfo.paw">프로필 보기</a></li>
+			<li><a href="/mypage/alarm/list.paw">나의 알람 확인</a></li>
+		</ul>
+		<ul class="user_act">
+			<h3>나의 활동</h3>
 			<li><a href="/mypage/together/writelist.paw">작성한 함께해요</a></li> 
 			<li><a href="/mypage/together/list.paw">참여한 함께해요</a></li>
 			<li><a href="/mypage/board/list.paw">내가 쓴 멍멍왈왈</a></li>

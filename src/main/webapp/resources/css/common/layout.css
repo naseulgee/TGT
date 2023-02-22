@@ -27,6 +27,8 @@ main nav .nav_wrap{ display: block; width: 100%; max-height: calc(100vh - 110px)
 main nav .nav_wrap h2{ padding: 3px 15px; background-color: var(--mainColor); color: #fff; font-size: 26px; }
 main nav .nav_wrap h3{ margin-bottom: 5px; padding: 3px 15px; border-bottom: 1px dashed var(--subGray_20); font-size: 22px; }
 main nav .nav_wrap ul { padding-bottom: 10px; }
+main nav .nav_wrap ul:not(:first-of-type) { border-top: 10px solid var(--subGray_20); }
+main nav .nav_wrap ul:not(:last-of-type) { border-bottom: 1px solid var(--subGray_40); }
 main nav .nav_wrap ul li a{ display: block; padding: 3px 20px; }
 main .main_wrap { padding-left: 250px; }
 

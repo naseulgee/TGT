@@ -30,7 +30,6 @@ function fn_selectBoardList(pageNo) {
 function fn_selectBoardListCallback(data) {
 	let total = data.TOTAL;
 	let al_list_body = $("#admin_al_list");
-	let str;
 
 	//페이징 세팅
 	let params = {
@@ -46,18 +45,115 @@ function fn_selectBoardListCallback(data) {
 	if (total == 0) {
 		al_list_body.html("<tr><td class='empty' colspan='5'>조회된 결과가 없습니다.</td></tr>");
 	} else {
-		let al_link = "";
-		str = "";
+		let str = "", al_link = "";
 		$.each(data.list, function(key, value) {
 			al_link = isNull(value.AL_LINK)?"":value.AL_LINK;
 			str += "<tr>"
-				+ "<td class='check'><input type='checkbox' name='al_idx' value='"+value.AL_IDX+"'></td>"
-				+ "<td class='idx'>"+value.AL_IDX+"</td>"
+				+ "<td class='check'><label><input type='checkbox' name='al_idx' value='"+value.AL_IDX+"'>"+value.AL_IDX+"</label></td>"
 				+ "<td class='target'>"+value.AL_MEM_ID+"</td>"
-				+ "<td class='content'>"+value.AL_CONTENTS+"</td>"
-				+ "<td class='link'>"+al_link+"</td>"
+				+ "<td class='content toggle_ellip'>"+value.AL_CONTENTS+"</td>"
+				+ "<td class='link toggle_ellip'>"+al_link+"</td>"
 			+ "</tr>";
 		});
 		al_list_body.html(str);
 	}
+	set_toggle_ellip();//내용과 링크의 토글 활성화
+}
+
+//알람 전체 선택/해제
+function check_toggle(target){
+	let chks = document.querySelectorAll("#admin_al_list input[type='checkbox']");
+	if(chks.length == 0) return false;
+	
+	if(target.checked){//전체 선택 시
+		chks.forEach(chk => { chk.checked = true; });
+	}else{//전체 해제 시
+		chks.forEach(chk => { chk.checked = false; });
+	}
+}
+
+//알람 수정폼 출력 함수
+function modi_form(){
+	let chks = document.querySelectorAll("#admin_al_list input[type='checkbox']:checked");
+	if(chks.length == 0) return alert("수정할 알람을 선택해 주세요.");
+	
+	//선택한 알람 번호값 세팅
+	let idxs = "";
+	chks.forEach(chk => { idxs += ","+chk.value; });
+	idxs = idxs.replace(",","");
+	
+	//팝업창 세팅
+	let popup = document.getElementById("pop");
+	if(isNull(popup)){
+		popup = document.createElement("div");
+		popup.id = "pop";
+	}
+	popup.innerHTML = "<form id='modi_content'>"
+			+"<p class='txt_center'>알람<br><strong>"+idxs+"</strong>에<br>대해 수정할 내용을 입력해주세요.</p>"
+			+"<input placeholder='알람 내용을 적어주세요' type='text' name='al_contents' value='' class='al_contents' required><br>"
+			+"<input placeholder='알람 링크를 적어주세요' type='text' name='al_link' value='' class='al_link'><br>"
+			+"<input type='hidden' name='target' value='"+idxs+"' class='target'>"
+			+"<div class='btn_wrap'>"
+				+"<input class='btn' type='button' value='취소하기' onclick='pop.remove()'>"
+				+"<input class='btn submit' type='button' value='수정하기' onclick='modi()'>"
+			+"</div>"
+		+"</form>";
+	document.querySelector("main").appendChild(popup);
+}
+//알람 수정 함수
+function modi(){
+	let form = document.getElementById("modi_content");
+	let idx = form.querySelector(".target");
+	let con = form.querySelector(".al_contents");
+	let link = form.querySelector(".al_link");
+	
+	if(isNull(form) || isNull(idx) || idx.value == "") return alert("비정상적인 접근입니다.");
+	if(isNull(con) || con.value == "") return alert("수정하실 내용을 입력해 주세요.");
+	
+	if(!confirm("정말 수정하시겠습니까?")) return false;
+	
+	$.ajax({
+		url: "/admin/alarm/modify",
+		type: "POST",
+		contentType: "application/json",
+		data: JSON.stringify({target: idx.value, al_contents: con.value, al_link: link.value}),
+		success: function(result){
+			alert("알람 "+result+"개 수정이 완료되었습니다.");
+			location.reload();
+		},
+		error: function(result){
+			console.log(result.status);
+			console.log(result.error);
+			console.log(result.responseText);
+		}
+	});
+}
+
+//알람 삭제 함수
+function del(){
+	let chks = document.querySelectorAll("#admin_al_list input[type='checkbox']:checked");
+	if(chks.length == 0) return alert("삭제할 알람을 선택해 주세요.");
+	
+	//선택한 알람 번호값 세팅
+	let idxs = "";
+	chks.forEach(chk => { idxs += ","+chk.value; });
+	idxs = idxs.replace(",","");
+	
+	if(!confirm("알람 "+idxs+"를 정말 삭제하시겠습니까?")) return false;
+	
+	$.ajax({
+		url: "/admin/alarm/delete",
+		type: "POST",
+		contentType: "application/json",
+		data: JSON.stringify({target: idxs}),
+		success: function(result){
+			alert("알람 "+idxs+" 삭제가 완료되었습니다.");
+			location.reload();
+		},
+		error: function(result){
+			console.log(result.status);
+			console.log(result.error);
+			console.log(result.responseText);
+		}
+	});
 }
