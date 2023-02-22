@@ -23,12 +23,6 @@ public class MessageController {
 	
 	CommandMap commandMap = new CommandMap();
 	
-	// 여기서 메세지가 오면 방목록 업데이트
-	@MessageMapping("/socket/roomList")
-	@SendTo("/topic/roomList")
-	public String roomList() throws Exception {
-		return "/chat";
-	}
 
 	// 채팅방에서 메세지 보내기
 	@MessageMapping("/socket/sendMessage/{roomNumber}")
