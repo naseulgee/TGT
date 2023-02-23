@@ -85,4 +85,33 @@ public class TogetherAdminServiceImpl implements TogetherAdminService {
 		return togetherAdminDAO.adminWithMem(map);
 	}
 	
+	/* 23.02.21 박선영 관리자 카테고리 수정  */
+	@Override
+	public void adminTogeCateModi(Map<String, Object> map) throws Exception {
+		togetherAdminDAO.adminTogeCateModi(map);
+	}
+	
+	/* 23.02.21 박선영 관리자 카테고리 상세보기 */
+	@Override
+	public Map<String, Object> admiCateDetail (Map<String, Object> map) throws Exception {
+		return togetherAdminDAO.admiCateDetail(map);
+	}
+	
+	/* 23.02.21 박선영 관리자 카테고리 삭제 */
+	@Override
+	public void adminTogeCateDel(Map<String, Object> map) throws Exception {
+		togetherAdminDAO.adminTogeCateDel(map);
+	}
+	
+	/* 23.02.22 박선영 관리자 몸무게 상세보기 */
+	@Override
+	public Map<String, Object> adminWeightDetail (Map<String, Object> map) throws Exception {
+		return togetherAdminDAO.adminWeightDetail(map);
+	}
+	
+	/* 23.02.22 박선영 관리자 몸무게 수정  */
+	@Override
+	public void adminTogeWtModi(Map<String, Object> map) throws Exception {
+		togetherAdminDAO.adminTogeWtModi(map);
+	}
 }

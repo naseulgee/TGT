@@ -40,5 +40,20 @@ public interface TogetherAdminService {
 	
 	/* 23.02.15 박선영 관리자 참여멤버 상세보기 */
 	public Map<String, Object> adminWithMem(Map<String, Object> map) throws Exception;
+	
+	/* 23.02.21 박선영 관리자 카테고리 수정 */
+	public void adminTogeCateModi(Map<String, Object> map) throws Exception;
+	
+	/* 23.02.21 박선영 관리자 카테고리 상세보기 */
+	public Map<String, Object> admiCateDetail(Map<String, Object> map) throws Exception;
+	
+	/* 23.02.21 박선영 관리자 카테고리 삭제 */
+	public void adminTogeCateDel(Map<String, Object> map) throws Exception;
+	
+	/* 23.02.22 박선영 관리자 몸무게 상세보기 */
+	public Map<String, Object> adminWeightDetail(Map<String, Object> map) throws Exception;
+	
+	/* 23.02.22 박선영 관리자 몸무게 수정하기 */
+	public void adminTogeWtModi(Map<String, Object> map) throws Exception;
 
 }

@@ -33,9 +33,6 @@ public class TogetherController {
 	@Resource(name="togetherService")
 	private TogetherService togetherService;
 	
-	// 23.02.17 이소영 chatService 연결
-	@Resource(name = "chatService")
-	private ChatService chatService;
 	
 	/* 23.02.02 박선영 게시글리스트 페이징화면출력 */
 	@RequestMapping(value="/together/openList")
@@ -128,10 +125,12 @@ public class TogetherController {
 		commandMap.put("TO_IDX", TO_IDX);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//날짜 형태 정해주기
+		SimpleDateFormat tsdf = new SimpleDateFormat("HH:mm");//시간형태 정해주기
 		
 		Date now = new Date();//날짜 마감에 따른 참여하기 비활성화 목적
 		
 		String nowDate = sdf.format(now);
+		String nowTime = tsdf.format(now);
 		
 		ModelAndView mv = new ModelAndView("/together/togetherDetail");
 		
@@ -139,6 +138,7 @@ public class TogetherController {
 		List<Map<String, Object>> withlist = togetherService.togetherWithList(commandMap.getMap());//참여자 리스트 메소드
 		Map<String, Object> checkwith = togetherService.checkWith(commandMap.getMap(),session);//참여여부 확인 메소드
 		
+		mv.addObject("nowTime", nowTime);
 		mv.addObject("nowDate", nowDate);
 		mv.addObject("checkwith", checkwith);	
 		mv.addObject("withlist", withlist);
@@ -238,7 +238,6 @@ public class TogetherController {
 		System.out.println(commandMap.get("TO_IDX"));
 		
 		togetherService.togetherDel(commandMap.getMap(),session);
-		chatService.deleteChatRoom(commandMap.getMap());
 		
 		return mv;
 	}

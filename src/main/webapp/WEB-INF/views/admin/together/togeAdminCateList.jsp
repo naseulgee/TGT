@@ -11,6 +11,10 @@ color:#f0b1aa;
 #ctreg.btn.submit{
 margin-right:5px;
 }
+
+#ctmodi{
+margin-right:5px;
+}
 </style>
 
 <main class="layoutCenter">
@@ -33,7 +37,7 @@ margin-right:5px;
 			<c:choose>
 				<c:when test="${!empty catelist}">
 					<c:forEach items="${catelist}" var="adct">
-						<tr>
+						<tr class="use_move" data-href="/admin/together/catedetail/${adct.TC_IDX }" onclick="move(this, 'TC_IDX:${adct.TC_IDX}')">
 							<td>${adct.TC_IDX}</td>
 							<td>${adct.TC_NAME }</td>
 							<td>${adct.TC_COUNT }</td>
@@ -51,7 +55,7 @@ margin-right:5px;
 </div>
 <br/>
 <div class="flexCenter">
-	<a class="btn submit" id="ctreg" href="/admin/together/catewriteForm.paw">함께해요 분류등록하기</a>
+	<a class="btn submit" id="ctreg" href="/admin/together/catewriteForm.paw">분류등록하기</a>
 	<a class="btn" href="/admin/together/list.paw">목록으로</a>
 </div>
 </main>

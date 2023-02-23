@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import paw.togaether.chat.service.ChatService;
@@ -205,6 +206,95 @@ public class AdminTogeController {
 		
 		return mv;
 		
+	}
+	
+	/* 23.02.21 박선영 관리자 카테고리 상세보기 */
+	@RequestMapping(value="/admin/together/catedetail/{TC_IDX}")
+	public ModelAndView admiCateDetail(@PathVariable("TC_IDX")int TC_IDX, CommandMap commandMap) throws Exception {
+		
+		ModelAndView mv = new ModelAndView("/admin/together/togeAdminCateDetail");
+		
+		Map<String, Object> map = togetherAdminService.admiCateDetail(commandMap.getMap());
+		
+		mv.addObject("map", map);
+		return mv;
+	}
+	
+	/* 23.02.21 박선영 관리자 카테고리 수정폼  */
+	@RequestMapping(value="/admin/together/catemodiForm")
+	public ModelAndView openadminTogeCateModi(CommandMap commandMap) throws Exception {
+		
+		ModelAndView mv = new ModelAndView("/admin/together/togeAdminCateModi");
+		
+		//이미 있던 분류 상세정보를 불러옴
+		Map<String, Object> map = togetherAdminService.admiCateDetail(commandMap.getMap());
+		
+		mv.addObject("map", map);
+		return mv;
+	}
+	
+	/* 23.02.21 박선영 관리자 카테고리 수정  */
+	@RequestMapping(value="/admin/together/catemodi", method = RequestMethod.POST)
+	public ModelAndView adminTogeCateModi(CommandMap commandMap) throws Exception {
+		
+		System.out.println(commandMap.getMap());
+		
+		ModelAndView mv = new ModelAndView("redirect:/admin/together/catelist");
+		
+		togetherAdminService.adminTogeCateModi(commandMap.getMap());
+		
+		return mv;
+	}
+	
+	/* 23.02.21 박선영 관리자 카테고리 삭제  */
+	@RequestMapping(value="/admin/together/catedel", method = RequestMethod.POST)
+	public ModelAndView adminTogeCateDel(CommandMap commandMap) throws Exception {
+		
+		System.out.println(commandMap.getMap());
+		
+		ModelAndView mv = new ModelAndView("redirect:/admin/together/catelist");
+		
+		togetherAdminService.adminTogeCateDel(commandMap.getMap());
+		
+		return mv;
+	}
+	
+	/* 23.02.22 박선영 관리자 몸무게 상세보기 */
+	@RequestMapping(value="/admin/together/wtdetail/{WT_IDX}")
+	public ModelAndView adminWeightDetail(@PathVariable("WT_IDX")int WT_IDX, CommandMap commandMap) throws Exception {
+		
+		ModelAndView mv = new ModelAndView("/admin/together/togeAdminWtDetail");
+		
+		Map<String, Object> map = togetherAdminService.adminWeightDetail(commandMap.getMap());
+		
+		mv.addObject("map", map);
+		return mv;
+	}
+	
+	/* 23.02.22 박선영 관리자 몸무게 수정폼  */
+	@RequestMapping(value="/admin/together/wtmodiForm")
+	public ModelAndView openadminTogeWtModi(CommandMap commandMap) throws Exception {
+		
+		ModelAndView mv = new ModelAndView("/admin/together/togeAdminWtModi");
+		
+		//이미 있던 분류 상세정보를 불러옴
+		Map<String, Object> map = togetherAdminService.adminWeightDetail(commandMap.getMap());
+		
+		mv.addObject("map", map);
+		return mv;
+	}
+	
+	/* 23.02.22 박선영 관리자 몸무게 수정  */
+	@RequestMapping(value="/admin/together/wtmodi", method = RequestMethod.POST)
+	public ModelAndView adminTogeWtModi(CommandMap commandMap) throws Exception {
+		
+		System.out.println(commandMap.getMap());
+		
+		ModelAndView mv = new ModelAndView("redirect:/admin/together/wtlist");
+		
+		togetherAdminService.adminTogeWtModi(commandMap.getMap());
+		
+		return mv;
 	}
 
 }

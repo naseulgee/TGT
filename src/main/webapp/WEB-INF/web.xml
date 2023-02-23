@@ -44,7 +44,7 @@
 		<!-- 업로드 관련 설정 -->
 		<multipart-config>
 			<!-- 업로드 폴더 절대경로 지정 -->
-			<location>D:\\study\\JAVA\\stsApp\\TGT\\src\\main\\webapp\\resources\\upload\\temp</location>
+			<location>//Users//parksun-young//lastproject//TGT230110//src//main//webapp//resources//upload//temp</location>
 			<max-file-size>20971520</max-file-size> <!--1MB * 20 -->
 			<max-request-size>41943040</max-request-size><!-- 40MB -->
 			<file-size-threshold>20971520</file-size-threshold> <!-- 20MB -->

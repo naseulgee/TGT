@@ -76,14 +76,40 @@ padding-left : 10px;
 				<th>참여멤버</th>
 				<td>
 				<ul>
-					<c:forEach items="${wlist}" var="wl">
-						<li>
-							<button class="use_move" data-href="/admin/together/withdetail" onclick="move(this, 'TO_IDX:${wl.TW_TO_IDX}', 'TW_MEM_ID:${wl.TW_MEM_ID}')">
-							${wl.TW_MEM_ID}</button>
-						</li>
-					</c:forEach>
+					<c:if test="${nowDate < map.TO_DATE}"><!--모집중일떄 -->
+						<c:forEach items="${wlist}" var="wl">
+							<li>
+								<button class="use_move" data-href="/admin/together/withdetail" onclick="move(this, 'TO_IDX:${wl.TW_TO_IDX}', 'TW_MEM_ID:${wl.TW_MEM_ID}')">
+								${wl.TW_MEM_ID}</button>
+							</li>
+						</c:forEach>
+					</c:if>
+					<c:if test="${nowDate eq map.TO_DATE}">
+						<c:if test="${nowTime <= map.TO_TIME}"><!-- 모집중일때 -->
+							<c:forEach items="${wlist}" var="wl">
+								<li>
+									<button class="use_move" data-href="/admin/together/withdetail" onclick="move(this, 'TO_IDX:${wl.TW_TO_IDX}', 'TW_MEM_ID:${wl.TW_MEM_ID}')">
+									${wl.TW_MEM_ID}</button>
+								</li>
+							</c:forEach>
+						</c:if>
+						<c:if test="${nowTime > map.TO_TIME}"><!-- 모집마감일때 -->
+							<c:forEach items="${wlist}" var="wl">
+								<li>
+									<button class="use_move"> ${wl.TW_MEM_ID}</button>
+								</li>
+							</c:forEach>
+						</c:if>
+					</c:if>
+					<c:if test="${nowDate > map.TO_DATE }">
+						<c:forEach items="${wlist}" var="wl">
+							<li>
+								<button class="use_move"> ${wl.TW_MEM_ID}</button>
+							</li>
+						</c:forEach>
+					</c:if>
 				</ul>
-				<c:if test="${empty wlist}">참여인원이 없습니다:(</c:if>
+					<c:if test="${empty wlist}">참여인원이 없습니다:(</c:if>
 				</td>
 			</tr>
 			<tr>

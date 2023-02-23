@@ -29,6 +29,11 @@ background-color:#f0b1aa;
 color: #fff;
 }
 
+.dogphoto label{
+		width : 120px;
+		height : 120px;
+	}
+
 </style>
 <main class="layoutCenter">
 <%@ include file="/WEB-INF/include/nav_mypage.jspf"%>
@@ -60,7 +65,11 @@ color: #fff;
 					<td><span class="fa-solid fa-bone"></span> 나는 이런 강아지개! :)  [${wtdetail.MEM_DOG_ETC}]</td>
 				</tr>
 				<tr class="dogphoto">
-					<td></td>
+					<td>
+						<label >
+							<img class="pop_img" src="/resources/upload/${wtdetail.PH_STORED_FILE_NAME}" id="photo"> 
+						</label>
+					</td>
 				</tr>
 			</tbody>
 		</table>
