@@ -34,9 +34,8 @@
 	
 	<sql id="searchType_place">
 		<if test="searchType != null">
-		    AND PL.PL_NAME LIKE '%' || #{keyword} || '%'
-		    OR PL.PL_LOC LIKE '%' || #{keyword} || '%'
-		    OR PC.PC_NAME LIKE '%' || #{keyword} || '%'
+		    AND PL_NAME LIKE '%' || #{keyword} || '%'
+		    OR PC_NAME LIKE '%' || #{keyword} || '%'
 		</if>
 	</sql>
 	
@@ -126,38 +125,42 @@
 	<select id="placeSearchList" parameterType="hashmap" resultType="hashmap">
 		<include refid="common.pagingPre" />
 	        <![CDATA[
-                SELECT 
-				    ROW_NUMBER() OVER (ORDER BY PL.PL_IDX DESC) RNUM, 
-				    PL.PL_IDX,
-				    PL.PL_NAME,
-				    PL.PL_CALL, 
-				    PL.PL_LOC, 
-				    PL.PL_OPEN,
-				    PL.PL_CLOSE,
-				    TO_CHAR(PL.PL_MOD_DATE, 'YYYY-MM-DD') AS PL_MOD_DATE,
-				    (SELECT PC.PC_NAME FROM PLACE_CATE PC, PLACE P WHERE PC.PC_IDX = P.PL_PC_IDX) AS PC_NAME,
-				    (SELECT ROUND(AVG(RE_STAR),1) FROM REVIEW WHERE RE_DEL_GB = 'N') AS R_AVG,
-				    (SELECT COUNT(RE_STAR) FROM REVIEW WHERE RE_DEL_GB = 'N') AS R_COUNT,
-				    (SELECT MIN(PH_STORED_FILE_NAME) FROM PHOTO WHERE PH_DEL_GB = 'N') AS PH_NAME
-				FROM 
-				    PLACE PL, REVIEW R, PHOTO PH, PLACE_CATE PC
-				WHERE 
-				    PL.PL_IDX = PH.PH_BOARD_IDX
-				    AND PL.PL_IDX = R.RE_PL_IDX
-				    AND PL.PL_PC_IDX = PC.PC_IDX
-				    AND PL.PL_DEL_GB = 'N'
+				SELECT 
+               		ROW_NUMBER() OVER (ORDER BY PL_IDX DESC) RNUM,
+					PL_IDX, 
+					PL_NAME, 
+					PL_LOC, 
+					PL_DEL_GB,
+					PC_IDX, 
+					PC_NAME,
+					R_AVG, 
+					R_COUNT,
+					PH_NAME
+				FROM
+					PLACE
+						INNER JOIN (SELECT PC_IDX, PC_NAME
+									FROM PLACE_CATE
+			]]>
+										<if test="pl_pc_idx != null and pl_pc_idx != 'caAll'">
+											WHERE PC_IDX = ${pl_pc_idx}
+										</if>
+			<![CDATA[
+									) 
+						ON PC_IDX = PL_PC_IDX
+		    			LEFT JOIN (SELECT RE_PL_IDX, ROUND(AVG(RE_STAR), 1) R_AVG, COUNT(RE_PL_IDX) R_COUNT
+		            				FROM REVIEW WHERE RE_DEL_GB = 'N' GROUP BY RE_PL_IDX
+		        					) 
+		        		ON PL_IDX = RE_PL_IDX
+		    			LEFT JOIN (SELECT PH_BOARD_IDX, MIN(PH_STORED_FILE_NAME) PH_NAME
+		    						FROM PHOTO
+		    						WHERE PH_BOARD_TYPE = 'place' AND PH_DEL_GB = 'N'
+		    						GROUP BY PH_BOARD_IDX
+		    						) 
+		    			ON PL_IDX = PH_BOARD_IDX
+					WHERE     
+				    	PL_DEL_GB = 'N'
 			]]>
 			<include refid="searchType_place"></include>
-			<![CDATA[
-				GROUP BY 
-						PL.PL_IDX,
-					    PL.PL_NAME,
-					    PL.PL_CALL, 
-					    PL.PL_LOC, 
-					    PL.PL_OPEN,
-					    PL.PL_CLOSE,
-					    PL_MOD_DATE
-			]]>
 		<include refid="common.pagingPost" />
-	</select>
+</select>
 </mapper>
