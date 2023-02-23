@@ -63,7 +63,8 @@ public class AlarmController {
 		//Mybatis에서 동적쿼리문으로 반복 처리하기 위해 신규 맵을 생성하여 다시 담아준다.
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("map", commandMap);
-		System.out.println(commandMap.get("al_idx"));
+		map.put("target", commandMap.get("target"));
+		
 		//알람 확인 처리
 		int result = alarmService.alarmModify(map);
 		if(result > 0) return new ResponseEntity<>(HttpStatus.OK);
@@ -75,12 +76,8 @@ public class AlarmController {
 	public ModelAndView alarmDelete(CommandMap commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:/mypage/alarm/list.paw");
 		
-		//Mybatis에서 동적쿼리문으로 반복 처리하기 위해 신규 맵을 생성하여 다시 담아준다.
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("map", commandMap.getMap());
-		
 		//알람 삭제
-		alarmService.alarmDelete(map);
+		alarmService.alarmDelete(commandMap.getMap());
 		
 		return mv;
 	}

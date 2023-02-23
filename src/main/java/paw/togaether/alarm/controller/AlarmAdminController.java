@@ -60,26 +60,15 @@ public class AlarmAdminController {
 	
 	/** 23.02.17 나슬기: 알람 작성폼 메소드 */
 	@GetMapping("/write")
-	public String alarmRegForm(){
-		return "/admin/alarm/writeForm";
+	public ModelAndView alarmRegForm(){
+		return new ModelAndView("/admin/alarm/writeForm");
 	}
 	
 	/** 23.02.22 나슬기: 알람 발송할 회원 조회 */
-	@PostMapping(value = "/selectMember", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(value = "/member", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<Map<String, Object>> selectMember(@RequestBody Map<String, Object> commandMap) throws Exception {
-		Map<String, Object> map = new HashMap<String, Object>();
-		//시설 리스트 불러오기
-		List<Map<String, Object>> list = alarmService.alarmMemberSelectList(commandMap);
-		map.put("list", list);
-		//총 개수
-		if (list.size() > 0) {
-			map.put("TOTAL", list.get(0).get("TOTAL_COUNT"));
-		} else {
-			map.put("TOTAL", 0);
-		}
-		
-		return new ResponseEntity<>(map, HttpStatus.OK);
+	public ResponseEntity<List<Map<String, Object>>> selectMember(@RequestBody Map<String, Object> commandMap) throws Exception {
+		return new ResponseEntity<>(alarmService.alarmMemberSelectList(commandMap), HttpStatus.OK);
 	}
 	
 	/** 23.02.17 나슬기: 알람 작성 메소드
@@ -87,12 +76,12 @@ public class AlarmAdminController {
 	@PostMapping("/write")
 	public ModelAndView alarmReg(CommandMap commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:/admin/alarm/list.paw");
+		commandMap.remove("subKeyword");
 		//서비스 호출 전 체크박스로 넘어오는 회원ID 정보에 대한 가공 처리 필수!
-		if(commandMap.get("target") != null
-				&& commandMap.get("target").toString().contains(",")) {//값이 여러개일 때만 가공
-			Object[] off_check = (Object[]) commandMap.get("target");//해당 값을 문자열로 이루어진 배열에 저장
+		if(commandMap.get("target") != null) {//값이 여러개일 때만 가공
+			Object[] target = (Object[]) commandMap.get("target");//해당 값을 문자열로 이루어진 배열에 저장
 			commandMap.put("target",
-					Arrays.deepToString(off_check)
+					Arrays.deepToString(target)
 					.toString()
 					.replaceAll(" ", "")
 					.replace("[", "")

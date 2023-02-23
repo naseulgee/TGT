@@ -37,7 +37,7 @@ public class AlarmServiceImpl implements AlarmService {
 	/** 23.02.22 나슬기: 알람 발송할 회원 조회 */
 	@Override
 	public List<Map<String, Object>>alarmMemberSelectList(Map<String, Object> map) throws Exception{
-		return alarmDAO.alarmSelectListWidthCondition(map);
+		return alarmDAO.alarmMemberSelectList(map);
 	}
 	/** 23.02.17 나슬기: 알람 등록하기 */
 	@Override

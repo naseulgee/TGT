@@ -24,7 +24,7 @@ function al_check(target, number){
 	$.ajax({
 		url: "/mypage/alarm/check",
 		type: "POST",
-		data: JSON.stringify({al_idx: number, al_check: "Y"}),
+		data: JSON.stringify({target: number, al_check: "Y"}),
 		contentType: "application/json",
 		success: function(result){
 			let tr = target.closest("tr");
@@ -41,5 +41,5 @@ function al_check(target, number){
 
 //알람 삭제 메소드
 function al_del(target, number){
-	if(confirm("정말 해당 알람을 삭제하시겠습니까?")) return move(target, "al_idx:"+number);
+	if(confirm("정말 해당 알람을 삭제하시겠습니까?")) return move(target, "target:"+number);
 }

@@ -47,7 +47,6 @@
 	
 	<!-- 23.02.22 나슬기: 알람을 보낼 회원 조회하는 쿼리문 / 받는값: 검색값 -->
 	<select id="se_members" resultType="hashmap">
-		<include refid="common.pagingPre"/>
 		<![CDATA[
 		select rownum rnum, m.*
 		from members m
@@ -58,7 +57,6 @@
 			or mem_dog_name like '%'||#{subKeyword}||'%'
 		</if>
 		order by mem_reg_date desc
-		<include refid="common.pagingPost"/>
 	</select>
 
 	<!-- 23.02.17 나슬기: 프로시저를 호출하여 알람 등록하는 쿼리문 / 받는값: 타겟 ID, 알람 내용, 연결 링크 -->

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/include/admin-header.jspf" %>
-<script src="/resources/js/paging/searchPaging_B.js"></script>
+<link rel="stylesheet" type="text/css" href="/resources/css/alarm/write.css"/>
 <script src="/resources/js/alarm/admin_alarm_selectMem.js"></script>
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
@@ -10,13 +10,12 @@
 	<table>
 		<tr>
 			<th class="req">타겟</th>
-			<td id="select_members"></td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<div id="members_list"></div>
-				<ul id="paging"></ul>
-				<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" />
+			<td id="select_members">
+				<div class="search flexCenter flexWrap">
+					<input type="text" id="subKeyword" name="subKeyword" placeholder="회원 또는 강아지 이름을 검색해 주세요">
+					<label class="btn"><input type="checkbox" onclick="check_toggle(this)">전체 선택</label>
+				</div>
+				<div id="members_list" class="flexCenter flexWrap"></div>
 			</td>
 		</tr>
 		<tr>

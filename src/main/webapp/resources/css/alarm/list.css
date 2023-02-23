@@ -1,5 +1,6 @@
 .alarm_list{ margin-top: 20px; }
 .alarm_list .check{ background-color: var(--subGray_5); }
 .alarm_list tr td{ justify-content: space-between; align-items: flex-start; padding: 0; }
-.alarm_list tr td a{ width: calc(100% - 20px); padding: 10px 5px; }
-.alarm_list tr td .al_del{ width: 30px; margin-top: 0.25em; box-sizing: border-box; }
+.alarm_list tr td a{ width: calc(100% - 40px); padding: 10px 15px; box-sizing: border-box; vertical-align: baseline; }
+.alarm_list tr td .al_del{ width: 40px; margin-top: 0.25em; box-sizing: border-box; }
+.alarm_list tr td .date{ color: var(--subGray_60); font-size: 0.8em; }
