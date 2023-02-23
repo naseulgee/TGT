@@ -51,4 +51,7 @@ public interface TogetherService {
 	/* 23.02.09 박선영 : 작성자 정보 확인 */
 	Map<String, Object> checkWriter(Map<String, Object> map, HttpSession session) throws Exception;
 	
+	/* 23.02.23 박선영 참여거절하기 */
+	public void withDel(Map<String, Object> map, HttpSession session) throws Exception;
+	
 }

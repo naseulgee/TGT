@@ -91,5 +91,10 @@ public class TogetherDAO extends AbstractDAO {
 	public Map<String, Object> checkWriter(Map<String, Object> map) throws Exception {
 		return (Map<String, Object>) selectOne("together.checkWriter", map);
 	}
+	
+	/* 23.02.23 박선영 참여거절 */
+	public void withDel(Map<String, Object> map) throws Exception {
+		delete("together.withDel", map);
+	}
 
 }

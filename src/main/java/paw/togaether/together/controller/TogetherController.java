@@ -307,4 +307,32 @@ public class TogetherController {
 		return mv;
 	}
 	
+	/* 23.02.23 박선영 참여거절 기능 구현 */
+	@RequestMapping(value="/together/withreject", method=RequestMethod.POST)
+	public ModelAndView withDel(CommandMap commandMap, HttpSession session) throws Exception {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//날짜 형태 정해주기
+		SimpleDateFormat tsdf = new SimpleDateFormat("HH:mm");//시간형태 정해주기
+		
+		Date now = new Date();//날짜 마감에 따른 참여하기 비활성화 목적
+		
+		String nowDate = sdf.format(now);
+		String nowTime = tsdf.format(now);
+		
+		ModelAndView mv = new ModelAndView("redirect:/together/detail/{TO_IDX}");
+		
+		System.out.println("commandmap: " + commandMap);
+		
+		Map<String, Object> map = togetherService.togetherDetail(commandMap.getMap(),session);//상세보기 정보
+		togetherService.withDel(commandMap.getMap(), session);
+		
+		String TO_IDX = (String)commandMap.get("TO_IDX");
+		commandMap.put("TO_IDX", TO_IDX);
+		
+		mv.addObject("nowTime", nowTime);
+		mv.addObject("nowDate", nowDate);
+		mv.addObject("TO_IDX", TO_IDX);
+		return mv;
+	}
+	
 }
