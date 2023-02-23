@@ -37,4 +37,4 @@
 .list_wrap .btn.submit{ width: 100%; }
 
 /* 지도 영역 */
-.map_wrap{ flex: 2; overflow: hidden; border: 1px solid green; }
+.map_wrap{ flex: 2; overflow: hidden; }

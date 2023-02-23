@@ -8,6 +8,7 @@
 
 <!-- 컨텐츠는 꼭 main 태그로 감싸주시고, 클래스명은 layoutCenter로 지정해주세요 -->
 <main class="layoutCenter">
+<div class="txt_center"><img src="/resources/image/place.jpg"></div><br>
 <h1 class="txt_center">우리동네 시설 등록</h1>
 <form id="placeWrite" method="post">
 <input type="hidden" name="ph_board_type" value="place">
