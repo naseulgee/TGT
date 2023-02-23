@@ -144,6 +144,7 @@
 					WT_START,
 					WT_END
 			FROM WEIGHT
+			ORDER BY WT_IDX ASC
 		]]>
 	</select>
 	

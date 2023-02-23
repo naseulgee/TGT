@@ -123,5 +123,13 @@ public class TogetherServiceImpl implements TogetherService {
 		map.put("mem_id", mem_id);
 		return togetherDAO.checkWriter(map);
 	}
+	
+	/* 23.02.23 박선영 참여거절 */
+	@Override
+	public void withDel(Map<String, Object> map, HttpSession session) throws Exception {
+		String mem_id = (String)session.getAttribute("mem_id"); //로그인 아이디가져오기
+		map.put("mem_id", mem_id);
+		togetherDAO.withDel(map);
+	}
 
 }

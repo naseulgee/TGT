@@ -27,8 +27,19 @@ padding-left: 10px;
 font-size : 17px;
 background-color:#f0b1aa;
 color: #fff;
+margin-right : 5px;
 }
 
+input#withdel.use_move{
+padding-top: 5px;
+padding-right: 10px;
+padding-bottom: 5px;
+padding-left: 10px;
+font-size : 17px;
+background-color:#ce0000;
+color: #fff;
+margin-right : 5px;
+}
 </style>
 <main class="layoutCenter">
 <%@ include file="/WEB-INF/include/nav_mypage.jspf"%>
@@ -73,11 +84,37 @@ color: #fff;
 		<br/>
 		<br/>
 		<div class="flexCenter">
-		<input type="button" id="wtdetail" class="use_move" data-href="/together/detail/${withdetail.TW_TO_IDX}.paw" onclick="move(this,'TO_IDX:${withdetail.TW_TO_IDX}')"
-		value="돌아가기:)">
-		<input type="hidden" id="TO_IDX" name="TO_IDX" value="${withdetail.TW_TO_IDX}">
+			<input type="button" id="wtdetail" class="use_move" data-href="/together/detail/${withdetail.TW_TO_IDX}.paw" onclick="move(this,'TO_IDX:${withdetail.TW_TO_IDX}')"
+			value="돌아가기:)">
+			<input type="hidden" id="TO_IDX" name="TO_IDX" value="${withdetail.TW_TO_IDX}">
+			<!-- 23.02.23  박선영 모집날짜가 지나지 않았을때 -->
+			<c:if test="${nowDate < map.TO_DATE}">
+				<c:if test="${withdetail.TO_WRITER_ID eq mem_id }">
+					<input type="button" id="withdel" name="withdel" class="use_move" 
+					data-href="/together/withreject" onclick="move(this, 'TO_IDX:${withdetail.TW_TO_IDX }', 'TW_TO_IDX:${withdetail.TW_TO_IDX}', 'TW_MEM_ID:${withdetail.MEM_ID}')" value="거절하기:(">
+				</c:if>
+			</c:if>
+			<!--23.02.23 박선영 모집시간도 고려할때 -->
+			<c:if test="${nowDate eq map.TO_DATE}">
+				<c:if test="${nowTime <= map.TO_TIME }">
+					<c:if test="${withdetail.TO_WRITER_ID eq mem_id }">
+						<input type="button" id="withdel" name="withdel" class="use_move" 
+						data-href="/together/withreject" onclick="move(this, 'TO_IDX:${withdetail.TW_TO_IDX }', 'TW_TO_IDX:${withdetail.TW_TO_IDX}', 'TW_MEM_ID:${withdetail.MEM_ID}')" value="거절하기:(">
+					</c:if>
+				</c:if>
+			</c:if>
 		</div>
 	</div>
 	
 </main>
+
+<script>
+$(document).ready(function(){
+	
+function rejectalert(){
+	alert("참여거절:(");
+}
+
+});//도큐먼트 함수 끝 
+</script>
 <%@ include file="/WEB-INF/include/common-footer.jspf" %>

@@ -305,8 +305,12 @@
 				   p.PH_MEM_ID,
 				   p.PH_ORIGINAL_FILE_NAME,
 				   p.PH_STORED_FILE_NAME,
-				   p.PH_DEL_GB
-			FROM MEMBERS m, BREED b, TOGETHER_WITH w, PHOTO p
+				   p.PH_DEL_GB,
+				   t.TO_WRITER_ID,
+				   t.TO_IDX,
+				   TO_CHAR(TO_DATE, 'YYYY-MM-DD')as TO_DATE,
+					t.TO_TIME
+			FROM MEMBERS m, BREED b, TOGETHER_WITH w, PHOTO p, TOGETHER t
 			WHERE 
 				MEM_ID = #{TW_MEM_ID, jdbcType=VARCHAR}
 			AND 
@@ -315,6 +319,8 @@
 				w.TW_TO_IDX = #{TO_IDX,jdbcType=VARCHAR}
 			AND 
 				p.PH_MEM_ID = #{TW_MEM_ID, jdbcType = VARCHAR}
+			AND 
+				t.TO_IDX = #{TO_IDX, jdbcType = VARCHAR}
 			 GROUP BY m.MEM_ID,
 					   m.MEM_DOG_NAME,
 					   m.MEM_DOG_WEIGHT,
@@ -328,7 +334,12 @@
 					   p.PH_MEM_ID,
 					   p.PH_ORIGINAL_FILE_NAME,
 					   p.PH_STORED_FILE_NAME,
-					   p.PH_DEL_GB	
+					   p.PH_DEL_GB,
+					   t.TO_WRITER_ID,
+					   t.TO_IDX,
+					   TO_DATE,
+					   t.TO_TIME
+					   
 		]]>
 	</select>
 	
@@ -377,5 +388,16 @@
 		]]>
 	</select>
 	
+	<!-- 23.02.23 박선영 참여거절하기 -->
+	<delete id="withDel">
+		<![CDATA[
+			DELETE 
+			FROM TOGETHER_WITH
+			WHERE 
+				TW_TO_IDX = #{TW_TO_IDX, jdbcType=VARCHAR}
+			AND 
+				TW_MEM_ID = #{TW_MEM_ID, jdbcType=VARCHAR}
+		]]>
+	</delete>
 	
 </mapper>

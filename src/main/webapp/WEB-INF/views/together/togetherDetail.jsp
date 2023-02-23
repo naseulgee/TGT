@@ -91,7 +91,16 @@ function logincheck(){
 				<!--로그인 되어있고 로그인한 아이디가 작성자 아이디와 같을때  -->
 				<c:if test="${mem_id eq map.TO_WRITER_ID}">
 					<input type="button" class="btn submit" id="creatChat" name="creatChat" value="채팅참여">
-					<input type="button" class="use_move" data-href="/together/modifyForm.paw" onclick="move(this, 'TO_IDX:${map.TO_IDX}')" value="수정하기" style="margin-right:5px;">
+					<!-- 23.02.23 박선영 마감하지 않았을때만 수정가능 -->
+					<c:if test="${nowDate < map.TO_DATE}">
+						<input type="button" class="use_move" data-href="/together/modifyForm.paw" onclick="move(this, 'TO_IDX:${map.TO_IDX}')" value="수정하기" style="margin-right:5px;">
+					</c:if>
+					<!-- 23.02.23 시간도 고려하여 마감하지 않았을때만 수정가능 -->
+					<c:if test="${nowDate eq map.TO_DATE}">
+						<c:if test="${nowTime <= map.TO_TIME }">
+							<input type="button" class="use_move" data-href="/together/modifyForm.paw" onclick="move(this, 'TO_IDX:${map.TO_IDX}')" value="수정하기" style="margin-right:5px;">
+						</c:if>
+					</c:if>
 					<input type="button" class="use_move" data-href="/together/delete.paw" onclick="move(this, 'TO_IDX:${map.TO_IDX}')" value="삭제하기">
 				</c:if>
 				
