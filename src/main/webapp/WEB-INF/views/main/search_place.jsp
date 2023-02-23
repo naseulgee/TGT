@@ -1,23 +1,31 @@
-<html  lang="utf-8">
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/include/common-head.jspf" %>
+<link href="resources/css/main/search.css" rel="stylesheet">
+
 <script src="/resources/js/paging/searchPaging_P.js"></script>
 
 	<div>
-			<table class="card_table" id="place_list">
-				<thead>
-					<tr >
-						<th scope="col">제목 [지역]</th>
-						<th scope="col">내용</th>
-						<th scope="col">작성자</th>
-						<th scope="col">작성일</th>
-					</tr>
-				</thead>
-				<tbody class="place">
+		<table class="card_table" id="place_list">
+			<thead>
+				<tr >
+					<th></th>
+					<th scope="col">이미지</th>
+					<th scope="col">카테고리</th>
+					<th scope="col">시설명</th>
+					<th scope="col">평점</th>
+					<th scope="col">주소</th>
+				</tr>
+			</thead>
+			<tbody class="place">
 
-				</tbody>
-			</table>
+			</tbody>
+		</table>
+		<div class="goBoard_div">
+			<a class="goBoard" href="/place/list.paw">
+				<i class="fa-solid fa-angles-right"></i>우리동네로 이동하기
+			</a>
+		</div>
 	</div>
 
 		<div id="PAGE_NAVI_P"></div>
@@ -68,32 +76,24 @@ $(document).ready(function(){
 			gfn_renderPaging_P(params3);
 
 			var str = "";
-			$.each(data.placeSearchList,
-				function(key, value) {
-					str += "<tr>"+ 
-								"<td align='center'>"+ value.PL_IDX + "</td>"+ 
-								"<td class='title' align='center'>"+ 
-									"<a href='#this' name='title'>"+ value.PL_NAME+ "["+value.PL_LOC+"]"+"</a>"+ 
-									"<input type='hidden' name='title' id='IDX' value=" + value.PL_IDX + ">"+ 
-								"</td>" + 
-								/* "<td align='center'>"+ value.BC_WRITER_ID + "</td>"+  */
-								"<td align='center'>"+ value.PL_MOD_DATE + "</td>"+ 
-							"</tr>";
-				});
+			$.each(data.placeSearchList, function(key, value) {
+				//이미지
+				let image = (isNull(value.PH_NAME))?"<i class='fa-thin fa-image no-image'></i>":"<img src='/resources/upload/s_"+value.PH_NAME+"' alt='"+value.PL_NAME+" 이미지' onerror='javascript:no_image(this)'>";
+				//리뷰(총리뷰)
+				let review = (isNull(value.R_AVG))?"0(0)":value.R_AVG+"("+value.R_COUNT+")";
+				//시설메뉴  +총개수
+				let menu = (isNull(value.PM_NAME))?"":value.PM_NAME;
+				let menu_count = (isNull(value.PM_COUNT) || value.PM_COUNT-1 > 0)?"":" +"+value.PM_COUNT;
+				str += "<tr class='use_move' data-mapping='"+value.PL_IDX+"' data-href='/place/detail/"+value.PL_IDX+".paw' onclick='move(this)'>";
+				str += "<Td></td><td class='img'>" + image + "</td>"
+					+ "<td class='cate'>" + value.PC_NAME + "</td>"
+					+ "<td class='pl_name'>" + value.PL_NAME + "</td>"
+					+ "<td class='review'> " + review + "</td>"
+					+ "<td class='loc'>" + value.PL_LOC + "</td>"
+				str += "</tr>";
+			});
 			body.append(str);
 		}
-
-			$("a[name='title']").on("click", function(e) { //제목 
-				e.preventDefault();
-				fn_openPlaceDetail3($(this));
-			});
-			
-			function fn_openPlaceDetail3(obj) {
-				var comSubmit = new ComSubmit();
-				comSubmit.setUrl("<c:url value='/place/detail.paw' />");
-				comSubmit.addParam("PL_IDX", obj.parent().find("#IDX").val());
-				comSubmit.submit();
-			}
 	}
 </script>
 </html>

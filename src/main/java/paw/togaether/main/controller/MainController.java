@@ -58,7 +58,7 @@ public class MainController {
 		return mv;
 	}
 	
-	//검색
+	/** 23.01.14 이소영 : 전체 검색 */
 	@RequestMapping(value = "/search")
 	public ModelAndView search(CommandMap commandMap, HttpServletRequest request,
 			@RequestParam(value = "keyword", defaultValue = "") String keyword,

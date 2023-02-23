@@ -61,6 +61,10 @@
 				<td>${BR_NAME}</td>
 			</tr>
 			<tr>
+				<th>멍BTI</th>
+				<td>${MEM_DOG_MBTI}</td>
+			</tr>
+			<tr>
 				<th>동물등록번호</th>
 				<td>${MEM_DOG_NUM}</td>
 			</tr>
