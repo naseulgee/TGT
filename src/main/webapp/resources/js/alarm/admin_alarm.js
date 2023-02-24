@@ -43,7 +43,7 @@ function fn_selectBoardListCallback(data) {
 	
 	//시설 리스트 세팅 로직
 	if (total == 0) {
-		al_list_body.html("<tr><td class='empty' colspan='5'>조회된 결과가 없습니다.</td></tr>");
+		al_list_body.html("<tr><td class='empty' colspan='4'>조회된 결과가 없습니다.</td></tr>");
 	} else {
 		let str = "", al_link = "";
 		$.each(data.list, function(key, value) {

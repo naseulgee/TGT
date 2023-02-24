@@ -81,7 +81,7 @@ function fn_selectBoardListCallback(data) {
 			let review = (isNull(value.R_AVG))?"0(0)":value.R_AVG+"("+value.R_COUNT+")";
 			//시설메뉴  +총개수
 			let menu = (isNull(value.PM_NAME))?"":value.PM_NAME;
-			let menu_count = (isNull(value.PM_COUNT) || value.PM_COUNT-1 > 0)?"":" +"+value.PM_COUNT;
+			let menu_count = (isNull(value.PM_COUNT) || value.PM_COUNT-1 == 0)?"":" +"+value.PM_COUNT;
 			str += "<tr class='use_move' data-mapping='"+value.PL_IDX+"' data-href='/place/detail/"+value.PL_IDX+".paw' onclick='move(this)'>";
 			str += "<th class='t_img'>이미지</th><td class='img'>" + image + "</td>"
 				+ "<th class='t_cate'>카테고리</th><td class='cate'>" + value.PC_NAME + "</td>"

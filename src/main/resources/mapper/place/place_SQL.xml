@@ -56,8 +56,8 @@
 		order by
 			<choose>
 				<when test="order == 'name'.toString()">pl_name asc<![CDATA[--이름 내림차순 정렬 ㄱ~ㅎ]]></when>
-				<when test="order == 'reviewcnt'.toString()">r_count asc, r_avg asc<![CDATA[--리뷰가 많은 순으로 정렬 후 같은 값에 한해 평점 높은 순으로 재정렬]]></when>
-				<when test="order == 'reviewavg'.toString()">r_avg asc, r_count asc<![CDATA[--평점 높은 순으로 정렬 후 같은 값에 한해 리뷰가 많은 순으로 재정렬]]></when>
+				<when test="order == 'reviewcnt'.toString()">r_count desc, r_avg desc<![CDATA[--리뷰가 많은 순으로 정렬 후 같은 값에 한해 평점 높은 순으로 재정렬]]></when>
+				<when test="order == 'reviewavg'.toString()">r_avg desc, r_count desc<![CDATA[--평점 높은 순으로 정렬 후 같은 값에 한해 리뷰가 많은 순으로 재정렬]]></when>
 				<otherwise>pl_idx desc<![CDATA[--등록 순으로 오름차순 정렬. 최신글~오래된글]]></otherwise>
 			</choose>
 		<include refid="common.pagingPost"/>
