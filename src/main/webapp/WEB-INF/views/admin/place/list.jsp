@@ -28,7 +28,7 @@
 	<!-- 표시 개수 -->
 	<div class="row_wrap">
 		<select id="page_count">
-			<option value="5">5개</option>
+			<option value="6">6개</option>
 			<option value="10">10개</option>
 			<option value="20">20개</option>
 			<option value="50">50개</option>
@@ -55,10 +55,8 @@
 				<tr><td></td></tr>
 			</tbody>
 		</table>
-		<ul id="paging">
-		</ul>
+		<ul id="paging"></ul>
 		<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" />
-		<form id="commonForm" name="commonForm"></form>
 	</article>
 </section>
 </main><!-- //main 종료 -->

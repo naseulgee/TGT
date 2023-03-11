@@ -1,4 +1,4 @@
-var page_row = 5;
+var page_row = 6;
 $(document).ready(function() {
 	fn_selectBoardList(1);
 	
@@ -11,7 +11,7 @@ $(document).ready(function() {
 
 //리스트 세팅 함수
 function fn_selectBoardList(pageNo) {
-	let comAjax = new ComAjax();
+	let comAjax = new ComAjax("common");
 	page_row = $("#page_count option:selected").val();
 
 	comAjax.setUrl("/place/list.paw");

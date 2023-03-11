@@ -38,13 +38,18 @@ public class AlarmAdminController {
 	/** 23.02.17 나슬기: 알람 조회 메소드 */
 	@PostMapping(value = "/list", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<Map<String, Object>> alarmList(Map<String, Object> commandMap) throws Exception {
+	public ResponseEntity<Map<String, Object>> alarmList(CommandMap commandMap) throws Exception {
 		//리턴용 맵 생성
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
 		//Mybatis에서 동적쿼리문으로 반복 처리하기 위해 신규 맵을 생성하여 다시 담아준다.
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("map", commandMap);
+		//동적쿼리 중 페이징에 대한 내용 처리
+		map.put("PAGE_INDEX", commandMap.get("PAGE_INDEX"));
+		map.put("PAGE_ROW", commandMap.get("PAGE_ROW"));
+		commandMap.remove("PAGE_INDEX");
+		commandMap.remove("PAGE_ROW");
+		map.put("map", commandMap.getMap());
 		
 		//조건에 맞는 알람 리스트 불러오기
 		List<Map<String, Object>> list = alarmService.alarmListWidthCondition(map);
@@ -78,7 +83,7 @@ public class AlarmAdminController {
 		ModelAndView mv = new ModelAndView("redirect:/admin/alarm/list.paw");
 		commandMap.remove("subKeyword");
 		//서비스 호출 전 체크박스로 넘어오는 회원ID 정보에 대한 가공 처리 필수!
-		if(commandMap.get("target") != null) {//값이 여러개일 때만 가공
+		if(commandMap.get("target") != null && commandMap.get("target") instanceof Object[]) {//값이 여러개일 때만 가공
 			Object[] target = (Object[]) commandMap.get("target");//해당 값을 문자열로 이루어진 배열에 저장
 			commandMap.put("target",
 					Arrays.deepToString(target)
