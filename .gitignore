@@ -11,7 +11,7 @@ _ing/
 .classpath
 .project
 .settings/
-**/web.xml
+src/main/webapp/WEB-INF//web.xml
 *.properties
 
 ###컴파일된 클래스 파일

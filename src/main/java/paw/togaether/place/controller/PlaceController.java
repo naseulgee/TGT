@@ -90,7 +90,7 @@ public class PlaceController {
 	@PostMapping(value={"/write", "/modify"})
 	public ResponseEntity<String> placeReg(CommandMap commandMap, HttpSession session, MultipartFile[] uploadFile) {
 		//서비스 호출 전 체크박스로 넘어오는 휴일 정보에 대한 가공 처리 필수!
-		if(commandMap.get("pl_offday") != null) {
+		if(commandMap.get("pl_offday") != null && !commandMap.get("pl_offday").getClass().getSimpleName().equals("String")) {
 			Object[] off_check = (Object[]) commandMap.get("pl_offday");//해당 값을 문자열로 이루어진 배열에 저장
 			commandMap.put("pl_offday",
 					Arrays.deepToString(off_check)

@@ -27,8 +27,7 @@
 		<tbody id="admin_al_list">
 		</tbody>
 	</table>
-	<ul id="paging">
-	</ul>
+	<ul id="paging"></ul>
 	<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" />
 </section>
 </main><!-- //main 종료 -->
