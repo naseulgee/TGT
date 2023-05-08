@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import paw.togaether.chat.service.ChatService;
 import paw.togaether.common.domain.CommandMap;
 import paw.togaether.together.service.TogetherService;
 	/**

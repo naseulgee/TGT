@@ -76,9 +76,4 @@ public class JoinController {
 		}
 		return mv;
 	}
-
-
-
-
-
 }
